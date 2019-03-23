@@ -32,4 +32,4 @@ void Personaje::MoverDerecha(){
 void Personaje::MoverIzquierda(){
 	xpos -= 30;
 }
-
+//test branch personajes
