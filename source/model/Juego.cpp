@@ -37,8 +37,8 @@ void Juego::init(const char *title, int xpos, int ypos, int width, int height, b
 	}
 
 
-	jugador1 = new Personaje("hulk3.png",0,300);
-	jugador2 = new Personaje("hulk4.png",500,300);
+	jugador1 = new Personaje("contents/images/hulk3.png",0,300);
+	jugador2 = new Personaje("contents/images/hulk4.png",500,300);
 
 }
 
