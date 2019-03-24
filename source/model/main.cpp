@@ -42,10 +42,5 @@ int main(int argc, char **argv){
 	*/
 }
 //Test branch
-<<<<<<< HEAD
-//Test commit Juli
-
-=======
 //Commit Juli en branch parallax
->>>>>>> parralox
 
