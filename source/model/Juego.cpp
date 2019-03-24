@@ -99,7 +99,7 @@ void Juego::clean()
 	SDL_Quit();
 	std::cout << "Juego finalizado!" << std::endl;
 }
-
+//testPersonaje
 
 
 
