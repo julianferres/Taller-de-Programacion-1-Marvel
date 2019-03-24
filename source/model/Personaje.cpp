@@ -27,7 +27,7 @@ void Personaje::update(float tiempoTrancurrido){
 	destRect.h = srcRect.h;*/
 
 }
-
+//coment
 
 void Personaje::dibujar(ControladorGrafico &graficos){
 	SpriteAnimado::dibujar(graficos, this->_x, this->_y);
