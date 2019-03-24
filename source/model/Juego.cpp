@@ -40,6 +40,7 @@ void Juego::init(const char *title, int xpos, int ypos, int width, int height, b
 	jugador1 = new Personaje(graficos,0,300);
 	jugador2 = new Personaje(graficos,500,300);
 
+
 }
 
 void Juego::handleEvents()
