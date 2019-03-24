@@ -1,7 +1,7 @@
 #include <ControladorTexturas.h>
 #include <Juego.hpp>
-#include <Personaje.h>
 #include <ControladorGrafico.hpp>
+#include <Personaje.hpp>
 
 Personaje* jugador1 ;
 Personaje* jugador2;

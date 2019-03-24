@@ -4,6 +4,7 @@
 #include <Juego.hpp>
 #include <ConfiguracionGlobal.hpp>
 #include <SpriteAnimado.hpp>
+#include <ControladorGrafico.hpp>
 
 class ControladorGrafico;
 class Personaje: public SpriteAnimado{
@@ -24,11 +25,11 @@ public:
 
 private:
 	float _dx, _dy;
-	int xpos;
-	int ypos;
+	//int xpos;
+	//int ypos;
 //Direccion _direccion;
-	SDL_Texture* objTexture;
-	SDL_Rect srcRect, destRect;
+//	SDL_Texture* objTexture;
+	//SDL_Rect srcRect, destRect;
 };
 
 

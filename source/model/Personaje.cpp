@@ -1,6 +1,6 @@
 #include <ControladorTexturas.h>
-#include <Personaje.h>
-#include <ControladorGrafico.hpp>
+#include <Personaje.hpp>
+//#include <ControladorGrafico.hpp>
 
 Personaje::Personaje(ControladorGrafico &graficos, float x, float y):
 	SpriteAnimado(graficos, "CaptainAmericaSprites.png", 0, 0, 16, 16, x, y, 100){
@@ -12,9 +12,7 @@ Personaje::Personaje(ControladorGrafico &graficos, float x, float y):
 	//ypos = y;
 
 }
-void Personaje::configurarAnimaciones(){
-	this->agregarAnimacion(1, 0, 0, "Avanzar", 16, 16, Vector2(0,0));
-}
+
 void Personaje::update(float tiempoTrancurrido){
 	this->_x += this->_dx * tiempoTrancurrido;
 
@@ -30,6 +28,7 @@ void Personaje::update(float tiempoTrancurrido){
 
 }
 
+
 void Personaje::dibujar(ControladorGrafico &graficos){
 	SpriteAnimado::dibujar(graficos, this->_x, this->_y);
 	//SDL_RenderCopy(Juego::renderer, objTexture, &srcRect, &destRect);
@@ -43,5 +42,12 @@ void Personaje::MoverDerecha(){
 
 void Personaje::MoverIzquierda(){
 	//xpos -= 30;
+}
+
+
+void Personaje::animacionFinalizada(std::string animacionActual){}
+
+void Personaje::configurarAnimaciones(){
+	this->agregarAnimacion(1, 0, 0, "Avanzar", 16, 16, Vector2(0,0));
 }
 //test branch personajes
