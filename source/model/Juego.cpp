@@ -80,8 +80,8 @@ void Juego::handleEvents()
 
 void Juego::update()
 {
-	jugador1->Update();
-	jugador2->Update();
+	jugador1->Update(3.2);
+	jugador2->Update(3.2);
 }
 
 void Juego::render()
@@ -99,7 +99,7 @@ void Juego::clean()
 	SDL_Quit();
 	std::cout << "Juego finalizado!" << std::endl;
 }
-
+//testPersonaje
 
 
 
