@@ -1,10 +1,10 @@
 #include <ControladorTexturas.h>
 #include <Personaje.hpp>
 //#include <ControladorGrafico.hpp>
-
+Personaje::Personaje(){}
 Personaje::Personaje(ControladorGrafico &graficos, float x, float y):
-	SpriteAnimado(graficos, "CaptainAmericaSprites.png", 0, 0, 16, 16, x, y, 100){
-		graficos.cargarImagen("CaptainAmericaSprites.png");
+	SpriteAnimado(graficos, "contents/images/CaptainAmericaSprites.png", 0, 0, 16, 16, x, y, 100){
+		graficos.cargarImagen("contents/images/CaptainAmericaSprites.png");
 	//	this->_facing = RIGHT;
 		this->configurarAnimaciones();
 		//objTexture = ControladorTexturas::LoadTexture(imagen);

@@ -8,7 +8,9 @@ Juego *juego = nullptr;
 
 int main(int argc, char **argv){
 
-	const int FPS = 60;
+	Juego juego;
+	return 0;
+	/*const int FPS = 60;
 	const int frameDelay = 1000/ FPS;
 	Uint32 frameStart;
 	int frameTime;
@@ -37,7 +39,7 @@ int main(int argc, char **argv){
 	juego-> clean();
 
 	return 0;
-
+	*/
 }
 //Test branch
 

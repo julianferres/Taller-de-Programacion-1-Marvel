@@ -10,8 +10,9 @@ class ControladorGrafico;
 class Personaje: public SpriteAnimado{
 
 public:
+	Personaje();
 	Personaje(ControladorGrafico &graficos, float x, float y);
-	~Personaje();
+//~Personaje();
 	void update(float tiempoTrancurrido);
 	void dibujar(ControladorGrafico &graficos);
 	void MoverDerecha();
