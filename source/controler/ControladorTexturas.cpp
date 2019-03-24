@@ -7,8 +7,4 @@ SDL_Texture* ControladorTexturas::LoadTexture(const char* texture ){
 
 	return tex;
 }*/
-//TEST
-//TEST EMA
-//TEST MATI
-//test ema2
-//test parralox
+
