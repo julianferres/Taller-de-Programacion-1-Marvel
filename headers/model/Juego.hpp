@@ -29,5 +29,5 @@ private:
 	SDL_Window *window;
 
 };
-
+//hola
 #endif

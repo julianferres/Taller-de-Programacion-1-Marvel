@@ -1,7 +1,7 @@
 #include <ControladorTexturas.h>
 #include <Juego.hpp>
-#include <Personaje.h>
-
+#include <ControladorGrafico.hpp>
+#include <Personaje.hpp>
 
 Personaje* jugador1 ;
 Personaje* jugador2;
@@ -15,7 +15,7 @@ Juego::~Juego()
 {}
 
 void Juego::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen){
-
+	ControladorGrafico graficos;
 	int flags = 0;
 
 	if(fullscreen){
@@ -37,8 +37,9 @@ void Juego::init(const char *title, int xpos, int ypos, int width, int height, b
 	}
 
 
-	jugador1 = new Personaje("contents/images/hulk3.png",0,300);
-	jugador2 = new Personaje("contents/images/hulk4.png",500,300);
+	jugador1 = new Personaje(graficos,0,300);
+	jugador2 = new Personaje(graficos,500,300);
+
 
 }
 
@@ -78,18 +79,20 @@ void Juego::handleEvents()
 
 }
 
-void Juego::update()
+void Juego::update(float tiempoTranscurrido)
 {
-	jugador1->Update(3.2);
-	jugador2->Update(3.2);
+	jugador1->update(tiempoTranscurrido);
+	jugador2->update(tiempoTranscurrido);
 }
 
-void Juego::render()
+void Juego::dibujar(ControladorGrafico graficos)
 {
-	SDL_RenderClear(renderer);
-	jugador1-> Render();
-	jugador2->Render();
-	SDL_RenderPresent(renderer);
+	graficos.clear();
+	//SDL_RenderClear(renderer);
+	jugador1-> dibujar(graficos);
+	jugador2->dibujar(graficos);
+	//SDL_RenderPresent(renderer);
+	graficos.render();
 }
 
 void Juego::clean()
