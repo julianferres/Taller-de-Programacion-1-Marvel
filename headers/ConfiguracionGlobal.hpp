@@ -17,6 +17,10 @@ enum Direccion{
 namespace constantes_personajes{
 	const float VELOCIDAD = 0.2f;
 }
+namespace constantes_graficas{
+	const int FPS = 50;
+	const int MAX_FRAME_TIME = 5 * 1000 / FPS;
+}
 
 namespace globals{
 	const int ANCHO_DE_PANTALLA = 640;

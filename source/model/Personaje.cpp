@@ -1,10 +1,10 @@
-#include <ControladorTexturas.h>
+//#include <ControladorTexturas.h>
 #include <Personaje.hpp>
 //#include <ControladorGrafico.hpp>
 Personaje::Personaje(){}
 Personaje::Personaje(ControladorGrafico &graficos, float x, float y):
-	SpriteAnimado(graficos, "contents/images/CaptainAmericaSprites.png", 0, 0, 16, 16, x, y, 100){
-		graficos.cargarImagen("contents/images/CaptainAmericaSprites.png");
+	SpriteAnimado(graficos, "contents/images/hulk3.png", 0, 0, 16, 16, x, y, 100){
+		graficos.cargarImagen("contents/images/hulk3.png");
 	//	this->_facing = RIGHT;
 		this->configurarAnimaciones();
 		//objTexture = ControladorTexturas::LoadTexture(imagen);
@@ -42,6 +42,11 @@ void Personaje::MoverDerecha(){
 
 void Personaje::MoverIzquierda(){
 	//xpos -= 30;
+}
+
+void Personaje::Frenar(){
+	this->_dx = 0.0f;
+	this->iniciarAnimacion("Avanzar");//this->_facing == LEFT ? "IdleLeft" : "IdleRight");
 }
 
 

@@ -3,7 +3,7 @@
 #include <ControladorGrafico.hpp>
 //pequeño test
 
-Juego *juego = nullptr;
+//Juego *juego = nullptr;
 
 
 int main(int argc, char **argv){
