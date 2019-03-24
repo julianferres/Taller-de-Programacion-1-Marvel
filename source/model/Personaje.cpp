@@ -8,7 +8,7 @@ Personaje::Personaje(const char* imagen, int x, int y){
 
 }
 
-void Personaje::Update(){
+void Personaje::Update(float tiempoTrancurrido){
 
 	srcRect.h = 286;
 	srcRect.w = 256;
