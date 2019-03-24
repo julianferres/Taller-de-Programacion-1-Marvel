@@ -8,7 +8,7 @@ class Personaje{
 public:
 	Personaje(const char* texturesheet, int x, int y);
 	~Personaje();
-	void Update();
+	void Update(float tiempoTrancurrido);
 	void Render();
 	void MoverDerecha();
 	void MoverIzquierda();
