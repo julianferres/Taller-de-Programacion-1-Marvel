@@ -8,13 +8,15 @@
 #ifndef HEADERS_CONFIGURACIONGLOBAL_HPP_
 #define HEADERS_CONFIGURACIONGLOBAL_HPP_
 
-enum Direction{
-	RIGHT,
-	LEFT,
-	UP,
-	DOWN
+enum Direccion{
+	DERECHA,
+	IZQUIERDA,
+	ARRIBA,
+	ABAJO
 };
-
+namespace constantes_personajes{
+	const float VELOCIDAD = 0.2f;
+}
 
 namespace globals{
 	const int ANCHO_DE_PANTALLA = 640;

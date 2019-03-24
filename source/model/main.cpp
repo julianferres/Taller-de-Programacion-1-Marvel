@@ -1,6 +1,6 @@
 #include <Juego.hpp>
 #include <iostream>
-
+#include <ControladorGrafico.hpp>
 //pequeño test
 
 Juego *juego = nullptr;
@@ -12,6 +12,7 @@ int main(int argc, char **argv){
 	const int frameDelay = 1000/ FPS;
 	Uint32 frameStart;
 	int frameTime;
+	ControladorGrafico graficos;
 
 	juego = new Juego();
 
@@ -22,8 +23,8 @@ int main(int argc, char **argv){
 		frameStart = SDL_GetTicks();
 
 		juego-> handleEvents();
-		juego-> update();
-		juego-> render();
+		juego-> update(frameTime);
+		juego-> dibujar(graficos);
 
 		frameTime = SDL_GetTicks() - frameStart;
 

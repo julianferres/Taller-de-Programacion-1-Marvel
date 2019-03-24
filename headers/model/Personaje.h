@@ -2,21 +2,31 @@
 #define PERSONAJE_H_
 
 #include <Juego.hpp>
+#include <ConfiguracionGlobal.hpp>
+#include <SpriteAnimado.hpp>
 
-class Personaje{
+class ControladorGrafico;
+class Personaje: public SpriteAnimado{
 
 public:
-	Personaje(const char* texturesheet, int x, int y);
+	Personaje(ControladorGrafico &graficos, float x, float y);
 	~Personaje();
-	void Update(float tiempoTrancurrido);
-	void Render();
+	void update(float tiempoTrancurrido);
+	void dibujar(ControladorGrafico &graficos);
 	void MoverDerecha();
 	void MoverIzquierda();
+	/* void frenar
+	 * El personaje frena mirando a la direccion ahacia la que venia caminando
+	 */
+	void Frenar();
+	virtual void animacionFinalizada(std::string animacionActual);
+	virtual void configurarAnimaciones();
 
 private:
+	float _dx, _dy;
 	int xpos;
 	int ypos;
-
+//Direccion _direccion;
 	SDL_Texture* objTexture;
 	SDL_Rect srcRect, destRect;
 };
