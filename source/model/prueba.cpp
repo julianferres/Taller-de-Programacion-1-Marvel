@@ -1,20 +1,28 @@
-#include <Juego.hpp>
+#include <Parallax.hpp>
 #include <iostream>
 
-//pequeño test
+Parallax *p = nullptr;
 
-Juego *juego = nullptr;
 
-/*
 int main(int argc, char **argv){
-
-	Juego juego;
-	return 0;
-	/*const int FPS = 60;
+	const int FPS = 60;
 	const int frameDelay = 1000/ FPS;
 	Uint32 frameStart;
 	int frameTime;
-	ControladorGrafico graficos;
+
+	p = new Parallax();
+	std::cout << "Creo al objeto!" << std::endl;
+
+	return 0;
+
+}
+/*
+ int main(int argc, char **argv){
+
+	const int FPS = 60;
+	const int frameDelay = 1000/ FPS;
+	Uint32 frameStart;
+	int frameTime;
 
 	juego = new Juego();
 
@@ -25,8 +33,8 @@ int main(int argc, char **argv){
 		frameStart = SDL_GetTicks();
 
 		juego-> handleEvents();
-		juego-> update(frameTime);
-		juego-> dibujar(graficos);
+		juego-> update();
+		juego-> render();
 
 		frameTime = SDL_GetTicks() - frameStart;
 
@@ -39,7 +47,5 @@ int main(int argc, char **argv){
 	juego-> clean();
 
 	return 0;
-	*/
-}
-*/
 
+}*/
