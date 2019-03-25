@@ -16,17 +16,24 @@ public:
 	bool running;
 	const int FPS =30;
 	const int SPEED = 5;
+	//const int SPEED_MEDIO=7.5;
+	const int SPEED_OTHER = 10;
+	const int CAMERA_LIMIT = 2000;
 	int x,y;
 	Uint32 start;
 	SDL_Rect imgloc;
+
 	SDL_Rect camera;
+	SDL_Rect camera_other;
+
 	SDL_Surface *background;
+	SDL_Surface *background2;
 	SDL_Surface *image;
 	SDL_Surface *screen;
 	bool b[2];
 	SDL_Texture *bitmapTex;
 
-	//Constantes
+	//Constantes (salen del JSON)
 	int W = 640;
 	int H = 480;
 
@@ -50,17 +57,27 @@ public:
 			x = 0;
 			y = 0;
 
-			background = SDL_LoadBMP("contents/images/city.bmp");
-			image = SDL_LoadBMP("contents/images/tree_key.bmp");
+			background = IMG_Load("contents/images/capa2.png");
+			background2 = IMG_Load("contents/images/capa0.png");
 
 			 bitmapTex = SDL_CreateTextureFromSurface(renderer, background);
-			 SDL_FreeSurface(background);
+			 SDL_Texture *bitmapTex2 = SDL_CreateTextureFromSurface(renderer, background2);
 
 			imgloc = {350,170,100,100};
 			camera.x = 0;
 			camera.y = 0;
 			camera.w = W;
 			camera.h = H;
+
+			std::cout << camera.h << std::endl;
+			std::cout << camera.h << std::endl;
+
+
+			camera_other.x = 0;
+			camera_other.y = 0;
+			camera_other.w = W;
+			camera_other.h = H;
+
 			bool b[2] = {0,0};
 
 			while(running) {
@@ -102,17 +119,19 @@ public:
 						//logic
 						if(b[0])
 						{
-							x += SPEED;
+							if(camera.x >= background->w - W || camera_other.x >= 2000-W){
+								continue;
+							}
 							camera.x += SPEED;
-							if(camera.x >= 2000-640)
-								camera.x = 0;
+							camera_other.x += SPEED_OTHER;
 						}
 						else if(b[1])
 						{
-							x -= SPEED;
+							if(camera.x <= 0 || camera_other.x <= 0){
+								continue;
+							}
 							camera.x -= SPEED;
-							if(camera.x <= 0)
-								camera.x = 2000-640;
+							camera_other.x -= SPEED_OTHER;
 						}
 
 						SDL_Rect location = {x,y,640,480};
@@ -121,6 +140,7 @@ public:
 						//render
 				        SDL_RenderClear(renderer);
 				        SDL_RenderCopy(renderer, bitmapTex, &camera, NULL);
+				        SDL_RenderCopy(renderer, bitmapTex2, &camera_other, NULL);
 
 						if(collision(&location, &imgloc))
 							SDL_BlitSurface(image, NULL, screen, &relcoord);
