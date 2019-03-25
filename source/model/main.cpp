@@ -1,20 +1,20 @@
 #include <Juego.hpp>
+#include <controler/ControladorJson.hpp>
 #include <iostream>
-#include <ControladorGrafico.hpp>
-//pequeño test
 
-//Juego *juego = nullptr;
+
+Juego *juego = nullptr;
 
 
 int main(int argc, char **argv){
 
-	Juego juego;
-	return 0;
-	/*const int FPS = 60;
+	const int FPS = 60;
 	const int frameDelay = 1000/ FPS;
 	Uint32 frameStart;
 	int frameTime;
-	ControladorGrafico graficos;
+
+	ControladorJson *controladorJson = new ControladorJson();
+	controladorJson-> LeerArchivo();
 
 	juego = new Juego();
 
@@ -25,8 +25,8 @@ int main(int argc, char **argv){
 		frameStart = SDL_GetTicks();
 
 		juego-> handleEvents();
-		juego-> update(frameTime);
-		juego-> dibujar(graficos);
+		juego-> update();
+		juego-> render();
 
 		frameTime = SDL_GetTicks() - frameStart;
 
@@ -39,9 +39,7 @@ int main(int argc, char **argv){
 	juego-> clean();
 
 	return 0;
-	*/
+
 }
-//Test branch
-//Test commit Juli
 
 
