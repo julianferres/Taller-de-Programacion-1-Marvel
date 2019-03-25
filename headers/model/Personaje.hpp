@@ -13,7 +13,7 @@ public:
 	Personaje();
 	Personaje(ControladorGrafico &graficos, float x, float y);
 //~Personaje();
-	void update(float tiempoTrancurrido);
+	void update();
 	void dibujar(ControladorGrafico &graficos);
 	void MoverDerecha();
 	void MoverIzquierda();

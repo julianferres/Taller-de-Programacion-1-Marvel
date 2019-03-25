@@ -7,25 +7,25 @@ void ControladorTeclado::beginNewFrame(){
 }
 
 
-void ControladorTeclado::eventoPresionarTecla(const SDL_Event& evento){
+void ControladorTeclado::keyDownEvent(const SDL_Event& evento){
 	this->_pressedKeys[evento.key.keysym.scancode] = true;
 	this->_heldKeys[evento.key.keysym.scancode] = true;
 
 }
 
-void ControladorTeclado::eventoSoltarTecla(const SDL_Event& evento){
+void ControladorTeclado::keyUpEvent(const SDL_Event& evento){
 	this->_releasedKeys[evento.key.keysym.scancode] = true;
 	this->_heldKeys[evento.key.keysym.scancode] = false;
 }
 
-bool ControladorTeclado::sePresionoUnaTecla(SDL_Scancode tecla){
+bool ControladorTeclado::wasKeyPressed(SDL_Scancode tecla){
 	return this->_pressedKeys[tecla];
 }
 
-bool ControladorTeclado::seSoltoUnaTecla(SDL_Scancode tecla){
+bool ControladorTeclado::wasKeyReleased(SDL_Scancode tecla){
 	return this->_releasedKeys[tecla];
 }
 
-bool ControladorTeclado::seEstaPresionandoUnaTecla(SDL_Scancode tecla){
+bool ControladorTeclado::isKeyHeld(SDL_Scancode tecla){
 	return this->_heldKeys[tecla];
 }
