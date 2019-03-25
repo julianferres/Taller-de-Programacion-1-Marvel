@@ -1,10 +1,23 @@
-#include <Juego.hpp>
+#include <Parallax.hpp>
 #include <iostream>
 
-Juego *juego = nullptr;
+Parallax *p = nullptr;
 
-/*
+
 int main(int argc, char **argv){
+	const int FPS = 60;
+	const int frameDelay = 1000/ FPS;
+	Uint32 frameStart;
+	int frameTime;
+
+	p = new Parallax();
+	std::cout << "Creo al objeto!" << std::endl;
+
+	return 0;
+
+}
+/*
+ int main(int argc, char **argv){
 
 	const int FPS = 60;
 	const int frameDelay = 1000/ FPS;
@@ -35,6 +48,4 @@ int main(int argc, char **argv){
 
 	return 0;
 
-}
-*/
-
+}*/
