@@ -1,5 +1,7 @@
 #include <Juego.hpp>
+#include <controler/ControladorJson.hpp>
 #include <iostream>
+
 
 Juego *juego = nullptr;
 
@@ -10,6 +12,9 @@ int main(int argc, char **argv){
 	const int frameDelay = 1000/ FPS;
 	Uint32 frameStart;
 	int frameTime;
+
+	ControladorJson *controladorJson = new ControladorJson();
+	controladorJson-> LeerArchivo();
 
 	juego = new Juego();
 

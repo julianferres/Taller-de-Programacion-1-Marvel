@@ -1,0 +1,11 @@
+#ifndef HEADERS_CONTROLER_CONTROLADORJSON_HPP_
+#define HEADERS_CONTROLER_CONTROLADORJSON_HPP_
+
+class ControladorJson{
+public:
+	void LeerArchivo();
+};
+
+
+
+#endif /* HEADERS_CONTROLER_CONTROLADORJSON_HPP_ */
