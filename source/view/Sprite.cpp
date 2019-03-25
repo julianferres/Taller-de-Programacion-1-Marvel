@@ -9,9 +9,10 @@
 #include <Sprite.hpp>
 #include <ControladorGrafico.hpp>
 #include <ConfiguracionGlobal.hpp>
+using namespace std;
 Sprite::Sprite() {};
 
-Sprite::Sprite( ControladorGrafico &graficos, const std::string &filePath, int x0, int y0, int ancho, int alto,
+Sprite::Sprite( ControladorGrafico &graficos, const string &filePath, int x0, int y0, int ancho, int alto,
 		float posX, float posY):
 					_x(posX),
 					_y(posY){

@@ -8,9 +8,11 @@
 #include <ControladorGrafico.hpp>
 #include <Sprite.hpp>
 
+using namespace std;
+
 SpriteAnimado::SpriteAnimado(){}
 
-SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos, const std::string &filePath, int x0, int y0,
+SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos, const string &filePath, int x0, int y0,
 		int ancho, int alto, float posX, float posY, float timeToUpdate):
 				Sprite(graficos, filePath, x0, y0, ancho, alto, posX, posY),
 				_frameIndex(0),
@@ -20,14 +22,14 @@ SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos, const std::string &fi
 				_animacionActual(""),
 				tiempoTrancurrido(0)	{}
 
-void SpriteAnimado::agregarAnimacion(int frames, int x, int y, std::string nombre, int ancho, int alto, Vector2 offset){
+void SpriteAnimado::agregarAnimacion(int frames, int x, int y, string nombre, int ancho, int alto, Vector2 offset){
 	std::vector<SDL_Rect> rectangulos;
 	for (int i = 0; i < frames; i++){
 		SDL_Rect newRect = { (i + x) * ancho, y, ancho, alto};
 		rectangulos.push_back(newRect);
 	}
-	this->_animaciones.insert(std::pair<std::string, std::vector<SDL_Rect> > (nombre, rectangulos));
-	this->_offsets.insert(std::pair<std::string, Vector2> (nombre, offset));
+	this->_animaciones.insert(std::pair<string, vector<SDL_Rect> > (nombre, rectangulos));
+	this->_offsets.insert(pair<string, Vector2> (nombre, offset));
 
 }
 
@@ -36,7 +38,7 @@ void SpriteAnimado::reiniciarAnimacion(){
 	this->_offsets.clear();
 }
 
-void SpriteAnimado::iniciarAnimacion(std::string animacion, bool unica){
+void SpriteAnimado::iniciarAnimacion(string animacion, bool unica){
 	this->_animacionActualUnica = unica;
 	if(this->_animacionActual != animacion){
 		this->_animacionActual = animacion;
@@ -85,7 +87,7 @@ void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y){
 	}
 }
 
-void SpriteAnimado::animacionFinalizada(std::string currentAnimation){
+void SpriteAnimado::animacionFinalizada(string currentAnimation){
 
 }
 

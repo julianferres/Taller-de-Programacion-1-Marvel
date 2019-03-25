@@ -13,6 +13,8 @@
 #include <string>
 #include <SDL2/SDL_image.h>
 
+using namespace std;
+
 struct SDL_Window;
 struct SDL_Renderer;
 
@@ -28,7 +30,7 @@ class ControladorGrafico{
 		 * Entonces cada imagen solo se carga una vez
 		 * Devuelve la imagen haya sido cargada recien o anteriormente
 		 */
-		SDL_Surface* cargarImagen(const std::string &filePath);
+		SDL_Surface* cargarImagen(const string &filePath);
 
 		/*void dibujarImagen
 		 * Dibuja una textura en la pantalla
@@ -54,7 +56,7 @@ class ControladorGrafico{
 	private:
 		SDL_Window* _window;
 		SDL_Renderer* _renderer;
-		std::map<std::string, SDL_Surface*> _spriteSheets;
+		map<string, SDL_Surface*> _spriteSheets;
 };
 
 
