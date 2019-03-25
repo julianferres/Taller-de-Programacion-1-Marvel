@@ -13,23 +13,23 @@
 
 class ControladorTeclado{
 	public:
-		void empezarNuevoFrame();
+		void beginNewFrame();
 		//Se llama cada vez que se suelta una tecla
-		void eventoSoltarTecla(const SDL_Event& evento);
+		void keyUpEvent(const SDL_Event& evento);
 		//SE llama cada vez que se presiona una tecla
-		void eventoPresionarTecla(const SDL_Event& evento);
+		void keyDownEvent(const SDL_Event& evento);
 		//Es true si se presiono la "tecla" que recibe como parametre en el frame actual
-		bool sePresionoUnaTecla(SDL_Scancode tecla);
+		bool wasKeyPressed(SDL_Scancode tecla);
 		//Es true si se suelta (deja de apretar) la "tecla" que recibe como parametre en el frame actual
-		bool seSoltoUnaTecla(SDL_Scancode tecla);
+		bool wasKeyReleased(SDL_Scancode tecla);
 		//Es true si se esta presionando la "tecla" que recibe como parametre en el frame actual
-		bool seEstaPresionandoUnaTecla(SDL_Scancode tecla);
+		bool isKeyHeld(SDL_Scancode tecla);
 
 
 	private:
-		std::map<SDL_Scancode, bool> _teclasSostenidas;
-		std::map<SDL_Scancode, bool> _teclasPresionadas;
-		std::map<SDL_Scancode, bool> _teclasSoltadas;
+		std::map<SDL_Scancode, bool> _heldKeys;
+		std::map<SDL_Scancode, bool> _pressedKeys;
+		std::map<SDL_Scancode, bool> _releasedKeys;
 };
 
 

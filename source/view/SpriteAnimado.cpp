@@ -7,9 +7,6 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 #include <Sprite.hpp>
-/*
- * Animations for our sprites
- */
 
 SpriteAnimado::SpriteAnimado(){}
 
