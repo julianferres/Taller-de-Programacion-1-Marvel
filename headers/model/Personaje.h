@@ -23,5 +23,4 @@ private:
 
 
 
-#endif /* PERSONAJE_H_ */
-
+#endif

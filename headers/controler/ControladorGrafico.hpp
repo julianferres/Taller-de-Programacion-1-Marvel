@@ -1,6 +1,5 @@
 #ifndef CONTROLADORGRAFICO_HPP_
 #define CONTROLADORGRAFICO_HPP_
-//Toda la informacion necesaria para manejar los graficos
 
 #include <map>
 #include <string>

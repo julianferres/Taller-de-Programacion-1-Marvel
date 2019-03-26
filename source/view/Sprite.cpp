@@ -1,11 +1,3 @@
-/*
- * Srprite.cpp
- *
- *  Created on: Mar 24, 2019
- *      Author: luupesado
- */
-
-
 #include <Sprite.hpp>
 #include <ControladorGrafico.hpp>
 #include <ConfiguracionGlobal.hpp>

@@ -1,9 +1,3 @@
-/*
- * SpriteAnimado.cpp
- *
- *  Created on: Mar 24, 2019
- *      Author: luupesado
- */
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 #include <Sprite.hpp>

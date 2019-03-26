@@ -1,5 +1,5 @@
-#ifndef PERSONAJE_H_
-#define PERSONAJE_H_
+#ifndef PERSONAJE_HPP_
+#define PERSONAJE_HPP_
 
 #include <Juego.hpp>
 #include <ConfiguracionGlobal.hpp>
@@ -21,7 +21,7 @@ public:
 	 * El personaje frena mirando a la direccion ahacia la que venia caminando
 	 */
 	void Frenar();
-	virtual void animacionFinalizada(std::string animacionActual);
+	//virtual void animacionFinalizada(std::string animacionActual);
 	virtual void configurarAnimaciones();
 
 private:
@@ -35,7 +35,5 @@ private:
 
 
 
-#endif /* PERSONAJE_H_ */
-
-//feature/personaje
+#endif
 

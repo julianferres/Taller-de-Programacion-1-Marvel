@@ -1,12 +1,5 @@
-/*
- * ConfiguracionGlobal.hpp
- *
- *  Created on: Mar 23, 2019
- *      Author: luupesado
- */
-
-#ifndef HEADERS_CONFIGURACIONGLOBAL_HPP_
-#define HEADERS_CONFIGURACIONGLOBAL_HPP_
+#ifndef CONFIGURACIONGLOBAL_HPP_
+#define CONFIGURACIONGLOBAL_HPP_
 
 enum Direccion{
 	DERECHA,
@@ -40,4 +33,4 @@ struct Vector2 {
 
 
 
-#endif /* HEADERS_CONFIGURACIONGLOBAL_HPP_ */
+#endif

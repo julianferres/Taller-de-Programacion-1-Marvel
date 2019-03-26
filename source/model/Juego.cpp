@@ -110,10 +110,6 @@ void Juego::render()
 
 void Juego::clean()
 {
-	SDL_DestroyWindow(window);
-	SDL_DestroyRenderer(renderer);
-	SDL_Quit();
-	std::cout << "Juego finalizado!" << std::endl;
 }
 
 

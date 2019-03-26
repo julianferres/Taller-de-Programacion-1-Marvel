@@ -1,12 +1,5 @@
-/*
- * ContrroladorTeclado.hpp
- *
- *  Created on: Mar 24, 2019
- *      Author: luupesado
- */
-
-#ifndef HEADERS_CONTROLER_CONTROLADORTECLADO_HPP_
-#define HEADERS_CONTROLER_CONTROLADORTECLADO_HPP_
+#ifndef CONTROLADORTECLADO_HPP_
+#define CONTROLADORTECLADO_HPP_
 
 #include<SDL2/SDL.h>
 #include <map>
@@ -35,4 +28,4 @@ class ControladorTeclado{
 
 
 
-#endif /* HEADERS_CONTROLER_CONTROLADORTECLADO_HPP_ */
+#endif

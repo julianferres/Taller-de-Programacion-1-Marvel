@@ -1,12 +1,5 @@
-/*
- * sprite.hpp
- *
- *  Created on: Mar 24, 2019
- *      Author: luupesado
- */
-
-#ifndef HEADERS_VIEW_SPRITE_HPP_
-#define HEADERS_VIEW_SPRITE_HPP_
+#ifndef SPRITE_HPP_
+#define SPRITE_HPP_
 
 #include <SDL2/SDL.h>
 #include <string>
@@ -27,4 +20,4 @@ protected:
 
 };
 
-#endif /* HEADERS_VIEW_SPRITE_HPP_ */
+#endif
