@@ -1,6 +1,5 @@
 #include <Juego.hpp>
 #include <controler/ControladorJson.hpp>
-#include <iostream>
 
 
 Juego *juego = nullptr;
@@ -8,17 +7,16 @@ Juego *juego = nullptr;
 
 int main(int argc, char **argv){
 
-	const int FPS = 60;
+	ControladorJson *controladorJson = new ControladorJson();
+	controladorJson->leerArchivo();
+
+	const int FPS = controladorJson->cantidadFPS();
 	const int frameDelay = 1000/ FPS;
 	Uint32 frameStart;
 	int frameTime;
 
-	ControladorJson *controladorJson = new ControladorJson();
-	controladorJson-> LeerArchivo();
-
 	juego = new Juego();
-
-	juego-> init("Marvel vs Capcom",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
+	juego-> init("Marvel vs Capcom",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, controladorJson->alturaVentana(), controladorJson->anchoVentana(), controladorJson->esfullscreen());
 
 	while(juego -> running()){
 
@@ -30,12 +28,11 @@ int main(int argc, char **argv){
 
 		frameTime = SDL_GetTicks() - frameStart;
 
-		if(frameDelay > frameTime){
+		if(frameDelay > frameTime)
 			SDL_Delay(frameDelay - frameTime);
-		}
-
 
 	}
+
 	juego-> clean();
 
 	return 0;
