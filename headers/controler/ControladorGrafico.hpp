@@ -1,12 +1,5 @@
-/*
- * ControladorGrafico.hpp
- *
- *  Created on: Mar 23, 2019
- *      Author: luupesado
- */
-
-#ifndef HEADERS_VIEW_CONTROLADORGRAFICO_HPP_
-#define HEADERS_VIEW_CONTROLADORGRAFICO_HPP_
+#ifndef CONTROLADORGRAFICO_HPP_
+#define CONTROLADORGRAFICO_HPP_
 //Toda la informacion necesaria para manejar los graficos
 
 #include <map>
@@ -62,4 +55,4 @@ class ControladorGrafico{
 
 
 
-#endif /* HEADERS_VIEW_CONTROLADORGRAFICO_HPP_ */
+#endif

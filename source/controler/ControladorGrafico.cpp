@@ -1,10 +1,3 @@
-/*
- * ControladorGrafico.cpp
- *
- *  Created on: Mar 23, 2019
- *      Author: luupesado
- */
-
 #include <ControladorGrafico.hpp>
 #include <SDL2/SDL.h>
 #include <ConfiguracionGlobal.hpp>
@@ -12,9 +5,6 @@
 using namespace globals;
 using namespace std;
 
-/*Graphic class
- *Holds all the information dealing with graphics for the game
- */
 
 ControladorGrafico::ControladorGrafico(){
 	SDL_CreateWindowAndRenderer(ANCHO_DE_PANTALLA,ALTO_DE_PANTALLA, 0, &this->_window, &this->_renderer);

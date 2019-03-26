@@ -1,4 +1,5 @@
 #include <ControladorTexturas.h>
+#include <ControladorGrafico.hpp>
 #include <Juego.hpp>
 #include <Personaje.h>
 
@@ -8,15 +9,29 @@ Personaje* jugador2;
 
 SDL_Renderer* Juego::renderer = nullptr;
 
-Juego::Juego()
-{}
+Juego::Juego(){
+	SDL_Init(SDL_INIT_EVERYTHING);
+	this->gameLoop();
+}
 
 Juego::~Juego()
 {}
+void Juego::gameLoop(){
+	ControladorGrafico graficos;
+	SDL_Event evento;
+	while (true){
+		if(SDL_PollEvent(&evento)){
+			if(evento.type==SDL_QUIT){
+				return;
+			}
+		}
+	}
 
+
+}
 void Juego::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen){
 
-	int flags = 0;
+/*  int flags = 0;
 
 	if(fullscreen){
 		flags = SDL_WINDOW_FULLSCREEN;
@@ -39,7 +54,7 @@ void Juego::init(const char *title, int xpos, int ypos, int width, int height, b
 
 	jugador1 = new Personaje("contents/images/CaptainAmericaSprites.png",0,300);
 	jugador2 = new Personaje("contents/images/hulk4.png",500,300);
-
+*/
 }
 
 void Juego::handleEvents()
@@ -80,16 +95,17 @@ void Juego::handleEvents()
 
 void Juego::update()
 {
-	jugador1->Update();
+	/*jugador1->Update();
 	jugador2->Update();
+	*/
 }
 
 void Juego::render()
 {
-	SDL_RenderClear(renderer);
+	/*SDL_RenderClear(renderer);
 	jugador1-> Render();
 	jugador2->Render();
-	SDL_RenderPresent(renderer);
+	SDL_RenderPresent(renderer);*/
 }
 
 void Juego::clean()
