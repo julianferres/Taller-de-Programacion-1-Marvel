@@ -33,7 +33,7 @@ void ControladorGrafico::render(){
 	SDL_RenderPresent(this->_renderer);
 }
 
-void ControladorGrafico::clear(){
+void ControladorGrafico::limpiar(){
 	SDL_RenderClear(this->_renderer);
 }
 

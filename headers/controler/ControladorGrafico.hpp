@@ -35,10 +35,10 @@ class ControladorGrafico{
 		 */
 		void render();
 
-		/*void clear
-		 * Clears the screen
+		/*void limpia
+		 * limpia la imagen
 		 */
-		void clear();
+		void limpiar();
 		/* SDL_Renderes getRenderer
 		 * Returns the renderer
 		 */

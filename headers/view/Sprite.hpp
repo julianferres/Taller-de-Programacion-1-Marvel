@@ -2,6 +2,7 @@
 #define SPRITE_HPP_
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <string>
 
 class ControladorGrafico;

@@ -1,4 +1,3 @@
-#include <ControladorTexturas.h>
 #include <Personaje.hpp>
 
 Personaje::Personaje(ControladorGrafico &graphics, float x, float y):
