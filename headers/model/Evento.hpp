@@ -10,12 +10,12 @@ public:
 
 	Evento(std::string fecha, std::string nivel_debug,  std::string mensaje );
 	std::string getFecha();
-	std::string getNivelDebug();
+	int getNivelDebug();
 	std::string getMensaje();
 
 private:
 	std::string fecha;
-	std::string nivel_debug;
+	int nivelDebug;
 	std::string mensaje;
 
 };

@@ -1,17 +1,24 @@
 #include <Evento.hpp>
 
 Evento::Evento(std::string fecha, std::string nivel_debug,  std::string mensaje ){
-		this->fecha = fecha;
-		this->nivel_debug = nivel_debug;
-		this->mensaje = mensaje;
+	int error = 1;
+	int info = 2;
+	int debug = 3;
+
+	this->fecha = fecha;
+	if(nivel_debug.compare("ERROR") == 0) this->nivelDebug = error;
+	else if(nivel_debug.compare("INFO") == 0) this->nivelDebug = info;
+	else this->nivelDebug = debug;
+	//this->nivelDebug = nivel_debug;
+	this->mensaje = mensaje;
 }
 
 std::string Evento::getFecha(){
 	return fecha;
 }
 
-std::string Evento::getNivelDebug(){
-	return nivel_debug;
+int Evento::getNivelDebug(){
+	return nivelDebug;
 }
 
 std::string Evento::getMensaje(){

@@ -9,10 +9,10 @@ class ControladorLogger{
 public:
 
 	ControladorLogger(std::string nivelDebug);
-	bool registrarEvento(Evento *event); //Registra el evento en el archivo -nombreArchivo- y devuelve si pudo hacerlo.
+	int registrarEvento(Evento *event); //Registra el evento en el archivo -nombreArchivo- y devuelve si pudo hacerlo.
 
 private:
-	std::string nivel_debug;
+	int nivelDebug;
 	std::string nombreArchivo;
 };
 
