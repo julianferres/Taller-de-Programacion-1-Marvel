@@ -1,9 +1,5 @@
 #include <controler/ControladorJson.hpp>
 #include <fstream>
-#include <string>
-#include <list>
-#include <iterator>
-#include <iostream>
 
 
 void ControladorJson::leerArchivo(){
@@ -45,4 +41,8 @@ int ControladorJson::cantidadFPS(){
 
 bool ControladorJson::esfullscreen(){
 	return fullscreen;
+}
+
+std::string ControladorJson::nivelDebug(){
+	return nivel_debug;
 }

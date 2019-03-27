@@ -1,7 +1,7 @@
 #ifndef HEADERS_CONTROLER_CONTROLADORJSON_HPP_
 #define HEADERS_CONTROLER_CONTROLADORJSON_HPP_
-#include <string>
 #include "controler/json.hpp"
+#include <string>
 #include <tuple>
 #include <vector>
 
@@ -12,6 +12,7 @@ public:
 	int anchoVentana();
 	int cantidadFPS();
 	bool esfullscreen();
+	std::string nivelDebug();
 
 
 private:

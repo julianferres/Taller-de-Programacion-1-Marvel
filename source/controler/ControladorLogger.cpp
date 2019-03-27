@@ -1,21 +1,19 @@
-/*
- * ControladorLogger.cpp
- *
- *  Created on: 26 mar. 2019
- *      Author: lucas
- */
-
 #include <controler/ControladorLogger.hpp>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
-bool ControladorLogger::registrarEvento(){
-	//Supongo que evento tiene un mensaje, una fecha, y el nivel de debug
+ControladorLogger::ControladorLogger(std::string nivelDebug){
+		nivel_debug = nivelDebug;
+}
+
+bool ControladorLogger::registrarEvento(Evento *event){
+		if ( nivel_debug.compare(event->getNivelDebug() ) != 0)
+		return false;
 
 	std::ofstream file;
 	try{
 		file.open("source/config/log.txt"); //Verificar la ruta
-		file << "prueba" << std::endl; //Añado el mensaje con la fecha, si el nivel de debug es correcto.
+		file << event->getNivelDebug() <<"; " << event->getMensaje() <<"; " << event->getFecha();
 		file.close();
 		return true;
 	}
