@@ -3,10 +3,11 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <Personaje.hpp>
 #include <iostream>
 #include <ControladorGrafico.hpp>
 #include <Sprite.hpp>
-
+class Personaje;
 
 class Juego{
 
@@ -20,7 +21,7 @@ private:
 	void dibujar(ControladorGrafico &grafico);
 	void actualizar(float tiempo);
 	bool isRunning;
-	Sprite imagen;
+	Personaje *personaje;
 
 };
 

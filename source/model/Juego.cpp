@@ -1,5 +1,6 @@
 #include <ControladorGrafico.hpp>
 #include <ControladorTeclado.hpp>
+#include <Personaje.hpp>
 #include <Juego.hpp>
 #include <Sprite.hpp>
 
@@ -15,7 +16,7 @@ void Juego::gameLoop(){
 	ControladorGrafico graficos;
 	ControladorTeclado teclado;
 	SDL_Event evento;
-	this->imagen=Sprite(graficos,"contents/images/CaptainAmericaSprites.png",7,20,89,115,1,2000);
+	this->personaje=new Personaje(graficos,"contents/images/CaptainAmericaSprites.png",0,200);
 	while (true){
 		teclado.beginNewFrame();
 		if(SDL_PollEvent(&evento)){
@@ -34,6 +35,15 @@ void Juego::gameLoop(){
 		if(teclado.wasKeyPressed(SDL_SCANCODE_ESCAPE)==true){
 			return;
 		}
+		else if(teclado.wasKeyPressed(SDL_SCANCODE_RIGHT)==true){
+			this->personaje->MoverDerecha();
+			std::cout<<"una vez a la derecha"<<endl;
+		}
+		else if(teclado.wasKeyPressed(SDL_SCANCODE_LEFT)==true){
+					this->personaje->MoverIzquierda();
+					std::cout<<"una vez a la izquierda"<<endl;
+				}
+
 		this->dibujar(graficos);
 	}
 }
@@ -44,7 +54,7 @@ void Juego::actualizar(float tiempo){
 
 void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.limpiar();
-	this->imagen.dibujar(grafico,1,200);
+	this->personaje->dibujar(grafico);
 	grafico.render();
 }
 

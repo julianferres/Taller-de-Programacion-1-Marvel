@@ -7,8 +7,16 @@ using namespace std;
 Sprite::Sprite() {};
 Sprite::~Sprite(){};
 
-Sprite::Sprite( ControladorGrafico &graficos, const string &filePath, int x0, int y0, int ancho, int alto,
-		float posX, float posY):_x(posX),_y(posY){
+Sprite::Sprite( ControladorGrafico &graficos, const string &filePath, int x0, int y0, int ancho, int alto){
+	this->_rectanguloOrigen.x = x0;
+	this->_rectanguloOrigen.y = y0;
+	this->_rectanguloOrigen.w = ancho;
+	this->_rectanguloOrigen.h = alto;
+
+	this->_spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
+	}
+
+Sprite::Sprite( ControladorGrafico &graficos, const string &filePath, int x0, int y0, int ancho, int alto,float x,float y){
 	this->_rectanguloOrigen.x = x0;
 	this->_rectanguloOrigen.y = y0;
 	this->_rectanguloOrigen.w = ancho;
