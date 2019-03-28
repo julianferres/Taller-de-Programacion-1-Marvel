@@ -1,7 +1,6 @@
 #include <ControladorGrafico.hpp>
 #include <ControladorTeclado.hpp>
 #include <Juego.hpp>
-#include <Personaje.h>
 #include <Sprite.hpp>
 
 Juego::Juego(){
