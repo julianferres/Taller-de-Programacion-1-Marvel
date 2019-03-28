@@ -2,6 +2,8 @@
 #include <fstream>
 #include <iostream>
 
+extern time_t my_time;
+
 ControladorLogger::ControladorLogger(std::string nivel_debug){
 	int error = 1;
 	int info = 2;
@@ -10,7 +12,17 @@ ControladorLogger::ControladorLogger(std::string nivel_debug){
 	if(nivel_debug.compare("ERROR") == 0) this->nivelDebug = error;
 	else if(nivel_debug.compare("INFO") == 0) this->nivelDebug = info;
 	else this->nivelDebug = debug;
-	nombreArchivo = "source/config/log.txt";
+
+	std::ofstream file;
+	try{
+		file.open(nombreArchivo,std::ofstream::trunc);
+	}
+	catch(int e){
+		file.open(nombreArchivoRepuesto, std::fstream::trunc);
+	}
+	Evento *event = new Evento(ctime(&my_time),"INFO","Archivo de logging creado!");
+	file << event->getNivel_Debug() <<" ; " << event->getMensaje() <<" ; " << event->getFecha();
+	file.close();
 
 }
 
@@ -24,23 +36,20 @@ int ControladorLogger::registrarEvento(Evento *event){
 	int noRegistrable = 1;
 	int registrablePeroNoRegistrado = 2;
 
-	/*if ( nivelDebug.compare(event->getNivelDebug() ) != 0)
-		return false;*/
 	if ((event->getNivelDebug()) > nivelDebug) return noRegistrable;
 
 	std::ofstream file;
 	try{
-		file.open(nombreArchivo, std::fstream::app); //Verificar la ruta
-		file << event->getNivelDebug() <<"; " << event->getMensaje() <<"; " << event->getFecha();
+		file.open(nombreArchivo, std::fstream::app);
+		file << event->getNivel_Debug() <<" ; " << event->getMensaje() <<" ; " << event->getFecha();
 		file.close();
 		return registrado;
 	}
 	catch (int e){
 		//No se puede abrir ni crear el archivo log.txt. Es bastante grave. Se trata de crear otro
-		nombreArchivo = "source/config/log_repuesto.txt";
 		try{
-			file.open(nombreArchivo, std::fstream::app);
-			file << event->getNivelDebug() <<"; " << event->getMensaje() <<"; " << event->getFecha();
+			file.open(nombreArchivoRepuesto, std::fstream::app);
+			file << event->getNivel_Debug() <<" ; " << event->getMensaje() <<" ; " << event->getFecha();
 			file.close();
 			return registrado;
 		}

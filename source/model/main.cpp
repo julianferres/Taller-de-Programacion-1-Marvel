@@ -4,21 +4,18 @@
 #include <controler/ControladorLogger.hpp>
 
 
-Juego *juego = nullptr;
 time_t my_time = time(NULL);
+ControladorJson *controladorJson = new ControladorJson();
+ControladorLogger *controladorLogger = new ControladorLogger(controladorJson->nivelDebug());
 
 
 int main(int argc, char **argv){
 
-	ControladorJson *controladorJson = new ControladorJson();
 	controladorJson->leerArchivo();
 
-	ControladorLogger *controladorLogger = new ControladorLogger(controladorJson->nivelDebug());
-
-
 	const int FPS = controladorJson->cantidadFPS();
-	if(FPS > 30){
-		Evento *event = new Evento(ctime(&my_time),"ERROR","Los FPS son mayores a 30");
+	if(FPS < 30){
+		Evento *event = new Evento(ctime(&my_time),"ERROR","Los FPS son menores a 30");
 		controladorLogger->registrarEvento(event);
 	}
 
@@ -26,7 +23,7 @@ int main(int argc, char **argv){
 	Uint32 frameStart;
 	int frameTime;
 
-	juego = new Juego();
+	Juego *juego = new Juego();
 	juego-> init("Marvel vs Capcom",SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, controladorJson->alturaVentana(), controladorJson->anchoVentana(), controladorJson->esfullscreen());
 
 	while(juego -> running()){

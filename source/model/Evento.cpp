@@ -9,7 +9,8 @@ Evento::Evento(std::string fecha, std::string nivel_debug,  std::string mensaje 
 	if(nivel_debug.compare("ERROR") == 0) this->nivelDebug = error;
 	else if(nivel_debug.compare("INFO") == 0) this->nivelDebug = info;
 	else this->nivelDebug = debug;
-	//this->nivelDebug = nivel_debug;
+
+	this->nivel_Debug = nivel_debug;
 	this->mensaje = mensaje;
 }
 
@@ -23,6 +24,11 @@ int Evento::getNivelDebug(){
 
 std::string Evento::getMensaje(){
 	return mensaje;
+}
+
+
+std::string Evento::getNivel_Debug(){ //para imprimir en el log un string y no un int
+	return nivel_Debug;
 }
 
 
