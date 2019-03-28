@@ -15,23 +15,25 @@ public:
 
 	bool running;
 	const int FPS =30;
-	const int SPEED = 5;
-	//const int SPEED_MEDIO=7.5;
-	const int SPEED_OTHER = 10;
+	const int SPEED_z1 = 5;
+	const int SPEED_z2=  7.5;
+	const int SPEED_z3 = 10;
 	const int CAMERA_LIMIT = 2000;
 	int x,y;
 	Uint32 start;
 	SDL_Rect imgloc;
 
-	SDL_Rect camera;
-	SDL_Rect camera_other;
+	SDL_Rect camera_z1;
+	SDL_Rect camera_z2;
+	SDL_Rect camera_z3;
 
-	SDL_Surface *background;
-	SDL_Surface *background2;
+	SDL_Surface *background_z1;
+	SDL_Surface *background_z2;
+	SDL_Surface *background_z3;
+
 	SDL_Surface *image;
 	SDL_Surface *screen;
 	bool b[2];
-	SDL_Texture *bitmapTex;
 
 	//Constantes (salen del JSON)
 	int W = 640;
@@ -57,26 +59,23 @@ public:
 			x = 0;
 			y = 0;
 
-			background = IMG_Load("contents/images/capa2.png");
-			background2 = IMG_Load("contents/images/capa0.png");
+			background_z1 = IMG_Load("contents/images/capa2.png");
+			background_z2 = IMG_Load("contents/images/capa1.png");
+			background_z3 = IMG_Load("contents/images/capa0.png");
 
-			 bitmapTex = SDL_CreateTextureFromSurface(renderer, background);
-			 SDL_Texture *bitmapTex2 = SDL_CreateTextureFromSurface(renderer, background2);
+			SDL_Texture *bitmapTex1 = SDL_CreateTextureFromSurface(renderer, background_z1);
+			SDL_Texture *bitmapTex2 = SDL_CreateTextureFromSurface(renderer, background_z2);
+			SDL_Texture *bitmapTex3 = SDL_CreateTextureFromSurface(renderer, background_z3);
 
 			imgloc = {350,170,100,100};
-			camera.x = 0;
-			camera.y = 0;
-			camera.w = W;
-			camera.h = H;
+			camera_z1.x = 0;  camera_z1.y = 0;
+			camera_z1.w = W; camera_z1.h = H;
 
-			std::cout << camera.h << std::endl;
-			std::cout << camera.h << std::endl;
+			camera_z2.x = 0;  camera_z2.y = 0;
+			camera_z2.w = W; camera_z2.h = H;
 
-
-			camera_other.x = 0;
-			camera_other.y = 0;
-			camera_other.w = W;
-			camera_other.h = H;
+			camera_z3.x = 0;  camera_z3.y = 0;
+			camera_z3.w = W; camera_z3.h = H;
 
 			bool b[2] = {0,0};
 
@@ -119,19 +118,23 @@ public:
 						//logic
 						if(b[0])
 						{
-							if(camera.x >= background->w - W || camera_other.x >= 2000-W){
+							if(camera_z1.x >= background_z1->w - W ||
+								camera_z2.x >= background_z2->w-W ||
+								camera_z3.x >= background_z3->w-W){
 								continue;
 							}
-							camera.x += SPEED;
-							camera_other.x += SPEED_OTHER;
+							camera_z1.x += SPEED_z1;
+							camera_z2.x += SPEED_z2;
+							camera_z3.x += SPEED_z3;
 						}
 						else if(b[1])
 						{
-							if(camera.x <= 0 || camera_other.x <= 0){
+							if(camera_z1.x <= 0 || camera_z2.x <= 0 || camera_z3.x <= 0){
 								continue;
 							}
-							camera.x -= SPEED;
-							camera_other.x -= SPEED_OTHER;
+							camera_z1.x -= SPEED_z1;
+							camera_z2.x -= SPEED_z2;
+							camera_z3.x -= SPEED_z3;
 						}
 
 						SDL_Rect location = {x,y,640,480};
@@ -139,8 +142,10 @@ public:
 
 						//render
 				        SDL_RenderClear(renderer);
-				        SDL_RenderCopy(renderer, bitmapTex, &camera, NULL);
-				        SDL_RenderCopy(renderer, bitmapTex2, &camera_other, NULL);
+				        SDL_RenderCopy(renderer, bitmapTex1, &camera_z1, NULL);
+				        SDL_RenderCopy(renderer, bitmapTex2, &camera_z2, NULL);
+				        SDL_RenderCopy(renderer, bitmapTex3, &camera_z3, NULL);
+
 
 						if(collision(&location, &imgloc))
 							SDL_BlitSurface(image, NULL, screen, &relcoord);
