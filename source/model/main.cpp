@@ -1,5 +1,4 @@
 #include <Juego.hpp>
-#include <Evento.hpp>
 #include <controler/ControladorJson.hpp>
 #include <controler/ControladorLogger.hpp>
 
@@ -14,10 +13,9 @@ int main(int argc, char **argv){
 	controladorJson->leerArchivo();
 
 	const int FPS = controladorJson->cantidadFPS();
-	if(FPS < 30){
-		Evento *event = new Evento(ctime(&my_time),"ERROR","Los FPS son menores a 30");
-		controladorLogger->registrarEvento(event);
-	}
+	if(FPS < 30)
+		controladorLogger->registrarEvento("ERROR","Los FPS son menores a 30",ctime(&my_time));
+
 
 	const int frameDelay = 1000/ FPS;
 	Uint32 frameStart;
