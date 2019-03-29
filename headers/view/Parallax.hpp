@@ -30,7 +30,7 @@ public:
 
 
 private:
-	const int FPS =30;
+	const int FPS =60;
 	const int SPEED_z1 = 5;
 	const int SPEED_z2=  7.5;
 	const int SPEED_z3 = 10;

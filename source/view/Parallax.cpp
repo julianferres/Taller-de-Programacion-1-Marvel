@@ -1,5 +1,5 @@
-#include <iostream>
 #include <Parallax.hpp>
+#include <iostream>
 #include <SDL2/SDL.h>
 
 	//Constructor
