@@ -37,7 +37,7 @@ int main(int argc, char **argv){
 	juego-> clean();
 
 	return 0;
-	*/
-}
-*/
+
+}*/
+
 
