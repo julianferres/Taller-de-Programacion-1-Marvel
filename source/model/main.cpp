@@ -1,8 +1,6 @@
 #include <Juego.hpp>
 #include <iostream>
 
-//pequeño test
-
 Juego *juego = nullptr;
 
 /*
