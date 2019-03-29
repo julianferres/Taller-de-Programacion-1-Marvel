@@ -4,9 +4,9 @@
 
 extern time_t my_time;
 
-ControladorLogger::ControladorLogger(std::string nivel_debug){
+ControladorLogger::ControladorLogger(){
 
-	nivelDebug = nivel_debug;
+	nivelDebug = "DEBUG";
 	std::ofstream file;
 	try{
 		file.open(nombreArchivo,std::ofstream::trunc);
@@ -19,6 +19,10 @@ ControladorLogger::ControladorLogger(std::string nivel_debug){
 
 }
 
+void ControladorLogger::setNivelDebug(std::string nivel_debug){
+	nivelDebug = nivel_debug;
+}
+
 int ControladorLogger::registrarEvento(std::string nivel_debug_evento,  std::string mensaje ,std::string fecha){
 	/*valores de retorno:
 		0: El evento se registro correctamente
@@ -29,8 +33,9 @@ int ControladorLogger::registrarEvento(std::string nivel_debug_evento,  std::str
 	int noRegistrable = 1;
 	int registrablePeroNoRegistrado = 2;
 
-	if(nivelDebug.compare("INFO") == 0 && nivel_debug_evento.compare("INFO")!= 0  ) return noRegistrable;
-	if(nivelDebug.compare("ERROR") == 0 && nivel_debug_evento.compare("DEBUG")== 0  ) return noRegistrable;
+	if(nivelDebug.compare("ERROR") == 0 && nivel_debug_evento.compare("ERROR")!= 0  ) return noRegistrable;
+	if(nivelDebug.compare("INFO") == 0 && nivel_debug_evento.compare("DEBUG")== 0  ) return noRegistrable;
+
 
 	std::ofstream file;
 	try{

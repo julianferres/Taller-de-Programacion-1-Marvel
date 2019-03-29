@@ -7,7 +7,7 @@
 
 time_t my_time = time(NULL);
 ControladorJson *controladorJson = new ControladorJson();
-ControladorLogger *controladorLogger = new ControladorLogger(controladorJson->nivelDebug());
+ControladorLogger *controladorLogger = new ControladorLogger();
 Parallax *p = nullptr;
 
 int main(int argc, char **argv){

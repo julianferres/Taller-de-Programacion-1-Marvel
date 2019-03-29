@@ -10,11 +10,12 @@ void ControladorJson::leerArchivo(){
 
 
 	using json = nlohmann::json;
-	std::ifstream ifs ("source/config/config.json", std::ifstream::in);
+	std::ifstream ifs ("source/config/conADAfig.json", std::ifstream::in);
 
 	try{
 		json j = json::parse(ifs);
 		nivel_debug = j["debug"];
+		controladorLogger->setNivelDebug(nivel_debug);
 		altura_ventana = j["window"]["height"];
 		ancho_ventana = j["window"]["width"];
 		fullscreen = j["window"]["fullscreen"];
