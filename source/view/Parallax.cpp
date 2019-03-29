@@ -4,6 +4,7 @@
 
 	//Constructor
 Parallax::Parallax(){
+
 			SDL_Init(SDL_INIT_EVERYTHING); //usar para iniciar
 			SDL_Window* window = SDL_CreateWindow("paralax prueba", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, W, H, 0);
 			SDL_Renderer* renderer = nullptr;
@@ -78,22 +79,24 @@ Parallax::Parallax(){
 						}
 
 						//logic
-						if(b[0])
-						{
+						if(b[0]){
+
 							if(camera_z1.x >= background_z1->w - W ||
 								camera_z2.x >= background_z2->w-W ||
 								camera_z3.x >= background_z3->w-W){
 								continue;
 							}
+
 							camera_z1.x += SPEED_z1;
 							camera_z2.x += SPEED_z2;
 							camera_z3.x += SPEED_z3;
+
 						}
-						else if(b[1])
-						{
-							if(camera_z1.x <= 0 || camera_z2.x <= 0 || camera_z3.x <= 0){
+
+						else if(b[1]){
+							if(camera_z1.x <= 0 || camera_z2.x <= 0 || camera_z3.x <= 0)
 								continue;
-							}
+
 							camera_z1.x -= SPEED_z1;
 							camera_z2.x -= SPEED_z2;
 							camera_z3.x -= SPEED_z3;
@@ -113,8 +116,12 @@ Parallax::Parallax(){
 							SDL_BlitSurface(image, NULL, screen, &relcoord);
 
 						SDL_RenderPresent(renderer);
-						if(1000/FPS > SDL_GetTicks()-start) {
+						if(1000/FPS > SDL_GetTicks()-start)
 							SDL_Delay(1000/FPS-(SDL_GetTicks()-start));
-						}
+
 					}
+			SDL_DestroyWindow(window);
+			SDL_DestroyRenderer(renderer);
+			SDL_Quit();
+			std::cout << "Juego finalizado!" << std::endl;
 }

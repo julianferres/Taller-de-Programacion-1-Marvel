@@ -26,7 +26,7 @@ private:
 	int cantidad_personajes;
 	int cantidad_fondos;
 	int FPS;
-	std::string nivel_debug;
+	std::string nivel_debug ="ERROR";
 	std::vector<std::tuple<std::string, std::string, int, int, int>> personajes;
 	std::vector<std::tuple<std::string, int>> fondos;
 

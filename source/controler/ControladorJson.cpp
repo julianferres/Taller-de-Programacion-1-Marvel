@@ -1,6 +1,7 @@
 #include <controler/ControladorJson.hpp>
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
+#include <iostream>
 
 extern time_t my_time;
 extern ControladorLogger *controladorLogger;
@@ -9,7 +10,7 @@ void ControladorJson::leerArchivo(){
 
 
 	using json = nlohmann::json;
-	std::ifstream ifs ("source/config/config.json", std::ifstream::in); //cambia el nombre y mira el log.txt
+	std::ifstream ifs ("source/config/config.json", std::ifstream::in);
 
 	try{
 		json j = json::parse(ifs);
@@ -28,6 +29,7 @@ void ControladorJson::leerArchivo(){
 		for (int i = 0; i < cantidad_fondos; i++){
 			fondos.push_back(std::make_tuple(j["battlefield"][i]["background"]["filepath"] , j["battlefield"][i]["background"]["zindex"] ));
 		}
+
 		controladorLogger->registrarEvento("INFO","Archivo de configuracion JSON leido correctamente",ctime(&my_time));
 
 	}
@@ -35,6 +37,8 @@ void ControladorJson::leerArchivo(){
 	catch(json::exception &e){
 		controladorLogger->registrarEvento("ERROR",e.what(),ctime(&my_time));
 	}
+	std::cout << ""<< std::endl;
+
 }
 
 
