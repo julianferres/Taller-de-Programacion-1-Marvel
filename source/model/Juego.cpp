@@ -2,6 +2,10 @@
 #include <ControladorTeclado.hpp>
 #include <Personaje.hpp>
 #include <Juego.hpp>
+#include <controler/ControladorLogger.hpp>
+
+extern ControladorLogger *controladorLogger;
+extern time_t my_time;
 
 Juego::Juego(){
 	this->isRunning=true;
@@ -15,12 +19,18 @@ Juego::~Juego()
 void Juego::gameLoop(){
 	ControladorGrafico graficos;
 	ControladorTeclado teclado;
+
 	this-> parallax = new Parallax(graficos);
+	if(this->parallax == NULL)
+		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax", ctime(&my_time));
+	else
+		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax", ctime(&my_time));
+
 	SDL_Event evento;
 
 	this->personaje=new Personaje(graficos,"contents/images/CaptainAmericaSprites.png",0,400);
 
-
+	controladorLogger->registrarEvento("INFO", "Arrancó el juego", ctime(&my_time));
 	while (isRunning){
 		teclado.beginNewFrame();
 		if(SDL_PollEvent(&evento)){
@@ -34,6 +44,7 @@ void Juego::gameLoop(){
 			}
 			else if(evento.type==SDL_QUIT){
 				isRunning = false;
+				controladorLogger->registrarEvento("INFO", "Juego finalizado", ctime(&my_time));
 				break;
 			}
 		}

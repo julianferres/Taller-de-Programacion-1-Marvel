@@ -16,7 +16,6 @@ ControladorGrafico::~ControladorGrafico(){
 	SDL_DestroyWindow(this->_window);
 	SDL_DestroyRenderer(this->_renderer);
 	SDL_Quit();
-	cout << "Juego finalizado!" <<endl;
 }
 
 SDL_Surface* ControladorGrafico::cargarImagen(const string &filePath){

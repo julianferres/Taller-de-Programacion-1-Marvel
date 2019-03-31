@@ -16,6 +16,7 @@ public:
 	int cantidadFPS();
 	bool esfullscreen();
 	std::string nivelDebug();
+	std::string pathImagen(int zindex);
 
 
 private:
@@ -29,7 +30,7 @@ private:
 	std::string nivel_debug;
 	std::vector<std::tuple<std::string, std::string, int, int, int>> personajes;
 	std::vector<std::tuple<std::string, int>> fondos;
-
+	std::string configPath = "source/config/config.json";
 };
 
 

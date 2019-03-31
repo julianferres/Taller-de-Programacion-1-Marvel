@@ -1,6 +1,7 @@
 #include <controler/ControladorJson.hpp>
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
+#include <iostream>
 
 extern time_t my_time;
 extern ControladorLogger *controladorLogger;
@@ -9,7 +10,7 @@ void ControladorJson::leerArchivo(){
 
 
 	using json = nlohmann::json;
-	std::ifstream ifs ("source/config/config.json", std::ifstream::in); //cambia el nombre y mira el log.txt
+	std::ifstream ifs (configPath, std::ifstream::in); //cambia el nombre y mira el log.txt
 
 	try{
 		json j = json::parse(ifs);
@@ -57,4 +58,12 @@ bool ControladorJson::esfullscreen(){
 
 std::string ControladorJson::nivelDebug(){
 	return nivel_debug;
+}
+
+std::string ControladorJson::pathImagen(int zindex){
+    for (int i = 0; i < cantidad_fondos; i++){
+            if(std::get<1>(fondos[i]) == zindex)
+                return std::get<0>(fondos[i]);
+        }
+    return NULL;
 }
