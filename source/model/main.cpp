@@ -12,10 +12,9 @@ Parallax *p = nullptr;
 
 int main(int argc, char **argv){
 
-	controladorJson->leerArchivo();
-	p = new Parallax();
-
+	std::cout << "Creo al objeto!" << std::endl;
 	Juego juego;
+
 	return 0;
 
 }

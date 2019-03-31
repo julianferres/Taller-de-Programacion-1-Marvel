@@ -1,5 +1,4 @@
 #include <ControladorGrafico.hpp>
-#include <SDL2/SDL.h>
 #include <ConfiguracionGlobal.hpp>
 #include <iostream>
 using namespace globals;

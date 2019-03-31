@@ -4,13 +4,14 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <Personaje.hpp>
-#include <iostream>
 #include <ControladorGrafico.hpp>
 #include <Sprite.hpp>
+#include <Parallax.hpp>
+
 class Personaje;
+class Parallax;
 
 class Juego{
-
 
 public:
 	Juego();
@@ -22,6 +23,7 @@ private:
 	void actualizar(float tiempo);
 	bool isRunning;
 	Personaje *personaje;
+	Parallax *parallax;
 
 };
 
