@@ -1,41 +1,29 @@
-#ifndef PERSONAJE_H_
-#define PERSONAJE_H_
+#ifndef PERSONAJE_HPP_
+#define PERSONAJE_HPP_
 
 #include <Juego.hpp>
 #include <ConfiguracionGlobal.hpp>
+#include <Sprite.hpp>
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
+#include <string>
+using namespace std;
 
 class ControladorGrafico;
-class Personaje: public SpriteAnimado{
-
+class Personaje{
 public:
 	Personaje();
-	Personaje(ControladorGrafico &graficos, float x, float y);
-//~Personaje();
-	void update(float tiempoTrancurrido);
-	void dibujar(ControladorGrafico &graficos);
+	Personaje(ControladorGrafico &grafico,const string filepath, float x, float y);
+	~Personaje();
+	void dibujar(ControladorGrafico &grafico);
 	void MoverDerecha();
 	void MoverIzquierda();
-	/* void frenar
-	 * El personaje frena mirando a la direccion ahacia la que venia caminando
-	 */
-	void Frenar();
-	virtual void animacionFinalizada(std::string animacionActual);
-	virtual void configurarAnimaciones();
-
 private:
-	float _dx, _dy;
-	//int xpos;
-	//int ypos;
-//Direccion _direccion;
-//	SDL_Texture* objTexture;
-	//SDL_Rect srcRect, destRect;
+	float posx, posy;
+	Sprite sprite;
 };
 
 
 
-#endif /* PERSONAJE_H_ */
-
-//feature/personaje
+#endif
 

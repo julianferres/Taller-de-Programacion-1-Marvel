@@ -15,6 +15,7 @@ int main(int argc, char **argv){
 	controladorJson->leerArchivo();
 	p = new Parallax();
 
+	Juego juego;
 	return 0;
 
 }

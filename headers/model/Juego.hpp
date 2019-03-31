@@ -3,8 +3,11 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <Personaje.hpp>
 #include <iostream>
-
+#include <ControladorGrafico.hpp>
+#include <Sprite.hpp>
+class Personaje;
 
 class Juego{
 
@@ -12,21 +15,13 @@ class Juego{
 public:
 	Juego();
 	~Juego();
-
-	void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen );
-	void handleEvents();
-	void update();
-	void render();
-	void clean();
 	bool running() {return isRunning;}
-
-	static SDL_Renderer *renderer;
-	static SDL_Event event;
-
 private:
-	int cnt = 0;
+	void gameLoop();
+	void dibujar(ControladorGrafico &grafico);
+	void actualizar(float tiempo);
 	bool isRunning;
-	SDL_Window *window;
+	Personaje *personaje;
 
 };
 
