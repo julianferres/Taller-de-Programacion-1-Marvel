@@ -3,7 +3,6 @@
 #include <fstream>
 #include <iostream>
 
-extern time_t my_time;
 extern ControladorLogger *controladorLogger;
 
 void ControladorJson::leerArchivo(){
@@ -30,12 +29,12 @@ void ControladorJson::leerArchivo(){
 		for (int i = 0; i < cantidad_fondos; i++){
 			fondos.push_back(std::make_tuple(j["battlefield"][i]["background"]["filepath"] , j["battlefield"][i]["background"]["zindex"] ));
 		}
-		controladorLogger->registrarEvento("INFO","Archivo de configuracion JSON leido correctamente",ctime(&my_time));
+		controladorLogger->registrarEvento("INFO","Archivo de configuracion JSON leido correctamente",controladorLogger->obtenerHora());
 
 	}
 
 	catch(json::exception &e){
-		controladorLogger->registrarEvento("ERROR",e.what(),ctime(&my_time));
+		controladorLogger->registrarEvento("ERROR",e.what(),controladorLogger->obtenerHora());
 	}
 }
 
@@ -65,5 +64,6 @@ std::string ControladorJson::pathImagen(int zindex){
             if(std::get<1>(fondos[i]) == zindex)
                 return std::get<0>(fondos[i]);
         }
+    controladorLogger->registrarEvento("ERROR","No se pudo encontrar imagen con zindex igual a "+ std::to_string(zindex),controladorLogger->obtenerHora());
     return NULL;
 }

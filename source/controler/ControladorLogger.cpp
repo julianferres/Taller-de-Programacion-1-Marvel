@@ -2,8 +2,6 @@
 #include <fstream>
 #include <iostream>
 
-extern time_t my_time;
-
 ControladorLogger::ControladorLogger(){
 
 	std::ofstream file;
@@ -13,7 +11,7 @@ ControladorLogger::ControladorLogger(){
 	catch(int e){
 		file.open(nombreArchivoRepuesto, std::fstream::trunc);
 	}
-	file <<  "INFO "<<" ; " << "Archivo de logging creado!" <<" ; " << ctime(&my_time);
+	file <<  "INFO "<<" ; " << "Archivo de logging creado!" <<" ; " << this->obtenerHora();
 	file.close();
 
 }
@@ -55,6 +53,11 @@ int ControladorLogger::registrarEvento(std::string nivel_debug_evento,  std::str
 
 void ControladorLogger::setNivelDebug(std::string nivel_debug){
 	nivelDebug = nivel_debug;
+}
+
+std::string ControladorLogger::obtenerHora(){
+	time_t fecha = time(NULL);
+	return ctime(&fecha);
 }
 
 

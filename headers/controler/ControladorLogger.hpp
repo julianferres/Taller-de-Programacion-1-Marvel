@@ -11,6 +11,7 @@ public:
 	ControladorLogger( );
 	void setNivelDebug(std::string nivelDebug);
 	int registrarEvento( std::string nivel_debug_evento,  std::string mensaje ,std::string fecha); //Registra el evento en el archivo -nombreArchivo- y devuelve si pudo hacerlo.
+	std::string obtenerHora();
 
 private:
 

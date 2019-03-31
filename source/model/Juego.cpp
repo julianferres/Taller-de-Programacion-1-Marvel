@@ -2,10 +2,9 @@
 #include <ControladorTeclado.hpp>
 #include <Personaje.hpp>
 #include <Juego.hpp>
-#include <controler/ControladorLogger.hpp>
+#include <ControladorLogger.hpp>
 
 extern ControladorLogger *controladorLogger;
-extern time_t my_time;
 
 Juego::Juego(){
 	this->isRunning=true;
@@ -22,15 +21,15 @@ void Juego::gameLoop(){
 
 	this-> parallax = new Parallax(graficos);
 	if(this->parallax == NULL)
-		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax", ctime(&my_time));
+		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax", controladorLogger->obtenerHora());
 	else
-		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax", ctime(&my_time));
+		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax", controladorLogger->obtenerHora());
 
 	SDL_Event evento;
 
 	this->personaje=new Personaje(graficos,"contents/images/CaptainAmericaSprites.png",0,400);
 
-	controladorLogger->registrarEvento("INFO", "Arrancó el juego", ctime(&my_time));
+	controladorLogger->registrarEvento("INFO", "Arrancó el juego", controladorLogger->obtenerHora());
 	while (isRunning){
 		teclado.beginNewFrame();
 		if(SDL_PollEvent(&evento)){
@@ -44,7 +43,7 @@ void Juego::gameLoop(){
 			}
 			else if(evento.type==SDL_QUIT){
 				isRunning = false;
-				controladorLogger->registrarEvento("INFO", "Juego finalizado", ctime(&my_time));
+				controladorLogger->registrarEvento("INFO", "Juego finalizado", controladorLogger->obtenerHora());
 				break;
 			}
 		}
