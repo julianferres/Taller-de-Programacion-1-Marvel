@@ -10,15 +10,10 @@ ControladorLogger *controladorLogger = new ControladorLogger(controladorJson->ni
 Parallax *p = nullptr;
 
 int main(int argc, char **argv){
-	const int FPS = 60;
-	const int frameDelay = 1000/ FPS;
-	Uint32 frameStart;
-	int frameTime;
 
-	p = new Parallax();
 	std::cout << "Creo al objeto!" << std::endl;
-
 	Juego juego;
+
 	return 0;
 
 }

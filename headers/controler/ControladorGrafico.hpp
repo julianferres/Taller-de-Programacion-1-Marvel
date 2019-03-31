@@ -30,9 +30,6 @@ class ControladorGrafico{
 
 		void dibujarImagen(SDL_Texture* source, SDL_Rect* rectanguloOrigen, SDL_Rect* rectanguloDestino);
 
-		/*void flip
-		 * Renderiza todo a la pantalla
-		 */
 		void render();
 
 		/*void limpia
