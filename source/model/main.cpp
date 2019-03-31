@@ -6,14 +6,15 @@
 
 time_t my_time = time(NULL);
 ControladorJson *controladorJson = new ControladorJson();
-ControladorLogger *controladorLogger = new ControladorLogger(controladorJson->nivelDebug());
+ControladorLogger *controladorLogger = new ControladorLogger();
+
 Parallax *p = nullptr;
 
 int main(int argc, char **argv){
 
-	std::cout << "Creo al objeto!" << std::endl;
 	controladorJson->leerArchivo();
-	std::cout << controladorJson->cantidadFPS() << std::endl;
+	controladorLogger->registrarEvento("INFO", "Juego iniciado", ctime(&my_time));
+	controladorLogger->registrarEvento("INFO","Cantidad de FPS: "+std::to_string(controladorJson->cantidadFPS()) , ctime(&my_time));
 	Juego juego;
 
 	return 0;

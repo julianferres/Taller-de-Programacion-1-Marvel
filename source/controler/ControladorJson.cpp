@@ -14,6 +14,7 @@ void ControladorJson::leerArchivo(){
 	try{
 		json j = json::parse(ifs);
 		nivel_debug = j["debug"];
+		controladorLogger->setNivelDebug(nivel_debug);
 		altura_ventana = j["window"]["height"];
 		ancho_ventana = j["window"]["width"];
 		fullscreen = j["window"]["fullscreen"];
