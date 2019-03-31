@@ -12,6 +12,8 @@ Parallax *p = nullptr;
 int main(int argc, char **argv){
 
 	std::cout << "Creo al objeto!" << std::endl;
+	controladorJson->leerArchivo();
+	std::cout << controladorJson->cantidadFPS() << std::endl;
 	Juego juego;
 
 	return 0;

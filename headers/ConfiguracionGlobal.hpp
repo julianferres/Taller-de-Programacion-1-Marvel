@@ -16,9 +16,6 @@ namespace constantes_graficas{
 }
 
 namespace globals{
-	const int ANCHO_DE_PANTALLA = 640;
-	const int ALTO_DE_PANTALLA = 480;
-
 	const float ESCALA_SPRITE = 2.0f;
 }
 

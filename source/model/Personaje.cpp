@@ -1,10 +1,8 @@
 #include <Personaje.hpp>
 
-Personaje::Personaje(){
-}
 Personaje::~Personaje(){
-
 }
+
 Personaje::Personaje(ControladorGrafico &graficos,const string filepath, float x, float y){
 	this->posx=x;
 	this->posy=y;

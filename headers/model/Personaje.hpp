@@ -9,15 +9,17 @@
 #include <string>
 using namespace std;
 
-class ControladorGrafico;
+
 class Personaje{
+
 public:
-	Personaje();
+
 	Personaje(ControladorGrafico &grafico,const string filepath, float x, float y);
 	~Personaje();
 	void dibujar(ControladorGrafico &grafico);
 	void MoverDerecha();
 	void MoverIzquierda();
+
 private:
 	float posx, posy;
 	Sprite sprite;

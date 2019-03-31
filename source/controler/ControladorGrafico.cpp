@@ -1,12 +1,14 @@
 #include <ControladorGrafico.hpp>
 #include <ConfiguracionGlobal.hpp>
+#include <controler/ControladorJson.hpp>
 #include <iostream>
 using namespace globals;
 using namespace std;
 
+extern ControladorJson *controladorJson;
 
 ControladorGrafico::ControladorGrafico(){
-	SDL_CreateWindowAndRenderer(ANCHO_DE_PANTALLA,ALTO_DE_PANTALLA, 0, &this->_window, &this->_renderer);
+	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), 0, &this->_window, &this->_renderer);
 	SDL_SetWindowTitle(this->_window, "Marvel vs Capcom");
 }
 
