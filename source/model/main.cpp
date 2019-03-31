@@ -18,6 +18,7 @@ int main(int argc, char **argv){
 	p = new Parallax();
 	std::cout << "Creo al objeto!" << std::endl;
 
+	Juego juego;
 	return 0;
 
 }

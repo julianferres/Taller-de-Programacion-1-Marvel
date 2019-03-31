@@ -36,8 +36,9 @@ public:
 	void dibujar(ControladorGrafico &graficos, int x, int y);
 
 protected:
-	double _timeToUpdate;
 	bool _animacionActualUnica;
+	double _timeToUpdate;
+
 	std::string _animacionActual;
 
 	/*void agregarAnimacion

@@ -1,35 +1,23 @@
-#include <ControladorTexturas.h>
-#include <Personaje.h>
+#include <Personaje.hpp>
 
-Personaje::Personaje(const char* imagen, int x, int y){
-	objTexture = ControladorTexturas::LoadTexture(imagen);
-	xpos = x;
-	ypos = y;
+Personaje::Personaje(){
+}
+Personaje::~Personaje(){
 
 }
-
-void Personaje::Update(){
-
-	srcRect.h = 286;
-	srcRect.w = 256;
-	srcRect.x = 0;
-	srcRect.y = 0;
-	destRect.x = xpos;
-	destRect.y = ypos;
-	destRect.w = srcRect.w ;
-	destRect.h = srcRect.h;
+Personaje::Personaje(ControladorGrafico &graficos,const string filepath, float x, float y){
+	this->posx=x;
+	this->posy=y;
+	this->sprite=Sprite(graficos,filepath,7,20,89,115);
 
 }
-
-void Personaje::Render(){
-	SDL_RenderCopy(Juego::renderer, objTexture, &srcRect, &destRect);
+void Personaje::dibujar(ControladorGrafico &graficos){
+	this->sprite.dibujar(graficos,this->posx,this->posy);
 }
-
 void Personaje::MoverDerecha(){
-	xpos += 30;
+	this->posx=this->posx+30;
 }
 
 void Personaje::MoverIzquierda(){
-	xpos -= 30;
+	this->posx=this->posx-30;
 }
-
