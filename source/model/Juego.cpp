@@ -79,7 +79,7 @@ void Juego::teclear(SDL_Event evento,ControladorTeclado teclado){
 		controladorLogger->registrarEvento("DEBUG", "Cambio de personaje");
 	}
 }
-
+//update
 
 
 
