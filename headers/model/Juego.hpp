@@ -21,6 +21,9 @@ class Juego{
 		Juego();
 		~Juego();
 		bool running() {return isRunning;}
+		int FPS = controladorJson->cantidadFPS();
+		int MAX_FRAME_TIME = 1000 / FPS;
+		Uint32 startTime;
 
 	private:
 
@@ -30,8 +33,6 @@ class Juego{
 		void dibujarFondo(ControladorGrafico &graficos);
 		void teclear(SDL_Event evento,ControladorTeclado teclado);
 		bool isRunning;
-		int FPS = controladorJson->cantidadFPS();
-		int MAX_FRAME_TIME = 5 * 1000 / FPS;
 		Jugador *jugador1;
 		Parallax *parallax;
 

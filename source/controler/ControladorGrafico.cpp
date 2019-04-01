@@ -8,7 +8,7 @@ using namespace std;
 extern ControladorJson *controladorJson;
 
 ControladorGrafico::ControladorGrafico(){
-	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), 0, &this->_window, &this->_renderer);
+	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), SDL_WINDOW_RESIZABLE, &this->_window, &this->_renderer);
 	SDL_SetWindowTitle(this->_window, "Marvel vs Capcom");
 }
 
