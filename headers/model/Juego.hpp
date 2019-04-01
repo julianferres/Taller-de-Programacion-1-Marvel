@@ -1,14 +1,13 @@
-#ifndef Game_hpp
-#define Game_hpp
+#ifndef JUEGO_HPP
+#define JUEGO_HPP
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <Personaje.hpp>
 #include <ControladorGrafico.hpp>
 #include <Sprite.hpp>
 #include <Parallax.hpp>
 
-class Personaje;
+class Jugador;
 class Parallax;
 
 class Juego{
@@ -22,7 +21,7 @@ private:
 	void dibujar(ControladorGrafico &grafico);
 	void actualizar(float tiempo);
 	bool isRunning;
-	Personaje *personaje;
+	Jugador *jugador1;
 	Parallax *parallax;
 
 };
