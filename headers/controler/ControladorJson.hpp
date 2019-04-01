@@ -14,10 +14,12 @@ class ControladorJson{
 		int alturaVentana();
 		int anchoVentana();
 		int cantidadFPS();
+		int alturaPersonaje(std::string);
+		int anchoPersonaje(std::string);
 		bool esfullscreen();
 		std::string nivelDebug();
-		std::string pathImagen(int zindex);
-
+		std::string pathFondo(int zindex);
+		std::string pathImagen(std::string nombrePersonaje);
 
 	private:
 

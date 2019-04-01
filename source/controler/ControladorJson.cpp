@@ -58,7 +58,7 @@ std::string ControladorJson::nivelDebug(){
 	return nivel_debug;
 }
 
-std::string ControladorJson::pathImagen(int zindex){
+std::string ControladorJson::pathFondo(int zindex){
     for (int i = 0; i < cantidad_fondos; i++){
             if(std::get<1>(fondos[i]) == zindex)
                 return std::get<0>(fondos[i]);
@@ -66,3 +66,31 @@ std::string ControladorJson::pathImagen(int zindex){
     controladorLogger->registrarEvento("ERROR","No se pudo encontrar imagen con zindex igual a "+ std::to_string(zindex));
     return NULL;
 }
+
+std::string ControladorJson::pathImagen(std::string nombrePersonaje){
+    for (int i = 0; i < cantidad_personajes; i++){
+            if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
+            	controladorLogger->registrarEvento("INFO","Se cargo correctamente la imagen del personaje"+ nombrePersonaje);
+            	return std::get<1>(personajes[i]);
+            }
+        }
+    controladorLogger->registrarEvento("ERROR","No se pudo encontrar la imagen del personaje "+ nombrePersonaje);
+    return NULL;
+}
+
+int ControladorJson::alturaPersonaje(std::string nombrePersonaje){
+    for (int i = 0; i < cantidad_personajes; i++){
+            if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0)
+                return std::get<2>(personajes[i]);
+        }
+    return -1;
+}
+
+int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
+    for (int i = 0; i < cantidad_personajes; i++){
+            if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0)
+                return std::get<3>(personajes[i]);
+        }
+    return -1;
+}
+

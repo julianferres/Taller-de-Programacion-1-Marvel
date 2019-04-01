@@ -3,8 +3,7 @@
 #include <Juego.hpp>
 
 extern ControladorLogger *controladorLogger;
-const int FPS = 50;
-const int MAX_FRAME_TIME = 5 * 1000 / FPS;
+
 Juego::Juego(){
 	this->isRunning=true;
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -28,11 +27,12 @@ void Juego::gameLoop(){
 
 	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Spiderman");
 	int LAST_UPDATE_TIME = SDL_GetTicks();
+
 	while (isRunning){
 		this->teclear(evento,teclado);
+
 		const int CURRENT_TIME_MS = SDL_GetTicks();
 		int ELAPSED_TIME_MS = CURRENT_TIME_MS - LAST_UPDATE_TIME;
-
 		this->actualizar(std::min(ELAPSED_TIME_MS, MAX_FRAME_TIME));
 		LAST_UPDATE_TIME = CURRENT_TIME_MS;
 
@@ -62,41 +62,34 @@ void Juego::dibujar(ControladorGrafico &grafico){
 }
 
 void Juego::teclear(SDL_Event evento,ControladorTeclado teclado){
-	teclado.beginNewFrame();
-	if(SDL_PollEvent(&evento)){
-		if(evento.type==SDL_KEYDOWN){
-			if(evento.key.repeat==0){
-				teclado.keyDownEvent(evento);
-			}
+	while(SDL_PollEvent(&evento)){
+		switch(evento.type){
+			case SDL_QUIT:
+				isRunning = false;
+				break;
+			case SDL_KEYDOWN:
+				switch(evento.key.keysym.sym){
+					case SDLK_RIGHT:
+						this->jugador1->personajeActualMoverDerecha();
+						this->parallax->MoverCamaraDerecha();
+						controladorLogger->registrarEvento("DEBUG", "una vez a la derecha");
+						break;
+					case SDLK_LEFT:
+						this->jugador1->personajeActualMoverIzquierda();
+						this->parallax->MoverCamaraIzquierda();
+						controladorLogger->registrarEvento("DEBUG", "una vez a la izquierda");
+						break;
+					case SDLK_l:
+						this->jugador1->cambiarPersonaje();
+						controladorLogger->registrarEvento("DEBUG", "Cambio de personaje");
+						break;
+					case SDLK_ESCAPE:
+						isRunning = false;
+						break;
+				}
+				break;
+			default:
+				break;
 		}
-		else if(evento.type==SDL_KEYUP){
-			teclado.keyUpEvent(evento);
-		}
-		else if(evento.type==SDL_QUIT){
-			isRunning = false;
-		}
-	}
-	if(teclado.wasKeyPressed(SDL_SCANCODE_ESCAPE)==true){
-		isRunning = false;
-	}
-	else if(teclado.wasKeyPressed(SDL_SCANCODE_RIGHT)==true){
-		this->jugador1->personajeActualMoverDerecha();
-		this->parallax->MoverCamaraDerecha();
-		controladorLogger->registrarEvento("DEBUG", "una vez a la derecha");
-	}
-	else if(teclado.wasKeyPressed(SDL_SCANCODE_LEFT)==true){
-		this->jugador1->personajeActualMoverIzquierda();
-		this->parallax->MoverCamaraIzquierda();
-		controladorLogger->registrarEvento("DEBUG", "una vez a la izquierda");
-	}
-	else if(teclado.wasKeyPressed(SDL_SCANCODE_L)==true){
-		this->jugador1->cambiarPersonaje();
-		controladorLogger->registrarEvento("DEBUG", "Cambio de personaje");
 	}
 }
-//update
-
-
-
-
-

@@ -11,23 +11,23 @@ extern ControladorLogger *controladorLogger;
 
 Parallax::Parallax(ControladorGrafico &graficos){
 
-	background_z1 = IMG_Load(controladorJson->pathImagen(1).c_str());
-	background_z2 = IMG_Load(controladorJson->pathImagen(2).c_str());
-	background_z3 = IMG_Load(controladorJson->pathImagen(3).c_str());
+	background_z1 = IMG_Load(controladorJson->pathFondo(1).c_str());
+	background_z2 = IMG_Load(controladorJson->pathFondo(2).c_str());
+	background_z3 = IMG_Load(controladorJson->pathFondo(3).c_str());
 	if(background_z1 == NULL)
-		controladorLogger->registrarEvento("ERROR", "No se pudo cargar la imagen con zindex = 1: " + controladorJson->pathImagen(1));
+		controladorLogger->registrarEvento("ERROR", "No se pudo cargar la imagen con zindex = 1: " + controladorJson->pathFondo(1));
 	else
-		controladorLogger->registrarEvento("DEBUG", "Se cargo la imagen con zindex = 1: " + controladorJson->pathImagen(1));
+		controladorLogger->registrarEvento("DEBUG", "Se cargo la imagen con zindex = 1: " + controladorJson->pathFondo(1));
 
 	if(background_z2 == NULL)
-		controladorLogger->registrarEvento("ERROR", "No se pudo cargar la imagen con zindex = 2: " + controladorJson->pathImagen(2));
+		controladorLogger->registrarEvento("ERROR", "No se pudo cargar la imagen con zindex = 2: " + controladorJson->pathFondo(2));
 	else
-		controladorLogger->registrarEvento("DEBUG", "Se cargo la imagen con zindex = 2: " + controladorJson->pathImagen(2));
+		controladorLogger->registrarEvento("DEBUG", "Se cargo la imagen con zindex = 2: " + controladorJson->pathFondo(2));
 
 	if(background_z3 == NULL)
-		controladorLogger->registrarEvento("ERROR", "No se pudo cargar la imagen con zindex = 3: " + controladorJson->pathImagen(3));
+		controladorLogger->registrarEvento("ERROR", "No se pudo cargar la imagen con zindex = 3: " + controladorJson->pathFondo(3));
 	else
-		controladorLogger->registrarEvento("DEBUG", "Se cargo la imagen con zindex = 3: " + controladorJson->pathImagen(3));
+		controladorLogger->registrarEvento("DEBUG", "Se cargo la imagen con zindex = 3: " + controladorJson->pathFondo(3));
 
 	bitmapTex1 = SDL_CreateTextureFromSurface(graficos.getRenderer(), background_z1);
 	bitmapTex2 = SDL_CreateTextureFromSurface(graficos.getRenderer(), background_z2);

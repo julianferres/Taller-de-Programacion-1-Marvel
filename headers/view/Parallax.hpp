@@ -46,7 +46,6 @@ class Parallax{
 
 	private:
 
-		const int FPS =controladorJson->cantidadFPS();
 		int W = controladorJson->anchoVentana();
 		int H = controladorJson->alturaVentana();
 		const int SPEED_z1 = 5;
