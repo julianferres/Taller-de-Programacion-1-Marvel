@@ -19,16 +19,15 @@ class Personaje{
 		void dibujar(ControladorGrafico &grafico);
 		void MoverDerecha();
 		void MoverIzquierda();
+		int ancho;
+		int alto;
 
 	private:
 
 		float posx, posy;
 		Sprite sprite;
-		std::string getFilePath(std::string nombre);
 		int getXInicial(std::string nombre);
 		int getYInicial(std::string nombre);
-		int getAncho(std::string nombre);
-		int getAlto(std::string nombre);
 
 };
 
