@@ -21,6 +21,7 @@ private:
 	void gameLoop();
 	void dibujar(ControladorGrafico &grafico);
 	void actualizar(float tiempo);
+	void dibujarFondo(ControladorGrafico &graficos);
 	void teclear(SDL_Event evento,ControladorTeclado teclado);
 	bool isRunning;
 	Jugador *jugador1;

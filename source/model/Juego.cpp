@@ -19,6 +19,7 @@ void Juego::gameLoop(){
 	ControladorTeclado teclado;
 	SDL_Event evento;
 
+	this->dibujarFondo(graficos);
 	this-> parallax = new Parallax(graficos);
 	if(this->parallax == NULL)
 		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax");
@@ -39,7 +40,13 @@ void Juego::gameLoop(){
 	}
 
 }
-
+void Juego::dibujarFondo(ControladorGrafico &graficos){
+	this-> parallax = new Parallax(graficos);
+	if(this->parallax == NULL)
+		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax");
+	else
+		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax");
+}
 
 void Juego::actualizar(float tiempo){
 	//this->jugador1.actualizar(tiempo);
