@@ -26,19 +26,6 @@ private:
 	Jugador *jugador1;
 	Parallax *parallax;
 
-		Juego();
-		~Juego();
-		bool running() {return isRunning;}
-
-	private:
-
-		void gameLoop();
-		void dibujar(ControladorGrafico &grafico);
-		void actualizar(float tiempo);
-		bool isRunning;
-		Personaje *personaje;
-		Parallax *parallax;
-
 };
 
 #endif

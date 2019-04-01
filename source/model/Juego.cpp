@@ -16,6 +16,7 @@ Juego::~Juego()
 void Juego::gameLoop(){
 	ControladorGrafico graficos;
 	ControladorTeclado teclado;
+	SDL_Event evento;
 
 	this-> parallax = new Parallax(graficos);
 	if(this->parallax == NULL)
@@ -66,16 +67,16 @@ void Juego::teclear(SDL_Event evento,ControladorTeclado teclado){
 	else if(teclado.wasKeyPressed(SDL_SCANCODE_RIGHT)==true){
 		this->jugador1->personajeActualMoverDerecha();
 		this->parallax->MoverCamaraDerecha();
-		std::cout<<"una vez a la derecha"<<endl;
+		controladorLogger->registrarEvento("DEBUG", "una vez a la derecha");
 	}
 	else if(teclado.wasKeyPressed(SDL_SCANCODE_LEFT)==true){
 		this->jugador1->personajeActualMoverIzquierda();
 		this->parallax->MoverCamaraIzquierda();
-		std::cout<<"una vez a la izquierda"<<endl;
+		controladorLogger->registrarEvento("DEBUG", "una vez a la izquierda");
 	}
 	else if(teclado.wasKeyPressed(SDL_SCANCODE_L)==true){
 		this->jugador1->cambiarPersonaje();
-		std::cout<<"Cambio personaje actual"<<endl;
+		controladorLogger->registrarEvento("DEBUG", "Cambio de personaje");
 	}
 }
 

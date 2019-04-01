@@ -26,8 +26,5 @@ private:
 	int getAlto(std::string nombre);
 };
 
-	public:
-
-
 #endif
 
