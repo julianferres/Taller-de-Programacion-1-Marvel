@@ -1,6 +1,6 @@
 #ifndef JUEGO_HPP
 #define JUEGO_HPP
-
+//juego
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <ControladorGrafico.hpp>
