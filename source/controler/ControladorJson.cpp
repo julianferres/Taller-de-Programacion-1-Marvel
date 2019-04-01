@@ -2,18 +2,17 @@
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
 
-extern time_t my_time;
 extern ControladorLogger *controladorLogger;
 
 void ControladorJson::leerArchivo(){
 
-
 	using json = nlohmann::json;
-	std::ifstream ifs ("source/config/config.json", std::ifstream::in); //cambia el nombre y mira el log.txt
+	std::ifstream ifs (configPath, std::ifstream::in); //cambia el nombre y mira el log.txt
 
 	try{
 		json j = json::parse(ifs);
 		nivel_debug = j["debug"];
+		controladorLogger->setNivelDebug(nivel_debug);
 		altura_ventana = j["window"]["height"];
 		ancho_ventana = j["window"]["width"];
 		fullscreen = j["window"]["fullscreen"];
@@ -28,13 +27,14 @@ void ControladorJson::leerArchivo(){
 		for (int i = 0; i < cantidad_fondos; i++){
 			fondos.push_back(std::make_tuple(j["battlefield"][i]["background"]["filepath"] , j["battlefield"][i]["background"]["zindex"] ));
 		}
-		controladorLogger->registrarEvento("INFO","Archivo de configuracion JSON leido correctamente",ctime(&my_time));
 
+		controladorLogger->registrarEvento("INFO","Archivo de configuracion JSON leido correctamente");
 	}
 
 	catch(json::exception &e){
-		controladorLogger->registrarEvento("ERROR",e.what(),ctime(&my_time));
+		controladorLogger->registrarEvento("ERROR",e.what());
 	}
+
 }
 
 
@@ -56,4 +56,13 @@ bool ControladorJson::esfullscreen(){
 
 std::string ControladorJson::nivelDebug(){
 	return nivel_debug;
+}
+
+std::string ControladorJson::pathImagen(int zindex){
+    for (int i = 0; i < cantidad_fondos; i++){
+            if(std::get<1>(fondos[i]) == zindex)
+                return std::get<0>(fondos[i]);
+        }
+    controladorLogger->registrarEvento("ERROR","No se pudo encontrar imagen con zindex igual a "+ std::to_string(zindex));
+    return NULL;
 }

@@ -1,5 +1,8 @@
 #include <Jugador.hpp>
+#include <ControladorLogger.hpp>
 #include <Juego.hpp>
+
+extern ControladorLogger *controladorLogger;
 
 Juego::Juego(){
 	this->isRunning=true;
@@ -13,8 +16,12 @@ Juego::~Juego()
 void Juego::gameLoop(){
 	ControladorGrafico graficos;
 	ControladorTeclado teclado;
+
 	this-> parallax = new Parallax(graficos);
-	SDL_Event evento;
+	if(this->parallax == NULL)
+		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax");
+	else
+		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax");
 
 	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Spiderman");
 

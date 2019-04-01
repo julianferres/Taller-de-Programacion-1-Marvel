@@ -1,6 +1,4 @@
 #include <Sprite.hpp>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <ControladorGrafico.hpp>
 
 using namespace std;
@@ -12,9 +10,8 @@ Sprite::Sprite( ControladorGrafico &graficos, const string &filePath, int x0, in
 	this->_rectanguloOrigen.y = y0;
 	this->_rectanguloOrigen.w = ancho;
 	this->_rectanguloOrigen.h = alto;
-
 	this->_spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
-	}
+}
 
 void Sprite::dibujar(ControladorGrafico &graficos, int x, int y){
 	SDL_Rect rectanguloDestino = {x, y, this->_rectanguloOrigen.w, this->_rectanguloOrigen.h};

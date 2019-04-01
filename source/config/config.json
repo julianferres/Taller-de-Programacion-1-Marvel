@@ -1,23 +1,23 @@
 {
-    "debug":"INFO",
+    "debug":"DEBUG",
     "FPS": 60,
     "battlefield":
         [
             {"background":
                 {
-                    "filepath":"file11.png",
+                    "filepath":"contents/images/capa0.png",
                     "zindex":3
                 }
             },
             {"background":
                 {
-                    "filepath":"file2.png",
+                    "filepath":"contents/images/capa1.png",
                     "zindex":2
                 }
             },
             {"background":
                 {
-                    "filepath":"file1.png",
+                    "filepath":"contents/images/capa2.png",
                     "zindex":1
                 }
             }
@@ -38,8 +38,8 @@
             }
         ],
     "window":{
-        "height":800,
-        "width":600,
+        "height":600,
+        "width":800,
 	"fullscreen": false
     }
 }

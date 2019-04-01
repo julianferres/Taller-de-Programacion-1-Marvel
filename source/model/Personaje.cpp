@@ -1,9 +1,7 @@
 #include <Personaje.hpp>
 #include <string>
 
-
 Personaje::~Personaje(){
-
 }
 Personaje::Personaje(ControladorGrafico &graficos, std::string nombre){
 	this->posx= jugador1::X0;

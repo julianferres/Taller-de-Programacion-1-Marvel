@@ -4,7 +4,6 @@
 #include <Juego.hpp>
 #include <ConfiguracionGlobal.hpp>
 #include <Sprite.hpp>
-#include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 #include <string>
 
@@ -27,7 +26,8 @@ private:
 	int getAlto(std::string nombre);
 };
 
+	public:
 
-//test
+
 #endif
 
