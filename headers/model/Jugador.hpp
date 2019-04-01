@@ -7,7 +7,8 @@ class ControladorGrafico;
 class Jugador{
 public:
 	Jugador();
-	Jugador(ControladorGrafico &grafico, const std::string filepath, float x, float y);
+	Jugador(ControladorGrafico &grafico, std::string nombrePersonaje1,
+			std::string nombrePersonaje2);
 	~Jugador();
 	void personajeActualMoverDerecha();
 	void personajeActualMoverIzquierda();

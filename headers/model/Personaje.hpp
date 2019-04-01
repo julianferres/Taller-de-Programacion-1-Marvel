@@ -7,13 +7,13 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 #include <string>
-using namespace std;
+
 
 class ControladorGrafico;
 class Personaje{
 public:
 	Personaje();
-	Personaje(ControladorGrafico &grafico,const string filepath, float x, float y);
+	Personaje(ControladorGrafico &grafico, std::string nombre);
 	~Personaje();
 	void dibujar(ControladorGrafico &grafico);
 	void MoverDerecha();
@@ -21,6 +21,11 @@ public:
 private:
 	float posx, posy;
 	Sprite sprite;
+	std::string getFilePath(std::string nombre);
+	int getXInicial(std::string nombre);
+	int getYInicial(std::string nombre);
+	int getAncho(std::string nombre);
+	int getAlto(std::string nombre);
 };
 
 

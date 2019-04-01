@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <ControladorGrafico.hpp>
-#include <ConfiguracionGlobal.hpp>
+
 using namespace std;
 Sprite::Sprite() {};
 Sprite::~Sprite(){};

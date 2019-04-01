@@ -9,9 +9,9 @@ Jugador::Jugador(){
 
 }
 
-Jugador::Jugador(ControladorGrafico &graficos, std::string filepath, float x, float y){
-	this->personaje1 = new Personaje(graficos,"contents/images/CaptainAmericaSprites.png",0,300);
-	this->personaje2 = new Personaje(graficos,"contents/images/SpidermanSprites.png",0,300);
+Jugador::Jugador(ControladorGrafico &graficos, std::string nombrePersonaje1, std::string nombrePersonaje2){
+	this->personaje1 = new Personaje(graficos,nombrePersonaje1);
+	this->personaje2 = new Personaje(graficos,nombrePersonaje2);
 	this->personajeActual = this->personaje1;
 	this->personajePrincipal = true;
 }

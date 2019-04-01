@@ -18,7 +18,7 @@ void Juego::gameLoop(){
 	this-> parallax = new Parallax(graficos);
 	SDL_Event evento;
 
-	this->jugador1 = new Jugador(graficos,"contents/images/CaptainAmericaSprites.png",0,300);
+	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Spiderman");
 
 
 	while (isRunning){

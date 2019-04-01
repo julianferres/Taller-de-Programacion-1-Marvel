@@ -20,7 +20,14 @@ namespace globals{
 	const int ALTO_DE_PANTALLA = 480;
 
 	const float ESCALA_SPRITE = 2.0f;
+
 }
+
+namespace jugador1{
+	const int X0 = 5;
+	const int YO = 300;
+}
+
 
 struct Vector2 {
 	int x, y;
