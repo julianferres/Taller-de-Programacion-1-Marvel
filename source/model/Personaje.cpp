@@ -5,7 +5,7 @@ Personaje::~Personaje(){
 }
 Personaje::Personaje(ControladorGrafico &graficos, std::string nombre){
 	this->posx= jugador1::X0;
-	this->posy= jugador1::YO;
+	this->posy= jugador1::Y0;
 	this->sprite=Sprite(graficos,this->getFilePath(nombre),this->getXInicial(nombre),
 			this->getYInicial(nombre),this->getAncho(nombre),this->getAlto(nombre));
 
@@ -20,6 +20,7 @@ void Personaje::MoverDerecha(){
 void Personaje::MoverIzquierda(){
 	this->posx=this->posx-30;
 }
+
 
 std::string Personaje::getFilePath(std::string nombre){
 	if( nombre == "CapitanAmerica"){
