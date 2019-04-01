@@ -22,7 +22,7 @@ namespace globals{
 
 namespace jugador1{
 	const int X0 = 5;
-	const int YO = 300;
+	const int Y0 = 300;
 }
 
 

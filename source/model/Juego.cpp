@@ -3,7 +3,8 @@
 #include <Juego.hpp>
 
 extern ControladorLogger *controladorLogger;
-
+const int FPS = 50;
+const int MAX_FRAME_TIME = 5 * 1000 / FPS;
 Juego::Juego(){
 	this->isRunning=true;
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -25,9 +26,15 @@ void Juego::gameLoop(){
 		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax");
 
 	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Spiderman");
-
+	int LAST_UPDATE_TIME = SDL_GetTicks();
 	while (isRunning){
 		this->teclear(evento,teclado);
+		const int CURRENT_TIME_MS = SDL_GetTicks();
+		int ELAPSED_TIME_MS = CURRENT_TIME_MS - LAST_UPDATE_TIME;
+
+		this->actualizar(std::min(ELAPSED_TIME_MS, MAX_FRAME_TIME));
+		LAST_UPDATE_TIME = CURRENT_TIME_MS;
+
 		this->dibujar(graficos);
 	}
 
@@ -35,6 +42,7 @@ void Juego::gameLoop(){
 
 
 void Juego::actualizar(float tiempo){
+	//this->jugador1.actualizar(tiempo);
 }
 
 void Juego::dibujar(ControladorGrafico &grafico){
