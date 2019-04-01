@@ -1,7 +1,7 @@
 #include <ControladorGrafico.hpp>
 #include <ConfiguracionGlobal.hpp>
-#include <controler/ControladorJson.hpp>
-#include <iostream>
+#include <ControladorJson.hpp>
+
 using namespace globals;
 using namespace std;
 

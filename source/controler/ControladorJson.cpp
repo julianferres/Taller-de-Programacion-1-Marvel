@@ -1,12 +1,10 @@
 #include <controler/ControladorJson.hpp>
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
-#include <iostream>
 
 extern ControladorLogger *controladorLogger;
 
 void ControladorJson::leerArchivo(){
-
 
 	using json = nlohmann::json;
 	std::ifstream ifs (configPath, std::ifstream::in); //cambia el nombre y mira el log.txt
@@ -29,13 +27,14 @@ void ControladorJson::leerArchivo(){
 		for (int i = 0; i < cantidad_fondos; i++){
 			fondos.push_back(std::make_tuple(j["battlefield"][i]["background"]["filepath"] , j["battlefield"][i]["background"]["zindex"] ));
 		}
-		controladorLogger->registrarEvento("INFO","Archivo de configuracion JSON leido correctamente",controladorLogger->obtenerHora());
 
+		controladorLogger->registrarEvento("INFO","Archivo de configuracion JSON leido correctamente");
 	}
 
 	catch(json::exception &e){
-		controladorLogger->registrarEvento("ERROR",e.what(),controladorLogger->obtenerHora());
+		controladorLogger->registrarEvento("ERROR",e.what());
 	}
+
 }
 
 
@@ -64,6 +63,6 @@ std::string ControladorJson::pathImagen(int zindex){
             if(std::get<1>(fondos[i]) == zindex)
                 return std::get<0>(fondos[i]);
         }
-    controladorLogger->registrarEvento("ERROR","No se pudo encontrar imagen con zindex igual a "+ std::to_string(zindex),controladorLogger->obtenerHora());
+    controladorLogger->registrarEvento("ERROR","No se pudo encontrar imagen con zindex igual a "+ std::to_string(zindex));
     return NULL;
 }

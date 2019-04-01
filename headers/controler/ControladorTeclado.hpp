@@ -5,7 +5,9 @@
 #include <map>
 
 class ControladorTeclado{
+
 	public:
+
 		void beginNewFrame();
 		//Se llama cada vez que se suelta una tecla
 		void keyUpEvent(const SDL_Event& evento);
@@ -18,14 +20,12 @@ class ControladorTeclado{
 		//Es true si se esta presionando la "tecla" que recibe como parametre en el frame actual
 		bool isKeyHeld(SDL_Scancode tecla);
 
-
 	private:
+
 		std::map<SDL_Scancode, bool> _heldKeys;
 		std::map<SDL_Scancode, bool> _pressedKeys;
 		std::map<SDL_Scancode, bool> _releasedKeys;
+
 };
-
-
-
 
 #endif

@@ -1,8 +1,8 @@
 #include <ControladorGrafico.hpp>
 #include <ControladorTeclado.hpp>
+#include <ControladorLogger.hpp>
 #include <Personaje.hpp>
 #include <Juego.hpp>
-#include <ControladorLogger.hpp>
 
 extern ControladorLogger *controladorLogger;
 
@@ -21,15 +21,16 @@ void Juego::gameLoop(){
 
 	this-> parallax = new Parallax(graficos);
 	if(this->parallax == NULL)
-		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax", controladorLogger->obtenerHora());
+		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax");
 	else
-		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax", controladorLogger->obtenerHora());
+		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax");
 
-	SDL_Event evento;
 
 	this->personaje=new Personaje(graficos,"contents/images/CaptainAmericaSprites.png",0,400);
+	controladorLogger->registrarEvento("INFO", "Se cargo correctamente la imagen del personaje 1");
+	controladorLogger->registrarEvento("INFO", "Juego iniciado");
 
-	controladorLogger->registrarEvento("INFO", "Arrancó el juego", controladorLogger->obtenerHora());
+	SDL_Event evento;
 	while (isRunning){
 		teclado.beginNewFrame();
 		if(SDL_PollEvent(&evento)){
@@ -43,7 +44,7 @@ void Juego::gameLoop(){
 			}
 			else if(evento.type==SDL_QUIT){
 				isRunning = false;
-				controladorLogger->registrarEvento("INFO", "Juego finalizado", controladorLogger->obtenerHora());
+				controladorLogger->registrarEvento("INFO", "Juego finalizado");
 				break;
 			}
 		}
@@ -53,12 +54,12 @@ void Juego::gameLoop(){
 		else if(teclado.wasKeyPressed(SDL_SCANCODE_RIGHT)==true){
 			this->personaje->MoverDerecha();
 			this->parallax->MoverCamaraDerecha();
-			std::cout<<"una vez a la derecha"<<endl;
+			controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la derecha");
 		}
 		else if(teclado.wasKeyPressed(SDL_SCANCODE_LEFT)==true){
 					this->personaje->MoverIzquierda();
 					this->parallax->MoverCamaraIzquierda();
-					std::cout<<"una vez a la izquierda"<<endl;
+					controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la izquierda");
 				}
 
 		this->dibujar(graficos);
