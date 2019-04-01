@@ -12,7 +12,6 @@
 class ControladorGrafico;
 class Personaje{
 public:
-	Personaje();
 	Personaje(ControladorGrafico &grafico, std::string nombre);
 	~Personaje();
 	void dibujar(ControladorGrafico &grafico);

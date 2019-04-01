@@ -1,8 +1,7 @@
 #include <Personaje.hpp>
 #include <string>
 
-Personaje::Personaje(){
-}
+
 Personaje::~Personaje(){
 
 }

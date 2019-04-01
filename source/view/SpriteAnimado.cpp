@@ -4,53 +4,52 @@
 
 using namespace std;
 
-SpriteAnimado::SpriteAnimado(){}
 
-SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos, const string &filePath, int x0, int y0,
-		int ancho, int alto, float posX, float posY, float timeToUpdate):
+/*SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos, const string &filePath, int x0, int y0,
+		/*int ancho, int alto, float posX, float posY, float timeToUpdate):
 				Sprite(graficos, filePath, x0, y0, ancho, alto, posX, posY),
 				_frameIndex(0),
 				_timeToUpdate(timeToUpdate),
 				_visible(true),
 				_animacionActualUnica(false),
 				_animacionActual(""),
-				tiempoTrancurrido(0)	{}
+				tiempoTrancurrido(0)	*/
 
 void SpriteAnimado::agregarAnimacion(int frames, int x, int y, string nombre, int ancho, int alto, Vector2 offset){
-	std::vector<SDL_Rect> rectangulos;
+	/*std::vector<SDL_Rect> rectangulos;
 	for (int i = 0; i < frames; i++){
 		SDL_Rect newRect = { (i + x) * ancho, y, ancho, alto};
 		rectangulos.push_back(newRect);
 	}
 	this->_animaciones.insert(std::pair<string, vector<SDL_Rect> > (nombre, rectangulos));
-	this->_offsets.insert(pair<string, Vector2> (nombre, offset));
+	this->_offsets.insert(pair<string, Vector2> (nombre, offset));*/
 
 }
 
 void SpriteAnimado::reiniciarAnimacion(){
-	this->_animaciones.clear();
-	this->_offsets.clear();
+	/*this->_animaciones.clear();
+	this->_offsets.clear();*/
 }
 
 void SpriteAnimado::iniciarAnimacion(string animacion, bool unica){
-	this->_animacionActualUnica = unica;
+	/*this->_animacionActualUnica = unica;
 	if(this->_animacionActual != animacion){
 		this->_animacionActual = animacion;
 		this->_frameIndex = 0;
-	}
+	}*/
 }
 
 void SpriteAnimado::esVisible(bool visible){
-	this->_visible = visible;
+	/*this->_visible = visible;*/
 }
 
 void SpriteAnimado::pararAnimacion(){
-	this->_frameIndex = 0;
-	this->animacionFinalizada(this->_animacionActual);
+	/*this->_frameIndex = 0;
+	this->animacionFinalizada(this->_animacionActual);*/
 }
 
 void SpriteAnimado::update(int elapsedTime){
-	Sprite::update();
+	/*Sprite::update();
 
 	this->tiempoTrancurrido += elapsedTime;
 	if(this->tiempoTrancurrido > this->_timeToUpdate){
@@ -65,11 +64,11 @@ void SpriteAnimado::update(int elapsedTime){
 			this->_frameIndex = 0;
 			this->animacionFinalizada(this->_animacionActual);
 		}
-	}
+	}*/
 }
 
 void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y){
-	if(this->_visible){
+	/*if(this->_visible){
 		SDL_Rect rectanguloDestino;
 		rectanguloDestino.x = x + this->_offsets[this->_animacionActual].x;
 		rectanguloDestino.y = y + this->_offsets[this->_animacionActual].y;
@@ -78,7 +77,7 @@ void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y){
 
 		SDL_Rect sourceRect = this->_animaciones[this->_animacionActual][this->_frameIndex];
 		graficos.dibujarImagen(this->_spriteSheet, &sourceRect, &rectanguloDestino);
-	}
+	}*/
 }
 
 void SpriteAnimado::animacionFinalizada(string currentAnimation){

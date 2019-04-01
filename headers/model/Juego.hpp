@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <ControladorGrafico.hpp>
+#include <ControladorTeclado.hpp>
 #include <Sprite.hpp>
 #include <Parallax.hpp>
 
@@ -20,6 +21,7 @@ private:
 	void gameLoop();
 	void dibujar(ControladorGrafico &grafico);
 	void actualizar(float tiempo);
+	void teclear(SDL_Event evento,ControladorTeclado teclado);
 	bool isRunning;
 	Jugador *jugador1;
 	Parallax *parallax;

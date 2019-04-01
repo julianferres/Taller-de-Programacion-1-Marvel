@@ -1,4 +1,4 @@
-/*
+/*/*
  * SpriteAnimado.hpp
  *
  *  Created on: Mar 24, 2019
@@ -18,9 +18,9 @@ class ControladorGrafico;
 
 class SpriteAnimado: public Sprite{
 public:
-	SpriteAnimado();
-	SpriteAnimado(ControladorGrafico &graficos, const std::string &filePath, int x0, int y0, int ancho, int alto,
-			float posX, float posY, float timeToUpdate);
+	//SpriteAnimado();
+	//SpriteAnimado(ControladorGrafico &graficos, const std::string &filePath, int x0, int y0, int ancho, int alto,
+	//		float posX, float posY, float timeToUpdate);
 
 	/*void iniciarAnimacion
 	 * Inicia la animacion que nos pasan si no empezo todavia
@@ -84,4 +84,4 @@ private:
 
 
 
-#endif /* HEADERS_VIEW_SPRITEANIMADO_HPP_ */
+#endif

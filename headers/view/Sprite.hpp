@@ -10,8 +10,6 @@ class Sprite{
 public:
 	Sprite();
 	Sprite( ControladorGrafico &graphicos, const std::string &filePath, int x0, int y0, int ancho, int alto);
-	Sprite( ControladorGrafico &graphicos, const std::string &filePath, int x0, int y0, int ancho, int alto
-			,float x,float y);
 	virtual ~Sprite();
 	virtual void update();
 	void dibujar(ControladorGrafico &graphicos, int x, int y);

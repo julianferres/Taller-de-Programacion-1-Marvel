@@ -5,10 +5,6 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 
-Jugador::Jugador(){
-
-}
-
 Jugador::Jugador(ControladorGrafico &graficos, std::string nombrePersonaje1, std::string nombrePersonaje2){
 	this->personaje1 = new Personaje(graficos,nombrePersonaje1);
 	this->personaje2 = new Personaje(graficos,nombrePersonaje2);
