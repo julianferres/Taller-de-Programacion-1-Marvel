@@ -34,11 +34,9 @@ void Personaje::MoverIzquierda(){
 }
 
 void Personaje::Saltar(){
-	if( ! saltando){
+	if( ! saltando)
 		saltando = true;
-		return;
-	}
-	if( alturaActualSalto >= alturaMaximaSalto  || cayendo){
+	else if( alturaActualSalto >= alturaMaximaSalto  || cayendo){
 		alturaActualSalto -=2;
 		if(alturaActualSalto <= 0 ){
 			cayendo = false;

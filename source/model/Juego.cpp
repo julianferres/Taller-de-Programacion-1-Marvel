@@ -23,12 +23,6 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	SDL_Event evento;
 
 	this->dibujarFondo(graficos);
-	this-> parallax = new Parallax(graficos);
-	if(this->parallax == NULL)
-		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax");
-	else
-		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax");
-
 	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Spiderman");
 
 	while (isRunning){
@@ -47,10 +41,6 @@ void Juego::dibujarFondo(ControladorGrafico &graficos){
 		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax");
 	else
 		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax");
-}
-
-void Juego::actualizar(float tiempo){
-	//this->jugador1.actualizar(tiempo);
 }
 
 void Juego::dibujar(ControladorGrafico &grafico){
