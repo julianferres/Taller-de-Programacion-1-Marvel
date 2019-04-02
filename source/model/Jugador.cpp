@@ -30,8 +30,7 @@ void Jugador::personajeActualMoverIzquierda(){
 }
 
 void Jugador::personajeActualSaltar(){
-	this->personaje1->Saltar();
-	this->personaje2->Saltar();
+	this->personajeActual->Saltar();
 }
 
 void Jugador::personajeActualDibujar(ControladorGrafico &graficos){
