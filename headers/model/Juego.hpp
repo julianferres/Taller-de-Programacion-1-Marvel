@@ -22,14 +22,13 @@ class Juego{
 		~Juego();
 		bool running() {return isRunning;}
 		int FPS = controladorJson->cantidadFPS();
-		int MAX_FRAME_TIME = 1000 / FPS;
+		unsigned MAX_FRAME_TIME = 1000 / FPS;
 		Uint32 startTime;
 
 	private:
 
 		void gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer);
 		void dibujar(ControladorGrafico &grafico);
-		void actualizar(float tiempo);
 		void dibujarFondo(ControladorGrafico &graficos);
 		void teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer);
 		bool isRunning;
