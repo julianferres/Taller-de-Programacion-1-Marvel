@@ -15,11 +15,6 @@ namespace globals{
 	const float ESCALA_SPRITE = 2.0f;
 }
 
-namespace jugador1{
-	const int X0 = 5;
-}
-
-
 struct Vector2 {
 	int x, y;
 	Vector2(): x(0),y(0){}

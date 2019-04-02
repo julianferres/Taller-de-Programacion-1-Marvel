@@ -24,6 +24,7 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 
 	this->dibujarFondo(graficos);
 	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Spiderman");
+	this->jugador2 = new Jugador(graficos,"Spiderman2", "CapitanAmerica2");
 
 	while (isRunning){
 		startTime = SDL_GetTicks();
@@ -49,6 +50,7 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL);
 	grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL);
 	this->jugador1->personajeActualDibujar(grafico);
+	this->jugador2->personajeActualDibujar(grafico);
 	grafico.render();
 }
 
@@ -64,12 +66,12 @@ void Juego::teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMov
 						this->jugador1->personajeActualMoverDerecha();
 						//if(jugador1->obtenerPosicionXPersonaje() > posicionMoverFondoDer)
 						if(jugador1->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
-						controladorLogger->registrarEvento("DEBUG", "una vez a la derecha");
+						controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la derecha");
 						break;
 					case SDLK_LEFT:
 						this->jugador1->personajeActualMoverIzquierda();
 						if (jugador1->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
-						controladorLogger->registrarEvento("DEBUG", "una vez a la izquierda");
+						controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la izquierda");
 						break;
 					case SDLK_l:
 						this->jugador1->cambiarPersonaje();

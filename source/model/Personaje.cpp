@@ -11,7 +11,7 @@ Personaje::~Personaje(){
 }
 
 Personaje::Personaje(ControladorGrafico &graficos, std::string nombre){
-	this->posx= jugador1::X0;
+	this->posx= controladorJson->posicionXinicialPersonaje(nombre);
 	this->posy= controladorJson->alturaVentana()*3/4;
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
