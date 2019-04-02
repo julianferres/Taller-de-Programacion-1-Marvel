@@ -1,12 +1,14 @@
 #include <ControladorGrafico.hpp>
 #include <ConfiguracionGlobal.hpp>
-#include <iostream>
+#include <ControladorJson.hpp>
+
 using namespace globals;
 using namespace std;
 
+extern ControladorJson *controladorJson;
 
 ControladorGrafico::ControladorGrafico(){
-	SDL_CreateWindowAndRenderer(ANCHO_DE_PANTALLA,ALTO_DE_PANTALLA, 0, &this->_window, &this->_renderer);
+	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), SDL_WINDOW_RESIZABLE, &this->_window, &this->_renderer);
 	SDL_SetWindowTitle(this->_window, "Marvel vs Capcom");
 }
 
@@ -14,7 +16,6 @@ ControladorGrafico::~ControladorGrafico(){
 	SDL_DestroyWindow(this->_window);
 	SDL_DestroyRenderer(this->_renderer);
 	SDL_Quit();
-	cout << "Juego finalizado!" <<endl;
 }
 
 SDL_Surface* ControladorGrafico::cargarImagen(const string &filePath){

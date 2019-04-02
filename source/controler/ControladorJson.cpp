@@ -3,14 +3,12 @@
 #include <fstream>
 #include <iostream>
 
-extern time_t my_time;
 extern ControladorLogger *controladorLogger;
 
 void ControladorJson::leerArchivo(){
 
-
 	using json = nlohmann::json;
-	std::ifstream ifs ("source/config/conADAfig.json", std::ifstream::in);
+	std::ifstream ifs (configPath, std::ifstream::in); //cambia el nombre y mira el log.txt
 
 	try{
 		json j = json::parse(ifs);
@@ -31,14 +29,12 @@ void ControladorJson::leerArchivo(){
 			fondos.push_back(std::make_tuple(j["battlefield"][i]["background"]["filepath"] , j["battlefield"][i]["background"]["zindex"] ));
 		}
 
-		controladorLogger->registrarEvento("INFO","Archivo de configuracion JSON leido correctamente",ctime(&my_time));
-
+		controladorLogger->registrarEvento("INFO","Archivo de configuracion JSON leido correctamente");
 	}
 
 	catch(json::exception &e){
-		controladorLogger->registrarEvento("ERROR",e.what(),ctime(&my_time));
+		controladorLogger->registrarEvento("ERROR",e.what());
 	}
-	std::cout << ""<< std::endl;
 
 }
 
@@ -62,3 +58,40 @@ bool ControladorJson::esfullscreen(){
 std::string ControladorJson::nivelDebug(){
 	return nivel_debug;
 }
+
+std::string ControladorJson::pathFondo(int zindex){
+    for (int i = 0; i < cantidad_fondos; i++){
+            if(std::get<1>(fondos[i]) == zindex)
+                return std::get<0>(fondos[i]);
+        }
+    controladorLogger->registrarEvento("ERROR","No se pudo encontrar imagen con zindex igual a "+ std::to_string(zindex));
+    return NULL;
+}
+
+std::string ControladorJson::pathImagen(std::string nombrePersonaje){
+    for (int i = 0; i < cantidad_personajes; i++){
+            if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
+            	controladorLogger->registrarEvento("INFO","Se cargo correctamente la imagen del personaje"+ nombrePersonaje);
+            	return std::get<1>(personajes[i]);
+            }
+        }
+    controladorLogger->registrarEvento("ERROR","No se pudo encontrar la imagen del personaje "+ nombrePersonaje);
+    return NULL;
+}
+
+int ControladorJson::alturaPersonaje(std::string nombrePersonaje){
+    for (int i = 0; i < cantidad_personajes; i++){
+            if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0)
+                return std::get<2>(personajes[i]);
+        }
+    return -1;
+}
+
+int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
+    for (int i = 0; i < cantidad_personajes; i++){
+            if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0)
+                return std::get<3>(personajes[i]);
+        }
+    return -1;
+}
+

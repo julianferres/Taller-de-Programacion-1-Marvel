@@ -4,26 +4,32 @@
 #include <Juego.hpp>
 #include <ConfiguracionGlobal.hpp>
 #include <Sprite.hpp>
-#include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 #include <string>
-using namespace std;
+
 
 class ControladorGrafico;
+
 class Personaje{
-public:
-	Personaje();
-	Personaje(ControladorGrafico &grafico,const string filepath, float x, float y);
-	~Personaje();
-	void dibujar(ControladorGrafico &grafico);
-	void MoverDerecha();
-	void MoverIzquierda();
-private:
-	float posx, posy;
-	Sprite sprite;
+
+	public:
+
+		Personaje(ControladorGrafico &grafico, std::string nombre);
+		~Personaje();
+		void dibujar(ControladorGrafico &grafico);
+		void MoverDerecha();
+		void MoverIzquierda();
+		int ancho;
+		int alto;
+
+	private:
+
+		float posx, posy;
+		Sprite sprite;
+		int getXInicial(std::string nombre);
+		int getYInicial(std::string nombre);
+
 };
-
-
 
 #endif
 

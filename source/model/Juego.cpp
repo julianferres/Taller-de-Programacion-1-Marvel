@@ -1,7 +1,8 @@
-#include <ControladorGrafico.hpp>
-#include <ControladorTeclado.hpp>
-#include <Personaje.hpp>
+#include <Jugador.hpp>
+#include <ControladorLogger.hpp>
 #include <Juego.hpp>
+
+extern ControladorLogger *controladorLogger;
 
 Juego::Juego(){
 	this->isRunning=true;
@@ -15,49 +16,37 @@ Juego::~Juego()
 void Juego::gameLoop(){
 	ControladorGrafico graficos;
 	ControladorTeclado teclado;
-	this-> parallax = new Parallax(graficos);
 	SDL_Event evento;
 
-	this->personaje=new Personaje(graficos,"contents/images/CaptainAmericaSprites.png",0,300);
+	this->dibujarFondo(graficos);
+	this-> parallax = new Parallax(graficos);
+	if(this->parallax == NULL)
+		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax");
+	else
+		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax");
 
+	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Spiderman");
 
 	while (isRunning){
-		teclado.beginNewFrame();
-		if(SDL_PollEvent(&evento)){
-			if(evento.type==SDL_KEYDOWN){
-				if(evento.key.repeat==0){
-					teclado.keyDownEvent(evento);
-				}
-			}
-			else if(evento.type==SDL_KEYUP){
-				teclado.keyUpEvent(evento);
-			}
-			else if(evento.type==SDL_QUIT){
-				isRunning = false;
-				break;
-			}
-		}
-		if(teclado.wasKeyPressed(SDL_SCANCODE_ESCAPE)==true){
-			return;
-		}
-		else if(teclado.wasKeyPressed(SDL_SCANCODE_RIGHT)==true){
-			this->personaje->MoverDerecha();
-			this->parallax->MoverCamaraDerecha();
-			std::cout<<"una vez a la derecha"<<endl;
-		}
-		else if(teclado.wasKeyPressed(SDL_SCANCODE_LEFT)==true){
-					this->personaje->MoverIzquierda();
-					this->parallax->MoverCamaraIzquierda();
-					std::cout<<"una vez a la izquierda"<<endl;
-				}
-
+		startTime = SDL_GetTicks();
+		this->teclear(evento,teclado);
 		this->dibujar(graficos);
+		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
+			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
+
 	}
 
 }
-
+void Juego::dibujarFondo(ControladorGrafico &graficos){
+	this-> parallax = new Parallax(graficos);
+	if(this->parallax == NULL)
+		controladorLogger->registrarEvento("ERROR", "No se pudo cargar el parallax");
+	else
+		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax");
+}
 
 void Juego::actualizar(float tiempo){
+	//this->jugador1.actualizar(tiempo);
 }
 
 void Juego::dibujar(ControladorGrafico &grafico){
@@ -65,12 +54,39 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL);
 	grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL);
 	grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL);
-	this->personaje->dibujar(grafico);
+	this->jugador1->personajeActualDibujar(grafico);
 	grafico.render();
 }
 
-
-
-
-
-
+void Juego::teclear(SDL_Event evento,ControladorTeclado teclado){
+	while(SDL_PollEvent(&evento)){
+		switch(evento.type){
+			case SDL_QUIT:
+				isRunning = false;
+				break;
+			case SDL_KEYDOWN:
+				switch(evento.key.keysym.sym){
+					case SDLK_RIGHT:
+						this->jugador1->personajeActualMoverDerecha();
+						this->parallax->MoverCamaraDerecha();
+						controladorLogger->registrarEvento("DEBUG", "una vez a la derecha");
+						break;
+					case SDLK_LEFT:
+						this->jugador1->personajeActualMoverIzquierda();
+						this->parallax->MoverCamaraIzquierda();
+						controladorLogger->registrarEvento("DEBUG", "una vez a la izquierda");
+						break;
+					case SDLK_l:
+						this->jugador1->cambiarPersonaje();
+						controladorLogger->registrarEvento("DEBUG", "Cambio de personaje");
+						break;
+					case SDLK_ESCAPE:
+						isRunning = false;
+						break;
+				}
+				break;
+			default:
+				break;
+		}
+	}
+}
