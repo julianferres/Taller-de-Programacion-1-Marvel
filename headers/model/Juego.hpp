@@ -33,6 +33,7 @@ class Juego{
 		void teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer);
 		bool isRunning;
 		Jugador *jugador1;
+		Jugador *jugador2;
 		Parallax *parallax;
 
 };
