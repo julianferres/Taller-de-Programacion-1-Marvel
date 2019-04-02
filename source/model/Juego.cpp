@@ -85,6 +85,9 @@ void Juego::teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMov
 						this->jugador1->cambiarPersonaje();
 						controladorLogger->registrarEvento("DEBUG", "Cambio de personaje");
 						break;
+					case SDLK_UP:
+						this->jugador1->personajeActualSaltar();
+						break;
 					case SDLK_ESCAPE:
 						isRunning = false;
 						break;

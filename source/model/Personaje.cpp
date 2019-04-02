@@ -16,6 +16,8 @@ Personaje::Personaje(ControladorGrafico &graficos, std::string nombre){
 }
 
 void Personaje::dibujar(ControladorGrafico &graficos){
+	if(saltando)
+		this->Saltar();
 	this->sprite.dibujar(graficos,this->posx,this->posy);
 }
 
@@ -29,6 +31,27 @@ void Personaje::MoverIzquierda(){
 	if(posx < 0)
 			return;
 	this->posx=this->posx-10;
+}
+
+void Personaje::Saltar(){
+	if( ! saltando){
+		saltando = true;
+		return;
+	}
+	if( alturaActualSalto >= alturaMaximaSalto  || cayendo){
+		alturaActualSalto -=2;
+		if(alturaActualSalto <= 0 ){
+			cayendo = false;
+			saltando = false;
+			return;
+		}
+		posy+=2;
+		cayendo = true;
+	}
+	else{
+		alturaActualSalto+=5;
+		posy -=5;
+	}
 }
 
 int Personaje::getXInicial(std::string nombre){

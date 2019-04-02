@@ -29,6 +29,11 @@ void Jugador::personajeActualMoverIzquierda(){
 	this->personaje2->MoverIzquierda();
 }
 
+void Jugador::personajeActualSaltar(){
+	this->personaje1->Saltar();
+	this->personaje2->Saltar();
+}
+
 void Jugador::personajeActualDibujar(ControladorGrafico &graficos){
 	this->personajeActual->dibujar(graficos);
 }

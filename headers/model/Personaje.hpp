@@ -19,10 +19,15 @@ class Personaje{
 		void dibujar(ControladorGrafico &grafico);
 		void MoverDerecha();
 		void MoverIzquierda();
+		void Saltar();
 		float getX();
 		float getXDer();
 		int ancho;
 		int alto;
+		bool saltando = false;
+		bool cayendo = false;
+		int alturaMaximaSalto = 100;
+		int alturaActualSalto = 0;
 
 
 	private:
