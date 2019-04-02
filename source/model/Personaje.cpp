@@ -51,4 +51,11 @@ int Personaje::getYInicial(std::string nombre){
 	}
 }
 
+float Personaje::getX(){
+	return this->posx;
+}
+
+float Personaje::getXDer(){
+	return (this->posx + this->ancho);
+}
 

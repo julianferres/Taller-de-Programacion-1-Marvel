@@ -19,8 +19,11 @@ class Personaje{
 		void dibujar(ControladorGrafico &grafico);
 		void MoverDerecha();
 		void MoverIzquierda();
+		float getX();
+		float getXDer();
 		int ancho;
 		int alto;
+
 
 	private:
 
