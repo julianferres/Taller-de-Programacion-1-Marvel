@@ -17,6 +17,7 @@ class Jugador{
 		void personajeActualMoverIzquierda();
 		void personajeActualDibujar(ControladorGrafico &grafico);
 		void cambiarPersonaje();
+		float obtenerPosicionXPersonaje(bool posicionDer);
 
 	private:
 

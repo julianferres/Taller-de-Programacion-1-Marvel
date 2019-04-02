@@ -27,11 +27,11 @@ class Juego{
 
 	private:
 
-		void gameLoop();
+		void gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer);
 		void dibujar(ControladorGrafico &grafico);
 		void actualizar(float tiempo);
 		void dibujarFondo(ControladorGrafico &graficos);
-		void teclear(SDL_Event evento,ControladorTeclado teclado);
+		void teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer);
 		bool isRunning;
 		Jugador *jugador1;
 		Parallax *parallax;

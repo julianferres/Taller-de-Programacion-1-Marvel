@@ -32,3 +32,12 @@ void Jugador::personajeActualMoverIzquierda(){
 void Jugador::personajeActualDibujar(ControladorGrafico &graficos){
 	this->personajeActual->dibujar(graficos);
 }
+
+float Jugador::obtenerPosicionXPersonaje(bool posicionDer){
+	if (posicionDer){
+		return ((this->personajeActual)->getXDer());
+	}
+	return ((this->personajeActual)->getX());
+}
+
+

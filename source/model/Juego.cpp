@@ -2,18 +2,22 @@
 #include <ControladorLogger.hpp>
 #include <Juego.hpp>
 
+extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
 Juego::Juego(){
+	int posicionMoverFondoIzq = controladorJson->anchoVentana() * 1/4;
+	int posicionMoverFondoDer = controladorJson->anchoVentana() * 3/4;
+
 	this->isRunning=true;
 	SDL_Init(SDL_INIT_EVERYTHING);
-	this->gameLoop();
+	this->gameLoop(posicionMoverFondoIzq, posicionMoverFondoDer);
 }
 
 Juego::~Juego()
 {}
 
-void Juego::gameLoop(){
+void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	ControladorGrafico graficos;
 	ControladorTeclado teclado;
 	SDL_Event evento;
@@ -29,7 +33,7 @@ void Juego::gameLoop(){
 
 	while (isRunning){
 		startTime = SDL_GetTicks();
-		this->teclear(evento,teclado);
+		this->teclear(evento,teclado, posicionMoverFondoIzq, posicionMoverFondoDer);
 		this->dibujar(graficos);
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
@@ -58,7 +62,7 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.render();
 }
 
-void Juego::teclear(SDL_Event evento,ControladorTeclado teclado){
+void Juego::teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	while(SDL_PollEvent(&evento)){
 		switch(evento.type){
 			case SDL_QUIT:
@@ -68,12 +72,13 @@ void Juego::teclear(SDL_Event evento,ControladorTeclado teclado){
 				switch(evento.key.keysym.sym){
 					case SDLK_RIGHT:
 						this->jugador1->personajeActualMoverDerecha();
-						this->parallax->MoverCamaraDerecha();
+						//if(jugador1->obtenerPosicionXPersonaje() > posicionMoverFondoDer)
+						if(jugador1->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
 						controladorLogger->registrarEvento("DEBUG", "una vez a la derecha");
 						break;
 					case SDLK_LEFT:
 						this->jugador1->personajeActualMoverIzquierda();
-						this->parallax->MoverCamaraIzquierda();
+						if (jugador1->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
 						controladorLogger->registrarEvento("DEBUG", "una vez a la izquierda");
 						break;
 					case SDLK_l:
