@@ -1,18 +1,23 @@
 #include <Personaje.hpp>
 #include <ControladorJson.hpp>
 #include <string>
+#include <iostream>
+#include<math.h>
+#define constanteDeAltura 39.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
+#define constanteTiempoCiclos 0.3
 
-extern ControladorJson *controladorJson;
 
 Personaje::~Personaje(){
 }
+
 Personaje::Personaje(ControladorGrafico &graficos, std::string nombre){
 	this->posx= jugador1::X0;
 	this->posy= controladorJson->alturaVentana()*3/4;
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
 	this->sprite=Sprite(graficos,controladorJson->pathImagen(nombre),this->getXInicial(nombre),
-			this->getYInicial(nombre),ancho,alto);
+	this->getYInicial(nombre),ancho,alto);
+	this->velocidadInicial = sqrt(constanteDeAltura * alto);
 }
 
 void Personaje::dibujar(ControladorGrafico &graficos){
@@ -34,23 +39,21 @@ void Personaje::MoverIzquierda(){
 }
 
 void Personaje::Saltar(){
-	if( ! saltando)
-		saltando = true;
-	else if( alturaActualSalto >= alturaMaximaSalto  || cayendo){
-		alturaActualSalto -=2;
-		if(alturaActualSalto <= 0 ){
-			cayendo = false;
-			saltando = false;
-			return;
-		}
-		posy+=2;
-		cayendo = true;
-	}
+	if( ! saltando) saltando = true;
 	else{
-		alturaActualSalto+=5;
-		posy -=5;
+		if(alturaActualSalto <= 0 && tiempo != 0 ){
+			saltando = false; 	tiempo = 0; 	return;
+		}
+		else{
+			tiempo += constanteTiempoCiclos;
+			float alturaPrevia  = alturaActualSalto;
+			alturaActualSalto = (velocidadInicial - 4.9* tiempo)*tiempo;
+			//El 4.9 viene de 0.5*gravedad
+			posy -= (alturaActualSalto - alturaPrevia);
+		}
 	}
 }
+
 
 int Personaje::getXInicial(std::string nombre){
 	if( nombre == "CapitanAmerica"){

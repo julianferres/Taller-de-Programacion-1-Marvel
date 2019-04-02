@@ -6,7 +6,9 @@
 #include <Sprite.hpp>
 #include <ControladorGrafico.hpp>
 #include <string>
+#include <ControladorJson.hpp>
 
+extern ControladorJson *controladorJson;
 
 class ControladorGrafico;
 
@@ -24,11 +26,10 @@ class Personaje{
 		float getXDer();
 		int ancho;
 		int alto;
+		float velocidadInicial;
 		bool saltando = false;
-		bool cayendo = false;
-		int alturaMaximaSalto = 100;
-		int alturaActualSalto = 0;
-
+		float alturaActualSalto = 0;
+		float tiempo = 0;
 
 	private:
 
