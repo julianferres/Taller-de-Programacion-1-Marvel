@@ -6,38 +6,40 @@
 #include <string>
 #include <vector>
 #include <ConfiguracionGlobal.hpp>
+using namespace std;
 
 class ControladorGrafico;
 
-class SpriteAnimado: public Sprite{
+class SpriteAnimado{
 
 	public:
 
 		SpriteAnimado();
-		SpriteAnimado(ControladorGrafico &graficos, const std::string &filePath, int x0, int y0, int ancho, int alto,float posX, float posY, float timeToUpdate);
-		void iniciarAnimacion(std::string animacion, bool unica = false);
-		void update(int tiempoTrancurrido);
+		SpriteAnimado(ControladorGrafico &graficos, const string &filePath);
+		void iniciarAnimacion(string animacion, bool unica = false);
+		void update(int largo);
 		void dibujar(ControladorGrafico &graficos, int x, int y);
-
-	protected:
-
-		bool _animacionActualUnica;
-		double _timeToUpdate;
-		std::string _animacionActual;
-		void agregarAnimacion(int frames, int x, int y, std::string nombre, int ancho, int alto, Vector2 offset);
+		void agregarAnimacion(int frames, int x, int y, string nombre, int ancho, int alto);
 		void reiniciarAnimacion();
 		void pararAnimacion();
 		void esVisible( bool visible);
-		virtual void animacionFinalizada(std::string _animacionActual)=0;
-		virtual void configurarAnimaciones() = 0;
+		void animacionFinalizada(string _animacionActual);
 
 	private:
 
-		std::map<std::string, std::vector<SDL_Rect> > _animaciones;
-		std::map<std::string, Vector2> _offsets;
-		int _frameIndex;
+		map<string,vector<SDL_Rect> > animacion;
+		map<std::string, Vector2> _offsets;
 		double tiempoTrancurrido;
-		bool _visible;
+
+		int ancho;
+		int alto;
+		bool animacionActualUnica;
+		double _timeToUpdate;
+		string animacionActual;
+
+		int frameIndex;
+		bool visible;
+		SDL_Texture* spriteSheet;
 
 };
 

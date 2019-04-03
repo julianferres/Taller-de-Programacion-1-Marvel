@@ -7,6 +7,7 @@
 #include <ControladorTeclado.hpp>
 #include <ControladorJson.hpp>
 #include <Sprite.hpp>
+#include <SpriteAnimado.hpp>
 #include <Parallax.hpp>
 
 extern ControladorJson *controladorJson;
@@ -28,7 +29,7 @@ class Juego{
 	private:
 
 		void gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer);
-		void dibujar(ControladorGrafico &grafico);
+		void dibujar(ControladorGrafico &grafico,SpriteAnimado *algo);
 		void dibujarFondo(ControladorGrafico &graficos);
 		void teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer);
 		bool isRunning;

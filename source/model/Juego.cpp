@@ -1,6 +1,7 @@
 #include <Jugador.hpp>
 #include <ControladorLogger.hpp>
 #include <Juego.hpp>
+#include <SpriteAnimado.hpp>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -21,6 +22,11 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	ControladorGrafico graficos;
 	ControladorTeclado teclado;
 	SDL_Event evento;
+	SpriteAnimado *pruebaMovimiento;
+
+	pruebaMovimiento=new SpriteAnimado(graficos,"contents/images/CaptainAmericaSprites.png");
+	pruebaMovimiento->agregarAnimacion(6,0,286,"caminarDerecha",101,126);
+	pruebaMovimiento->iniciarAnimacion("caminarDerecha",true);
 
 	this->dibujarFondo(graficos);
 	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Spiderman");
@@ -29,7 +35,7 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	while (isRunning){
 		startTime = SDL_GetTicks();
 		this->teclear(evento,teclado, posicionMoverFondoIzq, posicionMoverFondoDer);
-		this->dibujar(graficos);
+		this->dibujar(graficos,pruebaMovimiento);
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
 
@@ -44,13 +50,15 @@ void Juego::dibujarFondo(ControladorGrafico &graficos){
 		controladorLogger->registrarEvento("DEBUG", "Se cargo correctamente el parallax");
 }
 
-void Juego::dibujar(ControladorGrafico &grafico){
+void Juego::dibujar(ControladorGrafico &grafico,SpriteAnimado *pruebaMovimiento){
 	grafico.limpiar();
 	grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL);
 	grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL);
 	grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL);
 	this->jugador1->personajeActualDibujar(grafico);
 	this->jugador2->personajeActualDibujar(grafico);
+	pruebaMovimiento->dibujar(grafico,200,400);
+	pruebaMovimiento->update(6);
 	grafico.render();
 }
 
