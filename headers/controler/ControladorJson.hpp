@@ -21,6 +21,7 @@ class ControladorJson{
 		std::string nivelDebug();
 		std::string pathFondo(int zindex);
 		std::string pathImagen(std::string nombrePersonaje);
+		void leerArchivoDefault();
 
 	private:
 
@@ -37,12 +38,18 @@ class ControladorJson{
 
 		//Valores por defecto
 		const std::string configPathDefault = "source/default/config.json";
+		const std::string nivel_debug_default = "DEBUG";
 		const int altura_ventana_default = 600;
 		const int ancho_ventana_default = 800;
 		const bool fullscreen_default = false;
 		const int cantidad_personajes_default = 4;
 		const int cantidad_fondos_default = 3;
 		const int FPS_default = 60;
+
+		//Rangos aceptados
+		const int rango_altura_ventana[2] = {400, 800};
+		const int rango_ancho_ventana[2] = {600, 1000};
+		const int rango_FPS[2] = {30, 60};
 
 };
 

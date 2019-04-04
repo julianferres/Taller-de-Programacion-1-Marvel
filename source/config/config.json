@@ -5,23 +5,23 @@
         [
             {"background":
                 {
-                    "filepath":"contents/images/capa0.png",
+                    "filepath":"contents/images/capa3.png",
                     "zindex":3
                 }
             },
             {"background":
                 {
-                    "filepath":"contents/images/capa1.png",
+                    "filepath":"contents/images/capa2.png",
                     "zindex":2
                 }
             },
             {"background":
                 {
-                    "filepath":"contents/images/capa2.png",
+                    "filepath":"contents/images/capa1.png",
                     "zindex":1
                 }
             }
-        ],
+       
     "characters":
         [
             {"name":"CapitanAmerica",
