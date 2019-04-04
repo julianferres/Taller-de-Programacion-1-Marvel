@@ -19,15 +19,10 @@ Juego::~Juego()
 {}
 
 void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
+
 	ControladorGrafico graficos;
 	ControladorTeclado teclado;
 	SDL_Event evento;
-	/*SpriteAnimado *pruebaMovimiento;
-
-	pruebaMovimiento=new SpriteAnimado(graficos,"contents/images/CaptainAmericaSprites.png");
-	pruebaMovimiento->agregarAnimacion(6,0,286,"caminarDerecha",101,126);
-	pruebaMovimiento->agregarAnimacion(9,0,19,"quieto",90,120);
-	pruebaMovimiento->iniciarAnimacion("caminarDerecha");*/
 
 	this->dibujarFondo(graficos);
 	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Spiderman");
@@ -58,8 +53,6 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL);
 	this->jugador1->personajeActualDibujar(grafico);
 	this->jugador2->personajeActualDibujar(grafico);
-	/*pruebaMovimiento->dibujar(grafico,200,400);
-	pruebaMovimiento->update(10);*/
 	grafico.render();
 }
 
@@ -93,6 +86,10 @@ void Juego::teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMov
 				this->jugador1->personajeActualMoverIzquierda();
 				if (jugador1->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
 				controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la izquierda");
+			}
+			if (keys[SDL_SCANCODE_S]){
+				this->jugador1->personajeActualAgacharse();
+				controladorLogger->registrarEvento("DEBUG", "Jugador 1 agachado");
 			}
 			if (keys[SDL_SCANCODE_W]){
 				this->jugador1->personajeActualSaltar();

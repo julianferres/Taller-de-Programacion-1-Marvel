@@ -23,6 +23,7 @@ class Personaje{
 		void MoverDerecha();
 		void MoverIzquierda();
 		void Saltar();
+		void agacharse();
 		float getX();
 		float getXDer();
 		int ancho;

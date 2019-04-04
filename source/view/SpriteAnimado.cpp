@@ -15,6 +15,23 @@ SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos, const string &filePat
 string SpriteAnimado::getAnimacionActual(){
 	return this->animacionActual;
 }
+void SpriteAnimado::cargarAnimaciones(string nombre){
+	if(nombre=="CapitanAmerica" or nombre=="CapitanAmerica2"){
+		this->agregarAnimacion(6,0,158,"movDerecha",100,122);
+		this->agregarAnimacion(9,0,16,"quieto",100,120);
+		this->agregarAnimacion(3,0,740,"agacharse",100,105);
+		this->agregarAnimacion(6,0,288,"movIzquierda",100,122);
+		this->agregarAnimacion(6,0,422,"salto",100,171);
+	}
+	if((nombre=="Spiderman") or (nombre=="Spiderman2")){
+		this->agregarAnimacion(6,0,158,"movDerecha",100,122);
+		this->agregarAnimacion(9,0,16,"quieto",100,120);
+		this->agregarAnimacion(3,0,740,"agacharse",100,105);
+		this->agregarAnimacion(6,0,288,"movIzquierda",100,122);
+		this->agregarAnimacion(6,0,422,"salto",100,171);
+	}
+
+}
 
 void SpriteAnimado::agregarAnimacion(int frames, int x, int y, string nombre, int ancho, int alto){
 	vector<SDL_Rect> rectangulos;

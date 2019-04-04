@@ -10,7 +10,7 @@ using namespace std;
 Personaje::~Personaje(){
 }
 
-Personaje::Personaje(ControladorGrafico &graficos, std::string nombre){
+Personaje::Personaje(ControladorGrafico &graficos, string nombre){
 	this->posx= controladorJson->posicionXinicialPersonaje(nombre);
 	this->posxrelativo=this->posx;
 	this->posy= controladorJson->alturaVentana()*3/4;
@@ -18,8 +18,7 @@ Personaje::Personaje(ControladorGrafico &graficos, std::string nombre){
 	this->ancho = controladorJson->anchoPersonaje(nombre);
 	//this->sprite=Sprite(graficos,controladorJson->pathImagen(nombre),this->getXInicial(nombre),this->getYInicial(nombre),ancho,alto);
 	this->spriteAnimado=SpriteAnimado(graficos,controladorJson->pathImagen(nombre));
-	this->spriteAnimado.agregarAnimacion(6,0,158,"movDerecha",100,122);
-	this->spriteAnimado.agregarAnimacion(9,0,16,"quieto",100,120);
+	this->spriteAnimado.cargarAnimaciones(nombre);
 	this->spriteAnimado.iniciarAnimacion("quieto");
 	this->velocidadInicial = sqrt(constanteDeAltura * alto);
 }
@@ -36,7 +35,15 @@ void Personaje::dibujar(ControladorGrafico &graficos){
 		}
 	}
 	else{
-		this->spriteAnimado.dibujar(graficos,this->posx,this->posy);
+		if(this->spriteAnimado.getAnimacionActual()=="movIzquierda"){
+			if(this->posxrelativo>this->posx){
+				this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy);
+				this->posxrelativo=this->posxrelativo-5;
+			}
+		}
+		else{
+			this->spriteAnimado.dibujar(graficos,this->posx,this->posy);
+		}
 	}
 }
 
@@ -51,10 +58,16 @@ void Personaje::MoverDerecha(){
 void Personaje::MoverIzquierda(){
 	if(posx < 0)
 			return;
+	this->spriteAnimado.iniciarAnimacion("movIzquierda");
+	this->posxrelativo=this->posx;
 	this->posx=this->posx-30;
+}
+void Personaje::agacharse(){
+	this->spriteAnimado.iniciarAnimacion("agacharse");
 }
 
 void Personaje::Saltar(){
+	this->spriteAnimado.iniciarAnimacion("salto");
 	if( ! saltando) saltando = true;
 	else{
 		if(alturaActualSalto <= 0 && tiempo != 0 ){

@@ -24,11 +24,11 @@ class SpriteAnimado{
 		void esVisible( bool visible);
 		void animacionFinalizada();
 		string getAnimacionActual();
+		void cargarAnimaciones(string nombre);
 
 	private:
 
 		map<string,vector<SDL_Rect> > animacion;
-		map<std::string, Vector2> _offsets;
 
 		string animacionActual;
 		int frameIndex;
