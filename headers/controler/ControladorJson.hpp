@@ -35,6 +35,15 @@ class ControladorJson{
 		std::vector<std::tuple<std::string, int>> fondos;
 		std::string configPath = "source/config/config.json";
 
+		//Valores por defecto
+		const std::string configPathDefault = "source/default/config.json";
+		const int altura_ventana_default = 600;
+		const int ancho_ventana_default = 800;
+		const bool fullscreen_default = false;
+		const int cantidad_personajes_default = 4;
+		const int cantidad_fondos_default = 3;
+		const int FPS_default = 60;
+
 };
 
 #endif
