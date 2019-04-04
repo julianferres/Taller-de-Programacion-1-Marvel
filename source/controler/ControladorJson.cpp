@@ -56,7 +56,7 @@ void ControladorJson::leerArchivo(){
 			if (file.good() == false){
 				//Cargar imagen con zindex correspondiente
 				controladorLogger->registrarEvento("ERROR","Imagen de fondo no encontrada. Se carga una por defecto");
-				filepath_fondo = "contents/images/capa" + std::to_string(zindex_fondo) + ".png";
+				filepath_fondo = "contents/auxiliar/capa" + std::to_string(zindex_fondo) + ".png";
 			}
 			fondos.push_back(std::make_tuple(filepath_fondo , zindex_fondo));
 		}
