@@ -4,6 +4,7 @@
 #include <Juego.hpp>
 #include <ConfiguracionGlobal.hpp>
 #include <Sprite.hpp>
+#include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 #include <string>
 #include <ControladorJson.hpp>
@@ -33,8 +34,9 @@ class Personaje{
 
 	private:
 
-		float posx, posy;
-		Sprite sprite;
+		float posx, posy,posxrelativo;
+		//Sprite sprite;
+		SpriteAnimado spriteAnimado;
 		int getXInicial(std::string nombre);
 		int getYInicial(std::string nombre);
 

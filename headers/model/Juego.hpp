@@ -29,7 +29,7 @@ class Juego{
 	private:
 
 		void gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer);
-		void dibujar(ControladorGrafico &grafico,SpriteAnimado *algo);
+		void dibujar(ControladorGrafico &grafico);
 		void dibujarFondo(ControladorGrafico &graficos);
 		void teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer);
 		bool isRunning;
