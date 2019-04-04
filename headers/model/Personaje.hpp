@@ -38,8 +38,6 @@ class Personaje{
 		float posx, posy,posxrelativo;
 		//Sprite sprite;
 		SpriteAnimado spriteAnimado;
-		int getXInicial(std::string nombre);
-		int getYInicial(std::string nombre);
 
 };
 

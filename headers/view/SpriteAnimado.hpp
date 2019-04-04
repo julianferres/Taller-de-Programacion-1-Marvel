@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <ConfiguracionGlobal.hpp>
+#include <Animacion.hpp>
 using namespace std;
 
 class ControladorGrafico;
@@ -17,8 +17,9 @@ class SpriteAnimado{
 		SpriteAnimado();
 		SpriteAnimado(ControladorGrafico &graficos, const string &filePath);
 		void iniciarAnimacion(string animacion);
-		void update(int salto);
-		void dibujar(ControladorGrafico &graficos, int x, int y);
+		void update();
+		void dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho);
+		void cambiarAnimacion(string animacion);
 		void agregarAnimacion(int frames, int x, int y, string nombre, int ancho, int alto);
 		void pararAnimacion();
 		void esVisible( bool visible);
@@ -28,13 +29,12 @@ class SpriteAnimado{
 
 	private:
 
-		map<string,vector<SDL_Rect> > animacion;
-
-		string animacionActual;
-		int frameIndex;
-		bool visible;
+		Animacion *animacionActual;
+		vector<Animacion*> animaciones;
 		SDL_Texture* spriteSheet;
-		int paso;
+		int frameIndex = 0;
+		int regulador = 0;
+		bool visible = true;
 
 };
 

@@ -1,6 +1,6 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
-#include <Sprite.hpp>
+#include <Animacion.hpp>
 
 using namespace std;
 
@@ -9,44 +9,52 @@ SpriteAnimado::SpriteAnimado(){
 
 SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos, const string &filePath){
 	this->spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
-	this->visible=true;
-	this->frameIndex=0;
 }
+
 string SpriteAnimado::getAnimacionActual(){
-	return this->animacionActual;
+	return this->animacionActual->getNombre();
 }
 void SpriteAnimado::cargarAnimaciones(string nombre){
 	if(nombre=="CapitanAmerica" or nombre=="CapitanAmerica2"){
-		this->agregarAnimacion(6,0,158,"movDerecha",100,122);
-		this->agregarAnimacion(9,0,16,"quieto",100,120);
-		this->agregarAnimacion(3,0,740,"agacharse",100,105);
-		this->agregarAnimacion(6,0,288,"movIzquierda",100,122);
-		this->agregarAnimacion(6,0,422,"salto",100,171);
+		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,5);
+		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,3);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,3);
+		Animacion *salto = new Animacion("salto",6,0,422,100,171,10);
+		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,105,4);
+		animaciones.push_back(quieto);
+		animaciones.push_back(moverDerecha);
+		animaciones.push_back(moverIzquierda);
+		animaciones.push_back(salto);
+		animaciones.push_back(agacharse);
+		animacionActual = quieto;
 	}
 	if((nombre=="Spiderman") or (nombre=="Spiderman2")){
-		this->agregarAnimacion(6,0,158,"movDerecha",100,122);
-		this->agregarAnimacion(9,0,16,"quieto",100,120);
-		this->agregarAnimacion(3,0,740,"agacharse",100,105);
-		this->agregarAnimacion(6,0,288,"movIzquierda",100,122);
-		this->agregarAnimacion(6,0,422,"salto",100,171);
+		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,5);
+		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,3);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,3);
+		Animacion *salto = new Animacion("salto",6,0,422,100,171,8);
+		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,15,2);
+		animaciones.push_back(quieto);
+		animaciones.push_back(moverDerecha);
+		animaciones.push_back(moverIzquierda);
+		animaciones.push_back(salto);
+		animaciones.push_back(agacharse);
+		animacionActual = quieto;
 	}
 
 }
 
-void SpriteAnimado::agregarAnimacion(int frames, int x, int y, string nombre, int ancho, int alto){
-	vector<SDL_Rect> rectangulos;
-	for (int i = 0; i < frames; i++){
-		SDL_Rect newRect = { x+(i*ancho), y, ancho, alto};
-		rectangulos.push_back(newRect);
+void SpriteAnimado::iniciarAnimacion(string nombre){
+	if( animacionActual->getNombre() != nombre){
+		cambiarAnimacion(nombre);
+		frameIndex = 0;
 	}
-	this->animacion.insert(pair<string, vector<SDL_Rect> > (nombre, rectangulos));
-
 }
 
-void SpriteAnimado::iniciarAnimacion(string animacion){
-	if(this->animacionActual != animacion){
-		this->animacionActual = animacion;
-		this->frameIndex = 0;
+void SpriteAnimado::cambiarAnimacion(string nombre){
+	for(Uint8 i=0; i<animaciones.size();i++){
+		if(animaciones[i]->getNombre() == nombre )
+			animacionActual = animaciones[i];
 	}
 }
 
@@ -59,23 +67,28 @@ void SpriteAnimado::pararAnimacion(){
 	this->animacionFinalizada(this->_animacionActual);*/
 }
 
-void SpriteAnimado::update(int salto){
-	if (this->frameIndex<this->animacion[this->animacionActual].size() - 1){
-		this->frameIndex=this->frameIndex+1;
+void SpriteAnimado::update(){
+	if( regulador < animacionActual->getVelocidad()){
+		regulador++;
+		return;
 	}
+	if (frameIndex < animacionActual->getFrames() - 1 )
+		frameIndex++;
 	else{
 		this->frameIndex=0;
 		this->animacionFinalizada();
 	}
+	regulador = 0;
 }
-void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y){
-	if(this->visible){
-		SDL_Rect sourceRect = this->animacion[this->animacionActual][this->frameIndex];
-		SDL_Rect rectanguloDestino={x, y, sourceRect.w, sourceRect.h};
+
+void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho){
+	 if(this->visible){
+		SDL_Rect sourceRect = animacionActual->getRectOrigen(this->frameIndex);
+		SDL_Rect rectanguloDestino={x, y, ancho,alto};
 		graficos.dibujarImagen(this->spriteSheet, &sourceRect, &rectanguloDestino);
 	}
 }
 
 void SpriteAnimado::animacionFinalizada(){
-	this->animacionActual="quieto";
+	this->cambiarAnimacion("quieto");
 }

@@ -26,31 +26,31 @@
         [
             {"name":"CapitanAmerica",
             "filepath":"contents/images/CaptainAmericaSprites.png",
-            "height":115,
-            "width":89,
+            "height":170,
+            "width":100,
             "zindex":99,
-	    "posicionX":5
+	    "posicionX":20
             },
             {"name":"Spiderman",
             "filepath":"contents/images/SpidermanSprites.png",
-            "height":97,
-            "width":107,
+            "height":110,
+            "width":125,
             "zindex":99,
-            "posicionX":5
+            "posicionX":20
             },
             {"name":"Spiderman2",
             "filepath":"contents/images/SpidermanSprites.png",
             "height":110,
             "width":125,
             "zindex":99,
-            "posicionX":500
+            "posicionX":600
             },
 	    {"name":"CapitanAmerica2",
             "filepath":"contents/images/CaptainAmericaSprites.png",
-            "height":215,
-            "width":200,
+            "height":170,
+            "width":100,
             "zindex":99,
-	    "posicionX":500
+	    "posicionX":600
             }           
 
         ],
