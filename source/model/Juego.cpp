@@ -63,39 +63,58 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.render();
 }
 
+
 void Juego::teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer){
+	const Uint8 *keys = SDL_GetKeyboardState(NULL);
 	while(SDL_PollEvent(&evento)){
-		switch(evento.type){
-			case SDL_QUIT:
+			if (evento.type == SDL_QUIT  || keys[SDL_SCANCODE_ESCAPE] ){
 				isRunning = false;
-				break;
-			case SDL_KEYDOWN:
-				switch(evento.key.keysym.sym){
-					case SDLK_RIGHT:
-						this->jugador1->personajeActualMoverDerecha();
-						//if(jugador1->obtenerPosicionXPersonaje() > posicionMoverFondoDer)
-						if(jugador1->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
-						controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la derecha");
-						break;
-					case SDLK_LEFT:
-						this->jugador1->personajeActualMoverIzquierda();
-						if (jugador1->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
-						controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la izquierda");
-						break;
-					case SDLK_l:
-						this->jugador1->cambiarPersonaje();
-						controladorLogger->registrarEvento("DEBUG", "Cambio de personaje");
-						break;
-					case SDLK_UP:
-						this->jugador1->personajeActualSaltar();
-						break;
-					case SDLK_ESCAPE:
-						isRunning = false;
-						break;
+		        break;
+		    }
+			if (evento.type == SDL_KEYDOWN){
+				if(evento.key.keysym.sym == SDLK_l){
+					this->jugador1->cambiarPersonaje();
+					controladorLogger->registrarEvento("DEBUG", "Cambio de personaje del jugador 1");
+					break;
 				}
-				break;
-			default:
-				break;
-		}
+				if(evento.key.keysym.sym == SDLK_o){
+					this->jugador2->cambiarPersonaje();
+					controladorLogger->registrarEvento("DEBUG", "Cambio de personaje del jugador 2");
+					break;
+				}
+			}
+
+			 if (keys[SDL_SCANCODE_D]){
+				this->jugador1->personajeActualMoverDerecha();
+				if(jugador1->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
+				controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la derecha");
+			}
+			if (keys[SDL_SCANCODE_A]){
+				this->jugador1->personajeActualMoverIzquierda();
+				if (jugador1->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
+				controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la izquierda");
+			}
+			if (keys[SDL_SCANCODE_W]){
+				this->jugador1->personajeActualSaltar();
+				controladorLogger->registrarEvento("DEBUG", "Jugador 1 salta");
+			}
+		   if (keys[SDL_SCANCODE_RIGHT]){
+		    	this->jugador2->personajeActualMoverDerecha();
+		    	if(jugador2->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
+		    	controladorLogger->registrarEvento("DEBUG", "Jugador 2 a la derecha");
+		    }
+		    if (keys[SDL_SCANCODE_LEFT]){
+		    	this->jugador2->personajeActualMoverIzquierda();
+		    	if (jugador2->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
+		    	controladorLogger->registrarEvento("DEBUG", "Jugador 2 a la izquierda");
+		    }
+		    if (keys[SDL_SCANCODE_UP]){
+		    	this->jugador2->personajeActualSaltar();
+		    	controladorLogger->registrarEvento("DEBUG", "Jugador 2 salta");
+		    }
+		    if (keys[SDL_SCANCODE_P]){
+				this->jugador2->cambiarPersonaje();
+				controladorLogger->registrarEvento("DEBUG", "Cambio de personaje de jugador 2");
+			}
 	}
 }
