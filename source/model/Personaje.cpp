@@ -51,7 +51,7 @@ void Personaje::MoverDerecha(){
 	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movDerecha");
 	this->posxrelativo=this->posx;
-	this->posx=this->posx+30;
+	this->posx=this->posx+50;
 }
 
 void Personaje::MoverIzquierda(){
@@ -60,7 +60,7 @@ void Personaje::MoverIzquierda(){
 	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movIzquierda");
 	this->posxrelativo=this->posx;
-	this->posx=this->posx-30;
+	this->posx=this->posx-50;
 }
 void Personaje::agacharse(){
 	this->spriteAnimado.iniciarAnimacion("agacharse");

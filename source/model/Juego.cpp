@@ -25,7 +25,7 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	SDL_Event evento;
 
 	this->dibujarFondo(graficos);
-	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Spiderman");
+	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom");
 	this->jugador2 = new Jugador(graficos,"Spiderman2", "CapitanAmerica2");
 
 	while (isRunning){

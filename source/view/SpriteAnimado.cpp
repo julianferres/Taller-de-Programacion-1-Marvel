@@ -16,9 +16,9 @@ string SpriteAnimado::getAnimacionActual(){
 }
 void SpriteAnimado::cargarAnimaciones(string nombre){
 	if(nombre=="CapitanAmerica" or nombre=="CapitanAmerica2"){
-		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,5);
-		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,3);
-		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,3);
+		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,4);
+		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,5);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,5);
 		Animacion *salto = new Animacion("salto",6,0,422,100,171,10);
 		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,105,4);
 		animaciones.push_back(quieto);
@@ -30,8 +30,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 	}
 	if((nombre=="Spiderman") or (nombre=="Spiderman2")){
 		Animacion *quieto = new Animacion("quieto",10,0,0,125,115,5);
-		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,98,1);
-		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,98,1);
+		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,99,1);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,1);
 		Animacion *salto = new Animacion("salto",6,0,422,100,171,8);
 		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,15,2);
 		animaciones.push_back(quieto);
@@ -41,6 +41,19 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(agacharse);
 		animacionActual = quieto;
 	}
+	if((nombre=="Venom") or (nombre=="Venom2")){
+			Animacion *quieto = new Animacion("quieto",13,0,519,160,123,5);
+			Animacion *moverDerecha = new Animacion("movDerecha",10,0,2905,160,130,4);
+			Animacion *moverIzquierda = new Animacion("movIzquierda",10,0,2905,160,130,4);
+			Animacion *salto = new Animacion("salto",11,0,5408,160,172,6);
+			Animacion *agacharse = new Animacion("agacharse",10,0,3580,150,125,2);
+			animaciones.push_back(quieto);
+			animaciones.push_back(moverDerecha);
+			animaciones.push_back(moverIzquierda);
+			animaciones.push_back(salto);
+			animaciones.push_back(agacharse);
+			animacionActual = quieto;
+		}
 
 }
 
