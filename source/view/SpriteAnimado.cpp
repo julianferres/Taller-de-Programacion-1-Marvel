@@ -1,7 +1,7 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 #include <Animacion.hpp>
-
+class Animacion;
 using namespace std;
 
 SpriteAnimado::SpriteAnimado(){
@@ -29,9 +29,9 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animacionActual = quieto;
 	}
 	if((nombre=="Spiderman") or (nombre=="Spiderman2")){
-		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,5);
-		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,3);
-		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,3);
+		Animacion *quieto = new Animacion("quieto",10,0,0,125,115,5);
+		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,98,1);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,98,1);
 		Animacion *salto = new Animacion("salto",6,0,422,100,171,8);
 		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,15,2);
 		animaciones.push_back(quieto);

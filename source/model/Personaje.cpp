@@ -16,7 +16,6 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre){
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
 	this->posy= controladorJson->alturaVentana() - alto - 50;
-	//this->sprite=Sprite(graficos,controladorJson->pathImagen(nombre),this->getXInicial(nombre),this->getYInicial(nombre),ancho,alto);
 	this->spriteAnimado=SpriteAnimado(graficos,controladorJson->pathImagen(nombre));
 	this->spriteAnimado.cargarAnimaciones(nombre);
 	this->spriteAnimado.iniciarAnimacion("quieto");
@@ -26,19 +25,18 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre){
 void Personaje::dibujar(ControladorGrafico &graficos){
 	if(saltando)
 		this->Saltar();
-	//this->sprite.dibujar(graficos,this->posx,this->posy);
 	this->spriteAnimado.update();
 	if(this->spriteAnimado.getAnimacionActual()=="movDerecha"){
 		if(this->posxrelativo<this->posx){
 			this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto,ancho);
-			this->posxrelativo=this->posxrelativo+5;
+			this->posxrelativo=this->posxrelativo+1;
 		}
 	}
 	else{
 		if(this->spriteAnimado.getAnimacionActual()=="movIzquierda"){
 			if(this->posxrelativo>this->posx){
 				this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto, ancho);
-				this->posxrelativo=this->posxrelativo-5;
+				this->posxrelativo=this->posxrelativo-1;
 			}
 		}
 		else{
@@ -53,7 +51,7 @@ void Personaje::MoverDerecha(){
 	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movDerecha");
 	this->posxrelativo=this->posx;
-	this->posx=this->posx+20;
+	this->posx=this->posx+30;
 }
 
 void Personaje::MoverIzquierda(){
@@ -62,7 +60,7 @@ void Personaje::MoverIzquierda(){
 	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movIzquierda");
 	this->posxrelativo=this->posx;
-	this->posx=this->posx-20;
+	this->posx=this->posx-30;
 }
 void Personaje::agacharse(){
 	this->spriteAnimado.iniciarAnimacion("agacharse");
