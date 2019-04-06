@@ -49,5 +49,8 @@ float Jugador::obtenerPosicionXPersonaje(bool posicionDer){
 	return ((this->personajeActual)->getX());
 }
 
+SDL_Rect  Jugador::obtenerRectangulo(){
+	return personajeActual->obtenerRectangulo();
+}
 
 

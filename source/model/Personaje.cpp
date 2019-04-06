@@ -2,6 +2,8 @@
 #include <ControladorJson.hpp>
 #include <string>
 #include<math.h>
+#include <ControladorLogger.hpp>
+extern ControladorLogger *controladorLogger;
 
 #define constanteDeAltura 39.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
 #define constanteTiempoCiclos 0.3
@@ -91,4 +93,10 @@ float Personaje::getX(){
 float Personaje::getXDer(){
 	return (this->posx + this->ancho);
 }
+
+SDL_Rect  Personaje::obtenerRectangulo(){
+	SDL_Rect rectangulo = { static_cast<int>(posx), static_cast<int>(posy), ancho, alto};
+	return rectangulo;
+}
+
 

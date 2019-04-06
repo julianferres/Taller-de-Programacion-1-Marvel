@@ -26,17 +26,18 @@ class Personaje{
 		void agacharse();
 		float getX();
 		float getXDer();
+		SDL_Rect  obtenerRectangulo();
+
+	private:
+
+		float posx, posy,posxrelativo;
+		SpriteAnimado spriteAnimado;
 		int ancho;
 		int alto;
 		float velocidadInicial;
 		bool saltando = false;
 		float alturaActualSalto = 0;
 		float tiempo = 0;
-
-	private:
-
-		float posx, posy,posxrelativo;
-		SpriteAnimado spriteAnimado;
 
 };
 

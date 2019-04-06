@@ -20,6 +20,7 @@ class Juego{
 		Juego();
 		~Juego();
 		bool running() {return isRunning;}
+		bool colisionDePersonajes(Jugador *jugador1, Jugador *jugador2);
 		int FPS = controladorJson->cantidadFPS();
 		unsigned MAX_FRAME_TIME = 1000 / FPS;
 		Uint32 startTime;

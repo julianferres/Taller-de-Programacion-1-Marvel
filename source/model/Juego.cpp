@@ -56,7 +56,11 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.render();
 }
 
-
+bool Juego::colisionDePersonajes(Jugador *jugador1, Jugador *jugador2){
+	SDL_Rect rectJugador1 =jugador1->obtenerRectangulo();
+	SDL_Rect rectJugador2 =jugador2->obtenerRectangulo();
+	return SDL_HasIntersection( &rectJugador1, &rectJugador2 );
+}
 
 void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
@@ -79,9 +83,6 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 			}
 			//Jugador 1
 			 if (keys[SDL_SCANCODE_D]){
-				if(jugador1->obtenerPosicionXPersonaje(true) + 50 > jugador2->obtenerPosicionXPersonaje(true) - 50){
-					break;
-				}
 				this->jugador1->personajeActualMoverDerecha();
 				if(jugador1->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
 				controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la derecha");
@@ -118,6 +119,8 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 		    	this->jugador2->personajeActualAgacharse();
 				controladorLogger->registrarEvento("DEBUG", "Jugador 2 agachado");
 			}
-
+		    if(colisionDePersonajes(this->jugador1, this->jugador2)){
+				controladorLogger->registrarEvento("DEBUG", "COLISION");
+			}
 	}
 }
