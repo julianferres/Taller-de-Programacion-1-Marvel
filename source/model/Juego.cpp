@@ -30,7 +30,7 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 
 	while (isRunning){
 		startTime = SDL_GetTicks();
-		this->teclear(evento,teclado, posicionMoverFondoIzq, posicionMoverFondoDer);
+		this->teclear(graficos, evento,teclado, posicionMoverFondoIzq, posicionMoverFondoDer);
 		this->dibujar(graficos);
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
@@ -57,7 +57,7 @@ void Juego::dibujar(ControladorGrafico &grafico){
 }
 
 
-void Juego::teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer){
+void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
 	while(SDL_PollEvent(&evento)){
 			if (evento.type == SDL_QUIT  || keys[SDL_SCANCODE_ESCAPE] ){
@@ -76,7 +76,7 @@ void Juego::teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMov
 					break;
 				}
 			}
-
+			//Jugador 1
 			 if (keys[SDL_SCANCODE_D]){
 				this->jugador1->personajeActualMoverDerecha();
 				if(jugador1->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
@@ -95,6 +95,7 @@ void Juego::teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMov
 				this->jugador1->personajeActualSaltar();
 				controladorLogger->registrarEvento("DEBUG", "Jugador 1 salta");
 			}
+			//Jugador2
 		   if (keys[SDL_SCANCODE_RIGHT]){
 		    	this->jugador2->personajeActualMoverDerecha();
 		    	if(jugador2->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
@@ -109,9 +110,9 @@ void Juego::teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMov
 		    	this->jugador2->personajeActualSaltar();
 		    	controladorLogger->registrarEvento("DEBUG", "Jugador 2 salta");
 		    }
-		    if (keys[SDL_SCANCODE_P]){
-				this->jugador2->cambiarPersonaje();
-				controladorLogger->registrarEvento("DEBUG", "Cambio de personaje de jugador 2");
+		    if (keys[SDL_SCANCODE_DOWN]){
+		    	this->jugador2->personajeActualAgacharse();
+				controladorLogger->registrarEvento("DEBUG", "Jugador 2 agachado");
 			}
 	}
 }

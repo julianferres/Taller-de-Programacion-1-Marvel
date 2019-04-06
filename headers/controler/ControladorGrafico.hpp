@@ -22,7 +22,7 @@ class ControladorGrafico{
 		void render();
 		void limpiar();
 		SDL_Renderer* getRenderer() const;
-
+		bool controlarColision(SDL_Rect rect1, SDL_Rect rect2);
 	private:
 
 		SDL_Window* _window;

@@ -31,7 +31,7 @@ class Juego{
 		void gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer);
 		void dibujar(ControladorGrafico &grafico);
 		void dibujarFondo(ControladorGrafico &graficos);
-		void teclear(SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer);
+		void teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer);
 		bool isRunning;
 		Jugador *jugador1;
 		Jugador *jugador2;
