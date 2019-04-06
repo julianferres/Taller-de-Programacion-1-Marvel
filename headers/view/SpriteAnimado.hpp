@@ -1,8 +1,6 @@
 #ifndef HEADERS_VIEW_SPRITEANIMADO_HPP_
 #define HEADERS_VIEW_SPRITEANIMADO_HPP_
 
-#include <Sprite.hpp>
-#include <map>
 #include <string>
 #include <vector>
 #include <Animacion.hpp>

@@ -6,8 +6,6 @@
 #include <ControladorGrafico.hpp>
 #include <ControladorTeclado.hpp>
 #include <ControladorJson.hpp>
-#include <Sprite.hpp>
-#include <SpriteAnimado.hpp>
 #include <Parallax.hpp>
 
 extern ControladorJson *controladorJson;

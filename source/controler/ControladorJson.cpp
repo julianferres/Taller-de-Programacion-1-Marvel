@@ -1,7 +1,6 @@
 #include <controler/ControladorJson.hpp>
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
-#include <iostream>
 
 extern ControladorLogger *controladorLogger;
 
@@ -22,7 +21,7 @@ void ControladorJson::leerArchivo(){
 		cantidad_fondos = j["battlefield"].size();
 
 		for (int i = 0; i < cantidad_personajes; i++){
-			personajes.push_back(std::make_tuple(j["characters"][i]["name"],j["characters"][i]["filepath"],j["characters"][i]["height"],j["characters"][i]["width"],j["characters"][i]["zindex"],j["characters"][i]["posicionX"]));
+			personajes.push_back(std::make_tuple(j["characters"][i]["name"],j["characters"][i]["filepath"],j["characters"][i]["height"],j["characters"][i]["width"],j["characters"][i]["zindex"]));
 		}
 
 		for (int i = 0; i < cantidad_fondos; i++){
@@ -94,12 +93,3 @@ int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
         }
     return -1;
 }
-
-int ControladorJson::posicionXinicialPersonaje(std::string nombrePersonaje){
-    for (int i = 0; i < cantidad_personajes; i++){
-            if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0)
-                return std::get<5>(personajes[i]);
-        }
-    return -1;
-}
-

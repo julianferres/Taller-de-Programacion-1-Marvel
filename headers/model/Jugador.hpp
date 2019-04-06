@@ -11,7 +11,7 @@ class Jugador{
 	public:
 
 		Jugador(ControladorGrafico &grafico, std::string nombrePersonaje1,
-				std::string nombrePersonaje2);
+				std::string nombrePersonaje2, int posicionXinicial);
 		~Jugador();
 		void personajeActualMoverDerecha();
 		void personajeActualMoverIzquierda();

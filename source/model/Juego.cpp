@@ -25,8 +25,8 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	SDL_Event evento;
 
 	this->dibujarFondo(graficos);
-	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom");
-	this->jugador2 = new Jugador(graficos,"Spiderman2", "CapitanAmerica2");
+	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",10);
+	this->jugador2 = new Jugador(graficos,"Spiderman2", "CapitanAmerica2",600);
 
 	while (isRunning){
 		startTime = SDL_GetTicks();
@@ -57,6 +57,7 @@ void Juego::dibujar(ControladorGrafico &grafico){
 }
 
 
+
 void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
 	while(SDL_PollEvent(&evento)){
@@ -78,6 +79,9 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 			}
 			//Jugador 1
 			 if (keys[SDL_SCANCODE_D]){
+				if(jugador1->obtenerPosicionXPersonaje(true) + 50 > jugador2->obtenerPosicionXPersonaje(true) - 50){
+					break;
+				}
 				this->jugador1->personajeActualMoverDerecha();
 				if(jugador1->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
 				controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la derecha");
@@ -114,5 +118,6 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 		    	this->jugador2->personajeActualAgacharse();
 				controladorLogger->registrarEvento("DEBUG", "Jugador 2 agachado");
 			}
+
 	}
 }

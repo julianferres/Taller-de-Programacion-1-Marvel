@@ -1,6 +1,7 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 #include <Animacion.hpp>
+
 class Animacion;
 using namespace std;
 
@@ -14,6 +15,7 @@ SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos, const string &filePat
 string SpriteAnimado::getAnimacionActual(){
 	return this->animacionActual->getNombre();
 }
+
 void SpriteAnimado::cargarAnimaciones(string nombre){
 	if(nombre=="CapitanAmerica" or nombre=="CapitanAmerica2"){
 		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,4);

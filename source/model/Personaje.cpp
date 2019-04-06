@@ -10,8 +10,8 @@ using namespace std;
 Personaje::~Personaje(){
 }
 
-Personaje::Personaje(ControladorGrafico &graficos, string nombre){
-	this->posx= controladorJson->posicionXinicialPersonaje(nombre);
+Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXinicial){
+	this->posx= posicionXinicial;
 	this->posxrelativo=this->posx;
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
@@ -62,6 +62,7 @@ void Personaje::MoverIzquierda(){
 	this->posxrelativo=this->posx;
 	this->posx=this->posx-50;
 }
+
 void Personaje::agacharse(){
 	this->spriteAnimado.iniciarAnimacion("agacharse");
 }

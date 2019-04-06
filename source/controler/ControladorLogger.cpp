@@ -1,6 +1,5 @@
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
-#include <iostream>
 
 ControladorLogger::ControladorLogger(){
 

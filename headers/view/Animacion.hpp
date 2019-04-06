@@ -3,8 +3,7 @@
 
 #include <string>
 #include <vector>
-#include <Sprite.hpp>
-
+#include <SDL2/SDL_image.h>
 
 class Animacion{
 
@@ -17,7 +16,6 @@ class Animacion{
 		int getVelocidad();
 		SDL_Rect getRectOrigen(int frameIndex);
 
-
 	private:
 
 		std::string nombre;
@@ -25,9 +23,6 @@ class Animacion{
 		int velocidad;
 		int frames;
 
-
 };
-
-
 
 #endif

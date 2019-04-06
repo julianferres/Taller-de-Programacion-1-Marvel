@@ -17,7 +17,7 @@ class Personaje{
 
 	public:
 
-		Personaje(ControladorGrafico &grafico, std::string nombre);
+		Personaje(ControladorGrafico &grafico, std::string nombre, int posicionXinicial);
 		~Personaje();
 		void dibujar(ControladorGrafico &grafico);
 		void MoverDerecha();
@@ -36,7 +36,6 @@ class Personaje{
 	private:
 
 		float posx, posy,posxrelativo;
-		//Sprite sprite;
 		SpriteAnimado spriteAnimado;
 
 };
