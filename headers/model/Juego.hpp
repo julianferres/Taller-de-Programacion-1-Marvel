@@ -4,7 +4,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <ControladorGrafico.hpp>
-#include <ControladorTeclado.hpp>
 #include <ControladorJson.hpp>
 #include <Parallax.hpp>
 
@@ -23,7 +22,7 @@ class Juego{
 		void gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer);
 		void dibujar(ControladorGrafico &grafico);
 		void dibujarFondo(ControladorGrafico &graficos);
-		void teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer);
+		void teclear(ControladorGrafico &grafico, SDL_Event evento, int posicionMoverFondoIzq, int posicionMoverFondoDer);
 
 
 	private:
