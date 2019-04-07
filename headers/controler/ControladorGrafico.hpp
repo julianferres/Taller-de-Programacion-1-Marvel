@@ -18,7 +18,7 @@ class ControladorGrafico{
 		~ControladorGrafico();
 
 		SDL_Surface* cargarImagen(const string &filePath);
-		void dibujarImagen(SDL_Texture* source, SDL_Rect* rectanguloOrigen, SDL_Rect* rectanguloDestino);
+		void dibujarImagen(SDL_Texture* source, SDL_Rect* rectanguloOrigen, SDL_Rect* rectanguloDestino, SDL_RendererFlip flip);
 		void render();
 		void limpiar();
 		SDL_Renderer* getRenderer() const;

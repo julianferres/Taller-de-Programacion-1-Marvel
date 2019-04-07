@@ -25,8 +25,8 @@ SDL_Surface* ControladorGrafico::cargarImagen(const string &filePath){
 	return this->_spriteSheets[filePath];
 }
 
-void ControladorGrafico::dibujarImagen(SDL_Texture* textura, SDL_Rect* rectanguloOrigen, SDL_Rect* rectanguloDestino){
-	SDL_RenderCopy(this->_renderer, textura, rectanguloOrigen, rectanguloDestino);
+void ControladorGrafico::dibujarImagen(SDL_Texture* textura, SDL_Rect* rectanguloOrigen, SDL_Rect* rectanguloDestino, SDL_RendererFlip flip){
+	SDL_RenderCopyEx(this->_renderer, textura, rectanguloOrigen, rectanguloDestino,0,NULL, flip);
 }
 
 void ControladorGrafico::render(){

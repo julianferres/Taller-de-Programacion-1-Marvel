@@ -26,8 +26,8 @@
         [
             {"name":"CapitanAmerica",
             "filepath":"contents/images/CaptainAmericaSprites.png",
-            "height":200,
-            "width":150,
+            "height":320,
+            "width":200,
             "zindex":99	    
             },
 	    {"name":"Venom",
@@ -44,20 +44,20 @@
             },
             {"name":"Spiderman2",
             "filepath":"contents/images/SpidermanSprites.png",
-            "height":170,
-            "width":125,
+            "height":320,
+            "width":200,
             "zindex":99            
             },
 	    {"name":"Venom2",
             "filepath":"contents/images/Venom.png",
-            "height":170,
-            "width":100,
+            "height":320,
+            "width":200,
             "zindex":99	    
             },
 	    {"name":"CapitanAmerica2",
             "filepath":"contents/images/CaptainAmericaSprites.png",
-            "height":170,
-            "width":100,
+            "height":320,
+            "width":200,
             "zindex":99	    
             }           
 

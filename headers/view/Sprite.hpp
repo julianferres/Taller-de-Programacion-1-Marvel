@@ -15,7 +15,7 @@ class Sprite{
 		Sprite( ControladorGrafico &graphicos, const std::string &filePath, int x0, int y0, int ancho, int alto);
 		virtual ~Sprite();
 		virtual void update();
-		void dibujar(ControladorGrafico &graphicos, int x, int y);
+		void dibujar(ControladorGrafico &graphicos, int x, int y, SDL_RendererFlip flip);
 
 	protected:
 		SDL_Rect _rectanguloOrigen;

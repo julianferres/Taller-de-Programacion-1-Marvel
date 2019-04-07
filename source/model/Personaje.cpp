@@ -12,7 +12,7 @@ using namespace std;
 Personaje::~Personaje(){
 }
 
-Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXinicial){
+Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXinicial, SDL_RendererFlip flip){
 	this->posx= posicionXinicial;
 	this->posxrelativo=this->posx;
 	this->alto = controladorJson->alturaPersonaje(nombre);
@@ -22,6 +22,7 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 	this->spriteAnimado.cargarAnimaciones(nombre);
 	this->spriteAnimado.iniciarAnimacion("quieto");
 	this->velocidadInicial = sqrt(constanteDeAltura * alto);
+	this->flip = flip;
 }
 
 void Personaje::dibujar(ControladorGrafico &graficos){
@@ -30,19 +31,19 @@ void Personaje::dibujar(ControladorGrafico &graficos){
 	this->spriteAnimado.update();
 	if(this->spriteAnimado.getAnimacionActual()=="movDerecha"){
 		if(this->posxrelativo<this->posx){
-			this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto,ancho);
+			this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto,ancho, this->flip);
 			this->posxrelativo=this->posxrelativo+1;
 		}
 	}
 	else{
 		if(this->spriteAnimado.getAnimacionActual()=="movIzquierda"){
 			if(this->posxrelativo>this->posx){
-				this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto, ancho);
+				this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto, ancho, this->flip);
 				this->posxrelativo=this->posxrelativo-1;
 			}
 		}
 		else{
-			this->spriteAnimado.dibujar(graficos,this->posx,this->posy,alto, ancho);
+			this->spriteAnimado.dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
 		}
 	}
 }

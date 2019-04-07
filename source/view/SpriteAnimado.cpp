@@ -96,11 +96,11 @@ void SpriteAnimado::update(){
 	regulador = 0;
 }
 
-void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho){
+void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho, SDL_RendererFlip flip){
 	 if(this->visible){
 		SDL_Rect sourceRect = animacionActual->getRectOrigen(this->frameIndex);
 		SDL_Rect rectanguloDestino={x, y, ancho,alto};
-		graficos.dibujarImagen(this->spriteSheet, &sourceRect, &rectanguloDestino);
+		graficos.dibujarImagen(this->spriteSheet, &sourceRect, &rectanguloDestino, flip);
 	}
 }
 

@@ -17,7 +17,7 @@ class Personaje{
 
 	public:
 
-		Personaje(ControladorGrafico &grafico, std::string nombre, int posicionXinicial);
+		Personaje(ControladorGrafico &grafico, std::string nombre, int posicionXinicial, SDL_RendererFlip flip);
 		~Personaje();
 		void dibujar(ControladorGrafico &grafico);
 		void MoverDerecha();
@@ -41,6 +41,7 @@ class Personaje{
 		bool saltando = false;
 		float alturaActualSalto = 0;
 		float tiempo = 0;
+		SDL_RendererFlip flip;
 
 };
 

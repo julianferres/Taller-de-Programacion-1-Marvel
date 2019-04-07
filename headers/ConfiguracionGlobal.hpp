@@ -12,7 +12,7 @@ namespace constantes_personajes{
 }
 
 namespace globals{
-	const float ESCALA_SPRITE = 2.0f;
+	const float ESCALA_SPRITE = 3.0f;
 }
 
 struct Vector2 {

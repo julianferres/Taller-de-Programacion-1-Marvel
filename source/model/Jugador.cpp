@@ -3,9 +3,9 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 
-Jugador::Jugador(ControladorGrafico &graficos, std::string nombrePersonaje1, std::string nombrePersonaje2, int posicionXinicial){
-	this->personaje1 = new Personaje(graficos,nombrePersonaje1, posicionXinicial);
-	this->personaje2 = new Personaje(graficos,nombrePersonaje2, posicionXinicial);
+Jugador::Jugador(ControladorGrafico &graficos, std::string nombrePersonaje1, std::string nombrePersonaje2, int posicionXinicial, SDL_RendererFlip flip){
+	this->personaje1 = new Personaje(graficos,nombrePersonaje1, posicionXinicial, flip);
+	this->personaje2 = new Personaje(graficos,nombrePersonaje2, posicionXinicial, flip);
 	this->personajeActual = this->personaje1;
 	this->personajePrincipal = true;
 }

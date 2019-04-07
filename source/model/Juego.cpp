@@ -26,8 +26,10 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	SDL_Event evento;
 
 	this->dibujarFondo(graficos);
-	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",controladorJson->anchoVentana()/4);
-	this->jugador2 = new Jugador(graficos,"Spiderman2", "CapitanAmerica2",controladorJson->anchoVentana()*3/4);
+	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
+	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
+	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",controladorJson->anchoVentana()/4,flip1);
+	this->jugador2 = new Jugador(graficos,"Spiderman2", "CapitanAmerica2",controladorJson->anchoVentana()*3/4, flip2);
 
 	while (isRunning){
 		startTime = SDL_GetTicks();
@@ -49,9 +51,10 @@ void Juego::dibujarFondo(ControladorGrafico &graficos){
 
 void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.limpiar();
-	grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL);
-	grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL);
-	grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL);
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL, flip);
+	grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL, flip);
+	grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL, flip);
 	this->jugador1->personajeActualDibujar(grafico);
 	this->jugador2->personajeActualDibujar(grafico);
 	grafico.render();
