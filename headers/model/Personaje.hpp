@@ -27,6 +27,8 @@ class Personaje{
 		float getX();
 		float getXDer();
 		SDL_Rect  obtenerRectangulo();
+		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);
+		bool colisionaAlaIzquierda(SDL_Rect rectanguloOponente);
 
 	private:
 
@@ -34,6 +36,7 @@ class Personaje{
 		SpriteAnimado spriteAnimado;
 		int ancho;
 		int alto;
+		int velocidad = 50;
 		float velocidadInicial;
 		bool saltando = false;
 		float alturaActualSalto = 0;

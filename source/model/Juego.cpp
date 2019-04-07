@@ -1,4 +1,5 @@
 #include <Jugador.hpp>
+#include <Personaje.hpp>
 #include <ControladorLogger.hpp>
 #include <Juego.hpp>
 #include <SpriteAnimado.hpp>
@@ -56,14 +57,10 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.render();
 }
 
-bool Juego::colisionDePersonajes(Jugador *jugador1, Jugador *jugador2){
-	SDL_Rect rectJugador1 =jugador1->obtenerRectangulo();
-	SDL_Rect rectJugador2 =jugador2->obtenerRectangulo();
-	return SDL_HasIntersection( &rectJugador1, &rectJugador2 );
-}
-
 void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
+	Personaje* personaje1 = jugador1->devolverPersonajeActual();
+	Personaje* personaje2 = jugador2->devolverPersonajeActual();
 	while(SDL_PollEvent(&evento)){
 			if (evento.type == SDL_QUIT  || keys[SDL_SCANCODE_ESCAPE] ){
 				isRunning = false;
@@ -83,14 +80,19 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 			}
 			//Jugador 1
 			 if (keys[SDL_SCANCODE_D]){
-				this->jugador1->personajeActualMoverDerecha();
-				if(jugador1->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
-				controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la derecha");
+				if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() ) ){
+					this->jugador1->personajeActualMoverDerecha();
+					if(jugador1->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
+					controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la derecha");
+				}
+
 			}
 			if (keys[SDL_SCANCODE_A]){
-				this->jugador1->personajeActualMoverIzquierda();
-				if (jugador1->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
-				controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la izquierda");
+				if(! personaje1->colisionaAlaIzquierda(personaje2->obtenerRectangulo() )){
+					this->jugador1->personajeActualMoverIzquierda();
+					if (jugador1->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
+					controladorLogger->registrarEvento("DEBUG", "Jugador 1 a la izquierda");
+				}
 			}
 			if (keys[SDL_SCANCODE_S]){
 				this->jugador1->personajeActualAgacharse();
@@ -102,14 +104,18 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 			}
 			//Jugador2
 		   if (keys[SDL_SCANCODE_RIGHT]){
-		    	this->jugador2->personajeActualMoverDerecha();
-		    	if(jugador2->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
-		    	controladorLogger->registrarEvento("DEBUG", "Jugador 2 a la derecha");
+			   if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo())){
+					this->jugador2->personajeActualMoverDerecha();
+					if(jugador2->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
+					controladorLogger->registrarEvento("DEBUG", "Jugador 2 a la derecha");
+			   }
 		    }
 		    if (keys[SDL_SCANCODE_LEFT]){
-		    	this->jugador2->personajeActualMoverIzquierda();
-		    	if (jugador2->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
-		    	controladorLogger->registrarEvento("DEBUG", "Jugador 2 a la izquierda");
+		    	if(! personaje2->colisionaAlaIzquierda(personaje1->obtenerRectangulo())){
+		    		this->jugador2->personajeActualMoverIzquierda();
+					if (jugador2->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
+					controladorLogger->registrarEvento("DEBUG", "Jugador 2 a la izquierda");
+		    	}
 		    }
 		    if (keys[SDL_SCANCODE_UP]){
 		    	this->jugador2->personajeActualSaltar();
@@ -118,9 +124,6 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 		    if (keys[SDL_SCANCODE_DOWN]){
 		    	this->jugador2->personajeActualAgacharse();
 				controladorLogger->registrarEvento("DEBUG", "Jugador 2 agachado");
-			}
-		    if(colisionDePersonajes(this->jugador1, this->jugador2)){
-				controladorLogger->registrarEvento("DEBUG", "COLISION");
 			}
 	}
 }

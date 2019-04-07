@@ -53,7 +53,7 @@ void Personaje::MoverDerecha(){
 	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movDerecha");
 	this->posxrelativo=this->posx;
-	this->posx=this->posx+50;
+	this->posx=this->posx+velocidad;
 }
 
 void Personaje::MoverIzquierda(){
@@ -62,7 +62,7 @@ void Personaje::MoverIzquierda(){
 	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movIzquierda");
 	this->posxrelativo=this->posx;
-	this->posx=this->posx-50;
+	this->posx=this->posx-velocidad;
 }
 
 void Personaje::agacharse(){
@@ -97,6 +97,16 @@ float Personaje::getXDer(){
 SDL_Rect  Personaje::obtenerRectangulo(){
 	SDL_Rect rectangulo = { static_cast<int>(posx), static_cast<int>(posy), ancho, alto};
 	return rectangulo;
+}
+
+bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+10, static_cast<int>(posy), ancho, alto};
+	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
+}
+
+bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-10, static_cast<int>(posy), ancho, alto};
+	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
 
 

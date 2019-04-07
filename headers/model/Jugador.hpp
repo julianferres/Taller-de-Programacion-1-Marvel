@@ -21,7 +21,7 @@ class Jugador{
 		void personajeActualDibujar(ControladorGrafico &grafico);
 		void cambiarPersonaje();
 		float obtenerPosicionXPersonaje(bool posicionDer);
-		SDL_Rect  obtenerRectangulo();
+		Personaje * devolverPersonajeActual();
 
 	private:
 
@@ -29,8 +29,6 @@ class Jugador{
 		Personaje *personaje2;
 		Personaje *personajeActual;
 		bool personajePrincipal;
-
-	//	Personaje * devolverPersonajeActual();
 
 };
 
