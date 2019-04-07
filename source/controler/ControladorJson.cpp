@@ -6,15 +6,16 @@ extern ControladorLogger *controladorLogger;
 
 void ControladorJson::leerArchivo(){
 
-	using json = nlohmann::json;
+
 	std::ifstream ifs (configPath, std::ifstream::in); //cambia el nombre y mira el log.txt
 
 	try{
 		json j = json::parse(ifs);
-		nivel_debug = j["debug"];
+		this->setLogLevel(j);
 		controladorLogger->setNivelDebug(nivel_debug);
-		altura_ventana = j["window"]["height"];
-		ancho_ventana = j["window"]["width"];
+		this->setAlturaVentana(j);
+
+
 		fullscreen = j["window"]["fullscreen"];
 		FPS = j["FPS"];
 		cantidad_personajes = j["characters"].size();
@@ -92,4 +93,35 @@ int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
                 return std::get<3>(personajes[i]);
         }
     return -1;
+}
+
+
+void ControladorJson::setLogLevel(json j){
+	try{
+		nivel_debug = j["logLevel"];
+	}
+	catch(json::exception &e){
+		nivel_debug = "ERROR";
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar el nivel de logg, seteado a ERROR");
+	}
+}
+
+void ControladorJson::setAlturaVentana(json j){
+	try{
+		altura_ventana = j["window"]["height"];
+	}
+	catch(json::exception &e){
+		altura_ventana = 800;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar la alura de la ventana, seteado a 800");
+	}
+}
+
+void ControladorJson::setAnchoVentana(json j){
+	try{
+		ancho_ventana = j["window"]["width"];
+	}
+	catch(json::exception &e){
+		ancho_ventana = 1400;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar el ancho de la ventana, seteado a 1400");
+	}
 }

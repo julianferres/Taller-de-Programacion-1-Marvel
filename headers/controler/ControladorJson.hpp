@@ -5,7 +5,7 @@
 #include <string>
 #include <tuple>
 #include <vector>
-
+using json = nlohmann::json;
 class ControladorJson{
 
 	public:
@@ -33,6 +33,14 @@ class ControladorJson{
 		std::vector<std::tuple<std::string, std::string, int, int, int>> personajes;
 		std::vector<std::tuple<std::string, int>> fondos;
 		std::string configPath = "source/config/config.json";
+
+		void setLogLevel(json j);
+		void setAlturaVentana(json j);
+		void setAnchoVentana(json j);
+		void setPantallaCompleta(json j);
+		void setAlturaPersonaje(json j);
+		void setAnchhoPersonaje(json j);
+
 
 };
 
