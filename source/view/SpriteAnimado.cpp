@@ -21,7 +21,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,4);
 		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,5);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,5);
-		Animacion *salto = new Animacion("salto",6,0,422,100,171,10);
+		Animacion *salto = new Animacion("salto",8,0,595,125,135,10);
 		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,105,4);
 		animaciones.push_back(quieto);
 		animaciones.push_back(moverDerecha);
@@ -34,8 +34,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *quieto = new Animacion("quieto",10,0,0,125,115,5);
 		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,99,1);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,1);
-		Animacion *salto = new Animacion("salto",6,0,422,100,171,8);
-		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,15,2);
+		Animacion *salto = new Animacion("salto",14,0,473,100,135,2);
+		Animacion *agacharse = new Animacion("agacharse",1,0,302,109,76,2);
 		animaciones.push_back(quieto);
 		animaciones.push_back(moverDerecha);
 		animaciones.push_back(moverIzquierda);

@@ -22,7 +22,6 @@ Juego::~Juego()
 void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 
 	ControladorGrafico graficos;
-	ControladorTeclado teclado;
 	SDL_Event evento;
 
 	this->dibujarFondo(graficos);
@@ -33,7 +32,7 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 
 	while (isRunning){
 		startTime = SDL_GetTicks();
-		this->teclear(graficos, evento,teclado, posicionMoverFondoIzq, posicionMoverFondoDer);
+		this->teclear(graficos, evento, posicionMoverFondoIzq, posicionMoverFondoDer);
 		this->dibujar(graficos);
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
@@ -60,7 +59,7 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.render();
 }
 
-void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTeclado teclado, int posicionMoverFondoIzq, int posicionMoverFondoDer){
+void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
 	Personaje* personaje1 = jugador1->devolverPersonajeActual();
 	Personaje* personaje2 = jugador2->devolverPersonajeActual();
