@@ -1,5 +1,5 @@
 {
-    "debug":"DEBUG",
+    "logLevel": "DEBUG",
     "FPS": 60,
     "battlefield":
         [
@@ -26,37 +26,27 @@
         [
             {"name":"CapitanAmerica",
             "filepath":"contents/images/CaptainAmericaSprites.png",
-            "height":115,
-            "width":89,
-            "zindex":99,
-	    "posicionX":5
+            "height":320,
+            "width":200,
+            "zindex":99	    
+            },
+	    {"name":"Venom",
+            "filepath":"contents/images/Venom.png",
+            "height":320,
+            "width":200,
+            "zindex":99	    
             },
             {"name":"Spiderman",
             "filepath":"contents/images/SpidermanSprites.png",
-            "height":97,
-            "width":107,
-            "zindex":99,
-            "posicionX":5
-            },
-            {"name":"Spiderman2",
-            "filepath":"contents/images/SpidermanSprites.png",
-            "height":110,
-            "width":125,
-            "zindex":99,
-            "posicionX":500
-            },
-	    {"name":"CapitanAmerica2",
-            "filepath":"contents/images/CaptainAmericaSprites.png",
-            "height":215,
+            "height":320,
             "width":200,
-            "zindex":99,
-	    "posicionX":500
-            }           
+            "zindex":99            
+            }         
 
         ],
     "window":{
-        "height":600,
-        "width":800,
+        "height":800,
+        "width":1400,
 	"fullscreen": false
     }
 }

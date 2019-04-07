@@ -5,6 +5,8 @@
 #include <string>
 #include <tuple>
 #include <vector>
+#include <iostream>
+
 using json = nlohmann::json;
 class ControladorJson{
 
@@ -21,7 +23,6 @@ class ControladorJson{
 		std::string pathFondo(int zindex);
 		std::string pathImagen(std::string nombrePersonaje);
 		void leerArchivoDefault();
-
 	private:
 
 		int altura_ventana;
@@ -45,21 +46,31 @@ class ControladorJson{
 		const int cantidad_fondos_default = 3;
 		const int FPS_default = 60;
 
+		const std::string nombre_personaje_default = "CapitanAmerica";
+		std::string filepath_personaje_default = "contents/auxiliar/personaje_auxiliar_sprite.png";
+		int height_personaje_default = 320;
+		int width_personaje_default = 200;
+		int zindex_personaje_default = 99;
+
 		//Rangos aceptados
-		const int rango_altura_ventana[2] = {400, 800};
-		const int rango_ancho_ventana[2] = {600, 1000};
+		const int rango_altura_ventana[2] = {400, 1000};
+		const int rango_ancho_ventana[2] = {600, 2000};
 		const int rango_FPS[2] = {30, 60};
 
-		void setLogLevel(json j);
-		void setAlturaVentana(json j);
-		void setAnchoVentana(json j);
-		void setPantallaCompleta(json j);
-		void setAlturaPersonaje(json j);
-		void setAnchhoPersonaje(json j);
-		void setFPS(json j);
-		void setCantidadPersonajes(json j);
-		void setCantidadFondos(json j);
+		void setLogLevel(json j)throw();
+		void setAlturaVentana(json j)throw();
+		void setAnchoVentana(json j)throw();
+		void setPantallaCompleta(json j)throw();
+		void setFPS(json j)throw();
+		void setCantidadPersonajes(json j)throw();
+		void setCantidadFondos(json j)throw();
+		void setFondos(json j)throw();
+		void setPersonajes(json j)throw();
+		/*
+		void setAlturaPersonaje(json j)throw();
+		void setAnchhoPersonaje(json j)throw();
 
+		*/
 
 
 };
