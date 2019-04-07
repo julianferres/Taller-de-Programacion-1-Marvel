@@ -1,16 +1,15 @@
 #include <Jugador.hpp>
 #include <Personaje.hpp>
-#include <ConfiguracionGlobal.hpp>
-#include <Sprite.hpp>
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 
-Jugador::Jugador(ControladorGrafico &graficos, std::string nombrePersonaje1, std::string nombrePersonaje2){
-	this->personaje1 = new Personaje(graficos,nombrePersonaje1);
-	this->personaje2 = new Personaje(graficos,nombrePersonaje2);
+Jugador::Jugador(ControladorGrafico &graficos, std::string nombrePersonaje1, std::string nombrePersonaje2, int posicionXinicial, SDL_RendererFlip flip){
+	this->personaje1 = new Personaje(graficos,nombrePersonaje1, posicionXinicial, flip);
+	this->personaje2 = new Personaje(graficos,nombrePersonaje2, posicionXinicial, flip);
 	this->personajeActual = this->personaje1;
 	this->personajePrincipal = true;
 }
+
 void Jugador::cambiarPersonaje(){
 	if (this->personajePrincipal){
 		this->personajeActual = this->personaje2;
@@ -20,10 +19,12 @@ void Jugador::cambiarPersonaje(){
 		this->personajePrincipal = true;
 	}
 }
+
 void Jugador::personajeActualMoverDerecha(){
 	this->personaje1->MoverDerecha();
 	this->personaje2->MoverDerecha();
 }
+
 void Jugador::personajeActualMoverIzquierda(){
 	this->personaje1->MoverIzquierda();
 	this->personaje2->MoverIzquierda();
@@ -32,6 +33,7 @@ void Jugador::personajeActualMoverIzquierda(){
 void Jugador::personajeActualSaltar(){
 	this->personajeActual->Saltar();
 }
+
 void Jugador::personajeActualAgacharse(){
 	this->personajeActual->agacharse();
 }
@@ -47,4 +49,7 @@ float Jugador::obtenerPosicionXPersonaje(bool posicionDer){
 	return ((this->personajeActual)->getX());
 }
 
+Personaje* Jugador::devolverPersonajeActual(){
+	return this->personajeActual;
+}
 

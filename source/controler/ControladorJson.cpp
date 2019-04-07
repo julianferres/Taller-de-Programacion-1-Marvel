@@ -1,51 +1,27 @@
 #include <controler/ControladorJson.hpp>
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
-#include <iostream>
 
 extern ControladorLogger *controladorLogger;
 
 void ControladorJson::leerArchivo(){
 
-	using json = nlohmann::json;
+
 	std::ifstream ifs (configPath, std::ifstream::in); //cambia el nombre y mira el log.txt
 
 	try{
 		json j = json::parse(ifs);
-		nivel_debug = j["debug"];
-
-		if (nivel_debug.compare("ERROR") != 0 && nivel_debug.compare("INFO") != 0 && nivel_debug.compare("DEBUG") != 0 ){
-			controladorLogger->registrarEvento("ERROR","Nivel de Debug no corresponde a ERROR, INFO o DEBUG. Se setea en " + nivel_debug_default);
-			nivel_debug = nivel_debug_default;
-		}
-
+		this->setLogLevel(j);
 		controladorLogger->setNivelDebug(nivel_debug);
-
-		altura_ventana = j["window"]["height"];
-		if (altura_ventana < rango_altura_ventana[0] || altura_ventana > rango_altura_ventana[1]){
-			controladorLogger->registrarEvento("ERROR","Altura de la ventana no permitida. Se setea en " + std::to_string(altura_ventana_default));
-			altura_ventana = altura_ventana_default;
-		}
-
-		ancho_ventana = j["window"]["width"];
-		if (ancho_ventana < rango_ancho_ventana[0] || ancho_ventana > rango_ancho_ventana[1]){
-			controladorLogger->registrarEvento("ERROR","Ancho de la ventana no permitido. Se setea en " + std::to_string(ancho_ventana_default));
-			ancho_ventana = ancho_ventana_default;
-		}
-
-		fullscreen = j["window"]["fullscreen"];
-
-		FPS = j["FPS"];
-		if (FPS < rango_FPS[0] || FPS > rango_FPS[1]){
-					controladorLogger->registrarEvento("ERROR","Cantidad de FPS no permitido. Se setea en " + std::to_string(FPS_default));
-					FPS = FPS_default;
-		}
-
-		cantidad_personajes = j["characters"].size();
-		cantidad_fondos = j["battlefield"].size();
+		this->setAlturaVentana(j);
+		this->setAnchoVentana(j);
+		this->setPantallaCompleta(j);
+		this->setFPS(j);
+		this->setCantidadPersonajes(j);
+		this->setCantidadFondos(j);
 
 		for (int i = 0; i < cantidad_personajes; i++){
-			personajes.push_back(std::make_tuple(j["characters"][i]["name"],j["characters"][i]["filepath"],j["characters"][i]["height"],j["characters"][i]["width"],j["characters"][i]["zindex"],j["characters"][i]["posicionX"]));
+			personajes.push_back(std::make_tuple(j["characters"][i]["name"],j["characters"][i]["filepath"],j["characters"][i]["height"],j["characters"][i]["width"],j["characters"][i]["zindex"]));
 		}
 
 		for (int i = 0; i < cantidad_fondos; i++){
@@ -155,11 +131,77 @@ int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
     return -1;
 }
 
-int ControladorJson::posicionXinicialPersonaje(std::string nombrePersonaje){
-    for (int i = 0; i < cantidad_personajes; i++){
-            if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0)
-                return std::get<5>(personajes[i]);
-        }
-    return -1;
+
+void ControladorJson::setLogLevel(json j){
+	try{
+		nivel_debug = j["logLevel"];
+	}
+	catch(json::exception &e){
+		nivel_debug = "ERROR";
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar el nivel de logg, seteado a ERROR");
+	}
 }
+
+void ControladorJson::setAlturaVentana(json j){
+	try{
+		altura_ventana = j["window"]["height"];
+	}
+	catch(json::exception &e){
+		altura_ventana = 800;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar la alura de la ventana, seteado a 800");
+	}
+}
+
+void ControladorJson::setAnchoVentana(json j){
+	try{
+		ancho_ventana = j["window"]["width"];
+	}
+	catch(json::exception &e){
+		ancho_ventana = 1400;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar el ancho de la ventana, seteado a 1400");
+	}
+}
+
+void ControladorJson::setPantallaCompleta(json j){
+	try{
+		fullscreen = j["window"]["fullscreen"];
+	}
+	catch(json::exception &e){
+		fullscreen = false;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar modo pantalla completa. False por default");
+	}
+}
+
+void ControladorJson::setFPS(json j){
+	try{
+		FPS = j["FPS"];
+	}
+	catch(json::exception &e){
+		FPS = 60;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar fps. Seteado a 60 por default.");
+	}
+}
+
+void ControladorJson::setCantidadPersonajes(json j){
+	try{
+		cantidad_personajes = j["characters"].size();
+	}
+	catch(json::exception &e){
+		cantidad_personajes = 4;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar los personajes. Cantidad seteada a 4");
+	}
+}
+
+void ControladorJson::setCantidadFondos(json j){
+	try{
+		cantidad_fondos = j["battlefield"].size();
+	}
+	catch(json::exception &e){
+		cantidad_fondos = 1;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar los fondos. Cantidad seteada a 1");
+	}
+}
+
+
+
 

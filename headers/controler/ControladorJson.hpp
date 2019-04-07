@@ -5,7 +5,7 @@
 #include <string>
 #include <tuple>
 #include <vector>
-
+using json = nlohmann::json;
 class ControladorJson{
 
 	public:
@@ -16,7 +16,6 @@ class ControladorJson{
 		int cantidadFPS();
 		int alturaPersonaje(std::string);
 		int anchoPersonaje(std::string);
-		int posicionXinicialPersonaje(std::string);
 		bool esfullscreen();
 		std::string nivelDebug();
 		std::string pathFondo(int zindex);
@@ -32,7 +31,7 @@ class ControladorJson{
 		int cantidad_fondos;
 		int FPS;
 		std::string nivel_debug;
-		std::vector<std::tuple<std::string, std::string, int, int, int,int>> personajes;
+		std::vector<std::tuple<std::string, std::string, int, int, int>> personajes;
 		std::vector<std::tuple<std::string, int>> fondos;
 		std::string configPath = "source/config/config.json";
 
@@ -50,6 +49,18 @@ class ControladorJson{
 		const int rango_altura_ventana[2] = {400, 800};
 		const int rango_ancho_ventana[2] = {600, 1000};
 		const int rango_FPS[2] = {30, 60};
+
+		void setLogLevel(json j);
+		void setAlturaVentana(json j);
+		void setAnchoVentana(json j);
+		void setPantallaCompleta(json j);
+		void setAlturaPersonaje(json j);
+		void setAnchhoPersonaje(json j);
+		void setFPS(json j);
+		void setCantidadPersonajes(json j);
+		void setCantidadFondos(json j);
+
+
 
 };
 

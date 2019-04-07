@@ -1,7 +1,6 @@
 #ifndef HEADERS_CONTROLER_CONTROLADORLOGGER_HPP_
 #define HEADERS_CONTROLER_CONTROLADORLOGGER_HPP_
 
-#include <ctime>
 #include <string>
 
 class ControladorLogger{
@@ -21,4 +20,4 @@ class ControladorLogger{
 
 };
 
-#endif /* HEADERS_CONTROLER_CONTROLADORLOGGER_HPP_ */
+#endif

@@ -1,17 +1,16 @@
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
-#include <iostream>
 
 ControladorLogger::ControladorLogger(){
 
 	std::ofstream file;
 	try{
 		file.open(nombreArchivo,std::ofstream::trunc);
-		file <<  "INFO "<<" ; " << "Archivo de logging creado!" <<" ; " << obtenerTiempo();
+		file << "Archivo de logging creado!" <<" ; " << obtenerTiempo();
 	}
 	catch(int e){
 		file.open(nombreArchivoRepuesto, std::fstream::trunc);
-		file <<  "INFO "<<" ; " << "Archivo de logging de repuesto creado!" <<" ; " << obtenerTiempo();
+		file << "Archivo de logging de repuesto creado!" <<" ; " << obtenerTiempo();
 	}
 	file.close();
 

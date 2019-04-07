@@ -13,9 +13,10 @@ Sprite::Sprite( ControladorGrafico &graficos, const string &filePath, int x0, in
 	this->_spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
 }
 
-void Sprite::dibujar(ControladorGrafico &graficos, int x, int y){
+void Sprite::dibujar(ControladorGrafico &graficos, int x, int y, SDL_RendererFlip flip){
 	SDL_Rect rectanguloDestino = {x, y, this->_rectanguloOrigen.w, this->_rectanguloOrigen.h};
-	graficos.dibujarImagen(this->_spriteSheet, &this->_rectanguloOrigen, &rectanguloDestino);
+
+	graficos.dibujarImagen(this->_spriteSheet, &this->_rectanguloOrigen, &rectanguloDestino, flip);
 }
 
 void Sprite::update(){};

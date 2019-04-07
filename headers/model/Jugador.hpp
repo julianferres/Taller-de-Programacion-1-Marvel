@@ -2,6 +2,7 @@
 #define JUGADOR_HPP_
 
 #include <string>
+#include <SDL2/SDL_image.h>
 
 class Personaje;
 class ControladorGrafico;
@@ -11,7 +12,7 @@ class Jugador{
 	public:
 
 		Jugador(ControladorGrafico &grafico, std::string nombrePersonaje1,
-				std::string nombrePersonaje2);
+				std::string nombrePersonaje2, int posicionXinicial, SDL_RendererFlip flip);
 		~Jugador();
 		void personajeActualMoverDerecha();
 		void personajeActualMoverIzquierda();
@@ -20,6 +21,7 @@ class Jugador{
 		void personajeActualDibujar(ControladorGrafico &grafico);
 		void cambiarPersonaje();
 		float obtenerPosicionXPersonaje(bool posicionDer);
+		Personaje * devolverPersonajeActual();
 
 	private:
 
@@ -27,8 +29,6 @@ class Jugador{
 		Personaje *personaje2;
 		Personaje *personajeActual;
 		bool personajePrincipal;
-
-	//	Personaje * devolverPersonajeActual();
 
 };
 

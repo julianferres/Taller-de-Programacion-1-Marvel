@@ -33,13 +33,13 @@ Parallax::Parallax(ControladorGrafico &graficos){
 	bitmapTex2 = SDL_CreateTextureFromSurface(graficos.getRenderer(), background_z2);
 	bitmapTex3 = SDL_CreateTextureFromSurface(graficos.getRenderer(), background_z3);
 
-	camera_z1.x = 0;  camera_z1.y = 0;
+	camera_z1.x = 1000;  camera_z1.y = 0; //PARA QUE INICIE EN LA MITAD (FONDO Z1/2 APROX)
 	camera_z1.w = W; camera_z1.h = H;
 
-	camera_z2.x = 0;  camera_z2.y = 0;
+	camera_z2.x = 1000;  camera_z2.y = 0;
 	camera_z2.w = W; camera_z2.h = H;
 
-	camera_z3.x = 0;  camera_z3.y = 0;
+	camera_z3.x = 1000;  camera_z3.y = 0;
 	camera_z3.w = W; camera_z3.h = H;
 
 }

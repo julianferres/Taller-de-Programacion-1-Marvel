@@ -17,7 +17,7 @@ class Personaje{
 
 	public:
 
-		Personaje(ControladorGrafico &grafico, std::string nombre);
+		Personaje(ControladorGrafico &grafico, std::string nombre, int posicionXinicial, SDL_RendererFlip flip);
 		~Personaje();
 		void dibujar(ControladorGrafico &grafico);
 		void MoverDerecha();
@@ -26,18 +26,22 @@ class Personaje{
 		void agacharse();
 		float getX();
 		float getXDer();
-		int ancho;
-		int alto;
-		float velocidadInicial;
-		bool saltando = false;
-		float alturaActualSalto = 0;
-		float tiempo = 0;
+		SDL_Rect  obtenerRectangulo();
+		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);
+		bool colisionaAlaIzquierda(SDL_Rect rectanguloOponente);
 
 	private:
 
 		float posx, posy,posxrelativo;
-		//Sprite sprite;
 		SpriteAnimado spriteAnimado;
+		int ancho;
+		int alto;
+		int velocidad = 10;
+		float velocidadInicial;
+		bool saltando = false;
+		float alturaActualSalto = 0;
+		float tiempo = 0;
+		SDL_RendererFlip flip;
 
 };
 
