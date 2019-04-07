@@ -8,8 +8,8 @@ extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
 Juego::Juego(){
-	int posicionMoverFondoIzq = controladorJson->anchoVentana() * 1/4;
-	int posicionMoverFondoDer = controladorJson->anchoVentana() * 3/4;
+	int posicionMoverFondoIzq = controladorJson->anchoVentana() * 1/8;
+	int posicionMoverFondoDer = controladorJson->anchoVentana() * 7/8;
 
 	this->isRunning=true;
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -28,8 +28,8 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	this->dibujarFondo(graficos);
 	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
 	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
-	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",controladorJson->anchoVentana()/4,flip1);
-	this->jugador2 = new Jugador(graficos,"Spiderman2", "CapitanAmerica2",controladorJson->anchoVentana()*3/4, flip2);
+	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",controladorJson->anchoVentana()/8,flip1);
+	this->jugador2 = new Jugador(graficos,"Spiderman", "CapitanAmerica",controladorJson->anchoVentana()*3/4, flip2);
 
 	while (isRunning){
 		startTime = SDL_GetTicks();

@@ -17,7 +17,7 @@ string SpriteAnimado::getAnimacionActual(){
 }
 
 void SpriteAnimado::cargarAnimaciones(string nombre){
-	if(nombre=="CapitanAmerica" or nombre=="CapitanAmerica2"){
+	if(nombre == "CapitanAmerica" ){
 		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,4);
 		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,5);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,5);
@@ -30,7 +30,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(agacharse);
 		animacionActual = quieto;
 	}
-	if((nombre=="Spiderman") or (nombre=="Spiderman2")){
+	else if(nombre=="Spiderman"){
 		Animacion *quieto = new Animacion("quieto",10,0,0,125,115,5);
 		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,99,1);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,1);
@@ -43,7 +43,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(agacharse);
 		animacionActual = quieto;
 	}
-	if((nombre=="Venom") or (nombre=="Venom2")){
+	else if(nombre=="Venom" ){
 			Animacion *quieto = new Animacion("quieto",13,0,519,160,123,5);
 			Animacion *moverDerecha = new Animacion("movDerecha",10,0,2905,160,130,4);
 			Animacion *moverIzquierda = new Animacion("movIzquierda",10,0,2905,160,130,4);
@@ -56,7 +56,6 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 			animaciones.push_back(agacharse);
 			animacionActual = quieto;
 		}
-
 }
 
 void SpriteAnimado::iniciarAnimacion(string nombre){
@@ -89,6 +88,7 @@ void SpriteAnimado::update(){
 	}
 	if (frameIndex < animacionActual->getFrames() - 1 )
 		frameIndex++;
+	else if(getAnimacionActual() == "agacharse") return;
 	else{
 		this->frameIndex=0;
 		this->animacionFinalizada();

@@ -36,7 +36,7 @@ class Personaje{
 		SpriteAnimado spriteAnimado;
 		int ancho;
 		int alto;
-		int velocidad = 50;
+		int velocidad = 10;
 		float velocidadInicial;
 		bool saltando = false;
 		float alturaActualSalto = 0;

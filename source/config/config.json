@@ -41,25 +41,7 @@
             "height":320,
             "width":200,
             "zindex":99            
-            },
-            {"name":"Spiderman2",
-            "filepath":"contents/images/SpidermanSprites.png",
-            "height":320,
-            "width":200,
-            "zindex":99            
-            },
-	    {"name":"Venom2",
-            "filepath":"contents/images/Venom.png",
-            "height":320,
-            "width":200,
-            "zindex":99	    
-            },
-	    {"name":"CapitanAmerica2",
-            "filepath":"contents/imag43yegsthaes/CaptainAmericaSprites.png",
-            "height":320,
-            "width":200,
-            "zindex":99	    
-            }           
+            }         
 
         ],
     "window":{

@@ -29,27 +29,17 @@ void Personaje::dibujar(ControladorGrafico &graficos){
 	if(saltando)
 		this->Saltar();
 	this->spriteAnimado.update();
-	if(this->spriteAnimado.getAnimacionActual()=="movDerecha"){
-		if(this->posxrelativo<this->posx){
+	if(this->spriteAnimado.getAnimacionActual()=="movDerecha")
 			this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto,ancho, this->flip);
-			this->posxrelativo=this->posxrelativo+1;
-		}
-	}
-	else{
-		if(this->spriteAnimado.getAnimacionActual()=="movIzquierda"){
-			if(this->posxrelativo>this->posx){
+	else if(this->spriteAnimado.getAnimacionActual()=="movIzquierda")
 				this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto, ancho, this->flip);
-				this->posxrelativo=this->posxrelativo-1;
-			}
-		}
-		else{
+	else
 			this->spriteAnimado.dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
-		}
-	}
+
 }
 
 void Personaje::MoverDerecha(){
-	if(posx > controladorJson->anchoVentana() - ancho )
+	if(posx + ancho/2> controladorJson->anchoVentana() - ancho )
 		return;
 	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movDerecha");
@@ -58,7 +48,7 @@ void Personaje::MoverDerecha(){
 }
 
 void Personaje::MoverIzquierda(){
-	if(posx < 0)
+	if(posx - ancho/2 < 0)
 			return;
 	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movIzquierda");
