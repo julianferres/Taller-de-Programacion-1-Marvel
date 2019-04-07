@@ -14,12 +14,11 @@ void ControladorJson::leerArchivo(){
 		this->setLogLevel(j);
 		controladorLogger->setNivelDebug(nivel_debug);
 		this->setAlturaVentana(j);
-
-
-		fullscreen = j["window"]["fullscreen"];
-		FPS = j["FPS"];
-		cantidad_personajes = j["characters"].size();
-		cantidad_fondos = j["battlefield"].size();
+		this->setAnchoVentana(j);
+		this->setPantallaCompleta(j);
+		this->setFPS(j);
+		this->setCantidadPersonajes(j);
+		this->setCantidadFondos(j);
 
 		for (int i = 0; i < cantidad_personajes; i++){
 			personajes.push_back(std::make_tuple(j["characters"][i]["name"],j["characters"][i]["filepath"],j["characters"][i]["height"],j["characters"][i]["width"],j["characters"][i]["zindex"]));
@@ -125,3 +124,47 @@ void ControladorJson::setAnchoVentana(json j){
 		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar el ancho de la ventana, seteado a 1400");
 	}
 }
+
+void ControladorJson::setPantallaCompleta(json j){
+	try{
+		fullscreen = j["window"]["fullscreen"];
+	}
+	catch(json::exception &e){
+		fullscreen = false;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar modo pantalla completa. False por default");
+	}
+}
+
+void ControladorJson::setFPS(json j){
+	try{
+		FPS = j["FPS"];
+	}
+	catch(json::exception &e){
+		FPS = 60;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar fps. Seteado a 60 por default.");
+	}
+}
+
+void ControladorJson::setCantidadPersonajes(json j){
+	try{
+		cantidad_personajes = j["characters"].size();
+	}
+	catch(json::exception &e){
+		cantidad_personajes = 4;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar los personajes. Cantidad seteada a 4");
+	}
+}
+
+void ControladorJson::setCantidadFondos(json j){
+	try{
+		cantidad_fondos = j["battlefield"].size();
+	}
+	catch(json::exception &e){
+		cantidad_fondos = 1;
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: No se pudo encontrar los fondos. Cantidad seteada a 1");
+	}
+}
+
+
+
+

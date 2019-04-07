@@ -40,6 +40,10 @@ class ControladorJson{
 		void setPantallaCompleta(json j);
 		void setAlturaPersonaje(json j);
 		void setAnchhoPersonaje(json j);
+		void setFPS(json j);
+		void setCantidadPersonajes(json j);
+		void setCantidadFondos(json j);
+
 
 
 };
