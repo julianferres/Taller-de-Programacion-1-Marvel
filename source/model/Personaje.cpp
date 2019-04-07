@@ -17,7 +17,7 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 	this->posxrelativo=this->posx;
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
-	this->posy= controladorJson->alturaVentana() - alto - 50;
+	this->posy= controladorJson->alturaVentana() *9/16; //DEPENDE DEL FONDO Z3
 	this->spriteAnimado=SpriteAnimado(graficos,controladorJson->pathImagen(nombre));
 	this->spriteAnimado.cargarAnimaciones(nombre);
 	this->spriteAnimado.iniciarAnimacion("quieto");
