@@ -7,19 +7,23 @@
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
+#define posicionXInicialJugador1  controladorJson->anchoVentana() * 1/4
+#define   posicionXInicialJugador2  controladorJson->anchoVentana() *3/4
+
+#define limiteFondoIzq  controladorJson->anchoVentana() * 1/8
+#define limiteFondoDer  controladorJson->anchoVentana() * 15/16
+
 Juego::Juego(){
-	int posicionMoverFondoIzq = controladorJson->anchoVentana() * 1/8;
-	int posicionMoverFondoDer = controladorJson->anchoVentana() * 7/8;
 
 	this->isRunning=true;
 	SDL_Init(SDL_INIT_EVERYTHING);
-	this->gameLoop(posicionMoverFondoIzq, posicionMoverFondoDer);
+	this->gameLoop();
 }
 
 Juego::~Juego()
 {}
 
-void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
+void Juego::gameLoop(){
 
 	ControladorGrafico graficos;
 	SDL_Event evento;
@@ -27,12 +31,12 @@ void Juego::gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer){
 	this->dibujarFondo(graficos);
 	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
 	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
-	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",controladorJson->anchoVentana()/8,flip1);
-	this->jugador2 = new Jugador(graficos,"Spiderman", "CapitanAmerica",controladorJson->anchoVentana()*3/4, flip2);
+	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",posicionXInicialJugador1,flip1);
+	this->jugador2 = new Jugador(graficos,"Spiderman", "MegaMan",posicionXInicialJugador2, flip2);
 
 	while (isRunning){
 		startTime = SDL_GetTicks();
-		this->teclear(graficos, evento, posicionMoverFondoIzq, posicionMoverFondoDer);
+		this->teclear(graficos, evento);
 		this->dibujar(graficos);
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
@@ -59,7 +63,7 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.render();
 }
 
-void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,int posicionMoverFondoIzq, int posicionMoverFondoDer){
+void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento){
 	const Uint8 *keys = SDL_GetKeyboardState(NULL);
 	Personaje* personaje1 = jugador1->devolverPersonajeActual();
 	Personaje* personaje2 = jugador2->devolverPersonajeActual();
@@ -83,48 +87,44 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,int posicionMo
 			//Jugador 1
 			 if (keys[SDL_SCANCODE_D]){
 				if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() ) ){
-					this->jugador1->personajeActualMoverDerecha();
-					if(jugador1->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
+					if(personaje1->MoverDerecha(personaje2)) this->parallax->MoverCamaraDerecha();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la derecha");
 				}
 
 			}
 			if (keys[SDL_SCANCODE_A]){
 				if(! personaje1->colisionaAlaIzquierda(personaje2->obtenerRectangulo() )){
-					this->jugador1->personajeActualMoverIzquierda();
-					if (jugador1->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
+					if (personaje1->MoverIzquierda(personaje2)) this->parallax->MoverCamaraIzquierda();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la izquierda");
 				}
 			}
 			if (keys[SDL_SCANCODE_S]){
-				this->jugador1->personajeActualAgacharse();
+				personaje1->agacharse();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
 			}
 			if (keys[SDL_SCANCODE_W]){
-				this->jugador1->personajeActualSaltar();
+				personaje1->Saltar();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 salta");
 			}
 			//Jugador2
 		   if (keys[SDL_SCANCODE_RIGHT]){
 			   if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo())){
-					this->jugador2->personajeActualMoverDerecha();
-					if(jugador2->obtenerPosicionXPersonaje(true) > posicionMoverFondoDer) this->parallax->MoverCamaraDerecha();
+					if(personaje2->MoverDerecha(personaje1)) this->parallax->MoverCamaraDerecha();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la derecha");
 			   }
 		    }
 		    if (keys[SDL_SCANCODE_LEFT]){
 		    	if(! personaje2->colisionaAlaIzquierda(personaje1->obtenerRectangulo())){
-		    		this->jugador2->personajeActualMoverIzquierda();
-					if (jugador2->obtenerPosicionXPersonaje(false) < posicionMoverFondoIzq) this->parallax->MoverCamaraIzquierda();
+		    		if (personaje2->MoverIzquierda(personaje1)) this->parallax->MoverCamaraIzquierda();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la izquierda");
 		    	}
 		    }
 		    if (keys[SDL_SCANCODE_UP]){
-		    	this->jugador2->personajeActualSaltar();
+		    	personaje2->Saltar();
 		    	controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 salta");
 		    }
 		    if (keys[SDL_SCANCODE_DOWN]){
-		    	this->jugador2->personajeActualAgacharse();
+		    	personaje2->agacharse();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 agachado");
 			}
 	}

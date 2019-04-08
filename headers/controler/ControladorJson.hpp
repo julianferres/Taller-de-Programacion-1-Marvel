@@ -59,8 +59,8 @@ class ControladorJson{
 		int zindex_personaje_default = 99;
 
 		//Rangos aceptados
-		const int rango_altura_ventana[2] = {400, 1000};
-		const int rango_ancho_ventana[2] = {600, 2000};
+		const int rango_altura_ventana[2] = {400, 2000};
+		const int rango_ancho_ventana[2] = {600, 4000};
 		const int rango_FPS[2] = {30, 60};
 
 		void setLogLevel(json j)throw();

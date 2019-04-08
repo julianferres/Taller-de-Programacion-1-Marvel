@@ -14,10 +14,6 @@ class Jugador{
 		Jugador(ControladorGrafico &grafico, std::string nombrePersonaje1,
 				std::string nombrePersonaje2, int posicionXinicial, SDL_RendererFlip flip);
 		~Jugador();
-		void personajeActualMoverDerecha();
-		void personajeActualMoverIzquierda();
-		void personajeActualAgacharse();
-		void personajeActualSaltar();
 		void personajeActualDibujar(ControladorGrafico &grafico);
 		void cambiarPersonaje();
 		float obtenerPosicionXPersonaje(bool posicionDer);

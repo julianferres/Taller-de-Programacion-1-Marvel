@@ -19,10 +19,10 @@ class Juego{
 		Juego();
 		~Juego();
 		bool running() {return isRunning;}
-		void gameLoop(int posicionMoverFondoIzq, int posicionMoverFondoDer);
+		void gameLoop();
 		void dibujar(ControladorGrafico &grafico);
 		void dibujarFondo(ControladorGrafico &graficos);
-		void teclear(ControladorGrafico &grafico, SDL_Event evento, int posicionMoverFondoIzq, int posicionMoverFondoDer);
+		void teclear(ControladorGrafico &grafico, SDL_Event evento);
 
 
 	private:

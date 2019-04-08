@@ -20,24 +20,6 @@ void Jugador::cambiarPersonaje(){
 	}
 }
 
-void Jugador::personajeActualMoverDerecha(){
-	this->personaje1->MoverDerecha();
-	this->personaje2->MoverDerecha();
-}
-
-void Jugador::personajeActualMoverIzquierda(){
-	this->personaje1->MoverIzquierda();
-	this->personaje2->MoverIzquierda();
-}
-
-void Jugador::personajeActualSaltar(){
-	this->personajeActual->Saltar();
-}
-
-void Jugador::personajeActualAgacharse(){
-	this->personajeActual->agacharse();
-}
-
 void Jugador::personajeActualDibujar(ControladorGrafico &graficos){
 	this->personajeActual->dibujar(graficos);
 }

@@ -3,10 +3,15 @@
 #include <string>
 #include <math.h>
 #include <ControladorLogger.hpp>
+
+extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
 #define constanteDeAltura 39.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
 #define constanteTiempoCiclos 0.3
+#define limiteFondoIzq  controladorJson->anchoVentana() * 1/16
+#define limiteFondoDer  controladorJson->anchoVentana() * 15/16
+
 using namespace std;
 
 Personaje::~Personaje(){
@@ -38,25 +43,60 @@ void Personaje::dibujar(ControladorGrafico &graficos){
 
 }
 
-void Personaje::MoverDerecha(){
-	if(posx + ancho/2> controladorJson->anchoVentana() - ancho )
-		return;
-	if(!saltando)
+bool Personaje::MoverDerecha(Personaje *enemigo){
+	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
+
+	if(!saltando){
 		this->spriteAnimado.iniciarAnimacion("movDerecha");
+	}
+
+	if(posx + ancho >limiteFondoDer){
+		if (rect_enemigo.x > limiteFondoIzq){
+			enemigo->CorrerAIzquierda();
+			return true;
+		}
+		return false;
+	}
 	this->posxrelativo=this->posx;
-	this->posx=this->posx+50;//velocidad;
+	this->posx=this->posx+velocidad;
+	return false;
 }
 
-void Personaje::MoverIzquierda(){
-	if(posx - ancho/2 < 0)
+bool Personaje::MoverIzquierda(Personaje *enemigo){
+	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
+
+		if(!saltando){
+			this->spriteAnimado.iniciarAnimacion("movIzquierda");
+		}
+
+		if(posx  < limiteFondoIzq){
+			if (rect_enemigo.x + rect_enemigo.w < limiteFondoDer ){
+				enemigo->CorrerADerecha();
+				return true;
+			}
+			return false;
+		}
+		this->posxrelativo=this->posx;
+		this->posx=this->posx-velocidad;
+		return false;
+}
+
+void Personaje::CorrerAIzquierda(){
+	if(posx  < limiteFondoIzq)
 			return;
-	if(!saltando)
-		this->spriteAnimado.iniciarAnimacion("movIzquierda");
 	this->posxrelativo=this->posx;
-	this->posx=this->posx-50;//velocidad;
+	this->posx=this->posx-velocidad;
+}
+
+void Personaje::CorrerADerecha(){
+	if(posx + ancho > limiteFondoDer)
+			return;
+	this->posxrelativo=this->posx;
+	this->posx=this->posx+velocidad;
 }
 
 void Personaje::agacharse(){
+	if(saltando) return;
 	this->spriteAnimado.iniciarAnimacion("agacharse");
 }
 
@@ -65,7 +105,7 @@ void Personaje::Saltar(){
 	if( ! saltando) saltando = true;
 	else{
 		if(alturaActualSalto <= 0 && tiempo != 0 ){
-			saltando = false; 	tiempo = 0; 	return;
+			saltando = false; 	tiempo = 0; posy=controladorJson->alturaVentana() *9/16; 	return;
 		}
 		else{
 			tiempo += constanteTiempoCiclos;
@@ -91,12 +131,12 @@ SDL_Rect  Personaje::obtenerRectangulo(){
 }
 
 bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+10, static_cast<int>(posy), ancho, alto};
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+15, static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
 
 bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-10, static_cast<int>(posy), ancho, alto};
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-15, static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
 

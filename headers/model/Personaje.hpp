@@ -19,8 +19,10 @@ class Personaje{
 		Personaje(ControladorGrafico &grafico, std::string nombre, int posicionXinicial, SDL_RendererFlip flip);
 		~Personaje();
 		void dibujar(ControladorGrafico &grafico);
-		void MoverDerecha();
-		void MoverIzquierda();
+		bool MoverDerecha(Personaje *enemigo);
+		bool MoverIzquierda(Personaje *enemigo);
+		void CorrerADerecha();
+		void CorrerAIzquierda();
 		void Saltar();
 		void agacharse();
 		float getX();

@@ -38,7 +38,7 @@
             },
 	    {"name":"MegaMan",
             "filepath":"contents/images/MegaMan.png",
-            "height":220,
+            "height":320,
             "width":200,
             "zindex":99	    
             },
