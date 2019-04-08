@@ -14,13 +14,17 @@ class Parallax{
 		SDL_Surface *background_z1 ;
 		SDL_Surface *background_z2;
 		SDL_Surface *background_z3;
-		SDL_Surface *image;
+		//SDL_Surface *image;
 		SDL_Texture *bitmapTex1 ;
 		SDL_Texture *bitmapTex2 ;
 		SDL_Texture *bitmapTex3 ;
 
 		void MoverCamaraIzquierda();
 		void MoverCamaraDerecha();
+		void cargarFondos();
+		void cargarTexturas(ControladorGrafico &graficos);
+		void iniciarCamaras();
+
 		SDL_Rect *Camaraz1();
 		SDL_Rect *Camaraz2();
 		SDL_Rect *Camaraz3();

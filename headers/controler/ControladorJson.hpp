@@ -18,11 +18,15 @@ class ControladorJson{
 		int cantidadFPS();
 		int alturaPersonaje(std::string);
 		int anchoPersonaje(std::string);
+		int cantidadFondos();
 		bool esfullscreen();
+
 		std::string nivelDebug();
 		std::string pathFondo(int zindex);
 		std::string pathImagen(std::string nombrePersonaje);
 		void leerArchivoDefault();
+		std::string MenuImage();
+
 	private:
 
 		int altura_ventana;
@@ -35,6 +39,7 @@ class ControladorJson{
 		std::vector<std::tuple<std::string, std::string, int, int, int>> personajes;
 		std::vector<std::tuple<std::string, int>> fondos;
 		std::string configPath = "source/config/config.json";
+		std::string menuImage;
 
 		//Valores por defecto
 		const std::string configPathDefault = "source/default/config.json";
@@ -45,6 +50,7 @@ class ControladorJson{
 		const int cantidad_personajes_default = 4;
 		const int cantidad_fondos_default = 3;
 		const int FPS_default = 60;
+		void setMenuImage(json j);
 
 		const std::string nombre_personaje_default = "CapitanAmerica";
 		std::string filepath_personaje_default = "contents/auxiliar/personaje_auxiliar_sprite.png";

@@ -23,9 +23,10 @@ void ControladorJson::leerArchivo(){
 		this -> setCantidadFondos(j);
 		this -> setPersonajes(j);
 		this -> setFondos(j);
-
+		//this->setMenuImage(j);
 		controladorLogger->registrarEvento("INFO","ControladorJson::Archivo de configuracion JSON leido correctamente");
 	}
+
 
 	catch(json::exception &error){
 		//No se puede abrir el json. Cargar uno nuevo por default
@@ -73,6 +74,9 @@ int ControladorJson::anchoVentana(){
 int ControladorJson::cantidadFPS(){
 	return FPS;
 }
+int ControladorJson::cantidadFondos(){
+	return cantidad_fondos;
+}
 
 bool ControladorJson::esfullscreen(){
 	return fullscreen;
@@ -81,6 +85,8 @@ bool ControladorJson::esfullscreen(){
 std::string ControladorJson::nivelDebug(){
 	return nivel_debug;
 }
+
+
 
 std::string ControladorJson::pathFondo(int zindex){
     for (int i = 0; i < cantidad_fondos; i++){
