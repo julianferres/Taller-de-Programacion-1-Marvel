@@ -32,6 +32,9 @@ class Parallax{
 		SDL_Texture *Backgroundz2();
 		SDL_Texture *Backgroundz3();
 
+		bool finDeEscenarioDerecha();
+		bool finDeEscenarioIzquierda();
+
 		Parallax();
 		Parallax(ControladorGrafico &graficos);
 

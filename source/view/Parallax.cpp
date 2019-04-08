@@ -91,9 +91,7 @@ void Parallax::iniciarCamaras(){
 }
 
 void Parallax::MoverCamaraDerecha(){
-	if(camera_z1.x >= background_z1->w - W ||
-		camera_z2.x >= background_z2->w - W ||
-		camera_z3.x >= background_z3->w - W ){
+	if(finDeEscenarioDerecha() ){
 		return;
 	}
 		camera_z1.x += SPEED_z1;
@@ -102,7 +100,7 @@ void Parallax::MoverCamaraDerecha(){
 }
 
 void Parallax::MoverCamaraIzquierda(){
-	if(camera_z1.x <= 0 || camera_z2.x <= 0 || camera_z3.x <= 0){
+	if(finDeEscenarioIzquierda()){
 		return;
 	}
 	camera_z1.x -= SPEED_z1;
@@ -113,6 +111,18 @@ void Parallax::MoverCamaraIzquierda(){
 SDL_Rect *Parallax::Camaraz1(){
 	return &camera_z1;
 }
+
+
+bool Parallax::finDeEscenarioIzquierda(){
+	return camera_z1.x <= 0 || camera_z2.x <= 0 || camera_z3.x <= 0;
+}
+
+bool Parallax::finDeEscenarioDerecha(){
+	return camera_z1.x >= background_z1->w - W ||
+			camera_z2.x >= background_z2->w - W ||
+			camera_z3.x >= background_z3->w - W;
+}
+
 
 SDL_Rect *Parallax::Camaraz2(){
 	return &camera_z2;
