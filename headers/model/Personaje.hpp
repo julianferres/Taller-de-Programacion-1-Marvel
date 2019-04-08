@@ -3,7 +3,6 @@
 
 #include <Juego.hpp>
 #include <ConfiguracionGlobal.hpp>
-#include <Sprite.hpp>
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 #include <string>

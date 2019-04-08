@@ -1,6 +1,5 @@
 #include <Animacion.hpp>
 #include <string>
-#include <Sprite.hpp>
 
 Animacion::Animacion(){}
 

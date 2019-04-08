@@ -36,6 +36,12 @@
             "width":200,
             "zindex":99	    
             },
+	    {"name":"MegaMan",
+            "filepath":"contents/images/MegaMan.png",
+            "height":220,
+            "width":200,
+            "zindex":99	    
+            },
             {"name":"Spiderman",
             "filepath":"contents/images/SpidermanSprites.png",
             "height":320,
@@ -45,8 +51,8 @@
 
         ],
     "window":{
-        "height":800,
-        "width":1400,
+        "height":600,
+        "width":1200,
 	"fullscreen": false
     }
 }

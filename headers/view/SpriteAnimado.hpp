@@ -1,5 +1,5 @@
-#ifndef HEADERS_VIEW_SPRITEANIMADO_HPP_
-#define HEADERS_VIEW_SPRITEANIMADO_HPP_
+#ifndef SPRITEANIMADO_HPP_
+#define SPRITEANIMADO_HPP_
 
 #include <string>
 #include <vector>

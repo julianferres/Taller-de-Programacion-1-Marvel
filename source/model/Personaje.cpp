@@ -1,7 +1,7 @@
 #include <Personaje.hpp>
 #include <ControladorJson.hpp>
 #include <string>
-#include<math.h>
+#include <math.h>
 #include <ControladorLogger.hpp>
 extern ControladorLogger *controladorLogger;
 
@@ -17,7 +17,7 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 	this->posxrelativo=this->posx;
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
-	this->posy= controladorJson->alturaVentana() *9/16; //DEPENDE DEL FONDO Z3
+	this->posy=controladorJson->alturaVentana() *9/16; //DEPENDE DEL FONDO Z3
 	this->spriteAnimado=SpriteAnimado(graficos,controladorJson->pathImagen(nombre));
 	this->spriteAnimado.cargarAnimaciones(nombre);
 	this->spriteAnimado.iniciarAnimacion("quieto");
@@ -44,7 +44,7 @@ void Personaje::MoverDerecha(){
 	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movDerecha");
 	this->posxrelativo=this->posx;
-	this->posx=this->posx+velocidad;
+	this->posx=this->posx+50;//velocidad;
 }
 
 void Personaje::MoverIzquierda(){
@@ -53,7 +53,7 @@ void Personaje::MoverIzquierda(){
 	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movIzquierda");
 	this->posxrelativo=this->posx;
-	this->posx=this->posx-velocidad;
+	this->posx=this->posx-50;//velocidad;
 }
 
 void Personaje::agacharse(){

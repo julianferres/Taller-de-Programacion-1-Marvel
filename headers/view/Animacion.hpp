@@ -1,5 +1,5 @@
-#ifndef HEADERS_VIEW_ANIMACION_HPP_
-#define HEADERS_VIEW_ANIMACION_HPP_
+#ifndef ANIMACION_HPP_
+#define ANIMACION_HPP_
 
 #include <string>
 #include <vector>
