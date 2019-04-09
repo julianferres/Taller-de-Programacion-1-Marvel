@@ -23,9 +23,7 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
 	this->posy=controladorJson->alturaVentana() *9/16; //DEPENDE DEL FONDO Z3
-	this->spriteAnimado=SpriteAnimado(graficos,controladorJson->pathImagen(nombre));
-	this->spriteAnimado.cargarAnimaciones(nombre);
-	this->spriteAnimado.iniciarAnimacion("quieto");
+	this->spriteAnimado=SpriteAnimado(graficos,controladorJson->pathImagen(nombre),nombre);
 	this->velocidadInicial = sqrt(constanteDeAltura * alto);
 	this->flip = flip;
 }
@@ -33,25 +31,22 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 void Personaje::dibujar(ControladorGrafico &graficos){
 	if(saltando)
 		this->Saltar();
-	this->spriteAnimado.update();
 	if(this->spriteAnimado.getAnimacionActual()=="movDerecha")
 			this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto,ancho, this->flip);
 	else if(this->spriteAnimado.getAnimacionActual()=="movIzquierda")
-				this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto, ancho, this->flip);
+			this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto, ancho, this->flip);
 	else
 			this->spriteAnimado.dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
+	this->spriteAnimado.update();
 
 }
 
-bool Personaje::MoverDerecha(Personaje *enemigo){
+bool Personaje::MoverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
-
-	if(!saltando){
+	if(!saltando)
 		this->spriteAnimado.iniciarAnimacion("movDerecha");
-	}
-
 	if(posx + ancho >limiteFondoDer){
-		if (rect_enemigo.x > limiteFondoIzq){
+		if (rect_enemigo.x > limiteFondoIzq && !finEscenarioDerecha){
 			enemigo->CorrerAIzquierda();
 			return true;
 		}
@@ -62,23 +57,20 @@ bool Personaje::MoverDerecha(Personaje *enemigo){
 	return false;
 }
 
-bool Personaje::MoverIzquierda(Personaje *enemigo){
+bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
-
-		if(!saltando){
-			this->spriteAnimado.iniciarAnimacion("movIzquierda");
+	if(!saltando)
+		this->spriteAnimado.iniciarAnimacion("movIzquierda");
+	if(posx  < limiteFondoIzq){
+		if (rect_enemigo.x + rect_enemigo.w < limiteFondoDer && !finEscenarioIzquierda){
+			enemigo->CorrerADerecha();
+			return true;
 		}
-
-		if(posx  < limiteFondoIzq){
-			if (rect_enemigo.x + rect_enemigo.w < limiteFondoDer ){
-				enemigo->CorrerADerecha();
-				return true;
-			}
-			return false;
-		}
-		this->posxrelativo=this->posx;
-		this->posx=this->posx-velocidad;
 		return false;
+	}
+	this->posxrelativo=this->posx;
+	this->posx=this->posx-velocidad;
+	return false;
 }
 
 void Personaje::CorrerAIzquierda(){

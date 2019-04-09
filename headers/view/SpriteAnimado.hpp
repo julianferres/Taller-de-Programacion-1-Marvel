@@ -13,7 +13,7 @@ class SpriteAnimado{
 	public:
 
 		SpriteAnimado();
-		SpriteAnimado(ControladorGrafico &graficos, const string &filePath);
+		SpriteAnimado(ControladorGrafico &graficos, const string &filePath, string nombre);
 		void iniciarAnimacion(string animacion);
 		void update();
 		void dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho, SDL_RendererFlip flip);
