@@ -24,7 +24,6 @@ class Personaje{
 		void CorrerAIzquierda();
 		void Saltar();
 		void agacharse();
-		float getX();
 		float getXDer();
 		SDL_Rect  obtenerRectangulo();
 		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);

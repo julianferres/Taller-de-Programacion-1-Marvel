@@ -16,7 +16,6 @@ class Jugador{
 		~Jugador();
 		void personajeActualDibujar(ControladorGrafico &grafico);
 		void cambiarPersonaje();
-		float obtenerPosicionXPersonaje(bool posicionDer);
 		Personaje * devolverPersonajeActual();
 
 	private:

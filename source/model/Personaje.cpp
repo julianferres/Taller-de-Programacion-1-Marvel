@@ -48,12 +48,15 @@ bool Personaje::MoverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	if(posx + ancho >limiteFondoDer){
 		if (rect_enemigo.x > limiteFondoIzq && !finEscenarioDerecha){
 			enemigo->CorrerAIzquierda();
+			controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje en el limite derecho. Se corre el oponente a la izquierda");
 			return true;
 		}
+		controladorLogger->registrarEvento("DEBUG", "Personaje::Ambos jugadores en el borde de la pantalla.");
 		return false;
 	}
 	this->posxrelativo=this->posx;
 	this->posx=this->posx+velocidad;
+	controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje se mueve a la derecha");
 	return false;
 }
 
@@ -64,12 +67,15 @@ bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	if(posx  < limiteFondoIzq){
 		if (rect_enemigo.x + rect_enemigo.w < limiteFondoDer && !finEscenarioIzquierda){
 			enemigo->CorrerADerecha();
+			controladorLogger->registrarEvento("DEBUG", "Personaje:: Personaje en el limite izquierdo. Se corre el oponente a la derecha");
 			return true;
 		}
+		controladorLogger->registrarEvento("DEBUG", "Personaje::Ambos jugadores en el borde de la pantalla.");
 		return false;
 	}
 	this->posxrelativo=this->posx;
 	this->posx=this->posx-velocidad;
+	controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje se mueve a la izquierda");
 	return false;
 }
 
@@ -109,9 +115,6 @@ void Personaje::Saltar(){
 	}
 }
 
-float Personaje::getX(){
-	return this->posx;
-}
 
 float Personaje::getXDer(){
 	return (this->posx + this->ancho);

@@ -43,10 +43,8 @@ class Parallax{
 		int W = controladorJson->anchoVentana();
 		int H = controladorJson->alturaVentana();
 		const int SPEED_z1 = 5;
-		const int SPEED_z2=  7.2;
+		const int SPEED_z2=  7.5;
 		const int SPEED_z3 = 10;
-		int x = 0; 	int y = 0;
-
 
 };
 #endif

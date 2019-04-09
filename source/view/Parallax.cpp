@@ -72,17 +72,17 @@ void Parallax::iniciarCamaras(){
 	if (background_z1 == NULL){
 		controladorLogger->registrarEvento("ERROR", "Parallax::Como no hay fondo, no se puede inicializar la camara");
 	}else{
-	camera_z1.x = background_z1->w/2;  //PARA QUE INICIE EN LA MITAD (FONDO Z1/2 APROX)
+	camera_z1.x = background_z1->w/2 - W/2;
 	camera_z1.y = 0;
 	camera_z1.w = W;
 	camera_z1.h = H;
 	controladorLogger->registrarEvento("DEBUG", "Parallax::Camara 1 inicializada");
-	camera_z2.x = background_z1->w/2;
+	camera_z2.x = background_z2->w/2 -W/2;
 	camera_z2.y = 0;
 	camera_z2.w = W;
 	camera_z2.h = H;
 	controladorLogger->registrarEvento("DEBUG", "Parallax::Camara 2 inicializada");
-	camera_z3.x = background_z1->w/2;
+	camera_z3.x = background_z3->w/2 - W/2;
 	camera_z3.y = 0;
 	camera_z3.w = W;
 	camera_z3.h = H;
