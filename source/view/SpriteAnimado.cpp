@@ -35,7 +35,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,99,1);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,1);
 		Animacion *salto = new Animacion("salto",14,0,473,100,135,2);
-		Animacion *agacharse = new Animacion("agacharse",1,0,302,109,76,11);
+		Animacion *agacharse = new Animacion("agacharse",13,0,1208,110,66,8);
 		animaciones.push_back(quieto);
 		animaciones.push_back(moverDerecha);
 		animaciones.push_back(moverIzquierda);
