@@ -1,15 +1,19 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 #include <Animacion.hpp>
+#include <ControladorLogger.hpp>
 
 class Animacion;
 using namespace std;
+extern ControladorLogger *controladorLogger;
 
 SpriteAnimado::SpriteAnimado(){
 }
 
-SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos, const string &filePath, string nombre){
+SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos,  const string &filePath, string nombre){
 	this->spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
+	if(filePath == "contents/images/sinSprite.png")
+		nombre = "sinSprite";
 	cargarAnimaciones(nombre);
 }
 
@@ -45,31 +49,44 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animacionActual = quieto;
 	}
 	else if(nombre=="Venom" ){
-			Animacion *quieto = new Animacion("quieto",13,0,519,160,123,5);
-			Animacion *moverDerecha = new Animacion("movDerecha",10,0,2905,160,130,4);
-			Animacion *moverIzquierda = new Animacion("movIzquierda",10,0,2905,160,130,4);
-			Animacion *salto = new Animacion("salto",11,0,5408,160,172,8);
-			Animacion *agacharse = new Animacion("agacharse",10,0,3580,150,125,2);
-			animaciones.push_back(quieto);
-			animaciones.push_back(moverDerecha);
-			animaciones.push_back(moverIzquierda);
-			animaciones.push_back(salto);
-			animaciones.push_back(agacharse);
-			animacionActual = quieto;
-		}
+		Animacion *quieto = new Animacion("quieto",13,0,519,160,123,5);
+		Animacion *moverDerecha = new Animacion("movDerecha",10,0,2905,160,130,4);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",10,0,2905,160,130,4);
+		Animacion *salto = new Animacion("salto",11,0,5408,160,172,8);
+		Animacion *agacharse = new Animacion("agacharse",10,0,3580,150,125,2);
+		animaciones.push_back(quieto);
+		animaciones.push_back(moverDerecha);
+		animaciones.push_back(moverIzquierda);
+		animaciones.push_back(salto);
+		animaciones.push_back(agacharse);
+		animacionActual = quieto;
+	}
 	else if(nombre=="MegaMan" ){
-				Animacion *quieto = new Animacion("quieto",6,0,0,100,80,10);
-				Animacion *moverDerecha = new Animacion("movDerecha",12,0,108,100,82,4);
-				Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,108,100,82,4);
-				Animacion *salto = new Animacion("salto",13,0,1572,100,152,10);
-				Animacion *agacharse = new Animacion("agacharse",10,0,965,100,80,2);
-				animaciones.push_back(quieto);
-				animaciones.push_back(moverDerecha);
-				animaciones.push_back(moverIzquierda);
-				animaciones.push_back(salto);
-				animaciones.push_back(agacharse);
-				animacionActual = quieto;
-			}
+		Animacion *quieto = new Animacion("quieto",6,0,0,100,80,10);
+		Animacion *moverDerecha = new Animacion("movDerecha",12,0,108,100,82,4);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,108,100,82,4);
+		Animacion *salto = new Animacion("salto",13,0,1572,100,152,10);
+		Animacion *agacharse = new Animacion("agacharse",10,0,965,100,80,2);
+		animaciones.push_back(quieto);
+		animaciones.push_back(moverDerecha);
+		animaciones.push_back(moverIzquierda);
+		animaciones.push_back(salto);
+		animaciones.push_back(agacharse);
+		animacionActual = quieto;
+	}
+	else if(nombre=="sinSprite" ){
+		Animacion *quieto = new Animacion("quieto",1,0,0,600,600,10);
+		Animacion *moverDerecha = new Animacion("movDerecha",1,0,0,600,600,4);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",1,0,0,600,600,4);
+		Animacion *salto = new Animacion("salto",1,0,0,600,600,10);
+		Animacion *agacharse = new Animacion("agacharse",1,0,0,600,600,2);
+		animaciones.push_back(quieto);
+		animaciones.push_back(moverDerecha);
+		animaciones.push_back(moverIzquierda);
+		animaciones.push_back(salto);
+		animaciones.push_back(agacharse);
+		animacionActual = quieto;
+	}
 }
 
 void SpriteAnimado::iniciarAnimacion(string nombre){

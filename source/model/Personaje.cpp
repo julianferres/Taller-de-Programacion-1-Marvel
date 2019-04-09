@@ -11,6 +11,7 @@ extern ControladorLogger *controladorLogger;
 #define constanteTiempoCiclos 0.3
 #define limiteFondoIzq  controladorJson->anchoVentana() * 1/16
 #define limiteFondoDer  controladorJson->anchoVentana() * 15/16
+#define alturaPiso 80
 
 using namespace std;
 
@@ -22,7 +23,7 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 	this->posxrelativo=this->posx;
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
-	this->posy=controladorJson->alturaVentana() *9/16; //DEPENDE DEL FONDO Z3
+	this->posy = controladorJson->alturaVentana() - alturaPiso - alto;
 	this->spriteAnimado=SpriteAnimado(graficos,controladorJson->pathImagen(nombre),nombre);
 	this->velocidadInicial = sqrt(constanteDeAltura * alto);
 	this->flip = flip;

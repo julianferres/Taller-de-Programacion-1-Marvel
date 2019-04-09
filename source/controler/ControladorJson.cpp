@@ -1,7 +1,6 @@
 #include <controler/ControladorJson.hpp>
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
-#include <iostream>
 
 extern ControladorLogger *controladorLogger;
 

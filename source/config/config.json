@@ -47,7 +47,13 @@
             "height":320,
             "width":200,
             "zindex":99            
-            }         
+            },
+ 	    {"name":"sinSprite",
+            "filepath":"contents/images/sinSprite.png",
+            "height":200,
+            "width":200,
+            "zindex":99            
+            }          
 
         ],
     "window":{

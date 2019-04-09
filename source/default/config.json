@@ -26,25 +26,25 @@
         [
             {"name":"CapitanAmerica",
             "filepath":"contents/images/sinSprite.png",
-            "height":320,
+            "height":200,
             "width":200,
             "zindex":99	    
             },
 	    {"name":"Venom",
             "filepath":"contents/images/sinSprite.png",
-            "height":320,
+            "height":200,
             "width":200,
             "zindex":99	    
             },
 	    {"name":"MegaMan",
             "filepath":"contents/images/sinSprite.png",
-            "height":280,
-            "width":160,
+            "height":200,
+            "width":200,
             "zindex":99	    
             },
             {"name":"Spiderman",
             "filepath":"contents/images/sinSprite.png",
-            "height":320,
+            "height":200,
             "width":200,
             "zindex":99            
             }         
