@@ -18,7 +18,7 @@ string SpriteAnimado::getAnimacionActual(){
 
 void SpriteAnimado::cargarAnimaciones(string nombre){
 	if(nombre == "CapitanAmerica" ){
-		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,4);
+		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,6);
 		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,5);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,5);
 		Animacion *salto = new Animacion("salto",8,0,595,125,135,9);
@@ -57,10 +57,10 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 			animacionActual = quieto;
 		}
 	else if(nombre=="MegaMan" ){
-				Animacion *quieto = new Animacion("quieto",6,0,0,100,80,5);
+				Animacion *quieto = new Animacion("quieto",6,0,0,100,80,10);
 				Animacion *moverDerecha = new Animacion("movDerecha",12,0,108,100,82,4);
 				Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,108,100,82,4);
-				Animacion *salto = new Animacion("salto",13,0,1572,100,152,8);
+				Animacion *salto = new Animacion("salto",13,0,1572,100,152,10);
 				Animacion *agacharse = new Animacion("agacharse",10,0,965,100,80,2);
 				animaciones.push_back(quieto);
 				animaciones.push_back(moverDerecha);

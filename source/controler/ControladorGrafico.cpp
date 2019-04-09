@@ -1,8 +1,6 @@
 #include <ControladorGrafico.hpp>
-#include <ConfiguracionGlobal.hpp>
 #include <ControladorJson.hpp>
 
-using namespace globals;
 using namespace std;
 
 extern ControladorJson *controladorJson;
