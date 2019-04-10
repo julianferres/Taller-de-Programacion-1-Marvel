@@ -48,6 +48,12 @@
             "width":200,
             "zindex":99            
             },
+	    {"name":"Hulk",
+            "filepath":"contents/images/Hulk.png",
+            "height":320,
+            "width":200,
+            "zindex":99	    
+            },
  	    {"name":"sinSprite",
             "filepath":"contents/images/sinSprite.png",
             "height":200,

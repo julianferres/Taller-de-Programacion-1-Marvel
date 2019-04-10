@@ -32,7 +32,7 @@ void Juego::gameLoop(){
 	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
 	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
 	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",posicionXInicialJugador1,flip1);
-	this->jugador2 = new Jugador(graficos,"Spiderman", "MegaMan",posicionXInicialJugador2, flip2);
+	this->jugador2 = new Jugador(graficos,"Spiderman", "Hulk",posicionXInicialJugador2, flip2);
 
 	while (isRunning){
 		startTime = SDL_GetTicks();

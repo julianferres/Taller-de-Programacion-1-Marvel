@@ -62,7 +62,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animacionActual = quieto;
 	}
 	else if(nombre=="MegaMan" ){
-		Animacion *quieto = new Animacion("quieto",6,0,0,100,80,10);
+		Animacion *quieto = new Animacion("quieto",6,0,0,80,70,15);
 		Animacion *moverDerecha = new Animacion("movDerecha",12,0,108,100,82,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,108,100,82,4);
 		Animacion *salto = new Animacion("salto",13,0,1572,100,152,10);
@@ -73,6 +73,19 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(salto);
 		animaciones.push_back(agacharse);
 		animacionActual = quieto;
+	}
+	else if(nombre=="Hulk" ){
+			Animacion *quieto = new Animacion("quieto",8,0,0,120,125,10);
+			Animacion *moverDerecha = new Animacion("movDerecha",12,0,108,100,82,4);
+			Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,108,100,82,4);
+			Animacion *salto = new Animacion("salto",13,0,1572,100,152,10);
+			Animacion *agacharse = new Animacion("agacharse",10,0,965,100,80,2);
+			animaciones.push_back(quieto);
+			animaciones.push_back(moverDerecha);
+			animaciones.push_back(moverIzquierda);
+			animaciones.push_back(salto);
+			animaciones.push_back(agacharse);
+			animacionActual = quieto;
 	}
 	else if(nombre=="sinSprite" ){
 		Animacion *quieto = new Animacion("quieto",1,0,0,600,600,10);
