@@ -24,8 +24,8 @@ string SpriteAnimado::getAnimacionActual(){
 void SpriteAnimado::cargarAnimaciones(string nombre){
 	if(nombre == "CapitanAmerica" ){
 		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,6);
-		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,5);
-		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,5);
+		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,4);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,4);
 		Animacion *salto = new Animacion("salto",8,0,595,125,135,9);
 		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,105,4);
 		animaciones.push_back(quieto);
@@ -37,8 +37,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 	}
 	else if(nombre=="Spiderman"){
 		Animacion *quieto = new Animacion("quieto",10,0,0,125,115,5);
-		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,99,1);
-		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,1);
+		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,99,2);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,2);
 		Animacion *salto = new Animacion("salto",14,0,473,100,135,2);
 		Animacion *agacharse = new Animacion("agacharse",13,0,1180,110,90,8);
 		animaciones.push_back(quieto);
@@ -76,10 +76,10 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 	}
 	else if(nombre=="Hulk" ){
 			Animacion *quieto = new Animacion("quieto",8,0,0,120,125,10);
-			Animacion *moverDerecha = new Animacion("movDerecha",12,0,108,100,82,4);
-			Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,108,100,82,4);
-			Animacion *salto = new Animacion("salto",13,0,1572,100,152,10);
-			Animacion *agacharse = new Animacion("agacharse",10,0,965,100,80,2);
+			Animacion *moverDerecha = new Animacion("movDerecha",16,0,280,150,150,4);
+			Animacion *moverIzquierda = new Animacion("movIzquierda",16,0,130,150,143,4);
+			Animacion *salto = new Animacion("salto",10,0,580,170,215,10);
+			Animacion *agacharse = new Animacion("agacharse",9,0,445,150,123,4);
 			animaciones.push_back(quieto);
 			animaciones.push_back(moverDerecha);
 			animaciones.push_back(moverIzquierda);
