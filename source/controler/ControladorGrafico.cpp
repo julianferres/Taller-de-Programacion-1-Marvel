@@ -6,7 +6,10 @@ using namespace std;
 extern ControladorJson *controladorJson;
 
 ControladorGrafico::ControladorGrafico(){
-	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), SDL_WINDOW_RESIZABLE, &this->_window, &this->_renderer);
+	Uint32 sizePantalla = SDL_WINDOW_RESIZABLE;
+	if(controladorJson->esfullscreen())
+		sizePantalla = SDL_WINDOW_FULLSCREEN;
+	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), sizePantalla, &this->_window, &this->_renderer);
 	SDL_SetWindowTitle(this->_window, "Marvel vs Capcom");
 }
 

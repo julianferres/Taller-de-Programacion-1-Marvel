@@ -19,8 +19,10 @@ Personaje::~Personaje(){
 }
 
 Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXinicial, SDL_RendererFlip flip){
-	if(controladorJson->pathImagen(nombre).empty())
+	if(!controladorJson->existePersonaje(nombre)){
+		controladorLogger->registrarEvento("ERROR","ControladorJson::No se pudo encontrar la imagen del personaje: "+ nombre);
 		nombre = "sinSprite";
+	}
 	this->posx= posicionXinicial;
 	this->posxrelativo=this->posx;
 	this->alto = controladorJson->alturaPersonaje(nombre);

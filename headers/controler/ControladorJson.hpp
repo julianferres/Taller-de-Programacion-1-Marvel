@@ -20,7 +20,7 @@ class ControladorJson{
 		int anchoPersonaje(std::string);
 		int cantidadFondos();
 		bool esfullscreen();
-
+		bool existePersonaje(std::string);
 		std::string nivelDebug();
 		std::string pathFondo(int zindex);
 		std::string pathImagen(std::string nombrePersonaje);
@@ -53,14 +53,13 @@ class ControladorJson{
 		void setMenuImage(json j);
 
 		const std::string nombre_personaje_default = "CapitanAmerica";
-		std::string filepath_personaje_default = "contents/auxiliar/personaje_auxiliar_sprite.png";
 		int height_personaje_default = 320;
 		int width_personaje_default = 200;
 		int zindex_personaje_default = 99;
 
 		//Rangos aceptados
-		const int rango_altura_ventana[2] = {400, 2000};
-		const int rango_ancho_ventana[2] = {600, 4000};
+		const int rango_altura_ventana[2] = {600, 1000};
+		const int rango_ancho_ventana[2] = {800, 1400};
 		const int rango_FPS[2] = {30, 60};
 
 		void setLogLevel(json j, std::string argumentoConsola)throw();

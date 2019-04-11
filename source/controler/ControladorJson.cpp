@@ -101,8 +101,17 @@ std::string ControladorJson::pathImagen(std::string nombrePersonaje){
             	return std::get<1>(personajes[i]);
             }
         }
-    controladorLogger->registrarEvento("ERROR","ControladorJson::No se pudo encontrar la imagen del personaje: "+ nombrePersonaje);
     return "";
+}
+
+bool ControladorJson::existePersonaje(std::string nombrePersonaje){
+	for (int i = 0; i < cantidad_personajes; i++){
+		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
+			return true;
+		}
+	}
+	return false;
+
 }
 
 int ControladorJson::alturaPersonaje(std::string nombrePersonaje){
@@ -252,9 +261,20 @@ void ControladorJson::setPersonajes(json j)throw(){
 
 		std::ifstream file(filepath_personaje.c_str());
 		if (file.good() == false){
-			//Cargar imagen con zindex correspondiente
-			controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje no encontrada. Se carga una por defecto");
-			filepath_personaje = filepath_personaje_default;
+			controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
+			if(nombre_personaje == "CapitanAmerica")
+				filepath_personaje = "contents/images/captainAmericaSprites.png";
+			else if(nombre_personaje == "Venom")
+				filepath_personaje = "contents/images/Venom.png";
+			else if(nombre_personaje == "MegaMan")
+				filepath_personaje = "contents/images/MegaMan.png";
+			else if(nombre_personaje == "Spiderman")
+				filepath_personaje = "contents/images/SpidermanSprites.png";
+			else if(nombre_personaje == "Hulk")
+				filepath_personaje = "contents/images/Hulk.png";
+			else
+				filepath_personaje = "contents/images/sinSprite.png";
+
 		}
 
 		personajes.push_back(std::make_tuple(nombre_personaje,filepath_personaje,height_personaje,width_personaje,zindex_personaje));
