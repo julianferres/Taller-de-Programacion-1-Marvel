@@ -3,6 +3,7 @@
 
 #include <ControladorGrafico.hpp>
 #include <ControladorJson.hpp>
+#include <vector>
 
 extern ControladorJson *controladorJson;
 
@@ -14,7 +15,8 @@ class Parallax{
 		SDL_Surface *background_z1 ;
 		SDL_Surface *background_z2;
 		SDL_Surface *background_z3;
-		//SDL_Surface *image;
+		std::vector<std::string > fondos;
+		std::vector<int > zindexs;
 		SDL_Texture *bitmapTex1 ;
 		SDL_Texture *bitmapTex2 ;
 		SDL_Texture *bitmapTex3 ;

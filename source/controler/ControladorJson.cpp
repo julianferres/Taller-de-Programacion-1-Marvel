@@ -92,18 +92,17 @@ std::string ControladorJson::pathFondo(int zindex){
             if(std::get<1>(fondos[i]) == zindex)
                 return std::get<0>(fondos[i]);
         }
-    controladorLogger->registrarEvento("ERROR","ControladorJson::No se pudo encontrar imagen con zindex igual a "+ std::to_string(zindex));
-    return NULL;
+    return "";
 }
 
 std::string ControladorJson::pathImagen(std::string nombrePersonaje){
     for (int i = 0; i < cantidad_personajes; i++){
             if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
-            	controladorLogger->registrarEvento("INFO","ControladorJson::Se cargo correctamente la imagen del personaje"+ nombrePersonaje);
+            	controladorLogger->registrarEvento("INFO","ControladorJson::Se cargo correctamente la imagen del personaje: "+ nombrePersonaje + ": "+ std::get<1>(personajes[i]));
             	return std::get<1>(personajes[i]);
             }
         }
-    controladorLogger->registrarEvento("ERROR","ControladorJson::No se pudo encontrar la imagen del personaje "+ nombrePersonaje);
+    controladorLogger->registrarEvento("ERROR","ControladorJson::No se pudo encontrar la imagen del personaje: "+ nombrePersonaje);
     return NULL;
 }
 

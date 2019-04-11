@@ -18,54 +18,68 @@ Parallax::Parallax(ControladorGrafico &graficos){
 }
 
 void Parallax::cargarFondos(){
-	const char* SDL_GetError(void);
 	int cantidad_fondos = controladorJson->cantidadFondos();
-	if (cantidad_fondos == 0){
+	if (cantidad_fondos == 0)
 		controladorLogger->registrarEvento("ERROR", "Parallax::No hay informacion de fondos en el json. Se cargara fondo negro." + controladorJson->pathFondo(3));
+
+	for(int i=0; i<99; i++){
+		std::string fondo = controladorJson->pathFondo(i);
+		if(!fondo.empty() ){
+			fondos.push_back(fondo);
+			zindexs.push_back(i);
+		}
 	}
-	if (cantidad_fondos >=1){
-		background_z1 = IMG_Load(controladorJson->pathFondo(1).c_str());
-	}if (cantidad_fondos >=2){
-		background_z2 = IMG_Load(controladorJson->pathFondo(2).c_str());
-	}if (cantidad_fondos >=3){
-		background_z3 = IMG_Load(controladorJson->pathFondo(3).c_str());
+
+	if(fondos.size() < (size_t)cantidad_fondos ){
+		controladorLogger->registrarEvento("ERROR", "Parallax::Rango de zindex no permitido (1-99). Se cargan imagenes por defecto ");
+		background_z1 = IMG_Load("contents/auxiliar/capa1.png");
+		background_z2 = IMG_Load("contents/auxiliar/capa2.png");
+		background_z3 = IMG_Load("contents/auxiliar/capa3.png");
+		return;
 	}
-	if(background_z1 == NULL){
-		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la imagen con zindex = 1");
-	}else{
-		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la imagen con zindex = 1: " + controladorJson->pathFondo(1));
-	}if(background_z2 == NULL){
-		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la imagen con zindex = 2");
-	}else{
-		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la imagen con zindex = 2: " + controladorJson->pathFondo(2));
-	}if(background_z3 == NULL){
-		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la imagen con zindex = 3");
-	}else{
-		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la imagen con zindex = 3: " + controladorJson->pathFondo(3));
-	}
+
+	if (cantidad_fondos >=1)
+		background_z1 = IMG_Load(fondos[0].c_str());
+	if (cantidad_fondos >=2)
+		background_z2 = IMG_Load(fondos[1].c_str());
+	if (cantidad_fondos >=3)
+		background_z3 = IMG_Load(fondos[2].c_str());
+
+	if(background_z1 == NULL)
+		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la imagen con zindex = "+ to_string(zindexs[0]));
+	else
+		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la imagen con zindex = " + to_string(zindexs[0]) +"; "+ fondos[0] );
+	if(background_z2 == NULL)
+		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la imagen con zindex = "+ to_string(zindexs[1]));
+	else
+		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la imagen con zindex = " + to_string(zindexs[1]) +"; "+ fondos[1] );
+	if(background_z3 == NULL)
+		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la imagen con zindex = "+ to_string(zindexs[2]));
+	else
+		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la imagen con zindex = " + to_string(zindexs[2]) +"; "+ fondos[2] );
 }
 
 void Parallax::cargarTexturas(ControladorGrafico &graficos){
-	if (background_z1){
+	if (background_z1)
 		bitmapTex1 = SDL_CreateTextureFromSurface(graficos.getRenderer(), background_z1);
-	}if (background_z2){
+	if (background_z2)
 		bitmapTex2 = SDL_CreateTextureFromSurface(graficos.getRenderer(), background_z2);
-	}if (background_z3){
+	if (background_z3)
 		bitmapTex3 = SDL_CreateTextureFromSurface(graficos.getRenderer(), background_z3);
-	}
-	if(bitmapTex1 == NULL){
-		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la textura con zindex = 1");
-	}else{
-		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la textura con zindex = 1: " + controladorJson->pathFondo(1));
-	}if(bitmapTex2 == NULL){
-		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la textura con zindex = 2");
-	}else{
-		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la textura con zindex = 2: " + controladorJson->pathFondo(2));
-	}if(bitmapTex3 == NULL){
-		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la textura con zindex = 3: ");
-	}else{
-		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la textura con zindex = 3: " + controladorJson->pathFondo(3));
-	}
+
+	if(bitmapTex1 == NULL)
+		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la textura con zindex = "+ to_string(zindexs[0]) );
+	else
+		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la textura con zindex = " + to_string(zindexs[0]) );
+	if(bitmapTex2 == NULL)
+		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la textura con zindex = "+ to_string(zindexs[1]) );
+	else
+		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la textura con zindex = " + to_string(zindexs[1]) );
+	if(bitmapTex1 == NULL)
+			controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la textura con zindex = "+ to_string(zindexs[2]) );
+	else
+		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la textura con zindex = " + to_string(zindexs[2]) );
+
 }
 
 void Parallax::iniciarCamaras(){

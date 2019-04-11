@@ -7,7 +7,7 @@
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
-#define posicionXInicialJugador1  controladorJson->anchoVentana() * 1/4
+#define posicionXInicialJugador1  controladorJson->anchoVentana() * 1/16
 #define   posicionXInicialJugador2  controladorJson->anchoVentana() *3/4
 
 #define limiteFondoIzq  controladorJson->anchoVentana() * 1/8

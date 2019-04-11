@@ -104,7 +104,7 @@ void Personaje::Saltar(){
 	if( ! saltando) saltando = true;
 	else{
 		if(alturaActualSalto <= 0 && tiempo != 0 ){
-			saltando = false; 	tiempo = 0; posy=controladorJson->alturaVentana() *9/16; 	return;
+			saltando = false; 	tiempo = 0; posy=controladorJson->alturaVentana() - alturaPiso - alto;; 	return;
 		}
 		else{
 			tiempo += constanteTiempoCiclos;
