@@ -4,7 +4,7 @@
 
 extern ControladorLogger *controladorLogger;
 
-void ControladorJson::leerArchivo(){
+void ControladorJson::leerArchivo(std::string argumentoConsola){
 
 	using json = nlohmann::json;
 	std::ifstream ifs (configPath, std::ifstream::in); //cambia el nombre y mira el log.txt
@@ -12,8 +12,7 @@ void ControladorJson::leerArchivo(){
 	try{
 		json j = json::parse(ifs);
 
-		this -> setLogLevel(j);
-		controladorLogger->setNivelDebug(nivel_debug);
+		this -> setLogLevel(j,argumentoConsola);
 		this -> setAlturaVentana(j);
 		this -> setAnchoVentana(j);
 		this -> setPantallaCompleta(j);
@@ -103,7 +102,7 @@ std::string ControladorJson::pathImagen(std::string nombrePersonaje){
             }
         }
     controladorLogger->registrarEvento("ERROR","ControladorJson::No se pudo encontrar la imagen del personaje: "+ nombrePersonaje);
-    return NULL;
+    return "";
 }
 
 int ControladorJson::alturaPersonaje(std::string nombrePersonaje){
@@ -122,9 +121,12 @@ int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
     return -1;
 }
 
-void ControladorJson::setLogLevel(json j)throw(){
+void ControladorJson::setLogLevel(json j,std::string argumentoConsola)throw(){
 	try{
-		nivel_debug = j["logLevel"];
+		if(argumentoConsola.empty())
+			nivel_debug = j["logLevel"];
+		else
+			nivel_debug = argumentoConsola;
 		if (nivel_debug.compare("ERROR") != 0 && nivel_debug.compare("INFO") != 0 && nivel_debug.compare("DEBUG") != 0 ){
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Nivel de Debug no corresponde a ERROR, INFO o DEBUG. Se setea en " + nivel_debug_default);
 			nivel_debug = nivel_debug_default;
@@ -134,8 +136,7 @@ void ControladorJson::setLogLevel(json j)throw(){
 		controladorLogger->registrarEvento("ERROR","ControladorJson::Nivel de Debug no corresponde a ERROR, INFO o DEBUG. Se setea en " + nivel_debug_default);
 		nivel_debug = nivel_debug_default;
 	}
-
-
+	controladorLogger->setNivelDebug(nivel_debug);
 }
 
 void ControladorJson::setAlturaVentana(json j)throw(){

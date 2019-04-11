@@ -12,7 +12,7 @@ class ControladorJson{
 
 	public:
 
-		void leerArchivo();
+		void leerArchivo(std::string argumentoConsola);
 		int alturaVentana();
 		int anchoVentana();
 		int cantidadFPS();
@@ -63,7 +63,7 @@ class ControladorJson{
 		const int rango_ancho_ventana[2] = {600, 4000};
 		const int rango_FPS[2] = {30, 60};
 
-		void setLogLevel(json j)throw();
+		void setLogLevel(json j, std::string argumentoConsola)throw();
 		void setAlturaVentana(json j)throw();
 		void setAnchoVentana(json j)throw();
 		void setPantallaCompleta(json j)throw();
