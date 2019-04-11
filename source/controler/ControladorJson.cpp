@@ -116,17 +116,29 @@ bool ControladorJson::existePersonaje(std::string nombrePersonaje){
 
 int ControladorJson::alturaPersonaje(std::string nombrePersonaje){
     for (int i = 0; i < cantidad_personajes; i++){
-            if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0)
-                return std::get<2>(personajes[i]);
-        }
+		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
+			int altura = std::get<2>(personajes[i]);
+			if(altura < rango_altura_personaje[0] || altura > rango_altura_personaje[1]){
+				controladorLogger->registrarEvento("ERROR","Altura del personaje "+ nombrePersonaje + " no permitida. Se setea en " + std::to_string(altura_personaje_default));
+				altura = altura_personaje_default;
+			}
+			return altura;
+		}
+	}
     return -1;
 }
 
 int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
     for (int i = 0; i < cantidad_personajes; i++){
-            if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0)
-                return std::get<3>(personajes[i]);
-        }
+		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
+			int ancho = std::get<3>(personajes[i]);
+			if(ancho < rango_ancho_personaje[0] || ancho > rango_ancho_personaje[1]){
+				controladorLogger->registrarEvento("ERROR","Ancho del personaje "+ nombrePersonaje + " no permitida. Se setea en " + std::to_string(ancho_personaje_default));
+				ancho = ancho_personaje_default;
+			}
+			return ancho;
+		}
+    }
     return -1;
 }
 
@@ -276,7 +288,6 @@ void ControladorJson::setPersonajes(json j)throw(){
 				filepath_personaje = "contents/images/sinSprite.png";
 
 		}
-
 		personajes.push_back(std::make_tuple(nombre_personaje,filepath_personaje,height_personaje,width_personaje,zindex_personaje));
 	}
 

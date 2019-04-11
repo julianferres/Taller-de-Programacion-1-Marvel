@@ -46,6 +46,8 @@ class ControladorJson{
 		const std::string nivel_debug_default = "DEBUG";
 		const int altura_ventana_default = 600;
 		const int ancho_ventana_default = 800;
+		const int altura_personaje_default = 300;
+		const int ancho_personaje_default = 200;
 		const bool fullscreen_default = false;
 		const int cantidad_personajes_default = 4;
 		const int cantidad_fondos_default = 3;
@@ -60,6 +62,8 @@ class ControladorJson{
 		//Rangos aceptados
 		const int rango_altura_ventana[2] = {600, 1000};
 		const int rango_ancho_ventana[2] = {800, 1400};
+		const int rango_altura_personaje[2] = {50,400};
+		const int rango_ancho_personaje[2] = {50,350};
 		const int rango_FPS[2] = {30, 60};
 
 		void setLogLevel(json j, std::string argumentoConsola)throw();
