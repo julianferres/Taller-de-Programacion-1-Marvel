@@ -19,6 +19,8 @@ Personaje::~Personaje(){
 }
 
 Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXinicial, SDL_RendererFlip flip){
+	if(controladorJson->pathImagen(nombre).empty())
+		nombre = "sinSprite";
 	this->posx= posicionXinicial;
 	this->posxrelativo=this->posx;
 	this->alto = controladorJson->alturaPersonaje(nombre);

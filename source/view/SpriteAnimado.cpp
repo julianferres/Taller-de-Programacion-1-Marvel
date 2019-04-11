@@ -11,13 +11,7 @@ SpriteAnimado::SpriteAnimado(){
 }
 
 SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos,  const string &filePath, string nombre){
-	if(filePath == "contents/images/sinSprite.png"  || filePath.empty()){
-		nombre = "sinSprite";
-		this->spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),IMG_Load("contents/images/sinSprite.png"));
-	}
-	else
-		this->spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
-
+	this->spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
 	cargarAnimaciones(nombre);
 }
 
