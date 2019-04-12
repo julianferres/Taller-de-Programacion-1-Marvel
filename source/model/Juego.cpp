@@ -75,12 +75,12 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento){
 		        break;
 		    }
 			if (evento.type == SDL_KEYDOWN){
-				if(evento.key.keysym.sym == SDLK_l){
+				if(evento.key.keysym.sym == SDLK_e){
 					this->jugador1->cambiarPersonaje();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de personaje del jugador 1");
 					break;
 				}
-				if(evento.key.keysym.sym == SDLK_o){
+				if(evento.key.keysym.sym == SDLK_m){
 					this->jugador2->cambiarPersonaje();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de personaje del jugador 2");
 					break;
@@ -88,18 +88,29 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento){
 			}
 			//Jugador 1
 			 if (keys[SDL_SCANCODE_D]){
-				if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() )  ){
+				 if(personaje1->MoverDerecha(personaje2,finEscenarioDerecha)){
+					 this->parallax->MoverCamaraDerecha();
+				 }
+				 controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la derecha");
+
+				/*if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() )  ){
 					if(personaje1->MoverDerecha(personaje2,finEscenarioDerecha))
 						this->parallax->MoverCamaraDerecha();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la derecha");
-				}
+				}*/
 			}
 			if (keys[SDL_SCANCODE_A]){
-				if(! personaje1->colisionaAlaIzquierda(personaje2->obtenerRectangulo() )  ){
+				if (personaje1->MoverIzquierda(personaje2,finEscenarioIzquierda)){
+					this->parallax->MoverCamaraIzquierda();
+				}
+				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la izquierda");
+
+
+				/*if(! personaje1->colisionaAlaIzquierda(personaje2->obtenerRectangulo() )  ){
 					if (personaje1->MoverIzquierda(personaje2,finEscenarioIzquierda))
 						this->parallax->MoverCamaraIzquierda();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la izquierda");
-				}
+				}*/
 			}
 			if (keys[SDL_SCANCODE_S]){
 				personaje1->agacharse();
@@ -111,18 +122,29 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento){
 			}
 			//Jugador2
 		   if (keys[SDL_SCANCODE_RIGHT]){
-			   if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo()) ){
+			   if(personaje2->MoverDerecha(personaje1, finEscenarioDerecha) ){
+				   this->parallax->MoverCamaraDerecha();
+			   }
+			   controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la derecha");
+
+			  /* if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo()) ){
 					if(personaje2->MoverDerecha(personaje1, finEscenarioDerecha) )
 						this->parallax->MoverCamaraDerecha();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la derecha");
-			   }
+			   }*/
 		    }
 		    if (keys[SDL_SCANCODE_LEFT]){
-		    	if(! personaje2->colisionaAlaIzquierda(personaje1->obtenerRectangulo()) ){
-		    		if (personaje2->MoverIzquierda(personaje1,finEscenarioIzquierda))
-		    			this->parallax->MoverCamaraIzquierda();
-					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la izquierda");
+		    	if (personaje2->MoverIzquierda(personaje1,finEscenarioIzquierda)){
+		    		this->parallax->MoverCamaraIzquierda();
 		    	}
+		    	controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la izquierda");
+
+		    	/*if(! personaje2->colisionaAlaIzquierda(personaje1->obtenerRectangulo()) ){
+		    		if (personaje2->MoverIzquierda(personaje1,finEscenarioIzquierda)){
+		    			this->parallax->MoverCamaraIzquierda();
+		    		}
+		    	controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la izquierda");
+		    	}*/
 		    }
 		    if (keys[SDL_SCANCODE_UP]){
 		    	personaje2->Saltar();

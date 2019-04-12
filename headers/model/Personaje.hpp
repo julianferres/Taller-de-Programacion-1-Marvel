@@ -31,7 +31,7 @@ class Personaje{
 
 	private:
 
-		float posx, posy,posxrelativo;
+		float posx, posy;
 		SpriteAnimado spriteAnimado;
 		int ancho;
 		int alto;

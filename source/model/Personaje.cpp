@@ -24,7 +24,6 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 		nombre = "sinSprite";
 	}
 	this->posx= posicionXinicial;
-	this->posxrelativo=this->posx;
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
 	this->posy = controladorJson->alturaVentana() - alturaPiso - alto;
@@ -36,12 +35,7 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 void Personaje::dibujar(ControladorGrafico &graficos){
 	if(saltando)
 		this->Saltar();
-	if(this->spriteAnimado.getAnimacionActual()=="movDerecha")
-			this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto,ancho, this->flip);
-	else if(this->spriteAnimado.getAnimacionActual()=="movIzquierda")
-			this->spriteAnimado.dibujar(graficos,this->posxrelativo,this->posy,alto, ancho, this->flip);
-	else
-			this->spriteAnimado.dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
+	this->spriteAnimado.dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
 	this->spriteAnimado.update();
 
 }
@@ -59,7 +53,6 @@ bool Personaje::MoverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 		controladorLogger->registrarEvento("DEBUG", "Personaje::Ambos jugadores en el borde de la pantalla.");
 		return false;
 	}
-	this->posxrelativo=this->posx;
 	this->posx=this->posx+velocidad;
 	controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje se mueve a la derecha");
 	return false;
@@ -78,7 +71,6 @@ bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 		controladorLogger->registrarEvento("DEBUG", "Personaje::Ambos jugadores en el borde de la pantalla.");
 		return false;
 	}
-	this->posxrelativo=this->posx;
 	this->posx=this->posx-velocidad;
 	controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje se mueve a la izquierda");
 	return false;
@@ -87,14 +79,12 @@ bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 void Personaje::CorrerAIzquierda(){
 	if(posx  < limiteFondoIzq)
 			return;
-	this->posxrelativo=this->posx;
 	this->posx=this->posx-velocidad;
 }
 
 void Personaje::CorrerADerecha(){
 	if(posx + ancho > limiteFondoDer)
 			return;
-	this->posxrelativo=this->posx;
 	this->posx=this->posx+velocidad;
 }
 
