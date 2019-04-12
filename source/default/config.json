@@ -5,50 +5,56 @@
         [
             {"background":
                 {
-                    "filepath":"contents/images/capa3.png",
+                    "filepath":"contents/auxiliar/capa3.png",
                     "zindex":3
                 }
             },
             {"background":
                 {
-                    "filepath":"contents/images/capa2.png",
+                    "filepath":"contents/auxiliar/capa2.png",
                     "zindex":2
                 }
             },
             {"background":
                 {
-                    "filepath":"contents/images/capa1.png",
+                    "filepath":"contents/auxiliar/capa1.png",
                     "zindex":1
                 }
             }
         ],
     "characters":
         [
-            {"name":"CapitanAmerica",
-            "filepath":"contents/images/sinSprite.png",
+           {"name":"CapitanAmerica",
+            "filepath":"contents/images/CaptainAmericaSprites.png",
             "height":200,
-            "width":200,
+            "width":120,
             "zindex":99	    
             },
 	    {"name":"Venom",
-            "filepath":"contents/images/sinSprite.png",
+            "filepath":"contents/images/Venom.png",
             "height":200,
-            "width":200,
+            "width":120,
             "zindex":99	    
             },
 	    {"name":"MegaMan",
-            "filepath":"contents/images/sinSprite.png",
+            "filepath":"contents/images/MegaMan.png",
             "height":200,
-            "width":200,
+            "width":120,
             "zindex":99	    
             },
+            {"name":"Spiderman",
+            "filepath":"contents/images/SpidermanSprites.png",
+            "height":200,
+            "width":120,
+            "zindex":99            
+            },
 	    {"name":"Hulk",
-            "filepath":"contents/images/sinSprite.png",
+            "filepath":"contents/images/Hulk.png",
             "height":320,
             "width":200,
             "zindex":99	    
             },
-            {"name":"Spiderman",
+ 	    {"name":"sinSprite",
             "filepath":"contents/images/sinSprite.png",
             "height":200,
             "width":200,
