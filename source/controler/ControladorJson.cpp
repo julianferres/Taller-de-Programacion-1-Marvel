@@ -13,15 +13,27 @@ void ControladorJson::leerArchivo(std::string argumentoConsola){
 		json j = json::parse(ifs);
 
 		this -> setLogLevel(j,argumentoConsola);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Log level seteado");
 		this -> setAlturaVentana(j);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Altura ventana seteada");
 		this -> setAnchoVentana(j);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Ancho Ventana seteado");
 		this -> setPantallaCompleta(j);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Tamano pantalla seteado");
 		this -> setFPS(j);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::FPS seteados");
 		this -> setCantidadPersonajes(j);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Personajes contados");
 		this -> setCantidadFondos(j);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Fondos contados");
+		this -> setCantidadJugadores(j);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Jugadores contados");
 		this -> setPersonajes(j);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Personajes seteados");
 		this -> setFondos(j);
-		//this->setMenuImage(j);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Fondos seteados");
+		this -> elegirPersonajes(j);
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Personajes elegidos");
 		controladorLogger->registrarEvento("INFO","ControladorJson::Archivo de configuracion JSON leido correctamente");
 	}
 
@@ -29,6 +41,7 @@ void ControladorJson::leerArchivo(std::string argumentoConsola){
 	catch(json::exception &error){
 		//No se puede abrir el json. Cargar uno nuevo por default
 		controladorLogger->registrarEvento("ERROR",error.what());
+		controladorLogger->registrarEvento("ERROR","ControladorJson:: Se leera el archivo default");
 		this->leerArchivoDefault();
 	}
 
@@ -46,6 +59,7 @@ void ControladorJson::leerArchivoDefault(){
 	ancho_ventana = j["window"]["width"];
 	fullscreen = j["window"]["fullscreen"];
 	FPS = j["FPS"];
+	cantidad_jugadores = j["juagdores"].size();
 	cantidad_personajes = j["characters"].size();
 	cantidad_fondos = j["battlefield"].size();
 
@@ -57,7 +71,12 @@ void ControladorJson::leerArchivoDefault(){
 		fondos.push_back(std::make_tuple(j["battlefield"][i]["background"]["filepath"] , j["battlefield"][i]["background"]["zindex"] ));
 	}
 
+	personajesJugador1.push_back(j["jugadores"][0]["jugador"]["personaje1"]);
+	personajesJugador1.push_back(j["jugadores"][0]["jugador"]["personaje2"]);
+	personajesJugador2.push_back(j["jugadores"][1]["jugador"]["personaje1"]);
+	personajesJugador2.push_back(j["jugadores"][1]["jugador"]["personaje2"]);
 	controladorLogger->registrarEvento("INFO","ControladorJson::Archivo default de configuracion JSON leido correctamente");
+
 }
 
 
@@ -72,6 +91,7 @@ int ControladorJson::anchoVentana(){
 int ControladorJson::cantidadFPS(){
 	return FPS;
 }
+
 int ControladorJson::cantidadFondos(){
 	return cantidad_fondos;
 }
@@ -83,8 +103,6 @@ bool ControladorJson::esfullscreen(){
 std::string ControladorJson::nivelDebug(){
 	return nivel_debug;
 }
-
-
 
 std::string ControladorJson::pathFondo(int zindex){
     for (int i = 0; i < cantidad_fondos; i++){
@@ -274,15 +292,60 @@ void ControladorJson::setPersonajes(json j)throw(){
 		std::ifstream file(filepath_personaje.c_str());
 		if (file.good() == false){
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
-			nombre_personaje = 'sinSprite';
+			nombre_personaje = "sinSprite";
 			filepath_personaje = "contents/images/sinSprite.png";
 
 		}
-		personajes.push_back(std::make_tuple(nombre_personaje,filepath_personaje,height_personaje,width_personaje,zindex_personaje));
+		personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje));
 	}
 
 }
 
+void ControladorJson::elegirPersonajes(json j)throw(){
+	try {
+		std::string personaje1 = j["jugadores"][0]["jugador"]["personaje1"];
+		this->personajesJugador1.push_back(personaje1);
+	}catch(json::type_error &e){
+		this->personajesJugador1.push_back("CapitanAmerica");
+	}
+	try {
+		std::string personaje2 = j["jugadores"][0]["jugador"]["personaje2"];
+		this->personajesJugador1.push_back(personaje2);
+	}catch(json::type_error &e){
+		this->personajesJugador1.push_back("Venom");
+	}
+	try {
+		std::string personaje3 = j["jugadores"][1]["jugador"]["personaje1"];
+		this->personajesJugador2.push_back(personaje3);
+	}catch(json::type_error &e){
+		this->personajesJugador2.push_back("Hulk");
+	}
 
+	try {
+		std::string personaje4 = j["jugadores"][1]["jugador"]["personaje2"];
+		this->personajesJugador2.push_back(personaje4);
+	}catch(json::type_error &e){
+		this->personajesJugador2.push_back("Spiderman");
+	}
+}
 
+std::string ControladorJson::jugador1Personaje(int numero){
+	return personajesJugador1[numero];
+}
+std::string ControladorJson::jugador2Personaje(int numero){
+	return personajesJugador2[numero];
+}
 
+void ControladorJson::setCantidadJugadores(json j)throw(){
+	try{
+		cantidad_jugadores = j["jugadores"].size();
+	}
+	catch(json::type_error &e){
+		cantidad_jugadores = 2;
+		controladorLogger->registrarEvento("ERROR","ControladorJson::Cantidad de jugadores invalida. Se setea en: 2");
+	}
+}
+
+int ControladorJson::cantidadJugadores(){
+	return this->cantidad_jugadores;
+}

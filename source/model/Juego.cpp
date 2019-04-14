@@ -31,8 +31,8 @@ void Juego::gameLoop(){
 	this->iniciarFondo(graficos);
 	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
 	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
-	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",posicionXInicialJugador1,flip1, false);
-	this->jugador2 = new Jugador(graficos,"Spiderman", "Hulk",posicionXInicialJugador2, flip2, true);
+	this->jugador1 = new Jugador(graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),posicionXInicialJugador1,flip1, false);
+	this->jugador2 = new Jugador(graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),posicionXInicialJugador2, flip2, true);
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
 	while (isRunning){
 		startTime = SDL_GetTicks();

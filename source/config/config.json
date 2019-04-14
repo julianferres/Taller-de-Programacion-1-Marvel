@@ -28,25 +28,25 @@
             "filepath":"contents/images/CaptainAmericaSprites.png",
             "height":320,
             "width":200,
-            "zindex":99	    
+            "zindex":99  
             },
 	    {"name":"Venom",
             "filepath":"contents/images/Venom.png",
             "height":320,
             "width":200,
-            "zindex":99	    
+            "zindex":3    
             },
 	    {"name":"MegaMan",
             "filepath":"contents/images/MegaMan.png",
             "height":280,
             "width":160,
-            "zindex":99	    
+            "zindex":99    
             },
             {"name":"Spiderman",
             "filepath":"contents/images/SpidermanSprites.png",
             "height":320,
             "width":200,
-            "zindex":99            
+            "zindex":99           
             },
 	    {"name":"Hulk",
             "filepath":"contents/images/Hulk.png",
@@ -61,6 +61,22 @@
             "zindex":99            
             }          
 
+        ],
+
+    "jugadores":
+        [
+            {"jugador":
+                {
+                    "personaje1":"CapitanAmerica",
+                    "personaje2":"Venom"
+                }
+            },
+            {"jugador":
+                {
+                    "personaje1":"Spiderman",
+                    "personaje2":"Hulk"
+                }
+            }
         ],
     "window":{
         "height":600,

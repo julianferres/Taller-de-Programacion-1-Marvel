@@ -26,6 +26,9 @@ class ControladorJson{
 		std::string pathImagen(std::string nombrePersonaje);
 		void leerArchivoDefault();
 		std::string MenuImage();
+		std::string jugador1Personaje(int numero);
+		std::string jugador2Personaje(int numero);
+		int cantidadJugadores();
 
 	private:
 
@@ -39,8 +42,10 @@ class ControladorJson{
 		std::vector<std::tuple<std::string, std::string, int, int, int>> personajes;
 		std::vector<std::tuple<std::string, int>> fondos;
 		std::string configPath = "source/config/config.json";
-		std::string menuImage;
 
+		std::vector<std::string> personajesJugador1;
+		std::vector<std::string> personajesJugador2;
+		int cantidad_jugadores;
 		//Valores por defecto
 		const std::string configPathDefault = "source/default/config.json";
 		const std::string nivel_debug_default = "DEBUG";
@@ -52,8 +57,6 @@ class ControladorJson{
 		const int cantidad_personajes_default = 4;
 		const int cantidad_fondos_default = 3;
 		const int FPS_default = 60;
-		void setMenuImage(json j);
-
 		const std::string nombre_personaje_default = "CapitanAmerica";
 		int height_personaje_default = 320;
 		int width_personaje_default = 200;
@@ -71,10 +74,12 @@ class ControladorJson{
 		void setAnchoVentana(json j)throw();
 		void setPantallaCompleta(json j)throw();
 		void setFPS(json j)throw();
+		void setCantidadJugadores(json j)throw();
 		void setCantidadPersonajes(json j)throw();
 		void setCantidadFondos(json j)throw();
 		void setFondos(json j)throw();
 		void setPersonajes(json j)throw();
+		void elegirPersonajes(json j) throw();
 
 
 
