@@ -19,10 +19,11 @@ Parallax::Parallax(ControladorGrafico &graficos){
 
 void Parallax::cargarFondos(){
 	int cantidad_fondos = controladorJson->cantidadFondos();
-	if (cantidad_fondos == 0)
+	if (cantidad_fondos == 0){
 		controladorLogger->registrarEvento("ERROR", "Parallax::No hay informacion de fondos en el json. Se cargara fondo negro." + controladorJson->pathFondo(3));
-
-	for(int i=0; i<99; i++){
+		return;
+	}
+	for(int i=0; i<9; i++){
 		std::string fondo = controladorJson->pathFondo(i);
 		if(!fondo.empty() ){
 			fondos.push_back(fondo);
@@ -75,7 +76,7 @@ void Parallax::cargarTexturas(ControladorGrafico &graficos){
 		controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la textura con zindex = "+ to_string(zindexs[1]) );
 	else
 		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la textura con zindex = " + to_string(zindexs[1]) );
-	if(bitmapTex1 == NULL)
+	if(bitmapTex3 == NULL)
 			controladorLogger->registrarEvento("ERROR", "Parallax::No se pudo cargar la textura con zindex = "+ to_string(zindexs[2]) );
 	else
 		controladorLogger->registrarEvento("DEBUG", "Parallax::Se cargo la textura con zindex = " + to_string(zindexs[2]) );
@@ -83,24 +84,32 @@ void Parallax::cargarTexturas(ControladorGrafico &graficos){
 }
 
 void Parallax::iniciarCamaras(){
-	if (background_z1 == NULL){
-		controladorLogger->registrarEvento("ERROR", "Parallax::Como no hay fondo, no se puede inicializar la camara");
+	if (background_z1){
+		camera_z1.x = background_z1->w/2 - W/2;
+		camera_z1.y = 0;
+		camera_z1.w = W;
+		camera_z1.h = H;
+		controladorLogger->registrarEvento("DEBUG", "Parallax::Camara 1 inicializada");
 	}else{
-	camera_z1.x = background_z1->w/2 - W/2;
-	camera_z1.y = 0;
-	camera_z1.w = W;
-	camera_z1.h = H;
-	controladorLogger->registrarEvento("DEBUG", "Parallax::Camara 1 inicializada");
-	camera_z2.x = background_z2->w/2 -W/2;
-	camera_z2.y = 0;
-	camera_z2.w = W;
-	camera_z2.h = H;
-	controladorLogger->registrarEvento("DEBUG", "Parallax::Camara 2 inicializada");
-	camera_z3.x = background_z3->w/2 - W/2;
-	camera_z3.y = 0;
-	camera_z3.w = W;
-	camera_z3.h = H;
-	controladorLogger->registrarEvento("DEBUG", "Parallax::Camara 3 inicializada");
+		controladorLogger->registrarEvento("ERROR", "Parallax::Como no hay fondo, no se puede inicializar la camara");
+	}
+	if (background_z2){
+		camera_z2.x = background_z2->w/2 -W/2;
+		camera_z2.y = 0;
+		camera_z2.w = W;
+		camera_z2.h = H;
+		controladorLogger->registrarEvento("DEBUG", "Parallax::Camara 2 inicializada");
+	}else{
+		controladorLogger->registrarEvento("DEBUG", "Parallax::Camara 1 inicializada");
+	}
+	if (background_z3){
+		camera_z3.x = background_z3->w/2 - W/2;
+		camera_z3.y = 0;
+		camera_z3.w = W;
+		camera_z3.h = H;
+		controladorLogger->registrarEvento("DEBUG", "Parallax::Camara 3 inicializada");
+	}else{
+		controladorLogger->registrarEvento("ERROR", "Parallax::Como no hay 3 fondo3, no se puede inicializar la camara 3");
 	}
 }
 
@@ -108,18 +117,30 @@ void Parallax::MoverCamaraDerecha(){
 	if(finDeEscenarioDerecha() ){
 		return;
 	}
+	if (background_z1){
 		camera_z1.x += SPEED_z1;
+	}
+	if(background_z2){
 		camera_z2.x += SPEED_z2;
+	}
+	if(background_z3){
 		camera_z3.x += SPEED_z3;
+	}
 }
 
 void Parallax::MoverCamaraIzquierda(){
 	if(finDeEscenarioIzquierda()){
 		return;
 	}
-	camera_z1.x -= SPEED_z1;
-	camera_z2.x -= SPEED_z2;
-	camera_z3.x -= SPEED_z3;
+	if (background_z1){
+		camera_z1.x -= SPEED_z1;
+	}
+	if(background_z2){
+		camera_z2.x -= SPEED_z2;
+	}
+	if(background_z3){
+		camera_z3.x -= SPEED_z3;
+	}
 }
 
 SDL_Rect *Parallax::Camaraz1(){
@@ -128,13 +149,36 @@ SDL_Rect *Parallax::Camaraz1(){
 
 
 bool Parallax::finDeEscenarioIzquierda(){
-	return camera_z1.x <= 0 || camera_z2.x <= 0 || camera_z3.x <= 0;
+	bool finEscenario = false;
+	if (background_z1){
+		finEscenario = finEscenario || camera_z1.x <= 0;
+	}
+	if (background_z2){
+		finEscenario = finEscenario || camera_z2.x <= 0;
+	}
+	if (background_z3){
+		finEscenario = finEscenario || camera_z3.x <= 0;
+	}
+	return finEscenario;//camera_z1.x <= 0 || camera_z2.x <= 0 || camera_z3.x <= 0;
 }
 
 bool Parallax::finDeEscenarioDerecha(){
-	return camera_z1.x >= background_z1->w - W ||
-			camera_z2.x >= background_z2->w - W ||
-			camera_z3.x >= background_z3->w - W;
+	bool finEscenario = false;
+	if (background_z1){
+		finEscenario = finEscenario || camera_z1.x >= background_z1->w - W;
+	}
+	if (background_z2){
+		finEscenario = finEscenario || camera_z2.x >= background_z2->w - W ;
+	}
+	if (background_z3){
+		finEscenario = finEscenario || camera_z3.x >= background_z3->w - W;
+	}
+	return finEscenario;
+
+
+	//return camera_z1.x >= background_z1->w - W ||
+		//	camera_z2.x >= background_z2->w - W ||
+			//camera_z3.x >= background_z3->w - W;
 }
 
 

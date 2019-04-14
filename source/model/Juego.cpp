@@ -33,10 +33,11 @@ void Juego::gameLoop(){
 	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
 	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",posicionXInicialJugador1,flip1, false);
 	this->jugador2 = new Jugador(graficos,"Spiderman", "Hulk",posicionXInicialJugador2, flip2, true);
-
+	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
 	while (isRunning){
 		startTime = SDL_GetTicks();
 		this->teclear(graficos, evento);
+		controladorLogger->registrarEvento("DEBUG", "Juego::tecleado terminado");
 		this->dibujar(graficos);
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
@@ -55,9 +56,16 @@ void Juego::iniciarFondo(ControladorGrafico &graficos){
 void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.limpiar();
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
-	grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL, flip);
-	grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL, flip);
-	grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL, flip);
+	controladorLogger->registrarEvento("DEBUG", "Juego::Dibujar Juego");
+	if(parallax->bitmapTex1){
+		grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL, flip);
+	}
+	if(parallax->bitmapTex2){
+		grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL, flip);
+	}
+	if(parallax->bitmapTex3){
+		grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL, flip);
+	}
 	this->verificarCambioDeLado();
 	this->jugador1->personajeActualDibujar(grafico);
 	this->jugador2->personajeActualDibujar(grafico);

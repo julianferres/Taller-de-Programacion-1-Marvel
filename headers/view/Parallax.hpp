@@ -11,15 +11,17 @@ class Parallax{
 
 	public:
 
-		SDL_Rect camera_z1 ; SDL_Rect camera_z2 ; SDL_Rect camera_z3;
-		SDL_Surface *background_z1 ;
-		SDL_Surface *background_z2;
-		SDL_Surface *background_z3;
+		SDL_Rect camera_z1;
+		SDL_Rect camera_z2;
+		SDL_Rect camera_z3;
+		SDL_Surface *background_z1 = NULL;
+		SDL_Surface *background_z2 = NULL;
+		SDL_Surface *background_z3 = NULL;
 		std::vector<std::string > fondos;
 		std::vector<int > zindexs;
-		SDL_Texture *bitmapTex1 ;
-		SDL_Texture *bitmapTex2 ;
-		SDL_Texture *bitmapTex3 ;
+		SDL_Texture *bitmapTex1 = NULL ;
+		SDL_Texture *bitmapTex2 = NULL;
+		SDL_Texture *bitmapTex3 = NULL;
 
 		void MoverCamaraIzquierda();
 		void MoverCamaraDerecha();
