@@ -36,7 +36,7 @@ class Personaje{
 		float getPosY();
 		bool ladoDerecho();
 	private:
-
+		int posicionXinicial;
 		float posx, posy;
 		SpriteAnimado spriteAnimado;
 		int ancho;

@@ -174,11 +174,6 @@ bool Parallax::finDeEscenarioDerecha(){
 		finEscenario = finEscenario || camera_z3.x >= background_z3->w - W;
 	}
 	return finEscenario;
-
-
-	//return camera_z1.x >= background_z1->w - W ||
-		//	camera_z2.x >= background_z2->w - W ||
-			//camera_z3.x >= background_z3->w - W;
 }
 
 

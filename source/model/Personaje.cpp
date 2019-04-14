@@ -23,6 +23,7 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 		controladorLogger->registrarEvento("ERROR","ControladorJson::No se pudo encontrar la imagen del personaje: "+ nombre);
 		nombre = "sinSprite";
 	}
+	this->posicionXinicial = posicionXinicial;
 	this->posx= posicionXinicial;
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
@@ -101,6 +102,7 @@ void Personaje::agacharse(){
 	this->spriteAnimado.iniciarAnimacion("agacharse");
 }
 void Personaje::Cambio(){
+	this->posx = this->posicionXinicial;
 	this->spriteAnimado.iniciarAnimacion("cambioEntrada");
 }
 void Personaje::Saltar(){
