@@ -16,6 +16,7 @@ extern ControladorLogger *controladorLogger;
 using namespace std;
 
 Personaje::~Personaje(){
+	delete spriteAnimado;
 }
 
 Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXinicial, SDL_RendererFlip flip){
@@ -28,7 +29,7 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
 	this->posy = controladorJson->alturaVentana() - alturaPiso - alto;
-	this->spriteAnimado=SpriteAnimado(graficos,controladorJson->pathImagen(nombre),nombre);
+	this->spriteAnimado=new SpriteAnimado(graficos,controladorJson->pathImagen(nombre),nombre);
 	this->velocidadInicial = sqrt(constanteDeAltura * alto);
 	this->flip = flip;
 }
@@ -36,18 +37,18 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 void Personaje::dibujar(ControladorGrafico &graficos){
 	if(saltando)
 		this->Saltar();
-	this->spriteAnimado.dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
-	this->spriteAnimado.update();
+	this->spriteAnimado->dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
+	this->spriteAnimado->update();
 
 }
 void Personaje::cambiarAnimacion(string nombre){
-	this->spriteAnimado.cambiarAnimacion(nombre);
+	this->spriteAnimado->cambiarAnimacion(nombre);
 }
 
 bool Personaje::MoverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando)
-		this->spriteAnimado.iniciarAnimacion("movDerecha");
+		this->spriteAnimado->iniciarAnimacion("movDerecha");
 	if(posx + ancho >limiteFondoDer){
 		if (rect_enemigo.x > limiteFondoIzq && !finEscenarioDerecha){
 			enemigo->CorrerAIzquierda();
@@ -62,15 +63,15 @@ bool Personaje::MoverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	return false;
 }
 int Personaje::getFrameIndex(){
-	return this->spriteAnimado.getFrameIndex();
+	return this->spriteAnimado->getFrameIndex();
 }
 void Personaje::detenerAnimacion(){
-	this->spriteAnimado.pararAnimacion();
+	this->spriteAnimado->pararAnimacion();
 }
 bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando)
-		this->spriteAnimado.iniciarAnimacion("movIzquierda");
+		this->spriteAnimado->iniciarAnimacion("movIzquierda");
 	if(posx  < limiteFondoIzq){
 		if (rect_enemigo.x + rect_enemigo.w < limiteFondoDer && !finEscenarioIzquierda){
 			enemigo->CorrerADerecha();
@@ -99,14 +100,14 @@ void Personaje::CorrerADerecha(){
 
 void Personaje::agacharse(){
 	if(saltando) return;
-	this->spriteAnimado.iniciarAnimacion("agacharse");
+	this->spriteAnimado->iniciarAnimacion("agacharse");
 }
 void Personaje::Cambio(){
 	this->posx = this->posicionXinicial;
-	this->spriteAnimado.iniciarAnimacion("cambioEntrada");
+	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
 }
 void Personaje::Saltar(){
-	this->spriteAnimado.iniciarAnimacion("salto");
+	this->spriteAnimado->iniciarAnimacion("salto");
 	if( ! saltando) saltando = true;
 	else{
 		if(alturaActualSalto <= 0 && tiempo != 0 ){

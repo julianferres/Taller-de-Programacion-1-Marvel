@@ -38,7 +38,7 @@ class Personaje{
 	private:
 		int posicionXinicial;
 		float posx, posy;
-		SpriteAnimado spriteAnimado;
+		SpriteAnimado *spriteAnimado;
 		int ancho;
 		int alto;
 		int velocidad = 10;

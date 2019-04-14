@@ -11,6 +11,11 @@ Jugador::Jugador(ControladorGrafico &graficos, std::string nombrePersonaje1, std
 	this->ladoDerecho = ladoDerecho;
 }
 
+Jugador::~Jugador(){
+	delete personaje1;
+	delete personaje2;
+}
+
 void Jugador::cambiarPersonaje(){
 	if (this->personajePrincipal){
 		this->personajeActual = this->personaje2;

@@ -12,8 +12,18 @@ extern ControladorJson *controladorJson;
 SpriteAnimado::SpriteAnimado(){
 }
 
+SpriteAnimado::~SpriteAnimado(){
+
+	for(int i = 0; i<animaciones.size();i++){
+		if(animaciones[i]) delete animaciones[i];
+	}
+	animaciones.clear();
+	SDL_FreeSurface(surface);
+}
+
 SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos,  const string &filePath, string nombre){
-	this->spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
+	surface = graficos.cargarImagen(filePath);
+	this->spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),surface);
 	cargarAnimaciones(nombre);
 }
 

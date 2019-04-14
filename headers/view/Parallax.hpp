@@ -40,6 +40,7 @@ class Parallax{
 		bool finDeEscenarioIzquierda();
 
 		Parallax();
+		~Parallax();
 		Parallax(ControladorGrafico &graficos);
 
 	private:

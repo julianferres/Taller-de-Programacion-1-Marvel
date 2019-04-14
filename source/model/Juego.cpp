@@ -16,35 +16,42 @@ extern ControladorLogger *controladorLogger;
 Juego::Juego(){
 
 	this->isRunning=true;
-	SDL_Init(SDL_INIT_EVERYTHING);
+	SDL_Init(SDL_INIT_VIDEO );
+
 	this->gameLoop();
 }
 
-Juego::~Juego()
-{}
+Juego::~Juego(){
+	delete parallax;
+	delete jugador1;
+	delete jugador2;
+	SDL_QuitSubSystem(SDL_INIT_VIDEO);
+	SDL_Quit();
+}
 
 void Juego::gameLoop(){
 
-	ControladorGrafico graficos;
+	ControladorGrafico *graficos = new ControladorGrafico();
 	SDL_Event evento;
 
-	this->iniciarFondo(graficos);
+	this->iniciarFondo(*graficos);
 	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
 	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
-	this->jugador1 = new Jugador(graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),posicionXInicialJugador1,flip1, false);
-	this->jugador2 = new Jugador(graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),posicionXInicialJugador2, flip2, true);
+	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),posicionXInicialJugador1,flip1, false);
+	this->jugador2 = new Jugador(*graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),posicionXInicialJugador2, flip2, true);
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
 	while (isRunning){
 		startTime = SDL_GetTicks();
-		this->teclear(graficos, evento);
+		this->teclear(*graficos, evento);
 		controladorLogger->registrarEvento("DEBUG", "Juego::tecleado terminado");
-		this->dibujar(graficos);
+		this->dibujar(*graficos);
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
 
 	}
-
+	delete graficos;
 }
+
 void Juego::iniciarFondo(ControladorGrafico &graficos){
 	this-> parallax = new Parallax(graficos);
 	if(this->parallax == NULL)

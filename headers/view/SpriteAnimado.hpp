@@ -13,6 +13,7 @@ class SpriteAnimado{
 	public:
 
 		SpriteAnimado();
+		~SpriteAnimado();
 		SpriteAnimado(ControladorGrafico &graficos, const string &filePath, string nombre);
 		void iniciarAnimacion(string animacion);
 		void update();
@@ -31,6 +32,7 @@ class SpriteAnimado{
 		Animacion *animacionActual;
 		vector<Animacion*> animaciones;
 		SDL_Texture* spriteSheet;
+		SDL_Surface* surface;
 		int frameIndex = 0;
 		int regulador = 0;
 		bool visible = true;

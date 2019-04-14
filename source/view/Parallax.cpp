@@ -1,5 +1,4 @@
 #include <Parallax.hpp>
-#include <iostream>
 #include <SDL2/SDL.h>
 #include <ControladorGrafico.hpp>
 #include <ControladorJson.hpp>
@@ -14,6 +13,13 @@ Parallax::Parallax(ControladorGrafico &graficos){
 	this->cargarFondos();
 	this->cargarTexturas(graficos);
 	this->iniciarCamaras();
+
+}
+
+Parallax::~Parallax(){
+	SDL_FreeSurface(background_z1);
+	SDL_FreeSurface(background_z2);
+	SDL_FreeSurface(background_z3);
 
 }
 
@@ -127,6 +133,7 @@ void Parallax::MoverCamaraDerecha(){
 		camera_z3.x += SPEED_z3;
 	}
 }
+
 
 void Parallax::MoverCamaraIzquierda(){
 	if(finDeEscenarioIzquierda()){

@@ -3,6 +3,10 @@
 
 Animacion::Animacion(){}
 
+
+Animacion::~Animacion(){
+}
+
 Animacion::Animacion(std::string Nombre, int Frames,int x,int y, int ancho, int alto,int Velocidad ){
 	this->nombre = Nombre;
 	this->frames = Frames;

@@ -1,9 +1,11 @@
 #include <ControladorGrafico.hpp>
 #include <ControladorJson.hpp>
+#include <ControladorLogger.hpp>
 
 using namespace std;
 
 extern ControladorJson *controladorJson;
+extern ControladorLogger *controladorLogger;
 
 ControladorGrafico::ControladorGrafico(){
 	Uint32 sizePantalla = SDL_WINDOW_RESIZABLE;
@@ -11,15 +13,21 @@ ControladorGrafico::ControladorGrafico(){
 		sizePantalla = SDL_WINDOW_FULLSCREEN;
 	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), sizePantalla, &this->_window, &this->_renderer);
 	SDL_SetWindowTitle(this->_window, "Marvel vs Capcom");
+
 }
 
 ControladorGrafico::~ControladorGrafico(){
-	SDL_DestroyWindow(this->_window);
+
+	_spriteSheets.clear();
 	SDL_DestroyRenderer(this->_renderer);
+	SDL_DestroyWindow(this->_window);
 	SDL_Quit();
+
+
 }
 
 SDL_Surface* ControladorGrafico::cargarImagen(const string &filePath){
+
 	if(this->_spriteSheets.count(filePath) == 0){
 		this->_spriteSheets[filePath] = IMG_Load(filePath.c_str());
 	}
