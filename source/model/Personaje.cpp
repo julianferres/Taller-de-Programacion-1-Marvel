@@ -39,6 +39,9 @@ void Personaje::dibujar(ControladorGrafico &graficos){
 	this->spriteAnimado.update();
 
 }
+void Personaje::cambiarAnimacion(string nombre){
+	this->spriteAnimado.cambiarAnimacion(nombre);
+}
 
 bool Personaje::MoverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
@@ -57,7 +60,12 @@ bool Personaje::MoverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje se mueve a la derecha");
 	return false;
 }
-
+int Personaje::getFrameIndex(){
+	return this->spriteAnimado.getFrameIndex();
+}
+void Personaje::detenerAnimacion(){
+	this->spriteAnimado.pararAnimacion();
+}
 bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando)
@@ -92,7 +100,9 @@ void Personaje::agacharse(){
 	if(saltando) return;
 	this->spriteAnimado.iniciarAnimacion("agacharse");
 }
-
+void Personaje::Cambio(){
+	this->spriteAnimado.iniciarAnimacion("cambioEntrada");
+}
 void Personaje::Saltar(){
 	this->spriteAnimado.iniciarAnimacion("salto");
 	if( ! saltando) saltando = true;

@@ -24,6 +24,7 @@ class SpriteAnimado{
 		void animacionFinalizada();
 		string getAnimacionActual();
 		void cargarAnimaciones(string nombre);
+		int getFrameIndex();
 
 	private:
 

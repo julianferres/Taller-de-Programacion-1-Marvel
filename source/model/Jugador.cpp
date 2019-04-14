@@ -14,10 +14,15 @@ void Jugador::cambiarPersonaje(){
 	if (this->personajePrincipal){
 		this->personajeActual = this->personaje2;
 		this->personajePrincipal = false;
-	}else{
+		this->personaje2->Cambio();
+	}
+	else{
+		this->personajeActual->detenerAnimacion();
 		this->personajeActual = this->personaje1;
 		this->personajePrincipal = true;
+		this->personaje1->Cambio();
 	}
+
 }
 
 void Jugador::personajeActualDibujar(ControladorGrafico &graficos){

@@ -6,7 +6,7 @@
 #include <ControladorGrafico.hpp>
 #include <string>
 #include <ControladorJson.hpp>
-
+using namespace std;
 extern ControladorJson *controladorJson;
 
 class ControladorGrafico;
@@ -14,7 +14,7 @@ class ControladorGrafico;
 class Personaje{
 
 	public:
-
+		int getFrameIndex();
 		Personaje(ControladorGrafico &grafico, std::string nombre, int posicionXinicial, SDL_RendererFlip flip);
 		~Personaje();
 		void dibujar(ControladorGrafico &grafico);
@@ -23,7 +23,10 @@ class Personaje{
 		void CorrerADerecha();
 		void CorrerAIzquierda();
 		void Saltar();
+		void Cambio();
 		void agacharse();
+		void detenerAnimacion();
+		void cambiarAnimacion(string nombre);
 		float getXDer();
 		SDL_Rect  obtenerRectangulo();
 		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);
