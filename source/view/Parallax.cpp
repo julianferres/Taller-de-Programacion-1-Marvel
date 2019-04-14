@@ -23,7 +23,7 @@ void Parallax::cargarFondos(){
 		controladorLogger->registrarEvento("ERROR", "Parallax::No hay informacion de fondos en el json. Se cargara fondo negro." + controladorJson->pathFondo(3));
 		return;
 	}
-	for(int i=0; i<9; i++){
+	for(int i=0; i<99; i++){
 		std::string fondo = controladorJson->pathFondo(i);
 		if(!fondo.empty() ){
 			fondos.push_back(fondo);

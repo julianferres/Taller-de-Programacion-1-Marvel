@@ -2,10 +2,12 @@
 #include <ControladorGrafico.hpp>
 #include <Animacion.hpp>
 #include <ControladorLogger.hpp>
+#include <ControladorJson.hpp>
 
 class Animacion;
 using namespace std;
 extern ControladorLogger *controladorLogger;
+extern ControladorJson *controladorJson;
 
 SpriteAnimado::SpriteAnimado(){
 }
@@ -34,6 +36,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(agacharse);
 		animaciones.push_back(cambioEntrada);
 		animacionActual = quieto;
+		return;
 	}
 	else if(nombre=="Spiderman"){
 		Animacion *quieto = new Animacion("quieto",10,0,0,125,115,5);
@@ -49,6 +52,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(agacharse);
 		animaciones.push_back(cambioEntrada);
 		animacionActual = quieto;
+		return;
 	}
 	else if(nombre=="Venom" ){
 		Animacion *quieto = new Animacion("quieto",13,0,519,160,123,5);
@@ -64,6 +68,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(agacharse);
 		animaciones.push_back(cambioEntrada);
 		animacionActual = quieto;
+		return;
 	}
 	else if(nombre=="MegaMan" ){
 		Animacion *quieto = new Animacion("quieto",6,0,0,80,70,15);
@@ -80,21 +85,23 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(cambioEntrada);
 
 		animacionActual = quieto;
+		return;
 	}
 	else if(nombre=="Hulk" ){
-			Animacion *quieto = new Animacion("quieto",8,0,0,170,125,10);
-			Animacion *moverDerecha = new Animacion("movDerecha",16,0,280,170,150,4);
-			Animacion *moverIzquierda = new Animacion("movIzquierda",16,0,130,170,143,4);
-			Animacion *salto = new Animacion("salto",10,0,580,170,215,8);
-			Animacion *agacharse = new Animacion("agacharse",9,0,445,170,123,4);
-			Animacion *cambioEntrada = new Animacion("cambioEntrada",8,0,1112,170,248,3);
-			animaciones.push_back(quieto);
-			animaciones.push_back(moverDerecha);
-			animaciones.push_back(moverIzquierda);
-			animaciones.push_back(salto);
-			animaciones.push_back(agacharse);
-			animaciones.push_back(cambioEntrada);
-			animacionActual = quieto;
+		Animacion *quieto = new Animacion("quieto",8,0,0,170,125,10);
+		Animacion *moverDerecha = new Animacion("movDerecha",16,0,280,170,150,4);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",16,0,130,170,143,4);
+		Animacion *salto = new Animacion("salto",10,0,580,170,215,8);
+		Animacion *agacharse = new Animacion("agacharse",9,0,445,170,123,4);
+		Animacion *cambioEntrada = new Animacion("cambioEntrada",8,0,1112,170,248,3);
+		animaciones.push_back(quieto);
+		animaciones.push_back(moverDerecha);
+		animaciones.push_back(moverIzquierda);
+		animaciones.push_back(salto);
+		animaciones.push_back(agacharse);
+		animaciones.push_back(cambioEntrada);
+		animacionActual = quieto;
+		return;
 	}
 	else if(nombre=="sinSprite" ){
 		Animacion *quieto = new Animacion("quieto",1,0,0,600,600,10);
@@ -112,6 +119,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(cambioSalida);
 		animaciones.push_back(cambioEntrada);
 		animacionActual = quieto;
+		return;
 	}
 }
 

@@ -274,24 +274,15 @@ void ControladorJson::setPersonajes(json j)throw(){
 		std::ifstream file(filepath_personaje.c_str());
 		if (file.good() == false){
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
-			if(nombre_personaje == "CapitanAmerica")
-				filepath_personaje = "contents/images/captainAmericaSprites.png";
-			else if(nombre_personaje == "Venom")
-				filepath_personaje = "contents/images/Venom.png";
-			else if(nombre_personaje == "MegaMan")
-				filepath_personaje = "contents/images/MegaMan.png";
-			else if(nombre_personaje == "Spiderman")
-				filepath_personaje = "contents/images/SpidermanSprites.png";
-			else if(nombre_personaje == "Hulk")
-				filepath_personaje = "contents/images/Hulk.png";
-			else
-				filepath_personaje = "contents/images/sinSprite.png";
+			nombre_personaje = 'sinSprite';
+			filepath_personaje = "contents/images/sinSprite.png";
 
 		}
 		personajes.push_back(std::make_tuple(nombre_personaje,filepath_personaje,height_personaje,width_personaje,zindex_personaje));
 	}
 
 }
+
 
 
 

@@ -75,11 +75,7 @@ class ControladorJson{
 		void setCantidadFondos(json j)throw();
 		void setFondos(json j)throw();
 		void setPersonajes(json j)throw();
-		/*
-		void setAlturaPersonaje(json j)throw();
-		void setAnchhoPersonaje(json j)throw();
 
-		*/
 
 
 };

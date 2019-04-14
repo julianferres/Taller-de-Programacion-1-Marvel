@@ -121,8 +121,6 @@ void Personaje::Saltar(){
 }
 
 void Personaje::Flip(){
-	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
-	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
 	if (this->flip == 0){
 		this->flip = SDL_FLIP_HORIZONTAL;
 	}else{
