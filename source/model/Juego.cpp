@@ -28,11 +28,11 @@ void Juego::gameLoop(){
 	ControladorGrafico graficos;
 	SDL_Event evento;
 
-	this->dibujarFondo(graficos);
+	this->iniciarFondo(graficos);
 	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
 	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
-	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",posicionXInicialJugador1,flip1);
-	this->jugador2 = new Jugador(graficos,"Spiderman", "Hulk",posicionXInicialJugador2, flip2);
+	this->jugador1 = new Jugador(graficos,"CapitanAmerica", "Venom",posicionXInicialJugador1,flip1, false);
+	this->jugador2 = new Jugador(graficos,"Spiderman", "Hulk",posicionXInicialJugador2, flip2, true);
 
 	while (isRunning){
 		startTime = SDL_GetTicks();
@@ -44,7 +44,7 @@ void Juego::gameLoop(){
 	}
 
 }
-void Juego::dibujarFondo(ControladorGrafico &graficos){
+void Juego::iniciarFondo(ControladorGrafico &graficos){
 	this-> parallax = new Parallax(graficos);
 	if(this->parallax == NULL)
 		controladorLogger->registrarEvento("ERROR", "Juego::No se pudo cargar el parallax");
@@ -58,9 +58,27 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL, flip);
 	grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL, flip);
 	grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL, flip);
+	this->verificarCambioDeLado();
 	this->jugador1->personajeActualDibujar(grafico);
 	this->jugador2->personajeActualDibujar(grafico);
 	grafico.render();
+}
+
+void Juego::verificarCambioDeLado(){
+	if (this->jugador1->estaDelladoDerecho()){
+		if (this->jugador1->posicionActual() < this->jugador2->posicionActual()){
+			this->jugador1->cambiarDeLado();
+			this->jugador2->cambiarDeLado();
+		}
+	}else{//quiere decir que el que est[a del lado derecho els el jugador 2
+		if (this->jugador2->posicionActual() < this->jugador1->posicionActual()){
+			this->jugador2->cambiarDeLado();
+			this->jugador1->cambiarDeLado();//(this->jugador1->posicionActual() > this->jugador2->posicionActual() && this->jugador2->){
+		}
+	}
+		//	this->jugador1->Flip();
+		//	this->jugador2->Flip();
+//	}
 }
 
 void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento){

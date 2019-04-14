@@ -120,16 +120,33 @@ void Personaje::Saltar(){
 	}
 }
 
+void Personaje::Flip(){
+	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
+	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
+	if (this->flip == 0){
+		this->flip = SDL_FLIP_HORIZONTAL;
+	}else{
+		this->flip = SDL_FLIP_NONE;
+	}
+}
 
 float Personaje::getXDer(){
 	return (this->posx + this->ancho);
+}
+
+float Personaje::getPosX(){
+	return this->posx;
+}
+
+float Personaje::getPosY(){
+	return this->posy;
 }
 
 SDL_Rect  Personaje::obtenerRectangulo(){
 	SDL_Rect rectangulo = { static_cast<int>(posx), static_cast<int>(posy), ancho, alto};
 	return rectangulo;
 }
-
+/*
 bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
 	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+15, static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
@@ -138,6 +155,6 @@ bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
 bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
 	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-15, static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
-}
+}*/
 
 

@@ -29,9 +29,12 @@ class Personaje{
 		void cambiarAnimacion(string nombre);
 		float getXDer();
 		SDL_Rect  obtenerRectangulo();
-		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);
+		bool coliionaAlaDerecha(SDL_Rect rectanguloOponente);
 		bool colisionaAlaIzquierda(SDL_Rect rectanguloOponente);
-
+		void Flip();
+		float getPosX();
+		float getPosY();
+		bool ladoDerecho();
 	private:
 
 		float posx, posy;

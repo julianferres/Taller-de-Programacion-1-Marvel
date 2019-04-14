@@ -21,9 +21,9 @@ class Juego{
 		bool running() {return isRunning;}
 		void gameLoop();
 		void dibujar(ControladorGrafico &grafico);
-		void dibujarFondo(ControladorGrafico &graficos);
+		void iniciarFondo(ControladorGrafico &graficos);
 		void teclear(ControladorGrafico &grafico, SDL_Event evento);
-
+		void verificarCambioDeLado();
 
 	private:
 

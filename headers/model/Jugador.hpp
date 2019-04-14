@@ -12,19 +12,22 @@ class Jugador{
 	public:
 
 		Jugador(ControladorGrafico &grafico, std::string nombrePersonaje1,
-				std::string nombrePersonaje2, int posicionXinicial, SDL_RendererFlip flip);
+				std::string nombrePersonaje2, int posicionXinicial, SDL_RendererFlip flip, bool ladoDerecho);
 		~Jugador();
 		void personajeActualDibujar(ControladorGrafico &grafico);
 		void cambiarPersonaje();
+		void Flip();
 		Personaje * devolverPersonajeActual();
-
+		float posicionActual();
+		bool estaDelladoDerecho();
+		void cambiarDeLado();
 	private:
 
 		Personaje *personaje1;
 		Personaje *personaje2;
 		Personaje *personajeActual;
 		bool personajePrincipal;
-
+		bool ladoDerecho;
 };
 
 #endif
