@@ -81,12 +81,9 @@ void Juego::verificarCambioDeLado(){
 	}else{//quiere decir que el que est[a del lado derecho els el jugador 2
 		if (this->jugador2->posicionActual() < this->jugador1->posicionActual()){
 			this->jugador2->cambiarDeLado();
-			this->jugador1->cambiarDeLado();//(this->jugador1->posicionActual() > this->jugador2->posicionActual() && this->jugador2->){
+			this->jugador1->cambiarDeLado();
 		}
 	}
-		//	this->jugador1->Flip();
-		//	this->jugador2->Flip();
-//	}
 }
 
 void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento){
