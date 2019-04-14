@@ -49,5 +49,6 @@ bool Jugador::estaDelladoDerecho(){
 
 void Jugador::cambiarDeLado(){
 	this->ladoDerecho = not this->ladoDerecho;
-	this->personajeActual->Flip();
+	this->personaje1->Flip();
+	this->personaje2->Flip();
 }
