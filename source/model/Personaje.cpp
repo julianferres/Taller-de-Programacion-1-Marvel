@@ -32,6 +32,8 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 	this->spriteAnimado=new SpriteAnimado(graficos,controladorJson->pathImagen(nombre),nombre);
 	this->velocidadInicial = sqrt(constanteDeAltura * alto);
 	this->flip = flip;
+	this->zindex = controladorJson->zindexPersonaje(nombre);
+	this->nombre = nombre;
 }
 
 void Personaje::dibujar(ControladorGrafico &graficos){
@@ -146,6 +148,14 @@ float Personaje::getPosY(){
 SDL_Rect  Personaje::obtenerRectangulo(){
 	SDL_Rect rectangulo = { static_cast<int>(posx), static_cast<int>(posy), ancho, alto};
 	return rectangulo;
+}
+
+int Personaje::zindexPersonaje(){
+	return zindex;
+}
+
+std::string Personaje::getNombre(){
+	return nombre;
 }
 /*
 bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){

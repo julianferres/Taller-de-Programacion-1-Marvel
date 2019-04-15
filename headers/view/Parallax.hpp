@@ -38,6 +38,7 @@ class Parallax{
 
 		bool finDeEscenarioDerecha();
 		bool finDeEscenarioIzquierda();
+		std::vector<int> getzindexes();
 
 		Parallax();
 		~Parallax();

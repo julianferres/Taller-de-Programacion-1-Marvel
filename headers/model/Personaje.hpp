@@ -35,6 +35,8 @@ class Personaje{
 		float getPosX();
 		float getPosY();
 		bool ladoDerecho();
+		int zindexPersonaje();
+		std::string getNombre();
 	private:
 		int posicionXinicial;
 		float posx, posy;
@@ -47,7 +49,8 @@ class Personaje{
 		float alturaActualSalto = 0;
 		float tiempo = 0;
 		SDL_RendererFlip flip;
-
+		int zindex;
+		std::string nombre;
 };
 
 #endif
