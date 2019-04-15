@@ -74,4 +74,6 @@ bool ControladorGrafico::controlarColision(SDL_Rect rect1,SDL_Rect rect2){
 	return true;
 
 }
-
+void ControladorGrafico::maximizarVentana(int ancho, int alto){
+	controladorJson->maximizarVentana(ancho, alto);
+}

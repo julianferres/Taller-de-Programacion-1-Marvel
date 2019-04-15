@@ -37,6 +37,7 @@ class Personaje{
 		bool ladoDerecho();
 		int zindexPersonaje();
 		std::string getNombre();
+		void actualizarPiso();
 	private:
 		int posicionXinicial;
 		float posx, posy;

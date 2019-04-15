@@ -24,6 +24,7 @@ class ControladorGrafico{
 		SDL_Renderer* getRenderer() const;
 		bool controlarColision(SDL_Rect rect1, SDL_Rect rect2);
 		void cambiarPantallaCompleta();
+		void maximizarVentana(int ancho, int alto);
 	private:
 
 		SDL_Window* _window;
