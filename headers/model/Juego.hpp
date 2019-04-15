@@ -24,8 +24,8 @@ class Juego{
 		void iniciarFondo(ControladorGrafico &graficos);
 		void teclear(ControladorGrafico &grafico, SDL_Event evento);
 		void verificarCambioDeLado();
-		static bool compare_zindexs(std::tuple<std::string, int> zindex1, std::tuple<std::string, int> zindex2);
-		std::vector<std::tuple<std::string, int>> obtenerOrdenDibujo();
+		static bool compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugador *, int> zindex2);
+		std::vector<std::tuple<Jugador *, int>> obtenerOrdenDibujo();
 
 	private:
 

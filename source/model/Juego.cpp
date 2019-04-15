@@ -60,21 +60,18 @@ void Juego::iniciarFondo(ControladorGrafico &graficos){
 		controladorLogger->registrarEvento("DEBUG", "Juego::Se cargo correctamente el parallax");
 }
 
-bool Juego::compare_zindexs(std::tuple<std::string, int> zindex1, std::tuple<std::string, int> zindex2){
+bool Juego::compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugador *, int> zindex2){
 		return (std::get<1>(zindex1) <= std::get<1>(zindex2));
 }
 
-std::vector<std::tuple<std::string, int>> Juego::obtenerOrdenDibujo(){
-	std::vector<std::tuple<std::string, int>> zindexs_fondos_y_personajes;
-	std::vector<int> zindexes_fondos = parallax->getzindexes();
-	for(int i = 0; i < 3; i++)
-		zindexs_fondos_y_personajes.push_back(std::make_tuple("fondo" + std::to_string(i), zindexes_fondos[i]));
+std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
+	std::vector<std::tuple<Jugador *, int>> zindexs_personajes;
 
-	zindexs_fondos_y_personajes.push_back(std::make_tuple("jugador1", jugador1->devolverPersonajeActual()->zindexPersonaje()));
-	zindexs_fondos_y_personajes.push_back(std::make_tuple("jugador2", jugador2->devolverPersonajeActual()->zindexPersonaje()));
+	zindexs_personajes.push_back(std::make_tuple(jugador1, jugador1->devolverPersonajeActual()->zindexPersonaje()));
+	zindexs_personajes.push_back(std::make_tuple(jugador2, jugador2->devolverPersonajeActual()->zindexPersonaje()));
 
-	std::sort(zindexs_fondos_y_personajes.begin(), zindexs_fondos_y_personajes.end(), Juego::compare_zindexs);
-	return zindexs_fondos_y_personajes;
+	std::sort(zindexs_personajes.begin(), zindexs_personajes.end(), Juego::compare_zindexs);
+	return zindexs_personajes;
 }
 
 void Juego::dibujar(ControladorGrafico &grafico){
@@ -82,40 +79,39 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	controladorLogger->registrarEvento("DEBUG", "Juego::Dibujar Juego");
 
-
-	std::vector<std::tuple<std::string, int>> zindexs_fondos_y_personajes = obtenerOrdenDibujo();
+	std::vector<std::tuple<Jugador *, int>> zindexs_personajes = obtenerOrdenDibujo();
+	std::vector<int> zindexs_fondos = parallax->getzindexes();
 
 	this->verificarCambioDeLado();
 
-	for (int i = 0; i < 5; i++){
-		if(std::get<0>(zindexs_fondos_y_personajes[i]).compare("fondo0") == 0){
-			if(parallax->bitmapTex1){
+	int fondos_dibujados = 0;
+	int personajes_dibujados = 0;
+	while(fondos_dibujados + personajes_dibujados < 5){
+		if(fondos_dibujados == 3 && personajes_dibujados < 2){
+			get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(grafico);
+			personajes_dibujados++;
+		}
+
+		else if ((personajes_dibujados < 2) && get<1>(zindexs_personajes[personajes_dibujados]) <= zindexs_fondos[fondos_dibujados]){
+			get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(grafico);
+			personajes_dibujados++;
+		}
+		else{
+			if(fondos_dibujados == 0 && parallax->bitmapTex1){
 				grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL, flip);
 			}
-		}
-		else if(std::get<0>(zindexs_fondos_y_personajes[i]).compare("fondo1") == 0){
-			if(parallax->bitmapTex2){
-				grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL, flip);
-			}
-		}
 
-		else if(std::get<0>(zindexs_fondos_y_personajes[i]).compare("fondo2") == 0){
-			if(parallax->bitmapTex3){
+			else if(fondos_dibujados == 1 && parallax->bitmapTex2)
+				grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL, flip);
+
+
+			else if(fondos_dibujados == 2 && parallax->bitmapTex3){
 				grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL, flip);
 			}
-		}
+			fondos_dibujados++;
 
-		else if(std::get<0>(zindexs_fondos_y_personajes[i]).compare("jugador1") == 0){
-			this->jugador1->personajeActualDibujar(grafico);
-		}
-
-		else{
-			this->jugador2->personajeActualDibujar(grafico);
 		}
 	}
-
-
-
 
 	grafico.render();
 }
