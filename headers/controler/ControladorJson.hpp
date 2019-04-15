@@ -29,6 +29,7 @@ class ControladorJson{
 		std::string jugador1Personaje(int numero);
 		std::string jugador2Personaje(int numero);
 		int cantidadJugadores();
+		void cambiarPantallaCompleta();
 
 	private:
 
@@ -80,8 +81,6 @@ class ControladorJson{
 		void setFondos(json j)throw();
 		void setPersonajes(json j)throw();
 		void elegirPersonajes(json j) throw();
-
-
 
 };
 

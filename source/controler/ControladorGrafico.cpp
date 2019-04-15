@@ -8,9 +8,9 @@ extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
 ControladorGrafico::ControladorGrafico(){
-	Uint32 sizePantalla = SDL_WINDOW_RESIZABLE;
+	//Uint32 sizePantalla = SDL_WINDOW_RESIZABLE;
 	if(controladorJson->esfullscreen())
-		sizePantalla = SDL_WINDOW_FULLSCREEN;
+		this->sizePantalla = SDL_WINDOW_FULLSCREEN;
 	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), sizePantalla, &this->_window, &this->_renderer);
 	SDL_SetWindowTitle(this->_window, "Marvel vs Capcom");
 
@@ -23,6 +23,18 @@ ControladorGrafico::~ControladorGrafico(){
 	SDL_DestroyWindow(this->_window);
 	SDL_Quit();
 
+
+}
+
+void ControladorGrafico::cambiarPantallaCompleta(){
+	if (controladorJson->esfullscreen()){
+		controladorJson->cambiarPantallaCompleta();
+		this->sizePantalla = SDL_WINDOW_RESIZABLE;
+		SDL_SetWindowFullscreen(this->_window, this->sizePantalla);
+	}else{
+		controladorJson->cambiarPantallaCompleta();
+		this->sizePantalla = SDL_WINDOW_FULLSCREEN;
+	}
 
 }
 
@@ -62,3 +74,4 @@ bool ControladorGrafico::controlarColision(SDL_Rect rect1,SDL_Rect rect2){
 	return true;
 
 }
+

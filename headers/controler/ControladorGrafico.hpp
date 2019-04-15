@@ -23,12 +23,13 @@ class ControladorGrafico{
 		void limpiar();
 		SDL_Renderer* getRenderer() const;
 		bool controlarColision(SDL_Rect rect1, SDL_Rect rect2);
-
+		void cambiarPantallaCompleta();
 	private:
 
 		SDL_Window* _window;
 		SDL_Renderer* _renderer;
 		map<string, SDL_Surface*> _spriteSheets;
+		Uint32 sizePantalla = SDL_WINDOW_RESIZABLE;
 
 };
 

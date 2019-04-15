@@ -349,3 +349,7 @@ void ControladorJson::setCantidadJugadores(json j)throw(){
 int ControladorJson::cantidadJugadores(){
 	return this->cantidad_jugadores;
 }
+
+void ControladorJson::cambiarPantallaCompleta(){
+	this->fullscreen = not this->fullscreen;
+}
