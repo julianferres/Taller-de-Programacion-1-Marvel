@@ -7,11 +7,7 @@
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
-#define posicionXInicialJugador1  controladorJson->anchoVentana() * 1/16
-#define   posicionXInicialJugador2  controladorJson->anchoVentana() *3/4
 
-#define limiteFondoIzq  controladorJson->anchoVentana() * 1/8
-#define limiteFondoDer  controladorJson->anchoVentana() * 15/16
 
 Juego::Juego(){
 
@@ -37,8 +33,8 @@ void Juego::gameLoop(){
 	this->iniciarFondo(*graficos);
 	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
 	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
-	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),posicionXInicialJugador1,flip1, false);
-	this->jugador2 = new Jugador(*graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),posicionXInicialJugador2, flip2, true);
+	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),flip1, false);
+	this->jugador2 = new Jugador(*graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),controladorJson->getPosicionXInicialJugador2(), flip2, true);
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
 	while (isRunning){
 		startTime = SDL_GetTicks();
@@ -106,6 +102,11 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento){
 		}
 		if (keys[SDL_SCANCODE_F11]){
 			grafico.cambiarPantallaCompleta();
+		}
+		if (evento.window.event == SDL_WINDOWEVENT_RESIZED){
+			grafico.maximizarVentana(evento.window.data1, evento.window.data2);
+			this->jugador1->actualizarPiso();
+			this->jugador2->actualizarPiso();
 		}
 		if (evento.type == SDL_KEYDOWN){
 			if(evento.key.keysym.sym == SDLK_e){

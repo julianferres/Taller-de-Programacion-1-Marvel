@@ -21,6 +21,7 @@ class Jugador{
 		float posicionActual();
 		bool estaDelladoDerecho();
 		void cambiarDeLado();
+		void actualizarPiso();
 	private:
 
 		Personaje *personaje1;

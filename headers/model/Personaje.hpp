@@ -35,6 +35,7 @@ class Personaje{
 		float getPosX();
 		float getPosY();
 		bool ladoDerecho();
+		void actualizarPiso();
 	private:
 		int posicionXinicial;
 		float posx, posy;

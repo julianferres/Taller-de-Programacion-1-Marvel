@@ -57,3 +57,8 @@ void Jugador::cambiarDeLado(){
 	this->personaje1->Flip();
 	this->personaje2->Flip();
 }
+
+void Jugador::actualizarPiso(){
+	this->personaje1->actualizarPiso();
+	this->personaje2->actualizarPiso();
+}

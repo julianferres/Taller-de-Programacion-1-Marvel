@@ -9,9 +9,9 @@ extern ControladorLogger *controladorLogger;
 
 #define constanteDeAltura 39.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
 #define constanteTiempoCiclos 0.3
-#define limiteFondoIzq  controladorJson->anchoVentana() * 1/16
-#define limiteFondoDer  controladorJson->anchoVentana() * 15/16
-#define alturaPiso 80
+
+
+
 
 using namespace std;
 
@@ -28,7 +28,7 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 	this->posx= posicionXinicial;
 	this->alto = controladorJson->alturaPersonaje(nombre);
 	this->ancho = controladorJson->anchoPersonaje(nombre);
-	this->posy = controladorJson->alturaVentana() - alturaPiso - alto;
+	this->posy = controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
 	this->spriteAnimado=new SpriteAnimado(graficos,controladorJson->pathImagen(nombre),nombre);
 	this->velocidadInicial = sqrt(constanteDeAltura * alto);
 	this->flip = flip;
@@ -49,8 +49,8 @@ bool Personaje::MoverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando)
 		this->spriteAnimado->iniciarAnimacion("movDerecha");
-	if(posx + ancho >limiteFondoDer){
-		if (rect_enemigo.x > limiteFondoIzq && !finEscenarioDerecha){
+	if(posx + ancho > (controladorJson-> getLimiteFondoDer())){
+		if (rect_enemigo.x > (controladorJson->getLimiteFondoIzq()) && !finEscenarioDerecha){
 			enemigo->CorrerAIzquierda();
 			controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje en el limite derecho. Se corre el oponente a la izquierda");
 			return true;
@@ -72,8 +72,8 @@ bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando)
 		this->spriteAnimado->iniciarAnimacion("movIzquierda");
-	if(posx  < limiteFondoIzq){
-		if (rect_enemigo.x + rect_enemigo.w < limiteFondoDer && !finEscenarioIzquierda){
+	if(posx  < controladorJson->getLimiteFondoIzq()){
+		if (rect_enemigo.x + rect_enemigo.w < controladorJson->getLimiteFondoDer() && !finEscenarioIzquierda){
 			enemigo->CorrerADerecha();
 			controladorLogger->registrarEvento("DEBUG", "Personaje:: Personaje en el limite izquierdo. Se corre el oponente a la derecha");
 			return true;
@@ -87,13 +87,13 @@ bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 }
 
 void Personaje::CorrerAIzquierda(){
-	if(posx  < limiteFondoIzq)
+	if(posx  < controladorJson->getLimiteFondoIzq())
 			return;
 	this->posx=this->posx-velocidad;
 }
 
 void Personaje::CorrerADerecha(){
-	if(posx + ancho > limiteFondoDer)
+	if(posx + ancho > controladorJson->getLimiteFondoDer())
 			return;
 	this->posx=this->posx+velocidad;
 }
@@ -111,7 +111,10 @@ void Personaje::Saltar(){
 	if( ! saltando) saltando = true;
 	else{
 		if(alturaActualSalto <= 0 && tiempo != 0 ){
-			saltando = false; 	tiempo = 0; posy=controladorJson->alturaVentana() - alturaPiso - alto;; 	return;
+			saltando = false;
+			tiempo = 0;
+			posy=controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
+			return;
 		}
 		else{
 			tiempo += constanteTiempoCiclos;
@@ -146,6 +149,10 @@ float Personaje::getPosY(){
 SDL_Rect  Personaje::obtenerRectangulo(){
 	SDL_Rect rectangulo = { static_cast<int>(posx), static_cast<int>(posy), ancho, alto};
 	return rectangulo;
+}
+
+void Personaje::actualizarPiso(){
+	this->posy = controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
 }
 /*
 bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){

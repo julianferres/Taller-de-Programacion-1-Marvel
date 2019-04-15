@@ -353,3 +353,30 @@ int ControladorJson::cantidadJugadores(){
 void ControladorJson::cambiarPantallaCompleta(){
 	this->fullscreen = not this->fullscreen;
 }
+
+void ControladorJson::maximizarVentana(int ancho, int alto){
+	this->ancho_ventana = ancho;
+	this->altura_ventana = alto;
+	this->altura_piso = altura_ventana *2/15;
+}
+
+
+int ControladorJson::getPosicionXInicialJugador1(){
+	return this->ancho_ventana * 1/16;
+}
+
+int ControladorJson::getPosicionXInicialJugador2(){
+	return this->ancho_ventana * 3/4;
+}
+
+int ControladorJson::getLimiteFondoDer(){
+	return this->ancho_ventana * 15/16;
+}
+
+int ControladorJson::getLimiteFondoIzq(){
+	return this->altura_ventana *1/16;
+}
+
+int ControladorJson::getAlturaPiso(){
+	return this->altura_piso;
+}
