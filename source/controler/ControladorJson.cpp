@@ -160,6 +160,20 @@ int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
     return -1;
 }
 
+int ControladorJson::zindexPersonaje(std::string nombrePersonaje){
+    for (int i = 0; i < cantidad_personajes; i++){
+		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
+			int zindex_personaje = std::get<4>(personajes[i]);
+			if(zindex_personaje < 0 or zindex_personaje > 99){
+				controladorLogger->registrarEvento("Error", "zindex del personaje "+ nombrePersonaje + " no permitido. Se setea en " + std::to_string(zindex_personaje_default));
+				zindex_personaje = zindex_personaje_default;
+			}
+			return zindex_personaje;
+		}
+    }
+    return -1;
+}
+
 void ControladorJson::setLogLevel(json j,std::string argumentoConsola)throw(){
 	try{
 		if(argumentoConsola.empty())

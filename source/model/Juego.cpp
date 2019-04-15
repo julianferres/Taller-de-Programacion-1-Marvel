@@ -60,22 +60,58 @@ void Juego::iniciarFondo(ControladorGrafico &graficos){
 		controladorLogger->registrarEvento("INFO", "Juego::Se cargo correctamente el parallax");
 }
 
+bool Juego::compare_zindexs(std::tuple<std::string, int> zindex1, std::tuple<std::string, int> zindex2){
+		return (std::get<1>(zindex1) <= std::get<1>(zindex2));
+}
+
 void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.limpiar();
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	controladorLogger->registrarEvento("DEBUG", "Juego::Dibujar Juego");
-	if(parallax->bitmapTex1){
-		grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL, flip);
-	}
-	if(parallax->bitmapTex2){
-		grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL, flip);
-	}
-	if(parallax->bitmapTex3){
-		grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL, flip);
-	}
+
+
+	std::vector<std::tuple<std::string, int>> zindexs_fondos_y_personajes;
+	std::vector<int> zindexes_fondos = parallax->getzindexes();
+	for(int i = 0; i < 3; i++)
+		zindexs_fondos_y_personajes.push_back(std::make_tuple("fondo" + std::to_string(i), zindexes_fondos[i]));
+
+	zindexs_fondos_y_personajes.push_back(std::make_tuple("jugador1", jugador1->devolverPersonajeActual()->zindexPersonaje()));
+	zindexs_fondos_y_personajes.push_back(std::make_tuple("jugador2", jugador2->devolverPersonajeActual()->zindexPersonaje()));
+
+	std::sort(zindexs_fondos_y_personajes.begin(), zindexs_fondos_y_personajes.end(), Juego::compare_zindexs);
+
 	this->verificarCambioDeLado();
-	this->jugador1->personajeActualDibujar(grafico);
-	this->jugador2->personajeActualDibujar(grafico);
+
+	for (int i = 0; i < 5; i++){
+		if(std::get<0>(zindexs_fondos_y_personajes[i]).compare("fondo0") == 0){
+			if(parallax->bitmapTex1){
+				grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL, flip);
+			}
+		}
+		else if(std::get<0>(zindexs_fondos_y_personajes[i]).compare("fondo1") == 0){
+			if(parallax->bitmapTex2){
+				grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL, flip);
+			}
+		}
+
+		else if(std::get<0>(zindexs_fondos_y_personajes[i]).compare("fondo2") == 0){
+			if(parallax->bitmapTex3){
+				grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL, flip);
+			}
+		}
+
+		else if(std::get<0>(zindexs_fondos_y_personajes[i]).compare("jugador1") == 0){
+			this->jugador1->personajeActualDibujar(grafico);
+		}
+
+		else{
+			this->jugador2->personajeActualDibujar(grafico);
+		}
+	}
+
+
+
+
 	grafico.render();
 }
 

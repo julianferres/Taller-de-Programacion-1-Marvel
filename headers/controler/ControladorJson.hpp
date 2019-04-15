@@ -18,6 +18,7 @@ class ControladorJson{
 		int cantidadFPS();
 		int alturaPersonaje(std::string);
 		int anchoPersonaje(std::string);
+		int zindexPersonaje(std::string nombrePersonaje);
 		int cantidadFondos();
 		bool esfullscreen();
 		bool existePersonaje(std::string);

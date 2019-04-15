@@ -183,6 +183,9 @@ bool Parallax::finDeEscenarioDerecha(){
 	return finEscenario;
 }
 
+std::vector<int> Parallax::getzindexes(){
+	return zindexs;
+}
 
 SDL_Rect *Parallax::Camaraz2(){
 	return &camera_z2;
