@@ -64,12 +64,7 @@ bool Juego::compare_zindexs(std::tuple<std::string, int> zindex1, std::tuple<std
 		return (std::get<1>(zindex1) <= std::get<1>(zindex2));
 }
 
-void Juego::dibujar(ControladorGrafico &grafico){
-	grafico.limpiar();
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
-	controladorLogger->registrarEvento("DEBUG", "Juego::Dibujar Juego");
-
-
+std::vector<std::tuple<std::string, int>> Juego::obtenerOrdenDibujo(){
 	std::vector<std::tuple<std::string, int>> zindexs_fondos_y_personajes;
 	std::vector<int> zindexes_fondos = parallax->getzindexes();
 	for(int i = 0; i < 3; i++)
@@ -79,6 +74,16 @@ void Juego::dibujar(ControladorGrafico &grafico){
 	zindexs_fondos_y_personajes.push_back(std::make_tuple("jugador2", jugador2->devolverPersonajeActual()->zindexPersonaje()));
 
 	std::sort(zindexs_fondos_y_personajes.begin(), zindexs_fondos_y_personajes.end(), Juego::compare_zindexs);
+	return zindexs_fondos_y_personajes;
+}
+
+void Juego::dibujar(ControladorGrafico &grafico){
+	grafico.limpiar();
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	controladorLogger->registrarEvento("DEBUG", "Juego::Dibujar Juego");
+
+
+	std::vector<std::tuple<std::string, int>> zindexs_fondos_y_personajes = obtenerOrdenDibujo();
 
 	this->verificarCambioDeLado();
 
