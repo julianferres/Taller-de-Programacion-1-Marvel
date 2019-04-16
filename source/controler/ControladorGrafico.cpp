@@ -21,7 +21,7 @@ ControladorGrafico::~ControladorGrafico(){
 	_spriteSheets.clear();
 	SDL_DestroyRenderer(this->_renderer);
 	SDL_DestroyWindow(this->_window);
-	SDL_Quit();
+	//SDL_Quit();
 
 
 }

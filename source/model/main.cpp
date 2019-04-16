@@ -15,7 +15,8 @@ int main(int argc, char **argv){
 
 	controladorJson->leerArchivo(argumentoConsola);
 
-	Juego juego;
+	Juego *juego = new Juego();
+	delete juego;
 
 	return 0;
 

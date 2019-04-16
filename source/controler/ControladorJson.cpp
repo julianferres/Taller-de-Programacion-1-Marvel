@@ -59,7 +59,7 @@ void ControladorJson::leerArchivoDefault(){
 	ancho_ventana = j["window"]["width"];
 	fullscreen = j["window"]["fullscreen"];
 	FPS = j["FPS"];
-	cantidad_jugadores = j["juagdores"].size();
+	cantidad_jugadores = j["jugadores"].size();
 	cantidad_personajes = j["characters"].size();
 	cantidad_fondos = j["battlefield"].size();
 

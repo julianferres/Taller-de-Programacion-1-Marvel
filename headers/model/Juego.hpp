@@ -10,7 +10,6 @@
 extern ControladorJson *controladorJson;
 
 class Jugador;
-class Parallax;
 
 class Juego{
 
@@ -28,7 +27,7 @@ class Juego{
 		std::vector<std::tuple<Jugador *, int>> obtenerOrdenDibujo();
 
 	private:
-
+		ControladorGrafico *graficos;
 		bool isRunning;
 		Jugador *jugador1;
 		Jugador *jugador2;

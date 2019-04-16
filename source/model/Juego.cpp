@@ -12,29 +12,37 @@ extern ControladorLogger *controladorLogger;
 Juego::Juego(){
 
 	this->isRunning=true;
-	SDL_Init(SDL_INIT_VIDEO );
-
+	SDL_Init(0);
+	SDL_VideoInit(NULL);
+	SDL_InitSubSystem(SDL_INIT_TIMER);
+	this->startTime = SDL_GetTicks();
+	this->graficos = new ControladorGrafico();
+	this-> parallax = new Parallax(*graficos);
+	this->iniciarFondo(*graficos);
+	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),SDL_FLIP_NONE, false);
+	this->jugador2 = new Jugador(*graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),controladorJson->getPosicionXInicialJugador2(), SDL_FLIP_HORIZONTAL, true);
 	this->gameLoop();
+
 }
 
 Juego::~Juego(){
 	delete parallax;
 	delete jugador1;
 	delete jugador2;
-	SDL_QuitSubSystem(SDL_INIT_VIDEO);
+	delete graficos;
+	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	SDL_VideoQuit();
+	//SDL_QuitSubSystem(SDL_INIT_VIDEO);
+	SDL_QuitSubSystem(SDL_INIT_TIMER);
 	SDL_Quit();
 }
 
 void Juego::gameLoop(){
 
-	ControladorGrafico *graficos = new ControladorGrafico();
+
 	SDL_Event evento;
 
 	this->iniciarFondo(*graficos);
-	SDL_RendererFlip flip1 = SDL_FLIP_NONE;
-	SDL_RendererFlip flip2 = SDL_FLIP_HORIZONTAL;
-	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),flip1, false);
-	this->jugador2 = new Jugador(*graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),controladorJson->getPosicionXInicialJugador2(), flip2, true);
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
 	while (isRunning){
 		startTime = SDL_GetTicks();
@@ -45,11 +53,10 @@ void Juego::gameLoop(){
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
 
 	}
-	delete graficos;
 }
 
 void Juego::iniciarFondo(ControladorGrafico &graficos){
-	this-> parallax = new Parallax(graficos);
+
 	if(this->parallax == NULL)
 		controladorLogger->registrarEvento("ERROR", "Juego::No se pudo cargar el parallax");
 	else
