@@ -39,8 +39,11 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 void Personaje::dibujar(ControladorGrafico &graficos){
 	if(saltando)
 		this->Saltar();
+	if(!agachado && spriteAnimado->getAnimacionActual()=="agacharse")
+			spriteAnimado->iniciarAnimacion("quieto");
 	this->spriteAnimado->dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
 	this->spriteAnimado->update();
+	agachado = false;
 
 }
 void Personaje::cambiarAnimacion(string nombre){
@@ -102,10 +105,15 @@ void Personaje::CorrerADerecha(){
 
 void Personaje::agacharse(){
 	if(saltando) return;
+	agachado = true;
 	this->spriteAnimado->iniciarAnimacion("agacharse");
 }
 void Personaje::Cambio(){
-	this->posx = this->posicionXinicial;
+	if(posicionXinicial < controladorJson->anchoVentana()/2)
+		this->posx = 0;
+	else
+		this->posx = controladorJson->anchoVentana()-ancho;
+
 	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
 }
 void Personaje::Saltar(){

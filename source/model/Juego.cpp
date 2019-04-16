@@ -3,6 +3,7 @@
 #include <ControladorLogger.hpp>
 #include <Juego.hpp>
 #include <SpriteAnimado.hpp>
+#include <ControladorTeclado.hpp>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -18,6 +19,7 @@ Juego::Juego(){
 	this->startTime = SDL_GetTicks();
 	this->graficos = new ControladorGrafico();
 	this-> parallax = new Parallax(*graficos);
+	this->teclado = new ControladorTeclado();
 	this->iniciarFondo(*graficos);
 	controladorLogger->registrarEvento("INFO", "Juego::Fondos con parallax iniciado");
 	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),SDL_FLIP_NONE, false);
@@ -48,7 +50,7 @@ void Juego::gameLoop(){
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
 	while (isRunning){
 		this->startTime = SDL_GetTicks();
-		this->teclear(*graficos, evento);
+		this->teclear(*graficos, evento,*teclado);
 		this->dibujar(*graficos);
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
@@ -133,90 +135,75 @@ void Juego::verificarCambioDeLado(){
 	}
 }
 
-void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento){
-	const Uint8 *keys = SDL_GetKeyboardState(NULL);
+
+void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTeclado &teclado){
 	Personaje* personaje1 = jugador1->devolverPersonajeActual();
 	Personaje* personaje2 = jugador2->devolverPersonajeActual();
 	bool finEscenarioDerecha = parallax->finDeEscenarioDerecha();
 	bool finEscenarioIzquierda = parallax->finDeEscenarioIzquierda();
+	teclado.reiniciar();
+
 	while(SDL_PollEvent(&evento)){
-		if (evento.type == SDL_QUIT  || keys[SDL_SCANCODE_ESCAPE] ){
-			isRunning = false;
-			break;
-		}
-		if (keys[SDL_SCANCODE_F11]){
-			grafico.cambiarPantallaCompleta();
-		}
+
 		if (evento.window.event == SDL_WINDOWEVENT_RESIZED){
 			grafico.maximizarVentana(evento.window.data1, evento.window.data2);
 			this->jugador1->actualizarPiso();
 			this->jugador2->actualizarPiso();
 		}
-		if (evento.type == SDL_KEYDOWN){
-			if(evento.key.keysym.sym == SDLK_e){
-				this->jugador1->cambiarPersonaje();
-				controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de personaje del jugador 1");
-				break;
-			}
-			if(evento.key.keysym.sym == SDLK_m){
-				this->jugador2->cambiarPersonaje();
-				controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de personaje del jugador 2");
-				break;
-			}
-		}
-		//Jugador 1
-		 if (keys[SDL_SCANCODE_D]){
-			 if(personaje1->MoverDerecha(personaje2,finEscenarioDerecha)){
-				 this->parallax->MoverCamaraDerecha();
-			 }
-			 controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la derecha");
 
-			/*if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() )  ){
-				if(personaje1->MoverDerecha(personaje2,finEscenarioDerecha))
-					this->parallax->MoverCamaraDerecha();
-				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la derecha");
-			}*/
-		}
-		if (keys[SDL_SCANCODE_A]){
-			if (personaje1->MoverIzquierda(personaje2,finEscenarioIzquierda)){
-				this->parallax->MoverCamaraIzquierda();
-			}
-			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la izquierda");
+		 switch( evento.type ){
+		 	 case SDL_KEYDOWN:
+		 		 teclado.eventoPresionarTecla(evento);
+		 		 break;
+		 	 case SDL_KEYUP:
+		 		 teclado.eventoSoltarTecla(evento);
+		 		 break;
+		 	 case SDL_QUIT:
+		 		 isRunning=false;
+		 		 break;
+		 }
+	}
 
+	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_D)){
+		 if(personaje1->MoverDerecha(personaje2,finEscenarioDerecha)){
+			 this->parallax->MoverCamaraDerecha();
+			 /*if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() )  ){
+					if(personaje1->MoverDerecha(personaje2,finEscenarioDerecha))
+						this->parallax->MoverCamaraDerecha();
+					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la derecha");
+				}*/
+		 }
+	}
 
+	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_A)){
+		if (personaje1->MoverIzquierda(personaje2,finEscenarioIzquierda)){
+			this->parallax->MoverCamaraIzquierda();
 			/*if(! personaje1->colisionaAlaIzquierda(personaje2->obtenerRectangulo() )  ){
-				if (personaje1->MoverIzquierda(personaje2,finEscenarioIzquierda))
-					this->parallax->MoverCamaraIzquierda();
-				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la izquierda");
-			}*/
+					if (personaje1->MoverIzquierda(personaje2,finEscenarioIzquierda))
+						this->parallax->MoverCamaraIzquierda();
+					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la izquierda");
+				}*/
 		}
-		if (keys[SDL_SCANCODE_S]){
-			personaje1->agacharse();
-			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
-		}
-		if (keys[SDL_SCANCODE_W]){
-			personaje1->Saltar();
-			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 salta");
-		}
-		//Jugador2
-	   if (keys[SDL_SCANCODE_RIGHT]){
-		   if(personaje2->MoverDerecha(personaje1, finEscenarioDerecha) ){
-			   this->parallax->MoverCamaraDerecha();
-		   }
-		   controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la derecha");
+	}
 
-		  /* if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo()) ){
-				if(personaje2->MoverDerecha(personaje1, finEscenarioDerecha) )
-					this->parallax->MoverCamaraDerecha();
-				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la derecha");
-		   }*/
-		}
-		if (keys[SDL_SCANCODE_LEFT]){
-			if (personaje2->MoverIzquierda(personaje1,finEscenarioIzquierda)){
-				this->parallax->MoverCamaraIzquierda();
-			}
-			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la izquierda");
+	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_W)){
+		personaje1->Saltar();
+		controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 salta");
+	}
 
+	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_S)){
+		personaje1->agacharse();
+		controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
+	}
+
+	if(teclado.sePresionoUnaTecla(SDL_SCANCODE_E) ){
+			this->jugador1->cambiarPersonaje();
+			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de personaje del jugador 1");
+		}
+
+	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_LEFT)){
+		if (personaje2->MoverIzquierda(personaje1,finEscenarioIzquierda)){
+			this->parallax->MoverCamaraIzquierda();
 			/*if(! personaje2->colisionaAlaIzquierda(personaje1->obtenerRectangulo()) ){
 				if (personaje2->MoverIzquierda(personaje1,finEscenarioIzquierda)){
 					this->parallax->MoverCamaraIzquierda();
@@ -224,13 +211,42 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento){
 			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la izquierda");
 			}*/
 		}
-		if (keys[SDL_SCANCODE_UP]){
-			personaje2->Saltar();
-			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 salta");
-		}
-		if (keys[SDL_SCANCODE_DOWN]){
-			personaje2->agacharse();
-			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 agachado");
-		}
-}
+	}
+
+	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_RIGHT)){
+	   if(personaje2->MoverDerecha(personaje1, finEscenarioDerecha) ){
+		   this->parallax->MoverCamaraDerecha();
+			  /* if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo()) ){
+					if(personaje2->MoverDerecha(personaje1, finEscenarioDerecha) )
+						this->parallax->MoverCamaraDerecha();
+					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la derecha");
+			   }*/
+	   }
+	}
+
+	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_UP)){
+		personaje2->Saltar();
+		controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 salta");
+	}
+
+	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_DOWN)){
+		personaje2->agacharse();
+		controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 agachado");
+	}
+
+	if(teclado.sePresionoUnaTecla(SDL_SCANCODE_M)  ){
+		this->jugador2->cambiarPersonaje();
+		controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de personaje del jugador 2");
+	}
+
+	if(teclado.sePresionoUnaTecla(SDL_SCANCODE_F11)){
+		grafico.cambiarPantallaCompleta();
+		controladorLogger->registrarEvento("DEBUG", "Se cambia a pantalla completa");
+	}
+
+	if(teclado.sePresionoUnaTecla(SDL_SCANCODE_ESCAPE)){
+		isRunning=false;
+	}
+
+
 }

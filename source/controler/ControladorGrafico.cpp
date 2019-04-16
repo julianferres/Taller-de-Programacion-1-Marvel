@@ -17,25 +17,21 @@ ControladorGrafico::ControladorGrafico(){
 }
 
 ControladorGrafico::~ControladorGrafico(){
-
 	_spriteSheets.clear();
 	SDL_DestroyRenderer(this->_renderer);
 	SDL_DestroyWindow(this->_window);
-	//SDL_Quit();
-
-
 }
 
 void ControladorGrafico::cambiarPantallaCompleta(){
 	if (controladorJson->esfullscreen()){
 		controladorJson->cambiarPantallaCompleta();
 		this->sizePantalla = SDL_WINDOW_RESIZABLE;
-		SDL_SetWindowFullscreen(this->_window, this->sizePantalla);
 	}else{
 		controladorJson->cambiarPantallaCompleta();
 		this->sizePantalla = SDL_WINDOW_FULLSCREEN;
-	}
 
+	}
+	SDL_SetWindowFullscreen(this->_window, this->sizePantalla);
 }
 
 SDL_Surface* ControladorGrafico::cargarImagen(const string &filePath){
@@ -74,6 +70,7 @@ bool ControladorGrafico::controlarColision(SDL_Rect rect1,SDL_Rect rect2){
 	return true;
 
 }
+
 void ControladorGrafico::maximizarVentana(int ancho, int alto){
 	controladorJson->maximizarVentana(ancho, alto);
 }

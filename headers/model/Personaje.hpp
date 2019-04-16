@@ -46,6 +46,7 @@ class Personaje{
 		int alto;
 		int velocidad = 10;
 		float velocidadInicial;
+		bool agachado = false;
 		bool saltando = false;
 		float alturaActualSalto = 0;
 		float tiempo = 0;

@@ -5,6 +5,7 @@
 #include <SDL2/SDL_image.h>
 #include <ControladorGrafico.hpp>
 #include <ControladorJson.hpp>
+#include <ControladorTeclado.hpp>
 #include <Parallax.hpp>
 
 extern ControladorJson *controladorJson;
@@ -21,13 +22,14 @@ class Juego{
 		void gameLoop();
 		void dibujar(ControladorGrafico &grafico);
 		void iniciarFondo(ControladorGrafico &graficos);
-		void teclear(ControladorGrafico &grafico, SDL_Event evento);
+		void teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTeclado &teclado);
 		void verificarCambioDeLado();
 		static bool compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugador *, int> zindex2);
 		std::vector<std::tuple<Jugador *, int>> obtenerOrdenDibujo();
 
 	private:
 		ControladorGrafico *graficos;
+		ControladorTeclado *teclado;
 		bool isRunning;
 		Jugador *jugador1;
 		Jugador *jugador2;
