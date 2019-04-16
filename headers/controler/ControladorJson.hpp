@@ -31,7 +31,13 @@ class ControladorJson{
 		std::string jugador2Personaje(int numero);
 		int cantidadJugadores();
 		void cambiarPantallaCompleta();
+		void maximizarVentana(int ancho, int alto);
 
+		int getPosicionXInicialJugador1();
+		int getPosicionXInicialJugador2();
+		int getLimiteFondoIzq();
+		int getLimiteFondoDer();
+		int getAlturaPiso();
 	private:
 
 		int altura_ventana;
@@ -82,7 +88,12 @@ class ControladorJson{
 		void setFondos(json j)throw();
 		void setPersonajes(json j)throw();
 		void elegirPersonajes(json j) throw();
+		int posicionXInicialJugador1; //= controladorJson->anchoVentana() * 1/16;
+		int posicionXInicialJugador2; //= controladorJson->anchoVentana() *3/4;
 
+		int limiteFondoIzq;// = controladorJson->anchoVentana() * 1/8;
+		int limiteFondoDer;// = controladorJson->anchoVentana() * 15/16;
+		int altura_piso =80;
 };
 
 #endif
