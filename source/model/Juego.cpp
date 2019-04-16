@@ -19,8 +19,10 @@ Juego::Juego(){
 	this->graficos = new ControladorGrafico();
 	this-> parallax = new Parallax(*graficos);
 	this->iniciarFondo(*graficos);
+	controladorLogger->registrarEvento("INFO", "Juego::Fondos con parallax iniciado");
 	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),SDL_FLIP_NONE, false);
 	this->jugador2 = new Jugador(*graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),controladorJson->getPosicionXInicialJugador2(), SDL_FLIP_HORIZONTAL, true);
+	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
 	this->gameLoop();
 
 }
@@ -45,9 +47,8 @@ void Juego::gameLoop(){
 	this->iniciarFondo(*graficos);
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
 	while (isRunning){
-		startTime = SDL_GetTicks();
+		this->startTime = SDL_GetTicks();
 		this->teclear(*graficos, evento);
-		controladorLogger->registrarEvento("DEBUG", "Juego::tecleado terminado");
 		this->dibujar(*graficos);
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
@@ -80,7 +81,6 @@ std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
 void Juego::dibujar(ControladorGrafico &grafico){
 	grafico.limpiar();
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
-	controladorLogger->registrarEvento("DEBUG", "Juego::Dibujar Juego");
 
 	std::vector<std::tuple<Jugador *, int>> zindexs_personajes = obtenerOrdenDibujo();
 	std::vector<int> zindexs_fondos = parallax->getzindexes();
