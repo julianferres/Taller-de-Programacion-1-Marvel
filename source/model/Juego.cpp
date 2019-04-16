@@ -30,6 +30,7 @@ Juego::Juego(){
 }
 
 Juego::~Juego(){
+	delete teclado;
 	delete parallax;
 	delete jugador1;
 	delete jugador2;
@@ -144,6 +145,10 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 	teclado.reiniciar();
 
 	while(SDL_PollEvent(&evento)){
+		if (evento.type == SDL_QUIT   ){
+			isRunning = false;
+			break;
+		}
 
 		if (evento.window.event == SDL_WINDOWEVENT_RESIZED){
 			grafico.maximizarVentana(evento.window.data1, evento.window.data2);
@@ -157,9 +162,6 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 		 		 break;
 		 	 case SDL_KEYUP:
 		 		 teclado.eventoSoltarTecla(evento);
-		 		 break;
-		 	 case SDL_QUIT:
-		 		 isRunning=false;
 		 		 break;
 		 }
 	}

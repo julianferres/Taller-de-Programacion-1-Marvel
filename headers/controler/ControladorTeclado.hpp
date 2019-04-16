@@ -8,6 +8,7 @@ class ControladorTeclado{
 
 	public:
 
+		~ControladorTeclado();
 		void reiniciar();
 		void eventoPresionarTecla(const SDL_Event& evento);
 		void eventoSoltarTecla(const SDL_Event& evento);

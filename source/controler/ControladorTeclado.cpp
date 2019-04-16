@@ -1,5 +1,11 @@
 #include <ControladorTeclado.hpp>
 
+ControladorTeclado::~ControladorTeclado(){
+	_heldKeys.clear();
+	_pressedKeys.clear();
+	_releasedKeys.clear();
+}
+
 void ControladorTeclado::reiniciar(){
 	this->_pressedKeys.clear();
 	this->_releasedKeys.clear();
