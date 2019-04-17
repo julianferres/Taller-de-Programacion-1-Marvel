@@ -34,7 +34,7 @@
             "filepath":"contents/images/Venom.png",
             "height":320,
             "width":200,
-            "zindex":3    
+            "zindex":99    
             },
 	    {"name":"MegaMan",
             "filepath":"contents/images/MegaMan.png",
