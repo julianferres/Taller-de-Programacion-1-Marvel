@@ -296,22 +296,39 @@ void ControladorJson::setFondos(json j)throw(){
 }
 
 void ControladorJson::setPersonajes(json j)throw(){
-	for (int i = 0; i < cantidad_personajes; i++){
-		std::string nombre_personaje = j["characters"][i]["name"];
-		std::string filepath_personaje = j["characters"][i]["filepath"];
-		int height_personaje = j["characters"][i]["height"];
-		int width_personaje = j["characters"][i]["width"];
-		int zindex_personaje = j["characters"][i]["zindex"];
+	try{
+		for (int i = 0; i < cantidad_personajes; i++){
+			std::string nombre_personaje = j["characters"][i]["name"];
+			std::string filepath_personaje = j["characters"][i]["filepath"];
+			int height_personaje = j["characters"][i]["height"];
+			int width_personaje = j["characters"][i]["width"];
+			int zindex_personaje = j["characters"][i]["zindex"];
 
-		std::ifstream file(filepath_personaje.c_str());
-		if (file.good() == false){
-			controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
-			nombre_personaje = "sinSprite";
-			filepath_personaje = "contents/images/sinSprite.png";
+			std::ifstream file(filepath_personaje.c_str());
+			if (file.good() == false){
+				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
+				nombre_personaje = "sinSprite";
+				filepath_personaje = "contents/images/sinSprite.png";
 
+			}
+			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje));
 		}
-		personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje));
 	}
+	catch(json::type_error &e){
+		personajes.clear();
+		for (int i = 0; i < cantidad_personajes; i++){
+			std::string nombre_personaje = nombre_personaje_default;
+			std::string filepath_personaje = "contents/images/sinSprite.png";
+			int height_personaje = height_personaje_default;
+			int width_personaje = width_personaje_default;
+			int zindex_personaje = zindex_personaje_default;
+
+
+			controladorLogger->registrarEvento("ERROR","ControladorJson::Hubo un error de tipo en el parse de datos de personajes. Se cargan personajes por defecto");
+			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje));
+		}
+	}
+
 
 }
 

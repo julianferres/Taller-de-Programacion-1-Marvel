@@ -65,8 +65,8 @@ class ControladorJson{
 		const int cantidad_personajes_default = 4;
 		const int cantidad_fondos_default = 3;
 		const int FPS_default = 60;
-		const std::string nombre_personaje_default = "CapitanAmerica";
-		int height_personaje_default = 320;
+		const std::string nombre_personaje_default = "sinSprite";
+		int height_personaje_default = 200;
 		int width_personaje_default = 200;
 		int zindex_personaje_default = 99;
 
