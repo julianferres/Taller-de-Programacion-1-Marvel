@@ -171,9 +171,11 @@ void SpriteAnimado::update(){
 	}
 	regulador = 0;
 }
+
 int SpriteAnimado::getFrameIndex(){
 	return this->frameIndex;
 }
+
 void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho, SDL_RendererFlip flip){
 	 if(this->visible){
 		SDL_Rect sourceRect = animacionActual->getRectOrigen(this->frameIndex);
