@@ -5,19 +5,19 @@
         [
             {"background":
                 {
-                    "filepath":"contents/auxiliar/capa3.png",
+                    "filepath":"contents/auxiliar/capa3aux.png",
                     "zindex":3
                 }
             },
             {"background":
                 {
-                    "filepath":"contents/auxiliar/capa2.png",
+                    "filepath":"contents/auxiliar/capa2aux.png",
                     "zindex":2
                 }
             },
             {"background":
                 {
-                    "filepath":"contents/auxiliar/capa1.png",
+                    "filepath":"contents/auxiliar/capa1aux.png",
                     "zindex":1
                 }
             }

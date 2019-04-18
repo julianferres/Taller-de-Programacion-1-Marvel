@@ -1,5 +1,5 @@
 {
-    "logLevel": "DEBUG",
+    "logLevel": "ERROR",
     "FPS": 60,
     "battlefield":
         [
@@ -36,13 +36,7 @@
             "width":200,
             "zindex":99    
             },
-	    {"name":"MegaMan",
-            "filepath":"contents/images/MegaMan.png",
-            "height":280,
-            "width":160,
-            "zindex":99    
-            },
-            {"name":"Spiderman",
+        {"name":"Spiderman",
             "filepath":"contents/images/SpidermanSprites.png",
             "height":320,
             "width":200,
@@ -53,13 +47,8 @@
             "height":320,
             "width":200,
             "zindex":99	    
-            },
- 	    {"name":"sinSprite",
-            "filepath":"contents/images/sinSprite.png",
-            "height":200,
-            "width":200,
-            "zindex":99            
-            }          
+                      
+            }       
 
         ],
 
@@ -79,8 +68,8 @@
             }
         ],
     "window":{
-        "height":600,
-        "width":800,
+        "height":1000,
+        "width":1400,
 	"fullscreen": false
     }
 }

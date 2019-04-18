@@ -119,15 +119,18 @@ std::string ControladorJson::pathImagen(std::string nombrePersonaje){
             	return std::get<1>(personajes[i]);
             }
         }
+    //const std::string path = "contents/images/sinSprite.png";
     return "";
 }
 
 bool ControladorJson::existePersonaje(std::string nombrePersonaje){
 	for (int i = 0; i < cantidad_personajes; i++){
 		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
+			controladorLogger->registrarEvento("DEBUG","ControladorJson::Personaje encontrado: "+ nombrePersonaje);
 			return true;
 		}
 	}
+	controladorLogger->registrarEvento("ERROR","ControladorJson::NO se encontr[o el personaje: "+ nombrePersonaje);
 	return false;
 
 }
@@ -190,6 +193,8 @@ void ControladorJson::setLogLevel(json j,std::string argumentoConsola)throw(){
 		nivel_debug = nivel_debug_default;
 	}
 	controladorLogger->setNivelDebug(nivel_debug);
+	controladorLogger->registrarEvento("INFO","ControladorJson::Log level = " + nivel_debug);
+
 }
 
 void ControladorJson::setAlturaVentana(json j)throw(){
@@ -276,8 +281,8 @@ void ControladorJson::setFondos(json j)throw(){
 			std::ifstream file(filepath_fondo.c_str());
 			if (file.good() == false){
 				//Cargar imagen con zindex correspondiente
-				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de fondo no encontrada. Se carga una por defecto");
-				filepath_fondo = "contents/auxiliar/capa" + std::to_string(zindex_fondo) + ".png";
+				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de fondo zindex" + std::to_string(zindex_fondo) + "no encontrada. Se carga una por defecto");
+				filepath_fondo = "contents/auxiliar/capa" + std::to_string(zindex_fondo) + "aux.png";
 			}
 			fondos.push_back(std::make_tuple(filepath_fondo , zindex_fondo));
 		}
@@ -286,7 +291,7 @@ void ControladorJson::setFondos(json j)throw(){
 		fondos.clear();
 		for (int i = 0; i < cantidad_fondos; i++){
 			int zindex_fondo = 3 - i;
-			std::string filepath_fondo = "contents/auxiliar/capa" + std::to_string(zindex_fondo) + ".png";
+			std::string filepath_fondo = "contents/auxiliar/capa" + std::to_string(zindex_fondo) + "aux.png";
 
 			//Cargar imagen con zindex correspondiente
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de fondo no encontrada. Se carga una por defecto");
@@ -307,7 +312,7 @@ void ControladorJson::setPersonajes(json j)throw(){
 			std::ifstream file(filepath_personaje.c_str());
 			if (file.good() == false){
 				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
-				nombre_personaje = "sinSprite";
+				nombre_personaje = "sidsfnSprite";
 				filepath_personaje = "contents/images/sinSprite.png";
 
 			}
@@ -316,6 +321,7 @@ void ControladorJson::setPersonajes(json j)throw(){
 	}
 	catch(json::type_error &e){
 		personajes.clear();
+		controladorLogger->registrarEvento("ERROR","ControladorJson::Hubo un error de tipo en el parse de datos de uno o varios personajes. Se cargan personajes por defecto");
 		for (int i = 0; i < cantidad_personajes; i++){
 			std::string nombre_personaje = nombre_personaje_default;
 			std::string filepath_personaje = "contents/images/sinSprite.png";
@@ -324,7 +330,7 @@ void ControladorJson::setPersonajes(json j)throw(){
 			int zindex_personaje = zindex_personaje_default;
 
 
-			controladorLogger->registrarEvento("ERROR","ControladorJson::Hubo un error de tipo en el parse de datos de personajes. Se cargan personajes por defecto");
+
 			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje));
 		}
 	}
@@ -336,18 +342,27 @@ void ControladorJson::elegirPersonajes(json j)throw(){
 	try {
 		std::string personaje1 = j["jugadores"][0]["jugador"]["personaje1"];
 		this->personajesJugador1.push_back(personaje1);
+		if(!this->existePersonaje(personaje1)){
+			this->personajesJugador1.push_back("CapitanAmerica");
+		}
 	}catch(json::type_error &e){
 		this->personajesJugador1.push_back("CapitanAmerica");
 	}
 	try {
 		std::string personaje2 = j["jugadores"][0]["jugador"]["personaje2"];
 		this->personajesJugador1.push_back(personaje2);
+		if(!this->existePersonaje(personaje2)){
+					this->personajesJugador1.push_back("Venom");
+				}
 	}catch(json::type_error &e){
 		this->personajesJugador1.push_back("Venom");
 	}
 	try {
 		std::string personaje3 = j["jugadores"][1]["jugador"]["personaje1"];
 		this->personajesJugador2.push_back(personaje3);
+		if(!this->existePersonaje(personaje3)){
+					this->personajesJugador1.push_back("Hulk");
+				}
 	}catch(json::type_error &e){
 		this->personajesJugador2.push_back("Hulk");
 	}
@@ -355,6 +370,9 @@ void ControladorJson::elegirPersonajes(json j)throw(){
 	try {
 		std::string personaje4 = j["jugadores"][1]["jugador"]["personaje2"];
 		this->personajesJugador2.push_back(personaje4);
+		if(!this->existePersonaje(personaje4)){
+			this->personajesJugador1.push_back("Spiderman");
+		}
 	}catch(json::type_error &e){
 		this->personajesJugador2.push_back("Spiderman");
 	}

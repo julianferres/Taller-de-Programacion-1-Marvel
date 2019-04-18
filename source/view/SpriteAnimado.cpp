@@ -102,7 +102,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *moverDerecha = new Animacion("movDerecha",16,0,280,170,150,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",16,0,130,170,143,4);
 		Animacion *salto = new Animacion("salto",10,0,580,170,215,8);
-		Animacion *agacharse = new Animacion("agacharse",9,0,445,170,123,4);
+		Animacion *agacharse = new Animacion("agacharse",5,0,445,170,123,4);
 		Animacion *cambioEntrada = new Animacion("cambioEntrada",8,0,1112,170,248,3);
 		animaciones.push_back(quieto);
 		animaciones.push_back(moverDerecha);
@@ -113,7 +113,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animacionActual = quieto;
 		return;
 	}
-	else if(nombre=="sinSprite" ){
+	else {//if(nombre=="sinSprite" ){
 		Animacion *quieto = new Animacion("quieto",1,0,0,600,600,10);
 		Animacion *moverDerecha = new Animacion("movDerecha",1,0,0,600,600,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",1,0,0,600,600,4);

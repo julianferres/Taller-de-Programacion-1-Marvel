@@ -55,7 +55,7 @@ class ControladorJson{
 		std::vector<std::string> personajesJugador2;
 		int cantidad_jugadores;
 		//Valores por defecto
-		const std::string configPathDefault = "source/default/config.json";
+		const std::string configPathDefault = "source/default/configaux.json";
 		const std::string nivel_debug_default = "DEBUG";
 		const int altura_ventana_default = 600;
 		const int ancho_ventana_default = 800;
@@ -88,6 +88,7 @@ class ControladorJson{
 		void setFondos(json j)throw();
 		void setPersonajes(json j)throw();
 		void elegirPersonajes(json j) throw();
+		void fallaPersonajes();
 		int posicionXInicialJugador1; //= controladorJson->anchoVentana() * 1/16;
 		int posicionXInicialJugador2; //= controladorJson->anchoVentana() *3/4;
 
