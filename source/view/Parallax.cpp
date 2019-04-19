@@ -26,7 +26,7 @@ Parallax::~Parallax(){
 void Parallax::cargarFondos(){
 	int cantidad_fondos = controladorJson->cantidadFondos();
 	if (cantidad_fondos == 0){
-		controladorLogger->registrarEvento("ERROR", "Parallax::No hay informacion de fondos en el json. Se cargara fondo negro." + controladorJson->pathFondo(3));
+		controladorLogger->registrarEvento("ERROR", "Parallax::No hay informacion de fondos en el json." + controladorJson->pathFondo(3));
 		return;
 	}
 	for(int i=0; i<99; i++){
@@ -39,9 +39,9 @@ void Parallax::cargarFondos(){
 
 	if(fondos.size() < (size_t)cantidad_fondos ){
 		controladorLogger->registrarEvento("ERROR", "Parallax::Rango de zindex no permitido (1-99). Se cargan imagenes por defecto ");
-		background_z1 = IMG_Load("contents/auxiliar/capa1.png");
-		background_z2 = IMG_Load("contents/auxiliar/capa2.png");
-		background_z3 = IMG_Load("contents/auxiliar/capa3.png");
+		background_z1 = IMG_Load("contents/auxiliar/capa1aux.png");
+		background_z2 = IMG_Load("contents/auxiliar/capa2aux.png");
+		background_z3 = IMG_Load("contents/auxiliar/capa3aux.png");
 		return;
 	}
 

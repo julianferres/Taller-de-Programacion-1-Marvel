@@ -17,7 +17,7 @@ int main(int argc, char **argv){
 
 	Juego *juego = new Juego();
 	delete juego;
-
+	controladorLogger->registrarEvento("INFO", "Juego Finalizado");
 	return 0;
 
 }

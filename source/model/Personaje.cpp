@@ -20,10 +20,24 @@ Personaje::~Personaje(){
 }
 
 Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXinicial, SDL_RendererFlip flip){
+	std::string path = controladorJson->pathImagen(nombre);
 	if(!controladorJson->existePersonaje(nombre)){
-		controladorLogger->registrarEvento("ERROR","ControladorJson::No se pudo encontrar la imagen del personaje: "+ nombre);
-		nombre = "sinSprite";
-	}
+		path = "contents/images/sinSprite.png";
+		controladorLogger->registrarEvento("ERROR","Personaje::No se pudo encontrar la imagen del personaje: "+ nombre + path);
+
+		this->nombre = "sinSprite";
+		this->posicionXinicial = posicionXinicial;
+		this->posx= posicionXinicial;
+		this->alto = 320;
+		this->ancho =200;
+		this->posy = controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
+		this->spriteAnimado=new SpriteAnimado(graficos,path,"sinSprite");
+		this->velocidadInicial = sqrt(constanteDeAltura * alto);
+		this->flip = flip;
+		this->zindex = 99;
+		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se caga un ? por defecto");
+		//this->nombre = "sinSprite";
+	}else{
 	this->posicionXinicial = posicionXinicial;
 	this->posx= posicionXinicial;
 	this->alto = controladorJson->alturaPersonaje(nombre);
@@ -34,6 +48,7 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 	this->flip = flip;
 	this->zindex = controladorJson->zindexPersonaje(nombre);
 	this->nombre = nombre;
+	}
 }
 
 void Personaje::dibujar(ControladorGrafico &graficos){
@@ -46,6 +61,7 @@ void Personaje::dibujar(ControladorGrafico &graficos){
 	agachado = false;
 
 }
+
 void Personaje::cambiarAnimacion(string nombre){
 	this->spriteAnimado->cambiarAnimacion(nombre);
 }
@@ -67,12 +83,15 @@ bool Personaje::MoverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje se mueve a la derecha");
 	return false;
 }
+
 int Personaje::getFrameIndex(){
 	return this->spriteAnimado->getFrameIndex();
 }
+
 void Personaje::detenerAnimacion(){
 	this->spriteAnimado->pararAnimacion();
 }
+
 bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando)
@@ -108,6 +127,7 @@ void Personaje::agacharse(){
 	agachado = true;
 	this->spriteAnimado->iniciarAnimacion("agacharse");
 }
+
 void Personaje::Cambio(){
 	if(posicionXinicial < controladorJson->anchoVentana()/2)
 		this->posx = 0;
@@ -116,6 +136,7 @@ void Personaje::Cambio(){
 
 	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
 }
+
 void Personaje::Saltar(){
 	this->spriteAnimado->iniciarAnimacion("salto");
 	if( ! saltando) saltando = true;
