@@ -12,6 +12,10 @@ Boton::Boton(int posX, int posY, int width, int heigth){
 	this->spriteActual = BOTON_SPRITE_MOUSE_OUT;
 }
 
+Boton::~Boton(){
+
+}
+
 void Boton::setPosicion(int x, int y){
 	this->posicion.x = x;
 	this->posicion.y = y;

@@ -11,7 +11,7 @@ GameMenu::GameMenu(){
 
 
 void GameMenu::crearBotones(){
-	for (int i = 0; i < controladorJson->cantidad_personajes; i++){
+	for (int i = 0; i < controladorJson->cantidadPersonajes(); i++){
 		this->crearBotonParaPersonaje(i);
 	}
 }

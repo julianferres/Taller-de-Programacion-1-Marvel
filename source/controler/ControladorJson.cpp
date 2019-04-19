@@ -300,6 +300,10 @@ void ControladorJson::setFondos(json j)throw(){
 	}
 }
 
+int ControladorJson::cantidadPersonajes(){
+	return this->cantidad_personajes;
+}
+
 void ControladorJson::setPersonajes(json j)throw(){
 	try{
 		for (int i = 0; i < cantidad_personajes; i++){

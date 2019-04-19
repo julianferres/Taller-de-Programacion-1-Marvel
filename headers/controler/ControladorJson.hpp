@@ -30,6 +30,7 @@ class ControladorJson{
 		std::string jugador1Personaje(int numero);
 		std::string jugador2Personaje(int numero);
 		int cantidadJugadores();
+		int cantidadPersonajes();
 		void cambiarPantallaCompleta();
 		void maximizarVentana(int ancho, int alto);
 
