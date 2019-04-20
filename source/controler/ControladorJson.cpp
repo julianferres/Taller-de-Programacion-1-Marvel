@@ -64,11 +64,13 @@ void ControladorJson::leerArchivoDefault(){
 	cantidad_fondos = j["battlefield"].size();
 
 	for (int i = 0; i < cantidad_personajes; i++){
-		personajes.push_back(std::make_tuple(j["characters"][i]["name"],j["characters"][i]["filepath"],j["characters"][i]["height"],j["characters"][i]["width"],j["characters"][i]["zindex"]));
+		tuplaPersonaje personaje = tuplaPersonaje(j["characters"][i]["name"],j["characters"][i]["filepath"],j["characters"][i]["height"],j["characters"][i]["width"],j["characters"][i]["zindex"], j["characters"][i]["buttonpath"]);
+		personajes.push_back(personaje);
 	}
 
 	for (int i = 0; i < cantidad_fondos; i++){
-		fondos.push_back(std::make_tuple(j["battlefield"][i]["background"]["filepath"] , j["battlefield"][i]["background"]["zindex"] ));
+		std::tuple<std::string, int> fondo(j["battlefield"][i]["background"]["filepath"] , j["battlefield"][i]["background"]["zindex"] );
+		fondos.push_back(fondo);
 	}
 
 	personajesJugador1.push_back(j["jugadores"][0]["jugador"]["personaje1"]);
@@ -123,6 +125,22 @@ std::string ControladorJson::pathImagen(std::string nombrePersonaje){
     return "";
 }
 
+std::string ControladorJson::nombrePersonajeI(int i){
+	return std::get<0>(personajes[i]);
+}
+
+
+std::string ControladorJson::pathBoton(std::string nombrePersonaje){
+	for (int i = 0; i < cantidad_personajes; i++){
+		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
+			controladorLogger->registrarEvento("INFO","ControladorJson::Se cargo correctamente la imagen del boton del personaje: "+ nombrePersonaje + ": "+ std::get<5>(personajes[i]));
+			return std::get<5>(personajes[i]);
+		}
+	}
+//const std::string path = "contents/images/sinSprite.png";
+	return "";
+}
+
 bool ControladorJson::existePersonaje(std::string nombrePersonaje){
 	for (int i = 0; i < cantidad_personajes; i++){
 		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
@@ -162,6 +180,8 @@ int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
     }
     return -1;
 }
+
+
 
 int ControladorJson::zindexPersonaje(std::string nombrePersonaje){
     for (int i = 0; i < cantidad_personajes; i++){
@@ -300,11 +320,16 @@ void ControladorJson::setFondos(json j)throw(){
 	}
 }
 
+int ControladorJson::cantidadPersonajes(){
+	return this->cantidad_personajes;
+}
+
 void ControladorJson::setPersonajes(json j)throw(){
 	try{
 		for (int i = 0; i < cantidad_personajes; i++){
 			std::string nombre_personaje = j["characters"][i]["name"];
 			std::string filepath_personaje = j["characters"][i]["filepath"];
+			std::string file_boton_personaje = j["characters"][i]["buttonpath"];
 			int height_personaje = j["characters"][i]["height"];
 			int width_personaje = j["characters"][i]["width"];
 			int zindex_personaje = j["characters"][i]["zindex"];
@@ -316,7 +341,7 @@ void ControladorJson::setPersonajes(json j)throw(){
 				filepath_personaje = "contents/images/sinSprite.png";
 
 			}
-			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje));
+			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje, file_boton_personaje));
 		}
 	}
 	catch(json::type_error &e){
@@ -325,17 +350,28 @@ void ControladorJson::setPersonajes(json j)throw(){
 		for (int i = 0; i < cantidad_personajes; i++){
 			std::string nombre_personaje = nombre_personaje_default;
 			std::string filepath_personaje = "contents/images/sinSprite.png";
+			std::string file_boton_personaje = "contents/images/sinSprite.png";
 			int height_personaje = height_personaje_default;
 			int width_personaje = width_personaje_default;
 			int zindex_personaje = zindex_personaje_default;
 
 
 
-			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje));
+			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje,file_boton_personaje));
 		}
 	}
 
 
+}
+
+void ControladorJson::setPersonajeJugador(int personaje, int jugador, std::string nombre){
+	if(jugador==1){
+		this->personajesJugador1[personaje-1]=nombre;
+		controladorLogger->registrarEvento("INFO", "Se eligio a " + nombre + " para el jugador 1");
+	}else if (jugador==2){
+		this->personajesJugador2[personaje-1]=nombre;
+		controladorLogger->registrarEvento("INFO", "Se eligio a " + nombre + " para el jugador 2");
+	}
 }
 
 void ControladorJson::elegirPersonajes(json j)throw(){

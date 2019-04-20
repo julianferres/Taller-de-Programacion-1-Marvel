@@ -12,12 +12,12 @@ int main(int argc, char **argv){
 		argumentoConsola = argv[1];
 	else
 		argumentoConsola = "";
-
+	controladorLogger->registrarEvento("INFO", "main::Comienzo a leer el json");
 	controladorJson->leerArchivo(argumentoConsola);
-
+	controladorLogger->registrarEvento("INFO", "main::Json leido. Comienzo el juego");
 	Juego *juego = new Juego();
 	delete juego;
-	controladorLogger->registrarEvento("INFO", "Juego Finalizado");
+	controladorLogger->registrarEvento("INFO", "main::Juego Finalizado");
 	return 0;
 
 }

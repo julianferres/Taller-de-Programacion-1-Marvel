@@ -4,6 +4,7 @@
 #include <Juego.hpp>
 #include <SpriteAnimado.hpp>
 #include <ControladorTeclado.hpp>
+#include <GameMenu.hpp>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -12,19 +13,24 @@ extern ControladorLogger *controladorLogger;
 
 Juego::Juego(){
 
-	this->isRunning=true;
+	//this->isRunning=true;
 	SDL_Init(0);
 	SDL_VideoInit(NULL);
 	SDL_InitSubSystem(SDL_INIT_TIMER);
 	this->startTime = SDL_GetTicks();
 	this->graficos = new ControladorGrafico();
-	this-> parallax = new Parallax(*graficos);
+
+	this->startGameMenu(*graficos);
+
 	this->teclado = new ControladorTeclado();
+	this-> parallax = new Parallax(*graficos);
+
 	this->iniciarFondo(*graficos);
 	controladorLogger->registrarEvento("INFO", "Juego::Fondos con parallax iniciado");
 	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),SDL_FLIP_NONE, false);
 	this->jugador2 = new Jugador(*graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),controladorJson->getPosicionXInicialJugador2(), SDL_FLIP_HORIZONTAL, true);
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
+	this->isRunning=true;
 	this->gameLoop();
 
 }
@@ -40,6 +46,12 @@ Juego::~Juego(){
 	//SDL_QuitSubSystem(SDL_INIT_VIDEO);
 	SDL_QuitSubSystem(SDL_INIT_TIMER);
 	SDL_Quit();
+}
+
+void Juego::startGameMenu(ControladorGrafico &grafico){
+	controladorLogger->registrarEvento("DEBUG", "Juego::Inicio menu");
+	GameMenu *menu = new GameMenu(grafico);
+	delete menu;
 }
 
 void Juego::gameLoop(){

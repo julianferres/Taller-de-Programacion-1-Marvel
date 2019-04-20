@@ -8,6 +8,7 @@
 #include <iostream>
 
 using json = nlohmann::json;
+typedef std::tuple<std::string, std::string, int, int, int, std::string> tuplaPersonaje;
 class ControladorJson{
 
 	public:
@@ -25,11 +26,14 @@ class ControladorJson{
 		std::string nivelDebug();
 		std::string pathFondo(int zindex);
 		std::string pathImagen(std::string nombrePersonaje);
+		std::string pathBoton(std::string nombrePersonaje);
+		std::string nombrePersonajeI(int i);
 		void leerArchivoDefault();
 		std::string MenuImage();
 		std::string jugador1Personaje(int numero);
 		std::string jugador2Personaje(int numero);
 		int cantidadJugadores();
+		int cantidadPersonajes();
 		void cambiarPantallaCompleta();
 		void maximizarVentana(int ancho, int alto);
 
@@ -38,6 +42,8 @@ class ControladorJson{
 		int getLimiteFondoIzq();
 		int getLimiteFondoDer();
 		int getAlturaPiso();
+
+		void setPersonajeJugador(int personaje, int jugador, std::string nombre);
 	private:
 
 		int altura_ventana;
@@ -47,7 +53,7 @@ class ControladorJson{
 		int cantidad_fondos;
 		int FPS;
 		std::string nivel_debug;
-		std::vector<std::tuple<std::string, std::string, int, int, int>> personajes;
+		std::vector<tuplaPersonaje> personajes;
 		std::vector<std::tuple<std::string, int>> fondos;
 		std::string configPath = "source/config/config.json";
 
@@ -89,6 +95,7 @@ class ControladorJson{
 		void setPersonajes(json j)throw();
 		void elegirPersonajes(json j) throw();
 		void fallaPersonajes();
+
 		int posicionXInicialJugador1; //= controladorJson->anchoVentana() * 1/16;
 		int posicionXInicialJugador2; //= controladorJson->anchoVentana() *3/4;
 

@@ -113,7 +113,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animacionActual = quieto;
 		return;
 	}
-	else {//if(nombre=="sinSprite" ){
+	else if(nombre=="sinSprite" ){
 		Animacion *quieto = new Animacion("quieto",1,0,0,600,600,10);
 		Animacion *moverDerecha = new Animacion("movDerecha",1,0,0,600,600,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",1,0,0,600,600,4);
@@ -130,6 +130,51 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(cambioEntrada);
 		animacionActual = quieto;
 		return;
+	}
+	//std::string Nombre, int Frames,int x,int y, int ancho, int alto,int Velocidad
+	else if(nombre=="CapitanAmericaBoton"){
+		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,159,129,10);
+		Animacion *mouseOver = new Animacion("mouseOver",1,159,0,159,129,10);
+		Animacion *mouseDown = new Animacion("mouseDown",1,318,0,159,129,10);
+		Animacion *mouseUp = new Animacion("mouseUp",1,477,0,159,129,10);
+		animaciones.push_back(mouseOut);
+		animaciones.push_back(mouseOver);
+		animaciones.push_back(mouseDown);
+		animaciones.push_back(mouseUp);
+		animacionActual = mouseOut;
+	}
+	else if(nombre=="SpidermanBoton"){
+		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,170,138,10);
+		Animacion *mouseOver = new Animacion("mouseOver",1,170,0,170,138,10);
+		Animacion *mouseDown = new Animacion("mouseDown",1,340,0,170,138,10);
+		Animacion *mouseUp = new Animacion("mouseUp",1,510,0,170,138,10);
+		animaciones.push_back(mouseOut);
+		animaciones.push_back(mouseOver);
+		animaciones.push_back(mouseDown);
+		animaciones.push_back(mouseUp);
+		animacionActual = mouseOut;
+	}
+	else if(nombre=="HulkBoton"){
+		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,164,129,10);
+		Animacion *mouseOver = new Animacion("mouseOver",1,164,0,164,129,10);
+		Animacion *mouseDown = new Animacion("mouseDown",1,328,0,164,129,10);
+		Animacion *mouseUp = new Animacion("mouseUp",1,492,0,164,129,10);
+		animaciones.push_back(mouseOut);
+		animaciones.push_back(mouseOver);
+		animaciones.push_back(mouseDown);
+		animaciones.push_back(mouseUp);
+		animacionActual = mouseOut;
+	}
+	else if(nombre=="VenomBoton"){
+		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,175,145,10);
+		Animacion *mouseOver = new Animacion("mouseOver",1,175,0,175,145,10);
+		Animacion *mouseDown = new Animacion("mouseDown",1,350,0,175,145,10);
+		Animacion *mouseUp = new Animacion("mouseUp",1,525,0,175,145,10);
+		animaciones.push_back(mouseOut);
+		animaciones.push_back(mouseOver);
+		animaciones.push_back(mouseDown);
+		animaciones.push_back(mouseUp);
+		animacionActual = mouseOut;
 	}
 }
 

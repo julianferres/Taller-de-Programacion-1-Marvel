@@ -28,6 +28,8 @@ class Juego{
 		std::vector<std::tuple<Jugador *, int>> obtenerOrdenDibujo();
 
 	private:
+
+		void startGameMenu(ControladorGrafico &grafico);
 		ControladorGrafico *graficos;
 		ControladorTeclado *teclado;
 		bool isRunning;
