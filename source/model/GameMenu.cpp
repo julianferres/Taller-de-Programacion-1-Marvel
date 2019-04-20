@@ -8,7 +8,7 @@ extern ControladorLogger *controladorLogger;
 GameMenu::GameMenu(ControladorGrafico &graficos){
 	TTF_Init();
 
-	this->marvelFont = TTF_OpenFont("contents/Fonts/Marvel.ttf", 64);
+	this->marvelFont = TTF_OpenFont("contents/Fonts/Marvel.ttf", 300);
 	controladorLogger->registrarEvento("INFO", "Iniciando menu");
 	this->crearBotones(graficos);
 	this->handleEvent(graficos);
@@ -68,9 +68,13 @@ void GameMenu::dibujar(ControladorGrafico &graficos){
 	graficos.limpiar();
 
 	SDL_Surface* textSurface = TTF_RenderText_Solid(marvelFont, "MARVEL", { 255, 0, 0} );
-	SDL_Rect sourceRect = { 200,100, 200, 100};
+
 	SDL_Texture* TextTexture = SDL_CreateTextureFromSurface(graficos.getRenderer(), textSurface);
-	graficos.dibujarImagen(TextTexture, &sourceRect, NULL, SDL_FLIP_NONE);
+
+	int w =0;int h=0;
+	SDL_QueryTexture(TextTexture, NULL, NULL,&w , &h);
+	SDL_Rect sourceRect = { (controladorJson->anchoVentana()-w)/2,10,w,h};
+	graficos.dibujarImagen(TextTexture, NULL, &sourceRect, SDL_FLIP_NONE);
 
 	for (int i = 0; i< this->botones.size(); i++){
 		this->botones[i].dibujar(graficos);

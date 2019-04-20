@@ -133,7 +133,7 @@ std::string ControladorJson::nombrePersonajeI(int i){
 std::string ControladorJson::pathBoton(std::string nombrePersonaje){
 	for (int i = 0; i < cantidad_personajes; i++){
 		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
-			controladorLogger->registrarEvento("INFO","ControladorJson::Se cargo correctamente la imagen del boton del personaje: "+ nombrePersonaje + ": "+ std::get<1>(personajes[i]));
+			controladorLogger->registrarEvento("INFO","ControladorJson::Se cargo correctamente la imagen del boton del personaje: "+ nombrePersonaje + ": "+ std::get<5>(personajes[i]));
 			return std::get<5>(personajes[i]);
 		}
 	}
