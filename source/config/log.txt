@@ -1,2 +1,67 @@
-INFO ; Archivo de logging creado! ; Thu Apr 18 18:03:11 2019
-creo develop
+INFO ; Archivo de logging creado! ; Sat Apr 20 14:57:07 2019
+INFO ; main::Comienzo a leer el json ; Sat Apr 20 14:57:07 2019
+INFO ; ControladorJson::Log level = DEBUG ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Log level seteado ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Altura ventana seteada ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Ancho Ventana seteado ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Tamano pantalla seteado ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::FPS seteados ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Personajes contados ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Fondos contados ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Jugadores contados ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Personajes seteados ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Fondos seteados ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Personaje encontrado: CapitanAmerica ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Personaje encontrado: Venom ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Personaje encontrado: Spiderman ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Personaje encontrado: Hulk ; Sat Apr 20 14:57:07 2019
+DEBUG ; ControladorJson::Personajes elegidos ; Sat Apr 20 14:57:07 2019
+INFO ; ControladorJson::Archivo de configuracion JSON leido correctamente ; Sat Apr 20 14:57:07 2019
+INFO ; main::Json leido. Comienzo el juego ; Sat Apr 20 14:57:07 2019
+DEBUG ; Juego::Inicio menu ; Sat Apr 20 14:57:07 2019
+INFO ; Iniciando menu ; Sat Apr 20 14:57:07 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del boton del personaje: CapitanAmerica: contents/images/BotonCapitanAmerica.png ; Sat Apr 20 14:57:07 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del boton del personaje: Venom: contents/images/BotonVenom.png ; Sat Apr 20 14:57:07 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del boton del personaje: Spiderman: contents/images/BotonSpiderman.png ; Sat Apr 20 14:57:07 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del boton del personaje: Hulk: contents/images/BotonHulk.png ; Sat Apr 20 14:57:07 2019
+INFO ; Se eligio a CapitanAmerica para el jugador 1 ; Sat Apr 20 14:57:09 2019
+DEBUG ; GameMenu::Personaje Seteado ; Sat Apr 20 14:57:09 2019
+DEBUG ; GameMenu::Sumo uno a personaje = 2 ; Sat Apr 20 14:57:09 2019
+INFO ; Se eligio a Venom para el jugador 1 ; Sat Apr 20 14:57:10 2019
+DEBUG ; GameMenu::Personaje Seteado ; Sat Apr 20 14:57:10 2019
+DEBUG ; GameMenu::Sumo uno a personaje = 3 ; Sat Apr 20 14:57:10 2019
+DEBUG ; GameMenu::Sumo uno a jugador = 2 ; Sat Apr 20 14:57:10 2019
+INFO ; Se eligio a Hulk para el jugador 2 ; Sat Apr 20 14:57:11 2019
+DEBUG ; GameMenu::Personaje Seteado ; Sat Apr 20 14:57:11 2019
+DEBUG ; GameMenu::Sumo uno a personaje = 2 ; Sat Apr 20 14:57:11 2019
+INFO ; Se eligio a Venom para el jugador 2 ; Sat Apr 20 14:57:14 2019
+DEBUG ; GameMenu::Personaje Seteado ; Sat Apr 20 14:57:14 2019
+DEBUG ; GameMenu::Sumo uno a personaje = 3 ; Sat Apr 20 14:57:14 2019
+DEBUG ; GameMenu::Sumo uno a jugador = 3 ; Sat Apr 20 14:57:14 2019
+DEBUG ; GameMenu::Menu terminado ; Sat Apr 20 14:57:14 2019
+DEBUG ; Parallax::Se cargo la imagen con zindex = 1; contents/images/capa1.png ; Sat Apr 20 14:57:15 2019
+DEBUG ; Parallax::Se cargo la imagen con zindex = 2; contents/images/capa2.png ; Sat Apr 20 14:57:15 2019
+DEBUG ; Parallax::Se cargo la imagen con zindex = 3; contents/images/capa3.png ; Sat Apr 20 14:57:15 2019
+DEBUG ; Parallax::Se cargo la textura con zindex = 1 ; Sat Apr 20 14:57:15 2019
+DEBUG ; Parallax::Se cargo la textura con zindex = 2 ; Sat Apr 20 14:57:15 2019
+DEBUG ; Parallax::Se cargo la textura con zindex = 3 ; Sat Apr 20 14:57:15 2019
+DEBUG ; Parallax::Camara 1 inicializada ; Sat Apr 20 14:57:15 2019
+DEBUG ; Parallax::Camara 2 inicializada ; Sat Apr 20 14:57:15 2019
+DEBUG ; Parallax::Camara 3 inicializada ; Sat Apr 20 14:57:15 2019
+INFO ; Juego::Se cargo correctamente el parallax ; Sat Apr 20 14:57:15 2019
+INFO ; Juego::Fondos con parallax iniciado ; Sat Apr 20 14:57:15 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del personaje: CapitanAmerica: contents/images/CaptainAmericaSprites.png ; Sat Apr 20 14:57:15 2019
+DEBUG ; ControladorJson::Personaje encontrado: CapitanAmerica ; Sat Apr 20 14:57:15 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del personaje: CapitanAmerica: contents/images/CaptainAmericaSprites.png ; Sat Apr 20 14:57:15 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del personaje: Venom: contents/images/Venom.png ; Sat Apr 20 14:57:15 2019
+DEBUG ; ControladorJson::Personaje encontrado: Venom ; Sat Apr 20 14:57:15 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del personaje: Venom: contents/images/Venom.png ; Sat Apr 20 14:57:15 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del personaje: Hulk: contents/images/Hulk.png ; Sat Apr 20 14:57:15 2019
+DEBUG ; ControladorJson::Personaje encontrado: Hulk ; Sat Apr 20 14:57:15 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del personaje: Hulk: contents/images/Hulk.png ; Sat Apr 20 14:57:15 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del personaje: Venom: contents/images/Venom.png ; Sat Apr 20 14:57:15 2019
+DEBUG ; ControladorJson::Personaje encontrado: Venom ; Sat Apr 20 14:57:15 2019
+INFO ; ControladorJson::Se cargo correctamente la imagen del personaje: Venom: contents/images/Venom.png ; Sat Apr 20 14:57:15 2019
+INFO ; Juego::Se iniciaron los jugadores ; Sat Apr 20 14:57:15 2019
+INFO ; Juego::Se cargo correctamente el parallax ; Sat Apr 20 14:57:15 2019
+INFO ; Juego::Se iniciaron los jugadores ; Sat Apr 20 14:57:15 2019
