@@ -17,6 +17,12 @@ public:
 private:
 	std::vector<Boton> botones;
 	TTF_Font* marvelFont;
+	TTF_Font* selectFont;
+	SDL_Surface* tituloSurface;
+	SDL_Texture* tituloTexture;
+	SDL_Surface* actionSurface;
+	SDL_Texture* actionTexture;
+
 };
 
 
