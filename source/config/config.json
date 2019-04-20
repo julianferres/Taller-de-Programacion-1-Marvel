@@ -28,25 +28,29 @@
             "filepath":"contents/images/CaptainAmericaSprites.png",
             "height":320,
             "width":200,
-            "zindex":99  
+            "zindex":99,
+			"buttonpath": "contents/images/BotonCapitanAmerica.png"
             },
 	    {"name":"Venom",
             "filepath":"contents/images/Venom.png",
             "height":320,
             "width":200,
-            "zindex":99    
+            "zindex":99,
+			"buttonpath": "contents/images/BotonVenom.png"  
             },
         {"name":"Spiderman",
             "filepath":"contents/images/SpidermanSprites.png",
             "height":320,
             "width":200,
-            "zindex":99           
+            "zindex":99,
+			"buttonpath": "contents/images/BotonSpiderman.png"          
             },
 	    {"name":"Hulk",
             "filepath":"contents/images/Hulk.png",
             "height":320,
             "width":200,
-            "zindex":99	    
+            "zindex":99	,
+			"buttonpath": "contents/images/BotonHulk.png"     
                       
             }       
 

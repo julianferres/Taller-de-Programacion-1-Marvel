@@ -4,25 +4,27 @@
 #include <SDL2/SDL_image.h>
 #include <ControladorJson.hpp>
 #include <ControladorLogger.hpp>
+#include <SpriteAnimado.hpp>
 
 enum BotonSprite{
     BOTON_SPRITE_MOUSE_OUT = 0,
 	BOTON_SPRITE_MOUSE_OVER_MOTION = 1,
 	BOTON_SPRITE_MOUSE_DOWN = 2,
 	BOTON_SPRITE_MOUSE_UP = 3,
-	BOTON_SPRITE_TOTAL = 4
+//	BOTON_SPRITE_TOTAL = 4
 };
 
 class Boton{
 public:
-	Boton(int posX, int posY, int width, int heigth);
+	Boton(ControladorGrafico &graficos, int posX, int posY, int width, int heigth, std::string nombre);
 	~Boton();
 
 	void setPosicion(int x, int y);
 	void handleEvent(SDL_Event* e);
-	void dibujar();
+	void dibujar(ControladorGrafico &graficos);
 
 private:
+	SpriteAnimado *spriteAnimado;
 	int width;
 	int height;
 	SDL_Point posicion;

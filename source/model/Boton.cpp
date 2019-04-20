@@ -4,12 +4,14 @@
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
-Boton::Boton(int posX, int posY, int width, int heigth){
+Boton::Boton(ControladorGrafico &graficos, int posX, int posY, int width, int heigth, std::string nombre){
 	this->posicion.x = posX;
 	this->posicion.y = posY;
 	this->width = width;
 	this->height = heigth;
 	this->spriteActual = BOTON_SPRITE_MOUSE_OUT;
+	this->spriteAnimado=new SpriteAnimado(graficos,controladorJson->pathBoton(nombre),nombre + "Boton");
+	this->spriteAnimado->iniciarAnimacion("mouseOut");
 }
 
 Boton::~Boton(){
@@ -58,5 +60,25 @@ void Boton::handleEvent(SDL_Event* e){
 					break;
 				}
         }
+        switch(this->spriteActual){
+			case BOTON_SPRITE_MOUSE_OUT:
+				this->spriteAnimado->cambiarAnimacion("mouseOut");
+				break;
+			case BOTON_SPRITE_MOUSE_OVER_MOTION:
+				this->spriteAnimado->cambiarAnimacion("mouseOver");
+				break;
+			case BOTON_SPRITE_MOUSE_DOWN:
+				this->spriteAnimado->cambiarAnimacion("mouseDown");
+				break;
+			case BOTON_SPRITE_MOUSE_UP:
+				this->spriteAnimado->cambiarAnimacion("mouseUp");
+				break;
+        	}
 	}
+}
+
+void Boton::dibujar(ControladorGrafico &graficos){
+
+	this->spriteAnimado->dibujar(graficos,this->posicion.x,this->posicion.y,this->height, this->height, SDL_FLIP_NONE);
+	this->spriteAnimado->update();
 }

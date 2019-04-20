@@ -3,19 +3,19 @@
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
-GameMenu::GameMenu(){
+GameMenu::GameMenu(ControladorGrafico &graficos){
 	controladorLogger->registrarEvento("INFO", "Iniciando menu");
-	this->crearBotones();
+	this->crearBotones(graficos);
 }
 
 
 
-void GameMenu::crearBotones(){
+void GameMenu::crearBotones(ControladorGrafico &graficos){
 	for (int i = 0; i < controladorJson->cantidadPersonajes(); i++){
-		this->crearBotonParaPersonaje(i);
+		this->crearBotonParaPersonaje(graficos,i);
 	}
 }
 
-void GameMenu::crearBotonParaPersonaje(int i){
-	Boton botonI = Boton(100, 120*(i+1), 100, 100);
+void GameMenu::crearBotonParaPersonaje(ControladorGrafico &graficos, int i){
+	Boton botonI = Boton(graficos, 100, 120*(i+1), 100, 100, controladorJson->nombrePersonajeI(i));
 }
