@@ -29,7 +29,7 @@ class Juego{
 
 	private:
 
-		void startGame();
+		void startGameMenu(ControladorGrafico &grafico);
 		ControladorGrafico *graficos;
 		ControladorTeclado *teclado;
 		bool isRunning;

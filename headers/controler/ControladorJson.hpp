@@ -42,6 +42,8 @@ class ControladorJson{
 		int getLimiteFondoIzq();
 		int getLimiteFondoDer();
 		int getAlturaPiso();
+
+		void setPersonajeJugador(int personaje, int jugador, std::string nombre);
 	private:
 
 		int altura_ventana;
@@ -93,6 +95,7 @@ class ControladorJson{
 		void setPersonajes(json j)throw();
 		void elegirPersonajes(json j) throw();
 		void fallaPersonajes();
+
 		int posicionXInicialJugador1; //= controladorJson->anchoVentana() * 1/16;
 		int posicionXInicialJugador2; //= controladorJson->anchoVentana() *3/4;
 

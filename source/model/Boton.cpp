@@ -5,6 +5,8 @@ extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
 Boton::Boton(ControladorGrafico &graficos, int posX, int posY, int width, int heigth, std::string nombre){
+	this->botonClickeado=false;
+	this->nombre=nombre;
 	this->posicion.x = posX;
 	this->posicion.y = posY;
 	this->width = width;
@@ -18,14 +20,23 @@ Boton::~Boton(){
 
 }
 
+std::string Boton::Nombre(){
+	return this->nombre;
+}
+
 void Boton::setPosicion(int x, int y){
 	this->posicion.x = x;
 	this->posicion.y = y;
 }
 
-void Boton::handleEvent(SDL_Event* e){
+bool Boton::fueClickeado(){
+	return this->botonClickeado;
+}
+
+void Boton::handleEvent(SDL_Event e){
 	//If mouse event happened
-	if( e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP ){
+	this->botonClickeado = false;
+	if( e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP ){
 		//Obtengo posicion del mouse
 		int x, y;
 		SDL_GetMouseState( &x, &y );
@@ -48,7 +59,7 @@ void Boton::handleEvent(SDL_Event* e){
 
         //El mouse esta dentro del boton
         else{
-            switch( e->type ){
+            switch( e.type ){
                 case SDL_MOUSEMOTION:
 					this->spriteActual = BOTON_SPRITE_MOUSE_OVER_MOTION;
 					break;
@@ -57,6 +68,7 @@ void Boton::handleEvent(SDL_Event* e){
 					break;
                 case SDL_MOUSEBUTTONUP:
 					this->spriteActual = BOTON_SPRITE_MOUSE_UP;
+
 					break;
 				}
         }
@@ -72,6 +84,8 @@ void Boton::handleEvent(SDL_Event* e){
 				break;
 			case BOTON_SPRITE_MOUSE_UP:
 				this->spriteAnimado->cambiarAnimacion("mouseUp");
+				this->botonClickeado = true;
+			//	controladorJson->setPersonajeJugador();
 				break;
         	}
 	}

@@ -1,5 +1,5 @@
 {
-    "logLevel": "ERROR",
+    "logLevel": "DEBUG",
     "FPS": 60,
     "battlefield":
         [

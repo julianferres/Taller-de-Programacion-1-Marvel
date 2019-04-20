@@ -20,10 +20,14 @@ public:
 	~Boton();
 
 	void setPosicion(int x, int y);
-	void handleEvent(SDL_Event* e);
+	void handleEvent(SDL_Event e);
 	void dibujar(ControladorGrafico &graficos);
+	bool fueClickeado();
+	std::string Nombre();
 
 private:
+	std::string nombre;
+	bool botonClickeado;
 	SpriteAnimado *spriteAnimado;
 	int width;
 	int height;

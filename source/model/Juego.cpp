@@ -4,6 +4,7 @@
 #include <Juego.hpp>
 #include <SpriteAnimado.hpp>
 #include <ControladorTeclado.hpp>
+#include <GameMenu.hpp>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -19,7 +20,8 @@ Juego::Juego(){
 	this->startTime = SDL_GetTicks();
 	this->graficos = new ControladorGrafico();
 
-//	this->startGame();
+	this->startGameMenu(*graficos);
+
 	this->teclado = new ControladorTeclado();
 	this-> parallax = new Parallax(*graficos);
 
@@ -46,8 +48,10 @@ Juego::~Juego(){
 	SDL_Quit();
 }
 
-void Juego::startGame(){
-	//SDL_Texture virtualAudioImg = SDL_Texture();
+void Juego::startGameMenu(ControladorGrafico &grafico){
+	controladorLogger->registrarEvento("DEBUG", "Juego::Inicio menu");
+	GameMenu *menu = new GameMenu(grafico);
+	delete menu;
 }
 
 void Juego::gameLoop(){

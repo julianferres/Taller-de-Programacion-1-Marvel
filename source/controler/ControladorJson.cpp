@@ -181,6 +181,8 @@ int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
     return -1;
 }
 
+
+
 int ControladorJson::zindexPersonaje(std::string nombrePersonaje){
     for (int i = 0; i < cantidad_personajes; i++){
 		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
@@ -360,6 +362,16 @@ void ControladorJson::setPersonajes(json j)throw(){
 	}
 
 
+}
+
+void ControladorJson::setPersonajeJugador(int personaje, int jugador, std::string nombre){
+	if(jugador==1){
+		this->personajesJugador1[personaje-1]=nombre;
+		controladorLogger->registrarEvento("INFO", "Se eligio a " + nombre + " para el jugador 1");
+	}else if (jugador==2){
+		this->personajesJugador2[personaje-1]=nombre;
+		controladorLogger->registrarEvento("INFO", "Se eligio a " + nombre + " para el jugador 2");
+	}
 }
 
 void ControladorJson::elegirPersonajes(json j)throw(){
