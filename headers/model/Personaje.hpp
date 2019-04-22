@@ -6,53 +6,56 @@
 #include <ControladorGrafico.hpp>
 #include <string>
 #include <ControladorJson.hpp>
+
 using namespace std;
-extern ControladorJson *controladorJson;
 
 class ControladorGrafico;
 
 class Personaje{
 
 	public:
-		int getFrameIndex();
+
 		Personaje(ControladorGrafico &grafico, std::string nombre, int posicionXinicial, SDL_RendererFlip flip);
 		~Personaje();
+		int getFrameIndex();
+		int zindexPersonaje();
 		void dibujar(ControladorGrafico &grafico);
-		bool MoverDerecha(Personaje *enemigo, bool finEscenarioDerecha);
-		bool MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda);
-		void CorrerADerecha();
-		void CorrerAIzquierda();
-		void Saltar();
-		void Cambio();
+		bool moverDerecha(Personaje *enemigo, bool finEscenarioDerecha);
+		bool moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda);
+		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);
+		bool colisionaAlaIzquierda(SDL_Rect rectanguloOponente);
+		bool ladoDerecho();
+		void correrADerecha();
+		void correrAIzquierda();
+		void saltar();
+		void cambio();
 		void agacharse();
 		void detenerAnimacion();
 		void cambiarAnimacion(string nombre);
-		float getXDer();
-		SDL_Rect  obtenerRectangulo();
-		bool coliionaAlaDerecha(SDL_Rect rectanguloOponente);
-		bool colisionaAlaIzquierda(SDL_Rect rectanguloOponente);
 		void Flip();
+		void actualizarPiso();
 		float getPosX();
 		float getPosY();
-		bool ladoDerecho();
-		int zindexPersonaje();
+		SDL_Rect  obtenerRectangulo();
 		std::string getNombre();
-		void actualizarPiso();
+
 	private:
+
 		int posicionXinicial;
-		float posx, posy;
-		SpriteAnimado *spriteAnimado;
+		int zindex;
 		int ancho;
 		int alto;
 		int velocidad = 10;
+		float posx, posy;
 		float velocidadInicial;
-		bool agachado = false;
-		bool saltando = false;
 		float alturaActualSalto = 0;
 		float tiempo = 0;
+		bool agachado = false;
+		bool saltando = false;
+		SpriteAnimado *spriteAnimado;
 		SDL_RendererFlip flip;
-		int zindex;
 		std::string nombre;
+
 };
 
 #endif

@@ -4,19 +4,13 @@
 #include <ControladorLogger.hpp>
 #include <ControladorJson.hpp>
 
-class Animacion;
 using namespace std;
-extern ControladorLogger *controladorLogger;
-extern ControladorJson *controladorJson;
-
-SpriteAnimado::SpriteAnimado(){
-}
 
 SpriteAnimado::~SpriteAnimado(){
 
-	for(int i = 0; i<animaciones.size();i++){
+	for(Uint16 i = 0; i<animaciones.size();i++)
 		if(animaciones[i]) delete animaciones[i];
-	}
+
 	animaciones.clear();
 	SDL_FreeSurface(surface);
 }
@@ -176,6 +170,17 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(mouseUp);
 		animacionActual = mouseOut;
 	}
+	else {
+		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,175,145,10);
+		Animacion *mouseOver = new Animacion("mouseOver",1,175,0,175,145,10);
+		Animacion *mouseDown = new Animacion("mouseDown",1,350,0,175,145,10);
+		Animacion *mouseUp = new Animacion("mouseUp",1,525,0,175,145,10);
+		animaciones.push_back(mouseOut);
+		animaciones.push_back(mouseOver);
+		animaciones.push_back(mouseDown);
+		animaciones.push_back(mouseUp);
+		animacionActual = mouseOut;
+	}
 }
 
 void SpriteAnimado::iniciarAnimacion(string nombre){
@@ -190,10 +195,6 @@ void SpriteAnimado::cambiarAnimacion(string nombre){
 		if(animaciones[i]->getNombre() == nombre )
 			animacionActual = animaciones[i];
 	}
-}
-
-void SpriteAnimado::esVisible(bool visible){
-	this->visible = visible;
 }
 
 void SpriteAnimado::pararAnimacion(){
@@ -222,11 +223,11 @@ int SpriteAnimado::getFrameIndex(){
 }
 
 void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho, SDL_RendererFlip flip){
-	 if(this->visible){
-		SDL_Rect sourceRect = animacionActual->getRectOrigen(this->frameIndex);
-		SDL_Rect rectanguloDestino={x, y, ancho,alto};
-		graficos.dibujarImagen(this->spriteSheet, &sourceRect, &rectanguloDestino, flip);
-	}
+
+	SDL_Rect sourceRect = animacionActual->getRectOrigen(this->frameIndex);
+	SDL_Rect rectanguloDestino={x, y, ancho,alto};
+	graficos.dibujarImagen(this->spriteSheet, &sourceRect, &rectanguloDestino, flip);
+
 }
 
 void SpriteAnimado::animacionFinalizada(){

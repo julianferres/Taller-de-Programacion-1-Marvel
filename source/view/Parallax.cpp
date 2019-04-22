@@ -119,7 +119,7 @@ void Parallax::iniciarCamaras(){
 	}
 }
 
-void Parallax::MoverCamaraDerecha(){
+void Parallax::moverCamaraDerecha(){
 	if(finDeEscenarioDerecha() ){
 		return;
 	}
@@ -135,7 +135,7 @@ void Parallax::MoverCamaraDerecha(){
 }
 
 
-void Parallax::MoverCamaraIzquierda(){
+void Parallax::moverCamaraIzquierda(){
 	if(finDeEscenarioIzquierda()){
 		return;
 	}
@@ -150,7 +150,7 @@ void Parallax::MoverCamaraIzquierda(){
 	}
 }
 
-SDL_Rect *Parallax::Camaraz1(){
+SDL_Rect *Parallax::camaraz1(){
 	return &camera_z1;
 }
 
@@ -187,23 +187,23 @@ std::vector<int> Parallax::getzindexes(){
 	return zindexs;
 }
 
-SDL_Rect *Parallax::Camaraz2(){
+SDL_Rect *Parallax::camaraz2(){
 	return &camera_z2;
 }
 
-SDL_Rect *Parallax::Camaraz3(){
+SDL_Rect *Parallax::camaraz3(){
 	return &camera_z3;
 }
 
-SDL_Texture *Parallax::Backgroundz1() {
+SDL_Texture *Parallax::backgroundz1() {
 	return bitmapTex1;
 }
 
-SDL_Texture *Parallax::Backgroundz2(){
+SDL_Texture *Parallax::backgroundz2(){
 	return bitmapTex2;
 }
 
-SDL_Texture *Parallax::Backgroundz3(){
+SDL_Texture *Parallax::backgroundz3(){
 	return bitmapTex3;
 }
 

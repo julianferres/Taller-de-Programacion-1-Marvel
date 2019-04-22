@@ -4,15 +4,16 @@
 #include <string>
 #include <vector>
 #include <Animacion.hpp>
+
 using namespace std;
 
 class ControladorGrafico;
+class Animacion;
 
 class SpriteAnimado{
 
 	public:
 
-		SpriteAnimado();
 		~SpriteAnimado();
 		SpriteAnimado(ControladorGrafico &graficos, const string &filePath, string nombre);
 		void iniciarAnimacion(string animacion);
@@ -21,11 +22,10 @@ class SpriteAnimado{
 		void cambiarAnimacion(string animacion);
 		void agregarAnimacion(int frames, int x, int y, string nombre, int ancho, int alto);
 		void pararAnimacion();
-		void esVisible( bool visible);
 		void animacionFinalizada();
-		string getAnimacionActual();
 		void cargarAnimaciones(string nombre);
 		int getFrameIndex();
+		string getAnimacionActual();
 
 	private:
 

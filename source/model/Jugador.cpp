@@ -20,13 +20,13 @@ void Jugador::cambiarPersonaje(){
 	if (this->personajePrincipal){
 		this->personajeActual = this->personaje2;
 		this->personajePrincipal = false;
-		this->personaje2->Cambio();
+		this->personaje2->cambio();
 	}
 	else{
 		this->personajeActual->detenerAnimacion();
 		this->personajeActual = this->personaje1;
 		this->personajePrincipal = true;
-		this->personaje1->Cambio();
+		this->personaje1->cambio();
 	}
 
 }
@@ -44,7 +44,7 @@ float Jugador::posicionActual(){
 	return this->personajeActual->getPosX();
 }
 
-void Jugador::Flip(){
+void Jugador::flip(){
 	this->personajeActual->Flip();
 }
 

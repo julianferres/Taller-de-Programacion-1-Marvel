@@ -16,12 +16,13 @@ class Jugador{
 		~Jugador();
 		void personajeActualDibujar(ControladorGrafico &grafico);
 		void cambiarPersonaje();
-		void Flip();
-		Personaje * devolverPersonajeActual();
-		float posicionActual();
-		bool estaDelladoDerecho();
+		void flip();
 		void cambiarDeLado();
 		void actualizarPiso();
+		float posicionActual();
+		bool estaDelladoDerecho();
+		Personaje * devolverPersonajeActual();
+
 	private:
 
 		Personaje *personaje1;
@@ -29,6 +30,7 @@ class Jugador{
 		Personaje *personajeActual;
 		bool personajePrincipal;
 		bool ladoDerecho;
+
 };
 
 #endif

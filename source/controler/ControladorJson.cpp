@@ -1,13 +1,14 @@
 #include <controler/ControladorJson.hpp>
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
+#include <string>
 
 extern ControladorLogger *controladorLogger;
 
 void ControladorJson::leerArchivo(std::string argumentoConsola){
 
 	using json = nlohmann::json;
-	std::ifstream ifs (configPath, std::ifstream::in); //cambia el nombre y mira el log.txt
+	std::ifstream ifs (configPath, std::ifstream::in);
 
 	try{
 		json j = json::parse(ifs);
@@ -37,14 +38,11 @@ void ControladorJson::leerArchivo(std::string argumentoConsola){
 		controladorLogger->registrarEvento("INFO","ControladorJson::Archivo de configuracion JSON leido correctamente");
 	}
 
-
 	catch(json::exception &error){
-		//No se puede abrir el json. Cargar uno nuevo por default
 		controladorLogger->registrarEvento("ERROR",error.what());
 		controladorLogger->registrarEvento("ERROR","ControladorJson:: Se leera el archivo default");
 		this->leerArchivoDefault();
 	}
-
 }
 
 void ControladorJson::leerArchivoDefault(){
@@ -121,7 +119,6 @@ std::string ControladorJson::pathImagen(std::string nombrePersonaje){
             	return std::get<1>(personajes[i]);
             }
         }
-    //const std::string path = "contents/images/sinSprite.png";
     return "";
 }
 
@@ -137,7 +134,6 @@ std::string ControladorJson::pathBoton(std::string nombrePersonaje){
 			return std::get<5>(personajes[i]);
 		}
 	}
-//const std::string path = "contents/images/sinSprite.png";
 	return "";
 }
 
@@ -148,7 +144,7 @@ bool ControladorJson::existePersonaje(std::string nombrePersonaje){
 			return true;
 		}
 	}
-	controladorLogger->registrarEvento("ERROR","ControladorJson::NO se encontr[o el personaje: "+ nombrePersonaje);
+	controladorLogger->registrarEvento("ERROR","ControladorJson::No se encontro el personaje: "+ nombrePersonaje);
 	return false;
 
 }
@@ -300,7 +296,6 @@ void ControladorJson::setFondos(json j)throw(){
 
 			std::ifstream file(filepath_fondo.c_str());
 			if (file.good() == false){
-				//Cargar imagen con zindex correspondiente
 				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de fondo zindex" + std::to_string(zindex_fondo) + "no encontrada. Se carga una por defecto");
 				filepath_fondo = "contents/auxiliar/capa" + std::to_string(zindex_fondo) + "aux.png";
 			}
@@ -312,8 +307,6 @@ void ControladorJson::setFondos(json j)throw(){
 		for (int i = 0; i < cantidad_fondos; i++){
 			int zindex_fondo = 3 - i;
 			std::string filepath_fondo = "contents/auxiliar/capa" + std::to_string(zindex_fondo) + "aux.png";
-
-			//Cargar imagen con zindex correspondiente
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de fondo no encontrada. Se carga una por defecto");
 			fondos.push_back(std::make_tuple(filepath_fondo , zindex_fondo));
 		}
@@ -337,7 +330,7 @@ void ControladorJson::setPersonajes(json j)throw(){
 			std::ifstream file(filepath_personaje.c_str());
 			if (file.good() == false){
 				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
-				nombre_personaje = "sidsfnSprite";
+				nombre_personaje = "sinSprite";
 				filepath_personaje = "contents/images/sinSprite.png";
 
 			}
@@ -354,9 +347,6 @@ void ControladorJson::setPersonajes(json j)throw(){
 			int height_personaje = height_personaje_default;
 			int width_personaje = width_personaje_default;
 			int zindex_personaje = zindex_personaje_default;
-
-
-
 			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje,file_boton_personaje));
 		}
 	}
@@ -365,6 +355,10 @@ void ControladorJson::setPersonajes(json j)throw(){
 }
 
 void ControladorJson::setPersonajeJugador(int personaje, int jugador, std::string nombre){
+	if(nombre!="CapitanAmerica" && nombre!="Venom" && nombre!="Spiderman" && nombre!="Hulk"){
+		controladorLogger->registrarEvento("ERROR","ControladroJson::No es un nombre valido: "+ nombre );
+		nombre = "sinSprite";
+	}
 	if(jugador==1){
 		this->personajesJugador1[personaje-1]=nombre;
 		controladorLogger->registrarEvento("INFO", "Se eligio a " + nombre + " para el jugador 1");
@@ -377,40 +371,42 @@ void ControladorJson::setPersonajeJugador(int personaje, int jugador, std::strin
 void ControladorJson::elegirPersonajes(json j)throw(){
 	try {
 		std::string personaje1 = j["jugadores"][0]["jugador"]["personaje1"];
-		this->personajesJugador1.push_back(personaje1);
-		if(!this->existePersonaje(personaje1)){
-			this->personajesJugador1.push_back("CapitanAmerica");
-		}
+		if(!this->existePersonaje(personaje1))
+			this->personajesJugador1.push_back("sinSprite");
+		else
+			this->personajesJugador1.push_back(personaje1);
 	}catch(json::type_error &e){
 		this->personajesJugador1.push_back("CapitanAmerica");
 	}
+
 	try {
 		std::string personaje2 = j["jugadores"][0]["jugador"]["personaje2"];
-		this->personajesJugador1.push_back(personaje2);
-		if(!this->existePersonaje(personaje2)){
-					this->personajesJugador1.push_back("Venom");
-				}
+		if(!this->existePersonaje(personaje2))
+					this->personajesJugador1.push_back("sinSprite");
+		else
+			this->personajesJugador1.push_back(personaje2);
 	}catch(json::type_error &e){
-		this->personajesJugador1.push_back("Venom");
+		this->personajesJugador1.push_back("sinSprite");
 	}
+
 	try {
 		std::string personaje3 = j["jugadores"][1]["jugador"]["personaje1"];
-		this->personajesJugador2.push_back(personaje3);
-		if(!this->existePersonaje(personaje3)){
-					this->personajesJugador1.push_back("Hulk");
-				}
+		if(!this->existePersonaje(personaje3))
+			this->personajesJugador2.push_back("sinSprite");
+		else
+			this->personajesJugador2.push_back(personaje3);
 	}catch(json::type_error &e){
-		this->personajesJugador2.push_back("Hulk");
+		this->personajesJugador2.push_back("sinSprite");
 	}
 
 	try {
 		std::string personaje4 = j["jugadores"][1]["jugador"]["personaje2"];
-		this->personajesJugador2.push_back(personaje4);
-		if(!this->existePersonaje(personaje4)){
-			this->personajesJugador1.push_back("Spiderman");
-		}
+		if(!this->existePersonaje(personaje4))
+			this->personajesJugador2.push_back("sinSprite");
+		else
+			this->personajesJugador2.push_back(personaje4);
 	}catch(json::type_error &e){
-		this->personajesJugador2.push_back("Spiderman");
+		this->personajesJugador2.push_back("sinSprite");
 	}
 }
 

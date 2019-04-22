@@ -115,16 +115,16 @@ void Juego::dibujar(ControladorGrafico &grafico){
 			personajes_dibujados++;
 		}
 		else{
-			if(fondos_dibujados == 0 && parallax->bitmapTex1){
-				grafico.dibujarImagen(parallax->Backgroundz1(), parallax->Camaraz1(), NULL, flip);
+			if(fondos_dibujados == 0 && parallax->backgroundz1()){
+				grafico.dibujarImagen(parallax->backgroundz1(), parallax->camaraz1(), NULL, flip);
 			}
 
-			else if(fondos_dibujados == 1 && parallax->bitmapTex2)
-				grafico.dibujarImagen(parallax->Backgroundz2(), parallax->Camaraz2(), NULL, flip);
+			else if(fondos_dibujados == 1 && parallax->backgroundz2())
+				grafico.dibujarImagen(parallax->backgroundz2(), parallax->camaraz2(), NULL, flip);
 
 
-			else if(fondos_dibujados == 2 && parallax->bitmapTex3){
-				grafico.dibujarImagen(parallax->Backgroundz3(), parallax->Camaraz3() , NULL, flip);
+			else if(fondos_dibujados == 2 && parallax->backgroundz3()){
+				grafico.dibujarImagen(parallax->backgroundz3(), parallax->camaraz3() , NULL, flip);
 			}
 			fondos_dibujados++;
 
@@ -179,8 +179,8 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 	}
 
 	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_D)){
-		 if(personaje1->MoverDerecha(personaje2,finEscenarioDerecha)){
-			 this->parallax->MoverCamaraDerecha();
+		 if(personaje1->moverDerecha(personaje2,finEscenarioDerecha)){
+			 this->parallax->moverCamaraDerecha();
 			 /*if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() )  ){
 					if(personaje1->MoverDerecha(personaje2,finEscenarioDerecha))
 						this->parallax->MoverCamaraDerecha();
@@ -190,8 +190,8 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 	}
 
 	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_A)){
-		if (personaje1->MoverIzquierda(personaje2,finEscenarioIzquierda)){
-			this->parallax->MoverCamaraIzquierda();
+		if (personaje1->moverIzquierda(personaje2,finEscenarioIzquierda)){
+			this->parallax->moverCamaraIzquierda();
 			/*if(! personaje1->colisionaAlaIzquierda(personaje2->obtenerRectangulo() )  ){
 					if (personaje1->MoverIzquierda(personaje2,finEscenarioIzquierda))
 						this->parallax->MoverCamaraIzquierda();
@@ -201,7 +201,7 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 	}
 
 	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_W)){
-		personaje1->Saltar();
+		personaje1->saltar();
 		controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 salta");
 	}
 
@@ -216,8 +216,8 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 		}
 
 	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_LEFT)){
-		if (personaje2->MoverIzquierda(personaje1,finEscenarioIzquierda)){
-			this->parallax->MoverCamaraIzquierda();
+		if (personaje2->moverIzquierda(personaje1,finEscenarioIzquierda)){
+			this->parallax->moverCamaraIzquierda();
 			/*if(! personaje2->colisionaAlaIzquierda(personaje1->obtenerRectangulo()) ){
 				if (personaje2->MoverIzquierda(personaje1,finEscenarioIzquierda)){
 					this->parallax->MoverCamaraIzquierda();
@@ -228,8 +228,8 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 	}
 
 	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_RIGHT)){
-	   if(personaje2->MoverDerecha(personaje1, finEscenarioDerecha) ){
-		   this->parallax->MoverCamaraDerecha();
+	   if(personaje2->moverDerecha(personaje1, finEscenarioDerecha) ){
+		   this->parallax->moverCamaraDerecha();
 			  /* if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo()) ){
 					if(personaje2->MoverDerecha(personaje1, finEscenarioDerecha) )
 						this->parallax->MoverCamaraDerecha();
@@ -239,7 +239,7 @@ void Juego::teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTec
 	}
 
 	if(teclado.seEstaPresionandoUnaTecla(SDL_SCANCODE_UP)){
-		personaje2->Saltar();
+		personaje2->saltar();
 		controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 salta");
 	}
 

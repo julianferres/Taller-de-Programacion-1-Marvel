@@ -29,14 +29,14 @@ class Juego{
 
 	private:
 
-		void startGameMenu(ControladorGrafico &grafico);
 		ControladorGrafico *graficos;
 		ControladorTeclado *teclado;
-		bool isRunning;
 		Jugador *jugador1;
 		Jugador *jugador2;
 		Parallax *parallax;
 		Uint32 startTime;
+		void startGameMenu(ControladorGrafico &grafico);
+		bool isRunning;
 		int FPS = controladorJson->cantidadFPS();
 		unsigned MAX_FRAME_TIME = 1000 / FPS;
 

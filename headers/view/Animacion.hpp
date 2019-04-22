@@ -9,12 +9,10 @@ class Animacion{
 
 	public:
 
-		Animacion();
-		~Animacion();
 		Animacion(std::string nombre, int frames,int x,int y, int ancho, int alto,int velocidad );
-		std::string getNombre();
 		int getFrames();
 		int getVelocidad();
+		std::string getNombre();
 		SDL_Rect getRectOrigen(int frameIndex);
 
 	private:

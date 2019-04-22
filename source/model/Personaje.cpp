@@ -21,39 +21,31 @@ Personaje::~Personaje(){
 
 Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXinicial, SDL_RendererFlip flip){
 	std::string path = controladorJson->pathImagen(nombre);
-	if(!controladorJson->existePersonaje(nombre)){
+	if(nombre == "sinSprite"){
 		path = "contents/images/sinSprite.png";
-		controladorLogger->registrarEvento("ERROR","Personaje::No se pudo encontrar la imagen del personaje: "+ nombre + path);
-
-		this->nombre = "sinSprite";
-		this->posicionXinicial = posicionXinicial;
-		this->posx= posicionXinicial;
 		this->alto = 320;
 		this->ancho =200;
-		this->posy = controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
 		this->spriteAnimado=new SpriteAnimado(graficos,path,"sinSprite");
-		this->velocidadInicial = sqrt(constanteDeAltura * alto);
-		this->flip = flip;
 		this->zindex = 99;
-		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se caga un ? por defecto");
-		//this->nombre = "sinSprite";
-	}else{
-	this->posicionXinicial = posicionXinicial;
-	this->posx= posicionXinicial;
-	this->alto = controladorJson->alturaPersonaje(nombre);
-	this->ancho = controladorJson->anchoPersonaje(nombre);
-	this->posy = controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
-	this->spriteAnimado=new SpriteAnimado(graficos,controladorJson->pathImagen(nombre),nombre);
-	this->velocidadInicial = sqrt(constanteDeAltura * alto);
-	this->flip = flip;
-	this->zindex = controladorJson->zindexPersonaje(nombre);
-	this->nombre = nombre;
+		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se carga un ? por defecto");
 	}
+	else{
+		this->alto = controladorJson->alturaPersonaje(nombre);
+		this->ancho = controladorJson->anchoPersonaje(nombre);
+		this->spriteAnimado=new SpriteAnimado(graficos,controladorJson->pathImagen(nombre),nombre);
+		this->zindex = controladorJson->zindexPersonaje(nombre);
+	}
+	this->nombre = nombre;
+	this->posy = controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
+	this->velocidadInicial = sqrt(constanteDeAltura * alto);
+	this->posx= posicionXinicial;
+	this->posicionXinicial = posicionXinicial;
+	this->flip = flip;
 }
 
 void Personaje::dibujar(ControladorGrafico &graficos){
 	if(saltando)
-		this->Saltar();
+		this->saltar();
 	if(!agachado && spriteAnimado->getAnimacionActual()=="agacharse")
 			spriteAnimado->iniciarAnimacion("quieto");
 	this->spriteAnimado->dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
@@ -66,13 +58,13 @@ void Personaje::cambiarAnimacion(string nombre){
 	this->spriteAnimado->cambiarAnimacion(nombre);
 }
 
-bool Personaje::MoverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
+bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando)
 		this->spriteAnimado->iniciarAnimacion("movDerecha");
 	if(posx + ancho > (controladorJson-> getLimiteFondoDer())){
 		if (rect_enemigo.x > (controladorJson->getLimiteFondoIzq()) && !finEscenarioDerecha){
-			enemigo->CorrerAIzquierda();
+			enemigo->correrAIzquierda();
 			controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje en el limite derecho. Se corre el oponente a la izquierda");
 			return true;
 		}
@@ -92,13 +84,13 @@ void Personaje::detenerAnimacion(){
 	this->spriteAnimado->pararAnimacion();
 }
 
-bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
+bool Personaje::moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando)
 		this->spriteAnimado->iniciarAnimacion("movIzquierda");
 	if(posx  < controladorJson->getLimiteFondoIzq()){
 		if (rect_enemigo.x + rect_enemigo.w < controladorJson->getLimiteFondoDer() && !finEscenarioIzquierda){
-			enemigo->CorrerADerecha();
+			enemigo->correrADerecha();
 			controladorLogger->registrarEvento("DEBUG", "Personaje:: Personaje en el limite izquierdo. Se corre el oponente a la derecha");
 			return true;
 		}
@@ -110,13 +102,13 @@ bool Personaje::MoverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	return false;
 }
 
-void Personaje::CorrerAIzquierda(){
+void Personaje::correrAIzquierda(){
 	if(posx  < controladorJson->getLimiteFondoIzq())
 			return;
 	this->posx=this->posx-velocidad;
 }
 
-void Personaje::CorrerADerecha(){
+void Personaje::correrADerecha(){
 	if(posx + ancho > controladorJson->getLimiteFondoDer())
 			return;
 	this->posx=this->posx+velocidad;
@@ -128,7 +120,7 @@ void Personaje::agacharse(){
 	this->spriteAnimado->iniciarAnimacion("agacharse");
 }
 
-void Personaje::Cambio(){
+void Personaje::cambio(){
 	if(posicionXinicial < controladorJson->anchoVentana()/2)
 		this->posx = 0;
 	else
@@ -137,7 +129,7 @@ void Personaje::Cambio(){
 	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
 }
 
-void Personaje::Saltar(){
+void Personaje::saltar(){
 	this->spriteAnimado->iniciarAnimacion("salto");
 	if( ! saltando) saltando = true;
 	else{
@@ -163,10 +155,6 @@ void Personaje::Flip(){
 	}else{
 		this->flip = SDL_FLIP_NONE;
 	}
-}
-
-float Personaje::getXDer(){
-	return (this->posx + this->ancho);
 }
 
 float Personaje::getPosX(){

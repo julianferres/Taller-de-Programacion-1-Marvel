@@ -5,15 +5,12 @@
 using namespace std;
 
 extern ControladorJson *controladorJson;
-extern ControladorLogger *controladorLogger;
 
 ControladorGrafico::ControladorGrafico(){
-	//Uint32 sizePantalla = SDL_WINDOW_RESIZABLE;
 	if(controladorJson->esfullscreen())
 		this->sizePantalla = SDL_WINDOW_FULLSCREEN;
 	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), sizePantalla, &this->_window, &this->_renderer);
 	SDL_SetWindowTitle(this->_window, "Marvel vs Capcom");
-
 }
 
 ControladorGrafico::~ControladorGrafico(){
@@ -29,16 +26,14 @@ void ControladorGrafico::cambiarPantallaCompleta(){
 	}else{
 		controladorJson->cambiarPantallaCompleta();
 		this->sizePantalla = SDL_WINDOW_FULLSCREEN;
-
 	}
 	SDL_SetWindowFullscreen(this->_window, this->sizePantalla);
 }
 
 SDL_Surface* ControladorGrafico::cargarImagen(const string &filePath){
-
-	if(this->_spriteSheets.count(filePath) == 0){
+	if(this->_spriteSheets.count(filePath) == 0)
 		this->_spriteSheets[filePath] = IMG_Load(filePath.c_str());
-	}
+
 	return this->_spriteSheets[filePath];
 }
 
@@ -56,19 +51,6 @@ void ControladorGrafico::limpiar(){
 
 SDL_Renderer* ControladorGrafico::getRenderer() const{
 	return this->_renderer;
-}
-
-bool ControladorGrafico::controlarColision(SDL_Rect rect1,SDL_Rect rect2){
-	if(rect1.y >= rect2.y + rect2.h)
-		return false;
-	if(rect1.x >= rect2.x + rect2.w)
-		return false;
-	if(rect1.y + rect1.h <= rect2.y)
-		return false;
-	if(rect1.x + rect1.w <= rect2.x)
-		return false;
-	return true;
-
 }
 
 void ControladorGrafico::maximizarVentana(int ancho, int alto){

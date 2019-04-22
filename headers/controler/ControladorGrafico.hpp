@@ -16,15 +16,14 @@ class ControladorGrafico{
 
 		ControladorGrafico();
 		~ControladorGrafico();
-
 		SDL_Surface* cargarImagen(const string &filePath);
+		SDL_Renderer* getRenderer() const;
 		void dibujarImagen(SDL_Texture* source, SDL_Rect* rectanguloOrigen, SDL_Rect* rectanguloDestino, SDL_RendererFlip flip);
 		void render();
 		void limpiar();
-		SDL_Renderer* getRenderer() const;
-		bool controlarColision(SDL_Rect rect1, SDL_Rect rect2);
 		void cambiarPantallaCompleta();
 		void maximizarVentana(int ancho, int alto);
+
 	private:
 
 		SDL_Window* _window;
