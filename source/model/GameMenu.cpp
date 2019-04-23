@@ -1,5 +1,6 @@
 #include <GameMenu.hpp>
 #include <ControladorGrafico.hpp>
+#include <Boton.hpp>
 
 
 extern ControladorJson *controladorJson;
@@ -26,6 +27,8 @@ GameMenu::GameMenu(ControladorGrafico &graficos){
 }
 
 GameMenu::~GameMenu(){
+	for(int i=0;i<botones.size();i++)
+		delete botones[i];
 	SDL_DestroyTexture(actionTexture);
 	SDL_FreeSurface(actionSurface);
 	SDL_DestroyTexture(subTituloTexture);
@@ -45,8 +48,8 @@ void GameMenu::crearBotones(ControladorGrafico &graficos){
 }
 
 void GameMenu::crearBotonParaPersonaje(ControladorGrafico &graficos, int i){
-	Boton botonI = Boton(graficos, 250*(i+1), 400 , 200, 200, controladorJson->nombrePersonajeI(i));
-	this->botones.push_back(botonI);
+	Boton *boton =new Boton(graficos, 250*(i+1), 400 , 200, 200, controladorJson->nombrePersonajeI(i));
+	this->botones.push_back(boton);
 }
 
 void GameMenu::handleEvent(ControladorGrafico &graficos){//int personaje, int jugador){
@@ -54,8 +57,6 @@ void GameMenu::handleEvent(ControladorGrafico &graficos){//int personaje, int ju
 	bool quit = false;
 	int jugador=1;
 	int personaje=1;
-
-
 
 	while(!quit && (jugador <3)){
 			//Elegir personaje 1 Jugador 1
@@ -65,9 +66,9 @@ void GameMenu::handleEvent(ControladorGrafico &graficos){//int personaje, int ju
 			}
 			for (int i = 0; i< this->botones.size(); i++){
 				//controladorLogger->registrarEvento("DEBUG", "GameMenu::handleando evento para boton " + std::to_string(i));
-				this->botones[i].handleEvent(e);
-				if (e.type == SDL_MOUSEBUTTONUP && this->botones[i].fueClickeado()){
-					controladorJson->setPersonajeJugador(personaje, jugador, this->botones[i].Nombre());
+				this->botones[i]->handleEvent(e);
+				if (e.type == SDL_MOUSEBUTTONUP && this->botones[i]->fueClickeado()){
+					controladorJson->setPersonajeJugador(personaje, jugador, this->botones[i]->Nombre());
 					controladorLogger->registrarEvento("DEBUG", "GameMenu::Personaje Seteado");					personaje++;
 					controladorLogger->registrarEvento("DEBUG", "GameMenu::Sumo uno a personaje = "+ std::to_string(personaje));
 					if (personaje > 2){
@@ -83,6 +84,7 @@ void GameMenu::handleEvent(ControladorGrafico &graficos){//int personaje, int ju
 
 			}
 		this->dibujar(graficos);
+
 		}
 	}
 	controladorLogger->registrarEvento("DEBUG", "GameMenu::Menu terminado");
@@ -96,7 +98,7 @@ void GameMenu::dibujar(ControladorGrafico &graficos){
 	graficos.dibujarImagen(tituloTexture, NULL, &sourceRect, SDL_FLIP_NONE);
 
 	for (int i = 0; i< this->botones.size(); i++){
-		this->botones[i].dibujar(graficos);
+		this->botones[i]->dibujar(graficos);
 	}
 
 	SDL_QueryTexture(subTituloTexture, NULL, NULL,&w , &h);

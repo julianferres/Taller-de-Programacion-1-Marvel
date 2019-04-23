@@ -14,27 +14,17 @@ void ControladorJson::leerArchivo(std::string argumentoConsola){
 		json j = json::parse(ifs);
 
 		this -> setLogLevel(j,argumentoConsola);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Log level seteado");
 		this -> setAlturaVentana(j);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Altura ventana seteada");
 		this -> setAnchoVentana(j);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Ancho Ventana seteado");
 		this -> setPantallaCompleta(j);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Tamano pantalla seteado");
 		this -> setFPS(j);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::FPS seteados");
 		this -> setCantidadPersonajes(j);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Personajes contados");
 		this -> setCantidadFondos(j);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Fondos contados");
 		this -> setCantidadJugadores(j);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Jugadores contados");
 		this -> setPersonajes(j);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Personajes seteados");
 		this -> setFondos(j);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Fondos seteados");
 		this -> elegirPersonajes(j);
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Personajes elegidos");
+
 		controladorLogger->registrarEvento("INFO","ControladorJson::Archivo de configuracion JSON leido correctamente");
 	}
 
@@ -199,7 +189,7 @@ void ControladorJson::setLogLevel(json j,std::string argumentoConsola)throw(){
 			nivel_debug = j["logLevel"];
 		else
 			nivel_debug = argumentoConsola;
-		if (nivel_debug.compare("ERROR") != 0 && nivel_debug.compare("INFO") != 0 && nivel_debug.compare("DEBUG") != 0 ){
+		if (nivel_debug !="ERROR" && nivel_debug != "INFO"  && nivel_debug != "DEBUG" ){
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Nivel de Debug no corresponde a ERROR, INFO o DEBUG. Se setea en " + nivel_debug_default);
 			nivel_debug = nivel_debug_default;
 		}
@@ -220,6 +210,8 @@ void ControladorJson::setAlturaVentana(json j)throw(){
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Altura de la ventana no permitida. Se setea en " + std::to_string(altura_ventana_default));
 			altura_ventana = altura_ventana_default;
 		}
+		else
+			controladorLogger->registrarEvento("DEBUG","ControladorJson::Altura ventana seteada: "+std::to_string(altura_ventana));
 	}
 	catch(json::type_error &e){
 		controladorLogger->registrarEvento("ERROR","ControladorJson::Altura de la ventana no permitida. Se setea en " + std::to_string(altura_ventana_default));
@@ -234,6 +226,8 @@ void ControladorJson::setAnchoVentana(json j)throw(){
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Ancho de la ventana no permitido. Se setea en " + std::to_string(ancho_ventana_default));
 			ancho_ventana = ancho_ventana_default;
 		}
+		else
+			controladorLogger->registrarEvento("DEBUG","ControladorJson::Ancho ventana seteada: "+std::to_string(ancho_ventana));
 	}
 	catch(json::type_error &e){
 		controladorLogger->registrarEvento("ERROR","ControladorJson::Ancho de la ventana no permitido. Se setea en " + std::to_string(ancho_ventana_default));
@@ -249,6 +243,7 @@ void ControladorJson::setPantallaCompleta(json j)throw(){
 		controladorLogger->registrarEvento("ERROR","ControladorJson::Valor no permitido para fullscreen.");
 		fullscreen = fullscreen_default;
 	}
+	controladorLogger->registrarEvento("DEBUG","ControladorJson::Fullscreen = " + std::to_string(fullscreen));
 }
 
 void ControladorJson::setFPS(json j)throw(){
@@ -258,6 +253,8 @@ void ControladorJson::setFPS(json j)throw(){
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Cantidad de FPS no permitido. Se setea en " + std::to_string(FPS_default));
 			FPS = FPS_default;
 		}
+		else
+			controladorLogger->registrarEvento("DEBUG","ControladorJson::FPS seteados = " + std::to_string(FPS));
 	}
 	catch(json::type_error &e){
 		controladorLogger->registrarEvento("ERROR","ControladorJson::Cantidad de FPS no permitido. Se setea en " + std::to_string(FPS_default));
@@ -274,6 +271,7 @@ void ControladorJson::setCantidadPersonajes(json j)throw(){
 		controladorLogger->registrarEvento("ERROR","ControladorJson::Cantidad de personajes invalida. Se setea en: " + std::to_string(cantidad_personajes_default));
 
 	}
+	controladorLogger->registrarEvento("DEBUG","ControladorJson::Personajes contados = " + std::to_string(cantidad_personajes));
 
 }
 
@@ -285,6 +283,7 @@ void ControladorJson::setCantidadFondos(json j)throw(){
 		cantidad_fondos = cantidad_fondos_default;
 		controladorLogger->registrarEvento("ERROR","ControladorJson::Cantidad de fondos invalida. Se setea en: " + std::to_string(cantidad_fondos_default));
 	}
+	controladorLogger->registrarEvento("DEBUG","ControladorJson::Fondos contados = " + std::to_string(cantidad_fondos));
 
 }
 
@@ -301,6 +300,7 @@ void ControladorJson::setFondos(json j)throw(){
 			}
 			fondos.push_back(std::make_tuple(filepath_fondo , zindex_fondo));
 		}
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Fondos seteados");
 	}
 	catch(json::type_error &e){
 		fondos.clear();
@@ -332,10 +332,10 @@ void ControladorJson::setPersonajes(json j)throw(){
 				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
 				nombre_personaje = "sinSprite";
 				filepath_personaje = "contents/images/sinSprite.png";
-
 			}
 			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje, file_boton_personaje));
 		}
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Personajes seteados");
 	}
 	catch(json::type_error &e){
 		personajes.clear();
@@ -376,7 +376,7 @@ void ControladorJson::elegirPersonajes(json j)throw(){
 		else
 			this->personajesJugador1.push_back(personaje1);
 	}catch(json::type_error &e){
-		this->personajesJugador1.push_back("CapitanAmerica");
+		this->personajesJugador1.push_back("sinSprite");
 	}
 
 	try {
@@ -413,6 +413,7 @@ void ControladorJson::elegirPersonajes(json j)throw(){
 std::string ControladorJson::jugador1Personaje(int numero){
 	return personajesJugador1[numero];
 }
+
 std::string ControladorJson::jugador2Personaje(int numero){
 	return personajesJugador2[numero];
 }
@@ -425,6 +426,7 @@ void ControladorJson::setCantidadJugadores(json j)throw(){
 		cantidad_jugadores = 2;
 		controladorLogger->registrarEvento("ERROR","ControladorJson::Cantidad de jugadores invalida. Se setea en: 2");
 	}
+	controladorLogger->registrarEvento("DEBUG","ControladorJson::Jugadores contados = " + std::to_string(cantidad_jugadores));
 }
 
 int ControladorJson::cantidadJugadores(){
@@ -460,4 +462,12 @@ int ControladorJson::getLimiteFondoIzq(){
 
 int ControladorJson::getAlturaPiso(){
 	return this->altura_piso;
+}
+
+int ControladorJson::alturaPersonajeDefault(){
+	return this->altura_personaje_default;
+}
+
+int ControladorJson::anchoPersonajeDefault(){
+	return this->ancho_personaje_default;
 }

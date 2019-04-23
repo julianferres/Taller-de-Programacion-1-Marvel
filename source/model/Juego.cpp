@@ -24,9 +24,8 @@ Juego::Juego(){
 
 	this->teclado = new ControladorTeclado();
 	this-> parallax = new Parallax(*graficos);
-
 	this->iniciarFondo(*graficos);
-	controladorLogger->registrarEvento("INFO", "Juego::Fondos con parallax iniciado");
+
 	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),SDL_FLIP_NONE, false);
 	this->jugador2 = new Jugador(*graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),controladorJson->getPosicionXInicialJugador2(), SDL_FLIP_HORIZONTAL, true);
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
@@ -56,11 +55,8 @@ void Juego::startGameMenu(ControladorGrafico &grafico){
 
 void Juego::gameLoop(){
 
-
 	SDL_Event evento;
 
-	this->iniciarFondo(*graficos);
-	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
 	while (isRunning){
 		this->startTime = SDL_GetTicks();
 		this->teclear(*graficos, evento,*teclado);
@@ -140,7 +136,7 @@ void Juego::verificarCambioDeLado(){
 			this->jugador1->cambiarDeLado();
 			this->jugador2->cambiarDeLado();
 		}
-	}else{//quiere decir que el que est[a del lado derecho els el jugador 2
+	}else{
 		if (this->jugador2->posicionActual() < this->jugador1->posicionActual()){
 			this->jugador2->cambiarDeLado();
 			this->jugador1->cambiarDeLado();

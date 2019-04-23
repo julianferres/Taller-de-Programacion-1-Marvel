@@ -6,9 +6,9 @@ Animacion::Animacion(std::string Nombre, int Frames,int x,int y, int ancho, int 
 	this->frames = Frames;
 	this->velocidad = Velocidad;
 	for (int i = 0; i < frames; i++){
-			SDL_Rect newRect = { x+(i*ancho), y, ancho, alto};
-			rectangulos.push_back(newRect);
-		}
+		SDL_Rect newRect = { x+(i*ancho), y, ancho, alto};
+		rectangulos.push_back(newRect);
+	}
 }
 
 std::string Animacion::getNombre(){

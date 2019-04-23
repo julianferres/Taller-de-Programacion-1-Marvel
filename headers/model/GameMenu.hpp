@@ -19,7 +19,7 @@ class GameMenu{
 
 	private:
 
-		std::vector<Boton> botones;
+		std::vector<Boton*> botones;
 		TTF_Font* marvelFont;
 		TTF_Font* selectFont;
 		TTF_Font* pixelFont;

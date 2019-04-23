@@ -23,16 +23,16 @@ Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXi
 	std::string path = controladorJson->pathImagen(nombre);
 	if(nombre == "sinSprite"){
 		path = "contents/images/sinSprite.png";
-		this->alto = 320;
-		this->ancho =200;
-		this->spriteAnimado=new SpriteAnimado(graficos,path,"sinSprite");
+		this->alto = controladorJson->alturaPersonajeDefault();
+		this->ancho =controladorJson->anchoPersonajeDefault();
+		this->spriteAnimado=new SpriteAnimado(graficos,path,nombre);
 		this->zindex = 99;
-		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se carga un ? por defecto");
+		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se carga una imagen por defecto");
 	}
 	else{
 		this->alto = controladorJson->alturaPersonaje(nombre);
 		this->ancho = controladorJson->anchoPersonaje(nombre);
-		this->spriteAnimado=new SpriteAnimado(graficos,controladorJson->pathImagen(nombre),nombre);
+		this->spriteAnimado=new SpriteAnimado(graficos,path,nombre);
 		this->zindex = controladorJson->zindexPersonaje(nombre);
 	}
 	this->nombre = nombre;
@@ -130,14 +130,16 @@ void Personaje::cambio(){
 }
 
 void Personaje::saltar(){
-	this->spriteAnimado->iniciarAnimacion("salto");
-	if( ! saltando) saltando = true;
+
+	if( ! saltando){
+		this->spriteAnimado->iniciarAnimacion("salto");
+		saltando = true;
+	}
 	else{
 		if(alturaActualSalto <= 0 && tiempo != 0 ){
 			saltando = false;
 			tiempo = 0;
 			posy=controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
-			return;
 		}
 		else{
 			tiempo += constanteTiempoCiclos;

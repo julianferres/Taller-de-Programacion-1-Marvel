@@ -17,7 +17,7 @@ Boton::Boton(ControladorGrafico &graficos, int posX, int posY, int width, int he
 }
 
 Boton::~Boton(){
-
+	delete spriteAnimado;
 }
 
 std::string Boton::Nombre(){

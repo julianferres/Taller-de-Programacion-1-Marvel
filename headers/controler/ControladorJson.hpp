@@ -27,6 +27,8 @@ class ControladorJson{
 		int getLimiteFondoIzq();
 		int getLimiteFondoDer();
 		int getAlturaPiso();
+		int alturaPersonajeDefault();
+		int anchoPersonajeDefault();
 		bool esfullscreen();
 		bool existePersonaje(std::string);
 		std::string nivelDebug();
