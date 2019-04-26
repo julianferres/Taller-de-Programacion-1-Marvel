@@ -183,11 +183,13 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 	}
 }
 
-void SpriteAnimado::iniciarAnimacion(string nombre){
+bool SpriteAnimado::iniciarAnimacion(string nombre){
+	if(animacionActual->getNombre().compare("cambioEntrada") == 0) return false;
 	if( animacionActual->getNombre() != nombre){
 		cambiarAnimacion(nombre);
 		frameIndex = 0;
 	}
+	return true;
 }
 
 void SpriteAnimado::cambiarAnimacion(string nombre){
