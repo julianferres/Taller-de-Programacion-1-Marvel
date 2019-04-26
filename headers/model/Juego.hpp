@@ -20,9 +20,9 @@ class Juego{
 		~Juego();
 		bool running() {return isRunning;}
 		void gameLoop();
-		void dibujar(ControladorGrafico &grafico);
-		void iniciarFondo(ControladorGrafico &graficos);
-		void teclear(ControladorGrafico &grafico, SDL_Event evento,ControladorTeclado &teclado);
+		void dibujar();
+		void iniciarFondo();
+		void teclear();
 		void verificarCambioDeLado();
 		static bool compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugador *, int> zindex2);
 		std::vector<std::tuple<Jugador *, int>> obtenerOrdenDibujo();
@@ -35,7 +35,7 @@ class Juego{
 		Jugador *jugador2;
 		Parallax *parallax;
 		Uint32 startTime;
-		void startGameMenu(ControladorGrafico &grafico);
+		void startGameMenu();
 		bool isRunning;
 		int FPS = controladorJson->cantidadFPS();
 		unsigned MAX_FRAME_TIME = 1000 / FPS;
