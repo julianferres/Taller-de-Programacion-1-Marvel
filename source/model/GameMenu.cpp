@@ -8,10 +8,11 @@ extern ControladorLogger *controladorLogger;
 
 GameMenu::GameMenu(ControladorGrafico &graficos){
 	TTF_Init();
-
-	this->marvelFont = TTF_OpenFont("contents/Fonts/Marvel.ttf", 300);
-	this->selectFont = TTF_OpenFont("contents/Fonts/select.ttf", 100);
-	this->pixelFont = TTF_OpenFont("contents/Fonts/Pixel.ttf", 50);
+	this->alto_ventana = controladorJson->alturaVentana();
+	this->ancho_ventana = controladorJson->anchoVentana();
+	this->marvelFont = TTF_OpenFont("contents/Fonts/Marvel.ttf", (300 * this->ancho_ventana) / this->ancho_maximo_ventana);
+	this->selectFont = TTF_OpenFont("contents/Fonts/select.ttf", (100 * this->ancho_ventana) / this->ancho_maximo_ventana);
+	this->pixelFont = TTF_OpenFont("contents/Fonts/Pixel.ttf", (50 * this->ancho_ventana) / this->ancho_maximo_ventana);
 	controladorLogger->registrarEvento("INFO", "Iniciando menu");
 	this->crearBotones(graficos);
 	this->tituloSurface = TTF_RenderText_Solid(marvelFont, "MARVEL", { 255, 0, 0} );
@@ -48,7 +49,7 @@ void GameMenu::crearBotones(ControladorGrafico &graficos){
 }
 
 void GameMenu::crearBotonParaPersonaje(ControladorGrafico &graficos, int i){
-	Boton *boton =new Boton(graficos, 250*(i+1), 400 , 200, 200, controladorJson->nombrePersonajeI(i));
+	Boton *boton =new Boton(graficos, ((250* this->ancho_ventana) / this->ancho_maximo_ventana)*(i+1), (400 * this->alto_ventana) / this->alto_maximo_ventana , (200 * this->ancho_ventana) / this->ancho_maximo_ventana, (200 * this->alto_ventana) / this->alto_maximo_ventana, controladorJson->nombrePersonajeI(i));
 	this->botones.push_back(boton);
 }
 
@@ -94,7 +95,7 @@ void GameMenu::dibujar(ControladorGrafico &graficos){
 	graficos.limpiar();
 	int w =0;int h=0;
 	SDL_QueryTexture(tituloTexture, NULL, NULL,&w , &h);
-	SDL_Rect sourceRect = { (controladorJson->anchoVentana()-w)/2,10,w,h};
+	SDL_Rect sourceRect = { (this->ancho_ventana -w)/2,(10 * this->alto_ventana) / this->alto_maximo_ventana,w,h};
 	graficos.dibujarImagen(tituloTexture, NULL, &sourceRect, SDL_FLIP_NONE);
 
 	for (int i = 0; i< this->botones.size(); i++){
@@ -102,13 +103,13 @@ void GameMenu::dibujar(ControladorGrafico &graficos){
 	}
 
 	SDL_QueryTexture(subTituloTexture, NULL, NULL,&w , &h);
-	sourceRect = { (controladorJson->anchoVentana()-w)/2,270,w,h};
+	sourceRect = { (this->ancho_ventana -w)/2, (270 * this->alto_ventana) / this->alto_maximo_ventana,w,h};
 	graficos.dibujarImagen(subTituloTexture, NULL, &sourceRect, SDL_FLIP_NONE);
 
 
 
 	SDL_QueryTexture(actionTexture, NULL, NULL,&w , &h);
-	sourceRect = { (controladorJson->anchoVentana()-w)/2,670,w,h};
+	sourceRect = { (this->ancho_ventana -w)/2,(670 * this->alto_ventana) / this->alto_maximo_ventana,w,h};
 	graficos.dibujarImagen(actionTexture, NULL, &sourceRect, SDL_FLIP_NONE);
 
 	graficos.render();
