@@ -130,10 +130,11 @@ void Personaje::cambio(){
 }
 
 void Personaje::saltar(){
-
+	bool saltarPermitido = true;
 	if( ! saltando){
-		this->spriteAnimado->iniciarAnimacion("salto");
-		saltando = true;
+		saltarPermitido = this->spriteAnimado->iniciarAnimacion("salto");
+		if(saltarPermitido) saltando = true;
+		else saltando = false;
 	}
 	else{
 		if(alturaActualSalto <= 0 && tiempo != 0 ){

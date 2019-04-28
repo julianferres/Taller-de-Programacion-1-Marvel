@@ -93,6 +93,6 @@ void Boton::handleEvent(SDL_Event e){
 
 void Boton::dibujar(ControladorGrafico &graficos){
 
-	this->spriteAnimado->dibujar(graficos,this->posicion.x,this->posicion.y,this->height, this->height, SDL_FLIP_NONE);
+	this->spriteAnimado->dibujar(graficos,this->posicion.x,this->posicion.y,this->width, this->height, SDL_FLIP_NONE);
 	this->spriteAnimado->update();
 }

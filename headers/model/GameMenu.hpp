@@ -29,6 +29,10 @@ class GameMenu{
 		SDL_Texture* subTituloTexture;
 		SDL_Surface* actionSurface;
 		SDL_Texture* actionTexture;
+		int ancho_ventana;
+		int alto_ventana;
+		int ancho_maximo_ventana = 1400;
+		int alto_maximo_ventana = 1000;
 
 };
 

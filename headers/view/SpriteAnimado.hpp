@@ -16,7 +16,7 @@ class SpriteAnimado{
 
 		~SpriteAnimado();
 		SpriteAnimado(ControladorGrafico &graficos, const string &filePath, string nombre);
-		void iniciarAnimacion(string animacion);
+		bool iniciarAnimacion(string animacion);
 		void update();
 		void dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho, SDL_RendererFlip flip);
 		void cambiarAnimacion(string animacion);
