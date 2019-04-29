@@ -1,10 +1,9 @@
-/*#include <EscenaInicial.hpp>
+#include <EscenaInicial.hpp>
 #include <string>
 #include <vector>
 
-EscenaInicial::EscenaInicial(std::vector<std::string, std::string> personajes, std::vector<std::string> filepathsFondos){
-	this->personajes = personajes;
-	this->filepathsFondos = filepathsFondos;
+EscenaInicial::EscenaInicial(std::vector<std::tuple<std::string, std::string>> escena){
+	this->escena = escena;
 }
 
-*/
+

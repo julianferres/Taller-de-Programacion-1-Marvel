@@ -1,4 +1,4 @@
-/*#ifndef ESCENAINICIAL_HPP_
+#ifndef ESCENAINICIAL_HPP_
 #define ESCENAINICIAL_HPP_
 
 #include <vector>
@@ -8,15 +8,13 @@
 class EscenaInicial{
 
 	public:
-		EscenaInicial(std::vector<std::string, std::string> personajes, std::vector<std::string> filepathsFondos);
+		EscenaInicial(std::vector<std::tuple<std::string, std::string>> escena);
 	private:
-		//(nombre_personaje, filepath_personaje)
-		std::vector<std::string, std::string> personajes;
-		//filepath ordenados de los fondos (fondoZ0, fondoZ1, fondoZ2)
-		std::vector<std::string> filepathsFondos;
+		//(nombre, filepath)
+		std::vector<std::tuple<std::string, std::string>> escena;
+
 
 };
 
 
-
-#endif */
+#endif

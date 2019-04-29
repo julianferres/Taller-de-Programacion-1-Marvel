@@ -1,11 +1,10 @@
-/*#include <EscenaJuego.hpp>
+#include <EscenaJuego.hpp>
 #include <string>
 #include <vector>
 
-EscenaJuego::EscenaJuego(std::vector<std::string, int, int, int, int, SDL_RendererFlip> personajes, std::vector<std::string> mensajesFondo){
-	this->personajes = personajes;
-	this->mensajesFondos = mensajesFondos;
-}*/
+EscenaJuego::EscenaJuego(std::vector<std::tuple<std::string, int, int, int, int, SDL_RendererFlip>> escena){
+	this->escena = escena;
+}
 
 
 

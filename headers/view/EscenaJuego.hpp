@@ -1,4 +1,4 @@
-/*#ifndef ESCENAJUEGO_HPP_
+#ifndef ESCENAJUEGO_HPP_
 #define ESCENAJUEGO_HPP_
 #include <vector>
 #include <SDL2/SDL_image.h>
@@ -7,13 +7,13 @@
 class EscenaJuego{
 
 	public:
-		EscenaJuego(std::vector<std::string, int, int, int, int, SDL_RendererFlip> personajes, std::vector<std::string> mensajesFondo);
+		EscenaJuego(std::vector<std::tuple<std::string, int, int, int, int, SDL_RendererFlip>> escena);
 
 	private:
-		std::vector<std::string, int, int, int, int, SDL_RendererFlip> personajes;
-		std::vector<std::string> mensajesFondo;
-		//Cada posicion puede tomar los valores ["movDer", "movIzq"]
+		//nombre, x, y, alto, ancho, flip
+		std::vector<std::tuple<std::string, int, int, int, int, SDL_RendererFlip>> escena;
+
 };
 
 
-#endif*/
+#endif
