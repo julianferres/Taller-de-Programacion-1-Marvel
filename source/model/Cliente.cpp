@@ -15,17 +15,19 @@ using namespace std;
 #define MAXDATOS 256 // podemos enviar solo 100 bytes
 
 Cliente::Cliente( char * direccionIP){
-	int socket1,numeroBytes,conexion;
+	int socket1, socketControl, numeroBytes,conexion, conexionControl;
 	char buffer[MAXDATOS];
 	struct hostent *nodoServidor;
 	struct sockaddr_in servidor;
 
+	cout << direccionIP <<endl;
 	nodoServidor=gethostbyname(direccionIP); //la direccion ip que le pasamos por parametro
 	if(nodoServidor==NULL){
 		cout<<"error en la direccion"<<endl;
 	}
 
 	socket1=socket(AF_INET, SOCK_STREAM, 0); //lanzamos el socket
+	socketControl=socket(AF_INET, SOCK_STREAM, 0);
 
 	servidor.sin_family=AF_INET; // lo mismo que el servidor
 	servidor.sin_port=htons(PUERTO);
@@ -36,18 +38,20 @@ Cliente::Cliente( char * direccionIP){
 	if(conexion==-1){
 	cout<<"error al conectar"<<endl;
 	}
-
-
-
-	while(true){
-		/* enviarEventos  send(socketCliente, evento,sizeof(evento),0);
-		 * recibir vista recv(socket1,buffer,MAXDATOS,0);
-		 * dibujar
-		 */
-
+	conexionControl = connect(socketControl,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
+	if(conexionControl==-1){
+		cout<<"error al conectar el control"<<endl;
 	}
 
 
+
+	/*while(true){
+		enviarEventos  send(socketCliente, evento,sizeof(evento),0);
+		 * recibir vista recv(socket1,buffer,MAXDATOS,0);
+		 * dibujar
+
+
+	}*/
 
 
 	close(socket1);

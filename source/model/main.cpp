@@ -12,6 +12,8 @@ int main(int argc, char **argv){
 	std::string argumentoConsola ;
 	controladorLogger->registrarEvento("INFO", "main::Comienzo a leer el json");
 	controladorJson->leerArchivo(argumentoConsola);
+
+	bool iniciarJuego = true;
 	if(argc == 2){
 		argumentoConsola = argv[1];
 		if(argumentoConsola == "Server"){
@@ -21,12 +23,16 @@ int main(int argc, char **argv){
 	else if(argc == 3){
 		argumentoConsola = argv[1];
 		if(argumentoConsola=="Cliente"){
-			Cliente * cliente = new Cliente(argv[2]);
+			Cliente * cliente1 = new Cliente(argv[2]);
+			Cliente * cliente2 = new Cliente(argv[2]);
+			Cliente * cliente3 = new Cliente(argv[2]);
 		}
 	}
 
+
 	else
 		argumentoConsola = "";
+
 	controladorLogger->registrarEvento("INFO", "main::Json leido. Comienzo el juego");
 	Juego *juego = new Juego();
 	delete juego;

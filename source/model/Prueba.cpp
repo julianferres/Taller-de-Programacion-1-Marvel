@@ -3,7 +3,7 @@
  *
  *
  *
- */
+ *
 
 this->teclado = new ControladorTeclado();
 this-> parallax = new Parallax(*graficos);//cuando el cliente va a dibujar, se lo paso por parametro
@@ -12,21 +12,21 @@ new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->ju
 //despues de que todos los jugadores eligieron su personaje en el menu, corro el game loop
 //el servidor le envia al cliente el filePath de las texturas una sola vez, luego de elegir los personajes
 this->colaEventos = new ColaEventos();
-/*enviar Vista al cliente
+enviar Vista al cliente
  * cargo una cola del tipo
  * int identificadorTextura, SDL_Rect* rectanguloOrigen, SDL_Rect* rectanguloDestino, SDL_RendererFlip flip
  * la calculo con el metodo Juego::dibujar y la envio
  *
  *
- * */
+ *
 
 
-/*
+
  * Cliente
  *
  *
  *
- */
+
 
 SDL_Init(0);
 SDL_VideoInit(NULL);
@@ -42,16 +42,16 @@ this->startGameMenu();//recordar que despues hay que modificarlo para elegir una
 while(SDL_PollEvent(&evento)){
 	enviar al servidor , voy poniendo los eventos en una cola propia del cliente
 }//en un hilo distinto al de dibujar, dentro de un while true
-/*Para dibujar, recibo una cola del tipo
+Para dibujar, recibo una cola del tipo
  *int identificadorTextura, SDL_Rect* rectanguloOrigen, SDL_Rect* rectanguloDestino, SDL_RendererFlip flip
  *graficos->limpiar();
  *while cola
  *			graficos.dibujarImagen(lo que desencole);
  *graficos->render();
- * */
+ *
 
 
-/*Escenas
+Escenas
  * 1 EL server envia las cosas del menu que tiene que dibujar el cliente
  * 2 El server envia los paths a los clientes
  * 3 El server envia los rectangulos a los clientes
