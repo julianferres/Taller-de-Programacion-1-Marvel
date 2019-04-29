@@ -21,7 +21,6 @@ class Juego{
 		bool running() {return isRunning;}
 		void gameLoop();
 		void dibujar();
-		void iniciarFondo();
 		void teclear();
 		void verificarCambioDeLado();
 		static bool compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugador *, int> zindex2);

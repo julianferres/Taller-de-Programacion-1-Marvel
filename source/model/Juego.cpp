@@ -16,12 +16,10 @@ Juego::Juego(){
 	SDL_VideoInit(NULL);
 	SDL_InitSubSystem(SDL_INIT_TIMER);
 
-	this->startTime = SDL_GetTicks();
 	this->graficos = new ControladorGrafico();
 	this->startGameMenu();
 	this->teclado = new ControladorTeclado();
 	this-> parallax = new Parallax(*graficos);
-	this->iniciarFondo();
 	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),SDL_FLIP_NONE, false);
 	this->jugador2 = new Jugador(*graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),controladorJson->getPosicionXInicialJugador2(), SDL_FLIP_HORIZONTAL, true);
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
@@ -58,13 +56,6 @@ void Juego::gameLoop(){
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
 
 	}
-}
-
-void Juego::iniciarFondo(){
-	if(this->parallax == NULL)
-		controladorLogger->registrarEvento("ERROR", "Juego::No se pudo cargar el parallax");
-	else
-		controladorLogger->registrarEvento("INFO", "Juego::Se cargo correctamente el parallax");
 }
 
 bool Juego::compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugador *, int> zindex2){

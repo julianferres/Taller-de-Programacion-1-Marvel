@@ -35,6 +35,10 @@ Servidor::Servidor(){
 		cout<<"error en el enlace"<<endl;
 	};
 	listen(socket1,CANTIDADDECONEXIONES);
+
+
+
+
 	while(true){
 		tamanioCliente=sizeof(cliente);
 		socket2=accept(socket1,(struct sockaddr*)&cliente,&tamanioCliente);
@@ -43,14 +47,20 @@ Servidor::Servidor(){
 		};
 		cout<<"se conecto alguien"<<endl;
 		char mensaje[256];
-		//unsigned long int tamanio;
 		while(mensaje!="salir"){
-			cin>>mensaje;
-			//tamanio=sizeof(mensaje);
-			send(socket2,mensaje,256,0);
+			/*recibir eventos recv(socket1,evento,sizeof(evento),0);
+			actualizar
+			enviarVista send(socket2,mensaje,256,0);  cada 1/60 seg*/
 		}
 		close(socket2);
 	}
+
+
+
+
+
+
+
 }
 
 

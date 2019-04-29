@@ -36,13 +36,19 @@ Cliente::Cliente( char * direccionIP){
 	if(conexion==-1){
 	cout<<"error al conectar"<<endl;
 	}
+
+
+
 	while(true){
-		numeroBytes=recv(socket1,buffer,MAXDATOS,0);
-		if(numeroBytes==-1){
-			cout<<"error al recibir datos"<<endl;
-		}
-		buffer[numeroBytes]='\0';
-		cout<<"mensaje: "<<buffer<<endl;
+		/* enviarEventos  send(socketCliente, evento,sizeof(evento),0);
+		 * recibir vista recv(socket1,buffer,MAXDATOS,0);
+		 * dibujar
+		 */
+
 	}
+
+
+
+
 	close(socket1);
 }
