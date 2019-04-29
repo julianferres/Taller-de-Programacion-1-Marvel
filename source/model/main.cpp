@@ -3,6 +3,7 @@
 #include <ControladorJson.hpp>
 #include <ControladorLogger.hpp>
 #include <Servidor.hpp>
+#include <Server.hpp>
 #include <Cliente.hpp>
 
 ControladorJson *controladorJson = new ControladorJson();
@@ -17,15 +18,14 @@ int main(int argc, char **argv){
 	if(argc == 2){
 		argumentoConsola = argv[1];
 		if(argumentoConsola == "Server"){
-			Servidor *server = new Servidor();
+			Server *server = new Server();
 		}
 	}
 	else if(argc == 3){
 		argumentoConsola = argv[1];
 		if(argumentoConsola=="Cliente"){
 			Cliente * cliente1 = new Cliente(argv[2]);
-			Cliente * cliente2 = new Cliente(argv[2]);
-			Cliente * cliente3 = new Cliente(argv[2]);
+
 		}
 	}
 
