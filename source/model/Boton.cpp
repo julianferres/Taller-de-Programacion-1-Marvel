@@ -14,6 +14,8 @@ Boton::Boton(ControladorGrafico &graficos, int posX, int posY, int width, int he
 	this->spriteActual = BOTON_SPRITE_MOUSE_OUT;
 	this->spriteAnimado=new SpriteAnimado(graficos,controladorJson->pathBoton(nombre),nombre + "Boton");
 	this->spriteAnimado->iniciarAnimacion("mouseOut");
+
+
 }
 
 Boton::~Boton(){

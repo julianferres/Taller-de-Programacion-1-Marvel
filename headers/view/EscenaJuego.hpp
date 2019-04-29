@@ -1,6 +1,7 @@
 #ifndef ESCENAJUEGO_HPP_
 #define ESCENAJUEGO_HPP_
 #include <vector>
+#include <tuple>
 #include <SDL2/SDL_image.h>
 #include <string>
 

@@ -7,10 +7,13 @@
 #include <ControladorJson.hpp>
 #include <ControladorTeclado.hpp>
 #include <Parallax.hpp>
+#include <TexturasFondos.hpp>
+#include <JuegoCliente.hpp>
 
 extern ControladorJson *controladorJson;
 
 class Jugador;
+class JuegoCliente;
 
 class Juego{
 
@@ -30,9 +33,11 @@ class Juego{
 
 		ControladorGrafico *graficos;
 		ControladorTeclado *teclado;
+		JuegoCliente * cliente;
 		Jugador *jugador1;
 		Jugador *jugador2;
 		Parallax *parallax;
+		TexturasFondos *texturasFondos;
 		Uint32 startTime;
 		void startGameMenu();
 		bool isRunning;

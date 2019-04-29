@@ -5,6 +5,8 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorTeclado.hpp>
 #include <GameMenu.hpp>
+#include <TexturasFondos.hpp>
+#include <JuegoCliente.hpp>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -12,16 +14,12 @@ extern ControladorLogger *controladorLogger;
 
 Juego::Juego(){
 
-	SDL_Init(0);
-	SDL_VideoInit(NULL);
-	SDL_InitSubSystem(SDL_INIT_TIMER);
-
-	this->graficos = new ControladorGrafico();
-	this->startGameMenu();
+	this->cliente = new JuegoCliente();
 	this->teclado = new ControladorTeclado();
-	this-> parallax = new Parallax(*graficos);
-	this->jugador1 = new Jugador(*graficos,controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),SDL_FLIP_NONE, false);
-	this->jugador2 = new Jugador(*graficos,controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),controladorJson->getPosicionXInicialJugador2(), SDL_FLIP_HORIZONTAL, true);
+	this-> parallax = new Parallax();
+	this->startGameMenu();
+	this->jugador1 = new Jugador(*cliente->graficos(),controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),SDL_FLIP_NONE, false);
+	this->jugador2 = new Jugador(*cliente->graficos(),controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),controladorJson->getPosicionXInicialJugador2(), SDL_FLIP_HORIZONTAL, true);
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
 	this->isRunning=true;
 	this->gameLoop();
@@ -33,16 +31,11 @@ Juego::~Juego(){
 	delete parallax;
 	delete jugador1;
 	delete jugador2;
-	delete graficos;
-	SDL_QuitSubSystem(SDL_INIT_EVENTS);
-	SDL_VideoQuit();
-	SDL_QuitSubSystem(SDL_INIT_TIMER);
-	SDL_Quit();
 }
 
 void Juego::startGameMenu(){
 	controladorLogger->registrarEvento("DEBUG", "Juego::Inicio menu");
-	GameMenu *menu = new GameMenu(*graficos);
+	GameMenu *menu = new GameMenu(*cliente->graficos());
 	delete menu;
 }
 
@@ -73,11 +66,11 @@ std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
 }
 
 void Juego::dibujar(){
-	graficos->limpiar();
+	cliente->graficos()->limpiar();
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 
 	std::vector<std::tuple<Jugador *, int>> zindexs_personajes = obtenerOrdenDibujo();
-	std::vector<int> zindexs_fondos = parallax->getzindexes();
+	std::vector<int> zindexs_fondos = cliente->fondos()->getzindexes();
 
 	this->verificarCambioDeLado();
 
@@ -85,32 +78,32 @@ void Juego::dibujar(){
 	int personajes_dibujados = 0;
 	while(fondos_dibujados + personajes_dibujados < 5){
 		if(fondos_dibujados == 3 && personajes_dibujados < 2){
-			get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(*graficos);
+			get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(*cliente->graficos());
 			personajes_dibujados++;
 		}
 
 		else if ((personajes_dibujados < 2) && get<1>(zindexs_personajes[personajes_dibujados]) <= zindexs_fondos[fondos_dibujados]){
-			get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(*graficos);
+			get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(*cliente->graficos());
 			personajes_dibujados++;
 		}
 		else{
-			if(fondos_dibujados == 0 && parallax->backgroundz1()){
-				graficos->dibujarImagen(parallax->backgroundz1(), parallax->camaraz1(), NULL, flip);
+			if(fondos_dibujados == 0 && cliente->fondos()->backgroundz1()){
+				cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz1(), parallax->camaraz1(), NULL, flip);
 			}
 
-			else if(fondos_dibujados == 1 && parallax->backgroundz2())
-				graficos->dibujarImagen(parallax->backgroundz2(), parallax->camaraz2(), NULL, flip);
+			else if(fondos_dibujados == 1 && cliente->fondos()->backgroundz2())
+				cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz2(), parallax->camaraz2(), NULL, flip);
 
 
-			else if(fondos_dibujados == 2 && parallax->backgroundz3()){
-				graficos->dibujarImagen(parallax->backgroundz3(), parallax->camaraz3() , NULL, flip);
+			else if(fondos_dibujados == 2 && cliente->fondos()->backgroundz3()){
+				cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz3(), parallax->camaraz3() , NULL, flip);
 			}
 			fondos_dibujados++;
 
 		}
 	}
 
-	graficos->render();
+	cliente->graficos()->render();
 }
 
 void Juego::verificarCambioDeLado(){
@@ -143,7 +136,7 @@ void Juego::teclear(){
 		}
 
 		if (evento.window.event == SDL_WINDOWEVENT_RESIZED){
-			graficos->maximizarVentana(evento.window.data1, evento.window.data2);
+			cliente->graficos()->maximizarVentana(evento.window.data1, evento.window.data2);
 			this->jugador1->actualizarPiso();
 			this->jugador2->actualizarPiso();
 		}
@@ -234,7 +227,7 @@ void Juego::teclear(){
 	}
 
 	if(teclado->sePresionoUnaTecla(SDL_SCANCODE_F11)){
-		graficos->cambiarPantallaCompleta();
+		cliente->graficos()->cambiarPantallaCompleta();
 		controladorLogger->registrarEvento("DEBUG", "Se cambia a pantalla completa");
 	}
 
