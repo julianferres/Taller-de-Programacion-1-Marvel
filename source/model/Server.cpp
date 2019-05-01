@@ -56,7 +56,7 @@ Server::Server()
 	pthread_t thread_id;
 	juego = new Juego();
 
-    while(true ){
+    while( vectorPersonajes.size() < CANTIDAD_MAXIMA_JUGADORES){
     	client_sock = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c);
     	args->client_sock=client_sock;
     	puts("Connection accepted");
@@ -66,10 +66,19 @@ Server::Server()
         cantidad_actual_clientes++;
         //pthread_join( thread_id , NULL);
         puts("Handler assigned");
+
+
+
     }
      
     if (client_sock < 0)
         perror("accept failed");
+
+    juego->crearEquipos();
+    while(true){
+
+    }
+
     free(args);
     close(socket_desc);
 
@@ -91,7 +100,7 @@ void *Server::connection_handler(void *socket_desc)
     //El id es segun el orden en que hayan llegado los jugadores
     *idCliente = cantidad_actual_clientes;
 
-   char mensaje[256];
+   char nombrePersonaje[256];
 
    while(cantidad_actual_clientes<CANTIDAD_MAXIMA_JUGADORES){
 	   //esperando que lleguen todos los jugadores
@@ -104,33 +113,35 @@ void *Server::connection_handler(void *socket_desc)
 
 
    //recibo el personaje elegido
-   recv(sock,mensaje,256,0);
+   recv(sock,nombrePersonaje,256,0);
+
+   juego->crearJugador(nombrePersonaje,*idCliente);
 
 
-   const string &filePath = controladorJson->pathImagen(mensaje);
-   tuple <string, const string> personaje=make_tuple(mensaje,filePath);
-   personajes.push_back(personaje);
-   while(personajes.size()<CANTIDAD_MAXIMA_JUGADORES){
-	   puts("hay jugadores que no seleccionaron todavia");
+   vectorPersonajes.push_back(nombrePersonaje);//creo al jugador
+
+
+   while(vectorPersonajes.size()<CANTIDAD_MAXIMA_JUGADORES){
+	   //puts("hay jugadores que no seleccionaron todavia");
    }
-   for(int i=0;i<CANTIDAD_MAXIMA_JUGADORES;i++){
-	   string nombre = get<0>(personajes[i]);
-	   juego->crearJugador(nombre,*idCliente);
+
+   for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
+		string personajeElegido = vectorPersonajes[i];//ya seleccione mi personaje
+		puts(vectorPersonajes[i]);
+		send(sock,(personajeElegido.c_str()),sizeof(personajeElegido),0);//le envio el personaje al servidor
    }
-   juego->crearEquipos();
 
-   send(sock,&personajes,sizeof(personajes),0);//le enviamos para que creen las texturas
-
-   juego->gameLoop();
+   while(true){}
+   //juego->gameLoop();
 
 
 
 
-    while(  mensaje!="salir" ){
-    	recv(sock,mensaje,256,0);
-    	cout<<mensaje<<endl;
-    	cin>>mensaje;
-    	send(sock,mensaje,256,0);
+    while(  nombrePersonaje!="salir" ){
+    	recv(sock,nombrePersonaje,256,0);
+    	cout<<nombrePersonaje<<endl;
+    	cin>>nombrePersonaje;
+    	send(sock,nombrePersonaje,256,0);
     }
      
 

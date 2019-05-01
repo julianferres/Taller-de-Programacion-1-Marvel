@@ -10,6 +10,9 @@
 #include <GameMenu.hpp>
 #include <JuegoCliente.hpp>
 #include <ControladorLogger.hpp>
+#include <string>
+#include <tuple>
+#define CANTIDAD_MAXIMA_JUGADORES 4
 using namespace std;
 
 extern ControladorJson *controladorJson;
@@ -54,14 +57,23 @@ Cliente::Cliente( char * direccionIP){
 	juegoCliente->iniciarGraficos();
 	puts("inicie los graficos");
 	GameMenu *menu = new GameMenu(*juegoCliente->graficos(),idCliente);//inicio el menu
-	puts("menu");
+
+	//Seleccionamos el personaje y lo enviamos al server
 	string personajeElegido = menu->personajeSeleccionado();//ya seleccione mi personaje
-	send(socket1,&personajeElegido,sizeof(personajeElegido),0);//le envio el personaje al servidor
+	send(socket1,(personajeElegido.c_str()),sizeof(personajeElegido),0);//le envio el personaje al servidor
+
+
+	//Aca llegan los jugadores seleccionados por todos
 	vector<tuple<string, const string>> personajes;
-	recv(socket1,&personajes,sizeof(personajes),0);
+	for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
+		recv(socket1,buffer,256,0);
+		puts(buffer);
+		const string &filePath = controladorJson->pathImagen(buffer);
+		tuple <string, const string> tuplaPersonaje=make_tuple(buffer,filePath);
+		personajes.push_back(tuplaPersonaje);
+	  }
+	cout<< personajes.size();
 	juegoCliente->cargarTexturasJugadores(personajes);//creo el mapa
-
-
 
 
 

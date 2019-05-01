@@ -25,7 +25,7 @@ public:
 private:
 	Juego *juego ;
 	int cantidad_actual_clientes;
-	vector<tuple<string, const string>> personajes;
+	vector<char*> vectorPersonajes;
 };
 
 
