@@ -22,8 +22,8 @@ class ControladorJson{
 		int cantidadFondos();
 		int cantidadJugadores();
 		int cantidadPersonajes();
-		int getPosicionXInicialJugador1();
-		int getPosicionXInicialJugador2();
+		int getPosicionXInicialEquipo1();
+		int getPosicionXInicialEquipo2();
 		int getLimiteFondoIzq();
 		int getLimiteFondoDer();
 		int getAlturaPiso();

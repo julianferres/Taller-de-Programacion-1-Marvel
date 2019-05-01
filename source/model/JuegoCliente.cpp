@@ -5,14 +5,12 @@
 #include <ControladorJson.hpp>
 #include <TexturasFondos.hpp>
 
-
+using namespace std;
 
 JuegoCliente::JuegoCliente(){
 	SDL_Init(0);
 	SDL_VideoInit(NULL);
 	SDL_InitSubSystem(SDL_INIT_TIMER);
-	this->grafico = new ControladorGrafico();
-	this->texturasFondos = new TexturasFondos(*grafico);
 }
 
 JuegoCliente::~JuegoCliente(){
@@ -24,12 +22,19 @@ JuegoCliente::~JuegoCliente(){
 }
 
 ControladorGrafico* JuegoCliente::graficos(){
-	return this->grafico;
+	return (this->grafico);
 }
 
 TexturasFondos* JuegoCliente::fondos(){
 	return this->texturasFondos;
 }
 
+void JuegoCliente::cargarTexturasJugadores(vector<tuple<string, const string>> nombresYpaths){
+	this->texturasPersonajes = new TexturasPersonajes(*grafico,nombresYpaths);
+}
+
+void JuegoCliente::iniciarGraficos(){
+	this->grafico = new ControladorGrafico();
+}
 
 

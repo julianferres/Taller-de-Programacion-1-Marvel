@@ -15,7 +15,7 @@ class Personaje{
 
 	public:
 
-		Personaje(ControladorGrafico &grafico, std::string nombre, int posicionXinicial, SDL_RendererFlip flip);
+		Personaje( std::string nombre, int posicionXinicial, SDL_RendererFlip flip);
 		~Personaje();
 		int getFrameIndex();
 		int zindexPersonaje();

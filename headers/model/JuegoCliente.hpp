@@ -8,6 +8,7 @@
 #include <ControladorTeclado.hpp>
 #include <Parallax.hpp>
 #include <TexturasFondos.hpp>
+#include <TexturasPersonajes.hpp>
 
 class JuegoCliente{
 
@@ -16,10 +17,13 @@ public:
 	~JuegoCliente();
 	ControladorGrafico *graficos();
 	TexturasFondos * fondos();
+	void iniciarGraficos();
+	void cargarTexturasJugadores(vector<tuple<string, const string>> nombresYpaths);
 
 private:
 	ControladorGrafico *grafico;
 	TexturasFondos *texturasFondos;
+	TexturasPersonajes *texturasPersonajes;
 
 };
 

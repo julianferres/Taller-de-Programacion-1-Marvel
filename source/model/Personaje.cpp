@@ -16,23 +16,23 @@ extern ControladorLogger *controladorLogger;
 using namespace std;
 
 Personaje::~Personaje(){
-	delete spriteAnimado;
+	//delete spriteAnimado;
 }
 
-Personaje::Personaje(ControladorGrafico &graficos, string nombre, int posicionXinicial, SDL_RendererFlip flip){
+Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip){
 	std::string path = controladorJson->pathImagen(nombre);
 	if(nombre == "sinSprite"){
 		path = "contents/images/sinSprite.png";
 		this->alto = controladorJson->alturaPersonajeDefault();
 		this->ancho =controladorJson->anchoPersonajeDefault();
-		this->spriteAnimado=new SpriteAnimado(graficos,path,nombre);
+		this->spriteAnimado=new SpriteAnimado(nombre);
 		this->zindex = 99;
 		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se carga una imagen por defecto");
 	}
 	else{
 		this->alto = controladorJson->alturaPersonaje(nombre);
 		this->ancho = controladorJson->anchoPersonaje(nombre);
-		this->spriteAnimado=new SpriteAnimado(graficos,path,nombre);
+		this->spriteAnimado=new SpriteAnimado(nombre);
 		this->zindex = controladorJson->zindexPersonaje(nombre);
 	}
 	this->nombre = nombre;

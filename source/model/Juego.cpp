@@ -7,6 +7,7 @@
 #include <GameMenu.hpp>
 #include <TexturasFondos.hpp>
 #include <JuegoCliente.hpp>
+#include <Equipo.hpp>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -14,16 +15,9 @@ extern ControladorLogger *controladorLogger;
 
 Juego::Juego(){
 
-	this->cliente = new JuegoCliente();
 	this->teclado = new ControladorTeclado();
 	this-> parallax = new Parallax();
-	this->startGameMenu();
-	this->jugador1 = new Jugador(*cliente->graficos(),controladorJson->jugador1Personaje(0), controladorJson->jugador1Personaje(1),controladorJson->getPosicionXInicialJugador1(),SDL_FLIP_NONE, false);
-	this->jugador2 = new Jugador(*cliente->graficos(),controladorJson->jugador2Personaje(0), controladorJson->jugador2Personaje(1),controladorJson->getPosicionXInicialJugador2(), SDL_FLIP_HORIZONTAL, true);
 	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
-	this->isRunning=true;
-	this->gameLoop();
-
 }
 
 Juego::~Juego(){
@@ -33,18 +27,37 @@ Juego::~Juego(){
 	delete jugador2;
 }
 
-void Juego::startGameMenu(){
-	controladorLogger->registrarEvento("DEBUG", "Juego::Inicio menu");
-	GameMenu *menu = new GameMenu(*cliente->graficos());
-	delete menu;
+void Juego::crearJugador(std::string nombre,int cliente){
+	int posicionXinicial;
+	SDL_RendererFlip flip;
+	bool ladoDerecho;
+	if(cliente<2){//sos del equipo1
+		posicionXinicial = controladorJson->getPosicionXInicialEquipo1();
+		flip = SDL_FLIP_NONE;
+		ladoDerecho = false;
+	}
+	else{//sos del equipo 2
+		posicionXinicial = controladorJson->getPosicionXInicialEquipo2();
+		flip = SDL_FLIP_HORIZONTAL;
+		ladoDerecho = true;
+	}
+	Jugador *jugador = new Jugador(nombre,posicionXinicial,flip,ladoDerecho);
+	jugadores.insert(jugadores.begin(),cliente,jugador);
+}
+
+void Juego::crearEquipos(){
+	this->equipo1 = new Equipo(jugadores[0],jugadores[1]);
+	this->equipo2 = new Equipo(jugadores[2],jugadores[3]);
+	this->jugador1 = equipo1->JugadorActual();
+	this->jugador2 = equipo2->JugadorActual();
 }
 
 void Juego::gameLoop(){
-
+	this->isRunning=true;
 	while (isRunning){
 		this->startTime = SDL_GetTicks();
 		this->teclear();
-		this->dibujar();
+		//this->dibujar();
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
 
@@ -65,6 +78,7 @@ std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
 	return zindexs_personajes;
 }
 
+/*CAMBIAR PARA QUE NO DIBUJE ACA
 void Juego::dibujar(){
 	cliente->graficos()->limpiar();
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
@@ -87,15 +101,15 @@ void Juego::dibujar(){
 			personajes_dibujados++;
 		}
 		else{
-			if(fondos_dibujados == 0 && cliente->fondos()->backgroundz1()){
+			if(fondos_dibujados == 0 ){
 				cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz1(), parallax->camaraz1(), NULL, flip);
 			}
-
-			else if(fondos_dibujados == 1 && cliente->fondos()->backgroundz2())
+			ESTO ES LO QUE HAY QUE ENVIAR AL CLIENTE, EN VEZ DE DIBUJAR ACA
+			else if(fondos_dibujados == 1 )
 				cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz2(), parallax->camaraz2(), NULL, flip);
 
 
-			else if(fondos_dibujados == 2 && cliente->fondos()->backgroundz3()){
+			else if(fondos_dibujados == 2 ){
 				cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz3(), parallax->camaraz3() , NULL, flip);
 			}
 			fondos_dibujados++;
@@ -104,18 +118,18 @@ void Juego::dibujar(){
 	}
 
 	cliente->graficos()->render();
-}
+}*/
 
 void Juego::verificarCambioDeLado(){
 	if (this->jugador1->estaDelladoDerecho()){
 		if (this->jugador1->posicionActual() < this->jugador2->posicionActual()){
-			this->jugador1->cambiarDeLado();
-			this->jugador2->cambiarDeLado();
+			this->equipo1->cambiarDeLado();
+			this->equipo2->cambiarDeLado();
 		}
 	}else{
 		if (this->jugador2->posicionActual() < this->jugador1->posicionActual()){
-			this->jugador2->cambiarDeLado();
-			this->jugador1->cambiarDeLado();
+			this->equipo2->cambiarDeLado();
+			this->equipo1->cambiarDeLado();
 		}
 	}
 }
@@ -136,9 +150,9 @@ void Juego::teclear(){
 		}
 
 		if (evento.window.event == SDL_WINDOWEVENT_RESIZED){
-			cliente->graficos()->maximizarVentana(evento.window.data1, evento.window.data2);
-			this->jugador1->actualizarPiso();
-			this->jugador2->actualizarPiso();
+			//cliente->graficos()->maximizarVentana(evento.window.data1, evento.window.data2);
+			this->equipo1->actualizarPiso();
+			this->equipo1->actualizarPiso();
 		}
 
 		 switch( evento.type ){
@@ -184,8 +198,8 @@ void Juego::teclear(){
 	}
 
 	if(teclado->sePresionoUnaTecla(SDL_SCANCODE_E) ){
-			this->jugador1->cambiarPersonaje();
-			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de personaje del jugador 1");
+			this->equipo1->cambiarJugador();
+			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 1");
 		}
 
 	if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_LEFT)){
@@ -222,12 +236,12 @@ void Juego::teclear(){
 	}
 
 	if(teclado->sePresionoUnaTecla(SDL_SCANCODE_M)  ){
-		this->jugador2->cambiarPersonaje();
-		controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de personaje del jugador 2");
+		this->equipo2->cambiarJugador();
+		controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 2");
 	}
 
 	if(teclado->sePresionoUnaTecla(SDL_SCANCODE_F11)){
-		cliente->graficos()->cambiarPantallaCompleta();
+		//cliente->graficos()->cambiarPantallaCompleta();
 		controladorLogger->registrarEvento("DEBUG", "Se cambia a pantalla completa");
 	}
 

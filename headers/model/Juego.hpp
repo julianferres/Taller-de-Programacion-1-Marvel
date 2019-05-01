@@ -9,11 +9,16 @@
 #include <Parallax.hpp>
 #include <TexturasFondos.hpp>
 #include <JuegoCliente.hpp>
+#include <Equipo.hpp>
+#include<vector>
 
+#define CANTIDAD_MAXIMA_JUGADORES 4
 extern ControladorJson *controladorJson;
 
 class Jugador;
 class JuegoCliente;
+class Equipo;
+using namespace std;
 
 class Juego{
 
@@ -26,20 +31,22 @@ class Juego{
 		void dibujar();
 		void teclear();
 		void verificarCambioDeLado();
+		void crearEquipos();
+		void crearJugador(string nombre,int cliente);
 		static bool compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugador *, int> zindex2);
 		std::vector<std::tuple<Jugador *, int>> obtenerOrdenDibujo();
+		void crearJugadores(string nombre, const string &filePath, int cliente);
 
 	private:
 
-		ControladorGrafico *graficos;
 		ControladorTeclado *teclado;
-		JuegoCliente * cliente;
 		Jugador *jugador1;
 		Jugador *jugador2;
 		Parallax *parallax;
-		TexturasFondos *texturasFondos;
 		Uint32 startTime;
-		void startGameMenu();
+		vector<Jugador*> jugadores;
+		Equipo *equipo1;
+		Equipo *equipo2 ;
 		bool isRunning;
 		int FPS = controladorJson->cantidadFPS();
 		unsigned MAX_FRAME_TIME = 1000 / FPS;

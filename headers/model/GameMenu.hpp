@@ -4,19 +4,23 @@
 #include <Boton.hpp>
 #include <vector>
 #include <SDL2/SDL_ttf.h>
+#include <string>
+
+using namespace std;
+
 
 class GameMenu{
 
 	public:
 
-		GameMenu(ControladorGrafico &graficos);
+		GameMenu(ControladorGrafico &graficos, int idCliente);
 		~GameMenu();
 		void crearBotones(ControladorGrafico &graficos);
 		void crearBotonParaPersonaje(ControladorGrafico &graficos, int i);
 		void handleEvent(ControladorGrafico &graficos);
 		void dibujar(ControladorGrafico &graficos);
 		void elegirPersonajes(ControladorGrafico &graficos);
-
+		string personajeSeleccionado();
 	private:
 
 		std::vector<Boton*> botones;
@@ -29,10 +33,12 @@ class GameMenu{
 		SDL_Texture* subTituloTexture;
 		SDL_Surface* actionSurface;
 		SDL_Texture* actionTexture;
+		string personajeElegido;
 		int ancho_ventana;
 		int alto_ventana;
 		int ancho_maximo_ventana = 1400;
 		int alto_maximo_ventana = 1000;
+		int id;
 
 };
 

@@ -8,14 +8,23 @@
 #include<arpa/inet.h>
 #include<unistd.h>
 #include<pthread.h>
+#include <Juego.hpp>
+
+using namespace std;
+typedef void * (*THREADFUNCPTR)(void *);
+
 
 class Server{
 
 
 public:
 	Server();
-	static void* connection_handler(void *socket_desc);
+	void* connection_handler(void *socket_desc);
 
+private:
+	Juego *juego ;
+	int cantidad_actual_clientes;
+	vector<tuple<string, const string>> personajes;
 };
 
 

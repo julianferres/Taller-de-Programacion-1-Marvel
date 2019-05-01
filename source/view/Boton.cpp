@@ -1,4 +1,5 @@
 #include <Boton.hpp>
+#include <ControladorGrafico.hpp>
 
 
 extern ControladorJson *controladorJson;
@@ -12,8 +13,10 @@ Boton::Boton(ControladorGrafico &graficos, int posX, int posY, int width, int he
 	this->width = width;
 	this->height = heigth;
 	this->spriteActual = BOTON_SPRITE_MOUSE_OUT;
-	this->spriteAnimado=new SpriteAnimado(graficos,controladorJson->pathBoton(nombre),nombre + "Boton");
-	this->spriteAnimado->iniciarAnimacion("mouseOut");
+	const string &filePath = controladorJson->pathBoton(nombre);
+	this->textura = SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
+	this->spriteAnimado=new SpriteAnimado(nombre + "Boton");
+	//this->spriteAnimado->iniciarAnimacion("mouseOut");ya se inicia en el sprite
 
 
 }
@@ -94,7 +97,9 @@ void Boton::handleEvent(SDL_Event e){
 }
 
 void Boton::dibujar(ControladorGrafico &graficos){
-
-	this->spriteAnimado->dibujar(graficos,this->posicion.x,this->posicion.y,this->width, this->height, SDL_FLIP_NONE);
+	//this->spriteAnimado->dibujar(graficos,this->posicion.x,this->posicion.y,this->width, this->height, SDL_FLIP_NONE);
+	SDL_Rect sourceRect =this->spriteAnimado->rectOrigen();
+	SDL_Rect rectanguloDestino={this->posicion.x, this->posicion.y, this->width,this->height};
+	graficos.dibujarImagen(textura,&sourceRect,&rectanguloDestino,SDL_FLIP_NONE);
 	this->spriteAnimado->update();
 }

@@ -7,12 +7,17 @@
 #include <strings.h>
 #include <iostream>
 #include <Cliente.hpp>
-
+#include <GameMenu.hpp>
+#include <JuegoCliente.hpp>
+#include <ControladorLogger.hpp>
 using namespace std;
 
-#define PUERTO 5001
+extern ControladorJson *controladorJson;
+extern ControladorLogger *controladorLogger;
 
-#define MAXDATOS 256 // podemos enviar solo 100 bytes
+#define PUERTO 5001
+#define NO_TODOS_CLIENTES_CONECTADOS -1
+#define MAXDATOS 256
 
 Cliente::Cliente( char * direccionIP){
 	int socket1, socketControl, numeroBytes,conexion, conexionControl;
@@ -20,27 +25,47 @@ Cliente::Cliente( char * direccionIP){
 	struct hostent *nodoServidor;
 	struct sockaddr_in servidor;
 
-	cout << direccionIP <<endl;
-	nodoServidor=gethostbyname(direccionIP); //la direccion ip que le pasamos por parametro
-	if(nodoServidor==NULL){
+	nodoServidor=gethostbyname(direccionIP);
+	if(nodoServidor==NULL)
 		cout<<"error en la direccion"<<endl;
-	}
 
-	socket1=socket(AF_INET, SOCK_STREAM, 0); //lanzamos el socket
-	socketControl=socket(AF_INET, SOCK_STREAM, 0);
-
-	servidor.sin_family=AF_INET; // lo mismo que el servidor
+	socket1=socket(AF_INET, SOCK_STREAM, 0);
+	servidor.sin_family=AF_INET;
 	servidor.sin_port=htons(PUERTO);
 	servidor.sin_addr=*((struct in_addr *)nodoServidor->h_addr);
 	bzero(&(servidor.sin_zero),8);
-
 	conexion=connect(socket1,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
-	if(conexion==-1){
-	cout<<"error al conectar"<<endl;
-	}
-	conexionControl = connect(socketControl,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
-	if(conexionControl==-1){
-		cout<<"error al conectar el control"<<endl;
+	if(conexion==-1)
+		cout<<"error al conectar"<<endl;
+
+
+
+	int *idCliente=NULL;
+	JuegoCliente *juegoCliente = new JuegoCliente();
+
+	//estoy esperando que se conecten todos los clientes, mientras que n sea 0 faltan jugadores
+	// todosConectados va a tomar un valor != cuando esten todos y su valor sera el idCliente
+	recv(socket1,idCliente,sizeof(int*),0);//se conectaron todos los jugadores
+
+	juegoCliente->iniciarGraficos();
+	GameMenu *menu = new GameMenu(*juegoCliente->graficos(),*idCliente);//inicio el menu
+	string personajeElegido = menu->personajeSeleccionado();//ya seleccione mi personaje
+	send(socket1,&personajeElegido,sizeof(personajeElegido),0);//le envio el personaje al servidor
+	vector<tuple<string, const string>> personajes;
+	recv(socket1,&personajes,sizeof(personajes),0);
+	juegoCliente->cargarTexturasJugadores(personajes);//creo el mapa
+
+
+
+
+
+	while(true){
+		cin>>buffer;
+		send(socket1,buffer,MAXDATOS,0);
+		recv(socket1,buffer,MAXDATOS,0);
+		cout<<buffer<<endl;
+
+
 	}
 
 

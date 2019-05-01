@@ -2,7 +2,6 @@
 #include <string>
 #include <ControladorJson.hpp>
 #include <ControladorLogger.hpp>
-#include <Servidor.hpp>
 #include <Server.hpp>
 #include <Cliente.hpp>
 
@@ -34,8 +33,8 @@ int main(int argc, char **argv){
 		argumentoConsola = "";
 
 	controladorLogger->registrarEvento("INFO", "main::Json leido. Comienzo el juego");
-	Juego *juego = new Juego();
-	delete juego;
+	//Juego *juego = new Juego();
+	//delete juego;
 	controladorLogger->registrarEvento("INFO", "main::Juego Finalizado");
 	return 0;
 

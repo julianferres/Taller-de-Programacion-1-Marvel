@@ -5,9 +5,13 @@
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
+using namespace std;
 
-GameMenu::GameMenu(ControladorGrafico &graficos){
+
+GameMenu::GameMenu(ControladorGrafico &graficos, int idCliente){
+	controladorLogger->registrarEvento("DEBUG", "GameMenu::Inicio menu");
 	TTF_Init();
+	this->id = idCliente;
 	this->alto_ventana = controladorJson->alturaVentana();
 	this->ancho_ventana = controladorJson->anchoVentana();
 	this->marvelFont = TTF_OpenFont("contents/Fonts/Marvel.ttf", (300 * this->ancho_ventana) / this->ancho_maximo_ventana);
@@ -21,7 +25,8 @@ GameMenu::GameMenu(ControladorGrafico &graficos){
 	this->subTituloSurface = TTF_RenderText_Solid(selectFont, "ELIJE A TUS HEROES", { 255, 252, 51} );
 	this->subTituloTexture = SDL_CreateTextureFromSurface(graficos.getRenderer(), this->subTituloSurface);
 
-	this->actionSurface = TTF_RenderText_Solid(pixelFont, "Jugador 1 elija al personaje 1", { 0, 0, 251} );
+	std::string text ="Jugador " + std::to_string(this->id) + " elija al personaje ";
+	this->actionSurface = TTF_RenderText_Solid(pixelFont, text.c_str(), { 0, 0, 251} );
 	this->actionTexture = SDL_CreateTextureFromSurface(graficos.getRenderer(), this->actionSurface);
 
 	this->handleEvent(graficos);
@@ -56,11 +61,9 @@ void GameMenu::crearBotonParaPersonaje(ControladorGrafico &graficos, int i){
 void GameMenu::handleEvent(ControladorGrafico &graficos){//int personaje, int jugador){
 	SDL_Event e;
 	bool quit = false;
-	int jugador=1;
-	int personaje=1;
 
-	while(!quit && (jugador <3)){
-			//Elegir personaje 1 Jugador 1
+	while(!quit ){
+			//Elegir personaje
 		while( SDL_PollEvent( &e ) != 0 ){
 			if( e.type == SDL_QUIT ){
 				quit = true;
@@ -69,26 +72,15 @@ void GameMenu::handleEvent(ControladorGrafico &graficos){//int personaje, int ju
 				//controladorLogger->registrarEvento("DEBUG", "GameMenu::handleando evento para boton " + std::to_string(i));
 				this->botones[i]->handleEvent(e);
 				if (e.type == SDL_MOUSEBUTTONUP && this->botones[i]->fueClickeado()){
-					controladorJson->setPersonajeJugador(personaje, jugador, this->botones[i]->Nombre());
-					controladorLogger->registrarEvento("DEBUG", "GameMenu::Personaje Seteado");					personaje++;
-					controladorLogger->registrarEvento("DEBUG", "GameMenu::Sumo uno a personaje = "+ std::to_string(personaje));
-					if (personaje > 2){
-						personaje=1;
-						jugador++;
-						controladorLogger->registrarEvento("DEBUG", "GameMenu::Sumo uno a jugador = " + std::to_string(jugador));
-					}
-					std::string text = "Jugador " + std::to_string(jugador) + " elija al personaje " + std::to_string(personaje);
-					this->actionSurface = TTF_RenderText_Solid(pixelFont, text.c_str() , { 0, 0, 251} );
-					this->actionTexture = SDL_CreateTextureFromSurface(graficos.getRenderer(), this->actionSurface);
-
+					controladorLogger->registrarEvento("DEBUG", "GameMenu::Personaje Seteado");
+					this->personajeElegido = this->botones[i]->Nombre();
+					controladorLogger->registrarEvento("DEBUG", "GameMenu::Menu terminado");
+					return;
 				}
-
-			}
 		this->dibujar(graficos);
-
 		}
 	}
-	controladorLogger->registrarEvento("DEBUG", "GameMenu::Menu terminado");
+}
 }
 
 void GameMenu::dibujar(ControladorGrafico &graficos){
@@ -113,7 +105,14 @@ void GameMenu::dibujar(ControladorGrafico &graficos){
 	graficos.dibujarImagen(actionTexture, NULL, &sourceRect, SDL_FLIP_NONE);
 
 	graficos.render();
+
+	}
+
+string GameMenu::personajeSeleccionado(){
+	return personajeElegido;
 }
+
+
 
 void GameMenu::elegirPersonajes(ControladorGrafico &graficos){
 	/*SDL_Event e;

@@ -33,6 +33,7 @@ class Boton{
 		int height;
 		std::string nombre;
 		SpriteAnimado *spriteAnimado;
+		SDL_Texture *textura;
 		SDL_Point posicion;
 		BotonSprite spriteActual;
 

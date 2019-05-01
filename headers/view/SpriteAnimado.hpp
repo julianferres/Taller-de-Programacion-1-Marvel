@@ -15,7 +15,7 @@ class SpriteAnimado{
 	public:
 
 		~SpriteAnimado();
-		SpriteAnimado(ControladorGrafico &graficos, const string &filePath, string nombre);
+		SpriteAnimado(string nombre);
 		bool iniciarAnimacion(string animacion);
 		void update();
 		void dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho, SDL_RendererFlip flip);
@@ -26,6 +26,9 @@ class SpriteAnimado{
 		void cargarAnimaciones(string nombre);
 		int getFrameIndex();
 		string getAnimacionActual();
+		string getNombre();
+		SDL_Rect rectOrigen();
+
 
 	private:
 
@@ -36,6 +39,7 @@ class SpriteAnimado{
 		int frameIndex = 0;
 		int regulador = 0;
 		bool visible = true;
+		string nombreSprite;
 
 };
 

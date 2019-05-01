@@ -444,11 +444,11 @@ void ControladorJson::maximizarVentana(int ancho, int alto){
 }
 
 
-int ControladorJson::getPosicionXInicialJugador1(){
+int ControladorJson::getPosicionXInicialEquipo1(){
 	return this->ancho_ventana * 1/16;
 }
 
-int ControladorJson::getPosicionXInicialJugador2(){
+int ControladorJson::getPosicionXInicialEquipo2(){
 	return this->ancho_ventana * 3/4;
 }
 

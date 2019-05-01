@@ -15,14 +15,19 @@ SpriteAnimado::~SpriteAnimado(){
 	SDL_FreeSurface(surface);
 }
 
-SpriteAnimado::SpriteAnimado(ControladorGrafico &graficos,  const string &filePath, string nombre){
-	surface = graficos.cargarImagen(filePath);
-	this->spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),surface);
+SpriteAnimado::SpriteAnimado(string nombre){
+	//surface = graficos.cargarImagen(filePath);
+	//this->spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),surface);
+	this->nombreSprite = nombre;
 	cargarAnimaciones(nombre);
 }
 
 string SpriteAnimado::getAnimacionActual(){
 	return this->animacionActual->getNombre();
+}
+
+string SpriteAnimado::getNombre(){
+	return this->nombreSprite;
 }
 
 void SpriteAnimado::cargarAnimaciones(string nombre){
@@ -40,7 +45,6 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(agacharse);
 		animaciones.push_back(cambioEntrada);
 		animacionActual = quieto;
-		return;
 	}
 	else if(nombre=="Spiderman"){
 		Animacion *quieto = new Animacion("quieto",10,0,0,125,115,5);
@@ -87,9 +91,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(salto);
 		animaciones.push_back(agacharse);
 		animaciones.push_back(cambioEntrada);
-
 		animacionActual = quieto;
-		return;
+
 	}
 	else if(nombre=="Hulk" ){
 		Animacion *quieto = new Animacion("quieto",8,0,0,170,125,10);
@@ -105,7 +108,6 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(agacharse);
 		animaciones.push_back(cambioEntrada);
 		animacionActual = quieto;
-		return;
 	}
 	else if(nombre=="sinSprite" ){
 		Animacion *quieto = new Animacion("quieto",1,0,0,600,600,10);
@@ -123,7 +125,6 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(cambioSalida);
 		animaciones.push_back(cambioEntrada);
 		animacionActual = quieto;
-		return;
 	}
 	//std::string Nombre, int Frames,int x,int y, int ancho, int alto,int Velocidad
 	else if(nombre=="CapitanAmericaBoton"){
@@ -223,6 +224,11 @@ void SpriteAnimado::update(){
 int SpriteAnimado::getFrameIndex(){
 	return this->frameIndex;
 }
+
+SDL_Rect SpriteAnimado::rectOrigen(){
+	return animacionActual->getRectOrigen(this->frameIndex);
+}
+
 
 void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho, SDL_RendererFlip flip){
 
