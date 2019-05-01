@@ -1,9 +1,0 @@
-el cliente y el servidor lo corren desde consola
-g++ -o cliente cliente.cpp 
-
-./cliente localhost
-
-
-g++ -o servidor servidor.cpp
-
-./servidor

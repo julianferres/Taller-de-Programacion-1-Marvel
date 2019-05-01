@@ -40,15 +40,21 @@ Cliente::Cliente( char * direccionIP){
 
 
 
-	int *idCliente=NULL;
-	JuegoCliente *juegoCliente = new JuegoCliente();
 
-	//estoy esperando que se conecten todos los clientes, mientras que n sea 0 faltan jugadores
-	// todosConectados va a tomar un valor != cuando esten todos y su valor sera el idCliente
-	recv(socket1,idCliente,sizeof(int*),0);//se conectaron todos los jugadores
+	JuegoCliente *juegoCliente = new JuegoCliente();
+	int idClienteRecibido;
+	int idCliente;
+
+
+	recv(socket1,&idClienteRecibido,sizeof(int),0);//se conectaron todos los jugadores
+
+	idCliente= ntohl(idClienteRecibido);
+	cout<<"Soy el cliente idCliente: "<<idCliente;
 
 	juegoCliente->iniciarGraficos();
-	GameMenu *menu = new GameMenu(*juegoCliente->graficos(),*idCliente);//inicio el menu
+	puts("inicie los graficos");
+	GameMenu *menu = new GameMenu(*juegoCliente->graficos(),idCliente);//inicio el menu
+	puts("menu");
 	string personajeElegido = menu->personajeSeleccionado();//ya seleccione mi personaje
 	send(socket1,&personajeElegido,sizeof(personajeElegido),0);//le envio el personaje al servidor
 	vector<tuple<string, const string>> personajes;

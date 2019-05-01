@@ -20,6 +20,7 @@ class Server{
 public:
 	Server();
 	void* connection_handler(void *socket_desc);
+	static void*connection_handler_wrapper(void *args);
 
 private:
 	Juego *juego ;

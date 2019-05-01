@@ -10,14 +10,25 @@
 #include<Juego.hpp>
 #include <vector>
 #include <tuple>
- 
+#include <string>
+#define CANTIDAD_MAXIMA_JUGADORES 4
 using namespace std;
+
+struct arg_struct {
+	    Server *este;
+	    int client_sock;
+	 }args;
+	typedef struct arg_struct parametros;
+
 
 Server::Server()
 {
     int socket_desc , client_sock , c;
     struct sockaddr_in server , client;
     cantidad_actual_clientes=0;
+
+    parametros* args = (parametros*) malloc(sizeof(arg_struct));
+   args->este=this;
 
     //Create socket
     socket_desc = socket(AF_INET , SOCK_STREAM , 0);
@@ -45,10 +56,11 @@ Server::Server()
 	pthread_t thread_id;
 	juego = new Juego();
 
-    while(cantidad_actual_clientes<4 ){
-    	puts("Connection accepted");
+    while(true ){
     	client_sock = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c);
-        if( pthread_create( &thread_id , NULL , (THREADFUNCPTR) &Server::connection_handler , (void*) &client_sock) < 0)
+    	args->client_sock=client_sock;
+    	puts("Connection accepted");
+    	if( pthread_create( &thread_id , NULL , Server::connection_handler_wrapper , (void*) args)  < 0)
         	perror("could not create thread");
 
         cantidad_actual_clientes++;
@@ -58,8 +70,14 @@ Server::Server()
      
     if (client_sock < 0)
         perror("accept failed");
-     
+    free(args);
+    close(socket_desc);
 
+}
+
+void *Server::connection_handler_wrapper(void *args){
+	parametros* argumentos = (parametros*) args;
+	 return ((Server *)argumentos->este)->connection_handler((void*)&argumentos->client_sock);
 }
  
 /*
@@ -67,26 +85,35 @@ Server::Server()
  * */
 void *Server::connection_handler(void *socket_desc)
 {
-    //puts("Soy la funcion de conexion con el cliente");
     int sock = *(int*)socket_desc;
-    unsigned int *idCliente;
-    *idCliente = Server::cantidad_actual_clientes;
+    int *idCliente = (int*) malloc(sizeof(int));
+
+    //El id es segun el orden en que hayan llegado los jugadores
+    *idCliente = cantidad_actual_clientes;
 
    char mensaje[256];
 
-   while(cantidad_actual_clientes<3){
-    	puts("esperar a que estemos todos");
-    	//send(sock,NULL,sizeof(NULL),0);
+   while(cantidad_actual_clientes<CANTIDAD_MAXIMA_JUGADORES){
+	   //esperando que lleguen todos los jugadores
     }
-   send(sock,idCliente,sizeof(int*),0);//envio al cliente su id, y le aviso que ya estan todos conectados
-   recv(sock,mensaje,256,0);//recibo el personaje elegido
+
+
+   //Convierto el id en bytes para que sean enviados
+	int idConvertidoParaEnviar = htonl(*idCliente);
+   send(sock,(const char *)&idConvertidoParaEnviar,sizeof(int),0);//envio al cliente su id, y le aviso que ya estan todos conectados
+
+
+   //recibo el personaje elegido
+   recv(sock,mensaje,256,0);
+
+
    const string &filePath = controladorJson->pathImagen(mensaje);
    tuple <string, const string> personaje=make_tuple(mensaje,filePath);
    personajes.push_back(personaje);
-   while(personajes.size()<4){
+   while(personajes.size()<CANTIDAD_MAXIMA_JUGADORES){
 	   puts("hay jugadores que no seleccionaron todavia");
    }
-   for(int i=0;i<4;i++){
+   for(int i=0;i<CANTIDAD_MAXIMA_JUGADORES;i++){
 	   string nombre = get<0>(personajes[i]);
 	   juego->crearJugador(nombre,*idCliente);
    }
