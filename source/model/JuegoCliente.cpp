@@ -4,7 +4,7 @@
 #include <ControladorGrafico.hpp>
 #include <ControladorJson.hpp>
 #include <TexturasFondos.hpp>
-
+#include <iostream>
 using namespace std;
 
 JuegoCliente::JuegoCliente(){

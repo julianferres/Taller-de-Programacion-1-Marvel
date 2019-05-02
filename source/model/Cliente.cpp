@@ -41,9 +41,6 @@ Cliente::Cliente( char * direccionIP){
 	if(conexion==-1)
 		cout<<"error al conectar"<<endl;
 
-
-
-
 	JuegoCliente *juegoCliente = new JuegoCliente();
 	int idClienteRecibido;
 	int idCliente;
@@ -52,7 +49,7 @@ Cliente::Cliente( char * direccionIP){
 	recv(socket1,&idClienteRecibido,sizeof(int),0);//se conectaron todos los jugadores
 
 	idCliente= ntohl(idClienteRecibido);
-	cout<<"Soy el cliente idCliente: "<<idCliente;
+	cout<<"Soy el cliente idCliente: "<<idCliente << endl;
 
 	juegoCliente->iniciarGraficos();
 	puts("inicie los graficos");
@@ -67,11 +64,13 @@ Cliente::Cliente( char * direccionIP){
 	vector<tuple<string, const string>> personajes;
 	for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
 		recv(socket1,buffer,256,0);
-		puts(buffer);
-		const string &filePath = controladorJson->pathImagen(buffer);
-		tuple <string, const string> tuplaPersonaje=make_tuple(buffer,filePath);
+		const string &filePath = controladorJson->pathImagen(string(buffer));
+		tuple <string, const string> tuplaPersonaje=make_tuple(string(buffer),filePath);
 		personajes.push_back(tuplaPersonaje);
-	  }
+		cout << get<0>(personajes[i]) << "," << get<1>(personajes[i]) << endl;
+
+	}
+
 	cout<< personajes.size();
 	juegoCliente->cargarTexturasJugadores(personajes);//creo el mapa
 

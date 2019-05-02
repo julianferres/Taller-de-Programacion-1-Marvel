@@ -11,6 +11,7 @@
 #include <vector>
 #include <tuple>
 #include <string>
+#include <mutex>
 #define CANTIDAD_MAXIMA_JUGADORES 4
 using namespace std;
 
@@ -94,6 +95,7 @@ void *Server::connection_handler_wrapper(void *args){
  * */
 void *Server::connection_handler(void *socket_desc)
 {
+	mutex personajes_mutex;
     int sock = *(int*)socket_desc;
     int *idCliente = (int*) malloc(sizeof(int));
 
@@ -114,12 +116,10 @@ void *Server::connection_handler(void *socket_desc)
 
    //recibo el personaje elegido
    recv(sock,nombrePersonaje,256,0);
-
+   personajes_mutex.lock();
    juego->crearJugador(nombrePersonaje,*idCliente);
-
-
    vectorPersonajes.push_back(nombrePersonaje);//creo al jugador
-
+   personajes_mutex.unlock();
 
    while(vectorPersonajes.size()<CANTIDAD_MAXIMA_JUGADORES){
 	   //puts("hay jugadores que no seleccionaron todavia");
@@ -128,7 +128,7 @@ void *Server::connection_handler(void *socket_desc)
    for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
 		string personajeElegido = vectorPersonajes[i];//ya seleccione mi personaje
 		puts(vectorPersonajes[i]);
-		send(sock,(personajeElegido.c_str()),sizeof(personajeElegido),0);//le envio el personaje al servidor
+		send(sock,(personajeElegido.c_str()),256,0);//le envio el personaje al servidor
    }
 
    while(true){}
@@ -137,7 +137,7 @@ void *Server::connection_handler(void *socket_desc)
 
 
 
-    while(  nombrePersonaje!="salir" ){
+    while(nombrePersonaje!="salir" ){
     	recv(sock,nombrePersonaje,256,0);
     	cout<<nombrePersonaje<<endl;
     	cin>>nombrePersonaje;
