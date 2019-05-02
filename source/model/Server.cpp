@@ -13,6 +13,7 @@
 #include <string>
 #include <mutex>
 #define CANTIDAD_MAXIMA_JUGADORES 4
+#define MAXDATOS 1000
 using namespace std;
 
 struct arg_struct {
@@ -59,6 +60,8 @@ Server::Server()
 
     while( vectorPersonajes.size() < CANTIDAD_MAXIMA_JUGADORES){
     	client_sock = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c);
+    	 if (client_sock < 0)
+    	        perror("accept failed");
     	args->client_sock=client_sock;
     	puts("Connection accepted");
     	if( pthread_create( &thread_id , NULL , Server::connection_handler_wrapper , (void*) args)  < 0)
@@ -66,18 +69,12 @@ Server::Server()
 
         cantidad_actual_clientes++;
         //pthread_join( thread_id , NULL);
-        puts("Handler assigned");
-
-
+        cout<<"Bienvenido jugador "+to_string(cantidad_actual_clientes)<<endl;
 
     }
-     
-    if (client_sock < 0)
-        perror("accept failed");
 
     juego->crearEquipos();
     while(true){
-
     }
 
     free(args);
@@ -98,26 +95,23 @@ void *Server::connection_handler(void *socket_desc)
 	mutex personajes_mutex;
     int sock = *(int*)socket_desc;
     int *idCliente = (int*) malloc(sizeof(int));
+    char nombrePersonaje[MAXDATOS];
 
     //El id es segun el orden en que hayan llegado los jugadores
     *idCliente = cantidad_actual_clientes;
-
-   char nombrePersonaje[256];
 
    while(cantidad_actual_clientes<CANTIDAD_MAXIMA_JUGADORES){
 	   //esperando que lleguen todos los jugadores
     }
 
-
    //Convierto el id en bytes para que sean enviados
 	int idConvertidoParaEnviar = htonl(*idCliente);
    send(sock,(const char *)&idConvertidoParaEnviar,sizeof(int),0);//envio al cliente su id, y le aviso que ya estan todos conectados
 
-
    //recibo el personaje elegido
-   recv(sock,nombrePersonaje,256,0);
+   recv(sock,nombrePersonaje,MAXDATOS,0);
    personajes_mutex.lock();
-   juego->crearJugador(nombrePersonaje,*idCliente);
+   juego->crearJugador(string(nombrePersonaje),*idCliente);
    vectorPersonajes.push_back(nombrePersonaje);//creo al jugador
    personajes_mutex.unlock();
 
@@ -126,9 +120,8 @@ void *Server::connection_handler(void *socket_desc)
    }
 
    for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
-		string personajeElegido = vectorPersonajes[i];//ya seleccione mi personaje
-		puts(vectorPersonajes[i]);
-		send(sock,(personajeElegido.c_str()),256,0);//le envio el personaje al servidor
+		char* personajeElegido = vectorPersonajes[i];
+		send(sock,personajeElegido,MAXDATOS,0);//le envio el personaje al cliente
    }
 
    while(true){}

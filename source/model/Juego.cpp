@@ -8,16 +8,18 @@
 #include <TexturasFondos.hpp>
 #include <JuegoCliente.hpp>
 #include <Equipo.hpp>
+#include <string>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
+using namespace std;
 
 
 Juego::Juego(){
 
 	this->teclado = new ControladorTeclado();
 	this-> parallax = new Parallax();
-	controladorLogger->registrarEvento("INFO", "Juego::Se iniciaron los jugadores");
+	controladorLogger->registrarEvento("INFO", "Juego::Se inicio el juego");
 }
 
 Juego::~Juego(){
@@ -31,15 +33,17 @@ void Juego::crearJugador(std::string nombre,int cliente){
 	int posicionXinicial;
 	SDL_RendererFlip flip;
 	bool ladoDerecho;
-	if(cliente<2){//sos del equipo1
+	if(cliente<3){//sos del equipo1
 		posicionXinicial = controladorJson->getPosicionXInicialEquipo1();
 		flip = SDL_FLIP_NONE;
 		ladoDerecho = false;
+		controladorLogger->registrarEvento("INFO","Jugador "+to_string(cliente) +" al equipo 1");
 	}
 	else{//sos del equipo 2
 		posicionXinicial = controladorJson->getPosicionXInicialEquipo2();
 		flip = SDL_FLIP_HORIZONTAL;
 		ladoDerecho = true;
+		controladorLogger->registrarEvento("INFO","Jugador "+to_string(cliente)+" al equipo 2");
 	}
 	Jugador *jugador = new Jugador(nombre,posicionXinicial,flip,ladoDerecho);
 	jugadores.insert(jugadores.begin(),cliente,jugador);

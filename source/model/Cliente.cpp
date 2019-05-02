@@ -20,7 +20,7 @@ extern ControladorLogger *controladorLogger;
 
 #define PUERTO 5001
 #define NO_TODOS_CLIENTES_CONECTADOS -1
-#define MAXDATOS 256
+#define MAXDATOS 1000
 
 Cliente::Cliente( char * direccionIP){
 	int socket1, socketControl, numeroBytes,conexion, conexionControl;
@@ -41,37 +41,33 @@ Cliente::Cliente( char * direccionIP){
 	if(conexion==-1)
 		cout<<"error al conectar"<<endl;
 
+
 	JuegoCliente *juegoCliente = new JuegoCliente();
 	int idClienteRecibido;
 	int idCliente;
 
-
 	recv(socket1,&idClienteRecibido,sizeof(int),0);//se conectaron todos los jugadores
 
 	idCliente= ntohl(idClienteRecibido);
-	cout<<"Soy el cliente idCliente: "<<idCliente << endl;
+	cout<<"Soy el cliente : "<<idCliente << endl;
 
 	juegoCliente->iniciarGraficos();
-	puts("inicie los graficos");
 	GameMenu *menu = new GameMenu(*juegoCliente->graficos(),idCliente);//inicio el menu
 
 	//Seleccionamos el personaje y lo enviamos al server
 	string personajeElegido = menu->personajeSeleccionado();//ya seleccione mi personaje
-	send(socket1,(personajeElegido.c_str()),sizeof(personajeElegido),0);//le envio el personaje al servidor
-
+	cout<<"Seleccione al personaje "<<personajeElegido<<endl;
+	send(socket1,(personajeElegido.c_str()),MAXDATOS,0);//le envio el personaje al servidor
 
 	//Aca llegan los jugadores seleccionados por todos
 	vector<tuple<string, const string>> personajes;
 	for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
-		recv(socket1,buffer,256,0);
+		recv(socket1,buffer,MAXDATOS,0);
 		const string &filePath = controladorJson->pathImagen(string(buffer));
 		tuple <string, const string> tuplaPersonaje=make_tuple(string(buffer),filePath);
 		personajes.push_back(tuplaPersonaje);
-		cout << get<0>(personajes[i]) << "," << get<1>(personajes[i]) << endl;
-
 	}
 
-	cout<< personajes.size();
 	juegoCliente->cargarTexturasJugadores(personajes);//creo el mapa
 
 
