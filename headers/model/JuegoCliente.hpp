@@ -7,8 +7,8 @@
 #include <ControladorJson.hpp>
 #include <ControladorTeclado.hpp>
 #include <Parallax.hpp>
+#include <Texturas.hpp>
 #include <TexturasFondos.hpp>
-#include <TexturasPersonajes.hpp>
 
 class JuegoCliente{
 
@@ -17,13 +17,14 @@ public:
 	~JuegoCliente();
 	ControladorGrafico *graficos();
 	TexturasFondos * fondos();
+	SDL_Texture * getTextura(string nombre);
 	void iniciarGraficos();
-	void cargarTexturasJugadores(vector<tuple<string, const string>> nombresYpaths);
+	void cargarTexturas(vector<tuple<string, const string>> nombresYpaths);
 
 private:
 	ControladorGrafico *grafico;
 	TexturasFondos *texturasFondos;
-	TexturasPersonajes *texturasPersonajes;
+	Texturas *texturas;
 
 };
 

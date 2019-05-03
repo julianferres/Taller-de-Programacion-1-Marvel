@@ -94,6 +94,13 @@ std::string ControladorJson::nivelDebug(){
 	return nivel_debug;
 }
 
+std::vector<int>ControladorJson::getZindexes(){
+	for(int i=0;i<fondos.size();i++){
+		zindexes.push_back(std::get<1>(fondos[i]));
+	}
+	return zindexes;
+}
+
 std::string ControladorJson::pathFondo(int zindex){
     for (int i = 0; i < cantidad_fondos; i++){
             if(std::get<1>(fondos[i]) == zindex)
@@ -105,7 +112,6 @@ std::string ControladorJson::pathFondo(int zindex){
 std::string ControladorJson::pathImagen(std::string nombrePersonaje){
     for (int i = 0; i < cantidad_personajes; i++){
             if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
-            	controladorLogger->registrarEvento("INFO","ControladorJson::Se cargo correctamente la imagen del personaje: "+ nombrePersonaje + ": "+ std::get<1>(personajes[i]));
             	return std::get<1>(personajes[i]);
             }
         }
@@ -120,7 +126,6 @@ std::string ControladorJson::nombrePersonajeI(int i){
 std::string ControladorJson::pathBoton(std::string nombrePersonaje){
 	for (int i = 0; i < cantidad_personajes; i++){
 		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
-			controladorLogger->registrarEvento("INFO","ControladorJson::Se cargo correctamente la imagen del boton del personaje: "+ nombrePersonaje + ": "+ std::get<5>(personajes[i]));
 			return std::get<5>(personajes[i]);
 		}
 	}

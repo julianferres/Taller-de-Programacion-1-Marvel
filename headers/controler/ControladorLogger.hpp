@@ -8,6 +8,7 @@ class ControladorLogger{
 	public:
 
 		ControladorLogger( );
+		void crearLog(std::string nombre);
 		void setNivelDebug(std::string nivelDebug);
 		int registrarEvento( std::string nivel_debug_evento,  std::string mensaje);
 		std::string obtenerTiempo();
@@ -15,7 +16,8 @@ class ControladorLogger{
 	private:
 
 		std::string nivelDebug;
-		std::string nombreArchivo = "source/config/log.txt";
+		//std::string nombreArchivo = "source/config/log.txt";
+		std::string nombreArchivo = "source/config/log";
 		std::string nombreArchivoRepuesto = "source/config/log_repuesto.txt";
 
 };

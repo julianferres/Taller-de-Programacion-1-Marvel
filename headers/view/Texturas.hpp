@@ -9,9 +9,10 @@
 
 using namespace std;
 
-class TexturasPersonajes {
+class Texturas {
 	public:
-		TexturasPersonajes(ControladorGrafico &graficos,vector<tuple<string, const string>> nombresYpaths);
+		Texturas(ControladorGrafico &graficos,vector<tuple<string, const string>> nombresYpaths);
+		SDL_Texture * getTextura(string nombre);
 	private:
 		std::map<string, SDL_Texture*> texturas;
 };

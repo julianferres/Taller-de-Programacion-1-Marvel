@@ -7,90 +7,98 @@
 #include <strings.h>
 #include <iostream>
 #include <Cliente.hpp>
-#include <GameMenu.hpp>
-#include <JuegoCliente.hpp>
-#include <ControladorLogger.hpp>
 #include <string>
 #include <tuple>
-#define CANTIDAD_MAXIMA_JUGADORES 4
+
 using namespace std;
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
-#define PUERTO 5001
-#define NO_TODOS_CLIENTES_CONECTADOS -1
-#define MAXDATOS 1000
-
 Cliente::Cliente( char * direccionIP){
-	int socket1, socketControl, numeroBytes,conexion, conexionControl;
-	char buffer[MAXDATOS];
+	juegoCliente = new JuegoCliente();
+	this->iniciarConexion(direccionIP);
+	this->recibirIDcliente();
+	this->elegirPersonaje();
+	this->cargarContenidos();
+
+	while(true){
+		//enviarEventos  send(socketCliente, evento,sizeof(evento),0);
+		 // recibir vista recv(socket1,buffer,MAXDATOS,0);
+		 // dibujar
+	}
+
+	close(numeroSocket);
+}
+
+
+void Cliente::iniciarConexion(char* direccionIP){
+	int  conexion;
 	struct hostent *nodoServidor;
 	struct sockaddr_in servidor;
 
 	nodoServidor=gethostbyname(direccionIP);
 	if(nodoServidor==NULL)
-		cout<<"error en la direccion"<<endl;
+		controladorLogger->registrarEvento("ERROR", "Cliente::Error en la conexion");
 
-	socket1=socket(AF_INET, SOCK_STREAM, 0);
+	numeroSocket=socket(AF_INET, SOCK_STREAM, 0);
 	servidor.sin_family=AF_INET;
 	servidor.sin_port=htons(PUERTO);
 	servidor.sin_addr=*((struct in_addr *)nodoServidor->h_addr);
 	bzero(&(servidor.sin_zero),8);
-	conexion=connect(socket1,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
+	conexion=connect(numeroSocket,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
 	if(conexion==-1)
-		cout<<"error al conectar"<<endl;
+		controladorLogger->registrarEvento("ERROR", "Cliente::Error al conectar con el servidor");
+}
 
+void Cliente::recibirIDcliente(){
 
-	JuegoCliente *juegoCliente = new JuegoCliente();
 	int idClienteRecibido;
-	int idCliente;
-
-	recv(socket1,&idClienteRecibido,sizeof(int),0);//se conectaron todos los jugadores
-
+	recv(numeroSocket,&idClienteRecibido,sizeof(int),0);//se conectaron todos los jugadores
 	idCliente= ntohl(idClienteRecibido);
-	cout<<"Soy el cliente : "<<idCliente << endl;
+	controladorLogger->registrarEvento("INFO", "Cliente::El cliente "+to_string(idCliente)+"se conecto correctamente");
 
+}
+
+void Cliente::elegirPersonaje(){
 	juegoCliente->iniciarGraficos();
 	GameMenu *menu = new GameMenu(*juegoCliente->graficos(),idCliente);//inicio el menu
 
 	//Seleccionamos el personaje y lo enviamos al server
 	string personajeElegido = menu->personajeSeleccionado();//ya seleccione mi personaje
-	cout<<"Seleccione al personaje "<<personajeElegido<<endl;
-	send(socket1,(personajeElegido.c_str()),MAXDATOS,0);//le envio el personaje al servidor
+	controladorLogger->registrarEvento("INFO", "Cliente::El cliente "+to_string(idCliente)+" eligio al personaje" + personajeElegido);
+	send(numeroSocket,(personajeElegido.c_str()),MAXDATOS,0);//le envio el personaje al servidor
+}
 
-	//Aca llegan los jugadores seleccionados por todos
-	vector<tuple<string, const string>> personajes;
-	for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
-		recv(socket1,buffer,MAXDATOS,0);
+void Cliente::cargarContenidos(){
+	char buffer[MAXDATOS];
+	vector<tuple<string, const string>> personajesYfondos;
+	for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){//Aca llegan los jugadores seleccionados por todos
+		recv(numeroSocket,buffer,MAXDATOS,0);
 		const string &filePath = controladorJson->pathImagen(string(buffer));
 		tuple <string, const string> tuplaPersonaje=make_tuple(string(buffer),filePath);
-		personajes.push_back(tuplaPersonaje);
+		personajesYfondos.push_back(tuplaPersonaje);
+		send(numeroSocket,buffer,MAXDATOS,0);//le aviso que termine de trabajar
 	}
 
-	juegoCliente->cargarTexturasJugadores(personajes);//creo el mapa
-
-
-
-	while(true){
-		cin>>buffer;
-		send(socket1,buffer,MAXDATOS,0);
-		recv(socket1,buffer,MAXDATOS,0);
-		cout<<buffer<<endl;
-
-
+	int zindex;
+	int cantidadZindex = controladorJson->getZindexes().size();
+	for(int i=0; i <cantidadZindex;i++){
+		recv(numeroSocket,&zindex,sizeof(zindex),0);
+		const string &filePath = controladorJson->pathFondo(zindex);
+		tuple <string, const string> tuplaFondo=make_tuple(to_string(zindex),filePath);
+		personajesYfondos.push_back(tuplaFondo);
+		send(numeroSocket,buffer,MAXDATOS,0);//le aviso que termine de trabajar
 	}
 
+	juegoCliente->cargarTexturas(personajesYfondos);//creo el mapa(nombre,textura)
 
-
-	/*while(true){
-		enviarEventos  send(socketCliente, evento,sizeof(evento),0);
-		 * recibir vista recv(socket1,buffer,MAXDATOS,0);
-		 * dibujar
-
-
-	}*/
-
-
-	close(socket1);
+	/*ejemplo de como deberia dibujar el cliente
+	SDL_Rect rectanguloOrigen = {0,16,100,120};
+	SDL_Rect rectanguloOrigen1 = {0,0,800,480};
+	SDL_Rect rectanguloDestino = {50,300,200,320};
+	juegoCliente->graficos()->limpiar();
+	juegoCliente->graficos()->dibujarImagen(juegoCliente->getTextura("1"), &rectanguloOrigen1, NULL, SDL_FLIP_NONE);
+	juegoCliente->graficos()->dibujarImagen(juegoCliente->getTextura("CapitanAmerica"), &rectanguloOrigen, &rectanguloDestino, SDL_FLIP_NONE);
+	juegoCliente->graficos()->render();*/
 }

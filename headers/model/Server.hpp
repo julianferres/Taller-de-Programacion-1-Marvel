@@ -9,9 +9,13 @@
 #include<unistd.h>
 #include<pthread.h>
 #include <Juego.hpp>
+#include <ControladorLogger.hpp>
 
 using namespace std;
-typedef void * (*THREADFUNCPTR)(void *);
+
+#define CANTIDAD_MAXIMA_JUGADORES 4
+#define MAXDATOS 1000
+#define PUERTO 5001
 
 
 class Server{
@@ -19,13 +23,20 @@ class Server{
 
 public:
 	Server();
-	void* connection_handler(void *socket_desc);
+	void crearSocket();
+	void esperarConexiones();
+	void* conexionInicial(void *socket_desc);
 	static void*connection_handler_wrapper(void *args);
 
 private:
 	Juego *juego ;
-	int cantidad_actual_clientes;
+	int cantidad_actual_clientes =0;
+	int socketServidor;
+	int socketCliente;
 	vector<char*> vectorPersonajes;
+	struct sockaddr_in server , client;
+
+
 };
 
 

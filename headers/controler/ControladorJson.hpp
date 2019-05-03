@@ -37,6 +37,7 @@ class ControladorJson{
 		std::string pathBoton(std::string nombrePersonaje);
 		std::string nombrePersonajeI(int i);
 		std::string menuImage();
+		std::vector<int>getZindexes();
 		std::string jugador1Personaje(int numero);
 		std::string jugador2Personaje(int numero);
 		void leerArchivo(std::string argumentoConsola);
@@ -58,6 +59,7 @@ class ControladorJson{
 		int zindex_personaje_default = 99;
 		bool fullscreen;
 		std::string nivel_debug;
+		std::vector<int>zindexes;
 		std::vector<tuplaPersonaje> personajes;
 		std::vector<std::tuple<std::string, int>> fondos;
 		std::string configPath = "source/config/config.json";

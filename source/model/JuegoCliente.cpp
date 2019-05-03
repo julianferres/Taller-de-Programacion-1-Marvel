@@ -29,12 +29,16 @@ TexturasFondos* JuegoCliente::fondos(){
 	return this->texturasFondos;
 }
 
-void JuegoCliente::cargarTexturasJugadores(vector<tuple<string, const string>> nombresYpaths){
-	this->texturasPersonajes = new TexturasPersonajes(*grafico,nombresYpaths);
+void JuegoCliente::cargarTexturas(vector<tuple<string, const string>> nombresYpaths){
+	this->texturas = new Texturas(*grafico,nombresYpaths);
 }
 
 void JuegoCliente::iniciarGraficos(){
 	this->grafico = new ControladorGrafico();
+}
+
+SDL_Texture * JuegoCliente::getTextura(string nombre){
+	return this->texturas->getTextura(nombre);
 }
 
 

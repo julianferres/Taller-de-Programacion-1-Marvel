@@ -1,8 +1,9 @@
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
+#include <vector>
 
 ControladorLogger::ControladorLogger(){
-
+/*
 	std::ofstream file;
 	try{
 		file.open(nombreArchivo,std::ofstream::trunc);
@@ -12,8 +13,23 @@ ControladorLogger::ControladorLogger(){
 		file.open(nombreArchivoRepuesto, std::fstream::trunc);
 		file << "ERROR ; Archivo de logging de repuesto creado!" <<" ; " << obtenerTiempo();
 	}
-	file.close();
+	file.close();*/
 
+}
+
+void ControladorLogger::crearLog(std::string nombre){
+	std::ofstream file;
+	nombreArchivo +=nombre+std::string(".txt");
+
+	try{
+		file.open(nombreArchivo,std::ofstream::trunc);
+		file << "INFO ; Archivo de logging creado!" <<" ; " << obtenerTiempo();
+	}
+	catch(int e){
+		file.open(nombreArchivoRepuesto, std::fstream::trunc);
+		file << "ERROR ; Archivo de logging de repuesto creado!" <<" ; " << obtenerTiempo();
+	}
+	file.close();
 }
 
 int ControladorLogger::registrarEvento(std::string nivel_debug_evento,  std::string mensaje ){

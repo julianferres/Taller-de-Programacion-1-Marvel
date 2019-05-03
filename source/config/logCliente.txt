@@ -1,0 +1,43 @@
+INFO ; Archivo de logging creado! ; Thu May  2 23:53:44 2019
+INFO ; main::Comienzo a leer el json ; Thu May  2 23:53:44 2019
+ERROR ; ControladorJson::Nivel de Debug no corresponde a ERROR, INFO o DEBUG. Se setea en DEBUG ; Thu May  2 23:53:44 2019
+INFO ; ControladorJson::Log level = DEBUG ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Altura ventana seteada: 1000 ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Ancho ventana seteada: 1400 ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Fullscreen = 0 ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::FPS seteados = 60 ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Personajes contados = 4 ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Fondos contados = 3 ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Jugadores contados = 2 ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Personajes seteados ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Fondos seteados ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Personaje encontrado: CapitanAmerica ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Personaje encontrado: Venom ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Personaje encontrado: Spiderman ; Thu May  2 23:53:44 2019
+DEBUG ; ControladorJson::Personaje encontrado: Hulk ; Thu May  2 23:53:44 2019
+INFO ; ControladorJson::Archivo de configuracion JSON leido correctamente ; Thu May  2 23:53:44 2019
+INFO ; main::Json leido. Comienzo el juego ; Thu May  2 23:53:44 2019
+INFO ; Cliente::El cliente 2se conecto correctamente ; Thu May  2 23:53:44 2019
+INFO ; Cliente::El cliente 4se conecto correctamente ; Thu May  2 23:53:44 2019
+INFO ; Cliente::El cliente 3se conecto correctamente ; Thu May  2 23:53:44 2019
+INFO ; Cliente::El cliente 1se conecto correctamente ; Thu May  2 23:53:44 2019
+DEBUG ; GameMenu::Inicio menu ; Thu May  2 23:53:45 2019
+INFO ; Iniciando menu ; Thu May  2 23:53:45 2019
+DEBUG ; GameMenu::Inicio menu ; Thu May  2 23:53:45 2019
+INFO ; Iniciando menu ; Thu May  2 23:53:45 2019
+DEBUG ; GameMenu::Inicio menu ; Thu May  2 23:53:45 2019
+INFO ; Iniciando menu ; Thu May  2 23:53:45 2019
+DEBUG ; GameMenu::Inicio menu ; Thu May  2 23:53:45 2019
+INFO ; Iniciando menu ; Thu May  2 23:53:45 2019
+DEBUG ; GameMenu::Personaje Seteado ; Thu May  2 23:53:46 2019
+DEBUG ; GameMenu::Menu terminado ; Thu May  2 23:53:46 2019
+INFO ; Cliente::El cliente 4 eligio al personajeCapitanAmerica ; Thu May  2 23:53:46 2019
+DEBUG ; GameMenu::Personaje Seteado ; Thu May  2 23:53:47 2019
+DEBUG ; GameMenu::Menu terminado ; Thu May  2 23:53:47 2019
+INFO ; Cliente::El cliente 3 eligio al personajeVenom ; Thu May  2 23:53:47 2019
+DEBUG ; GameMenu::Personaje Seteado ; Thu May  2 23:53:49 2019
+DEBUG ; GameMenu::Menu terminado ; Thu May  2 23:53:49 2019
+INFO ; Cliente::El cliente 2 eligio al personajeSpiderman ; Thu May  2 23:53:49 2019
+DEBUG ; GameMenu::Personaje Seteado ; Thu May  2 23:53:51 2019
+DEBUG ; GameMenu::Menu terminado ; Thu May  2 23:53:51 2019
+INFO ; Cliente::El cliente 1 eligio al personajeHulk ; Thu May  2 23:53:51 2019

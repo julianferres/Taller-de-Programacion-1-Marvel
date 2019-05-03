@@ -3,12 +3,12 @@
 #include <TexturasFondos.hpp>
 #include <map>
 #include <tuple>
-#include <TexturasPersonajes.hpp>
 #include <SpriteAnimado.hpp>
+#include <Texturas.hpp>
 
 using namespace std;
 
-TexturasPersonajes::TexturasPersonajes(ControladorGrafico &graficos,vector<tuple<string, const string>> nombresYpaths){
+Texturas::Texturas(ControladorGrafico &graficos,vector<tuple<string, const string>> nombresYpaths){
 	for(int i=0;i<nombresYpaths.size();i++){
 		tuple<string,const string> tuplai = nombresYpaths[i];
 		const string &filePath = get<1>(tuplai);
@@ -17,5 +17,9 @@ TexturasPersonajes::TexturasPersonajes(ControladorGrafico &graficos,vector<tuple
 		 texturas[nombre] = t1;
 	}
 
+}
+
+SDL_Texture * Texturas::getTextura(string nombre){
+	return this->texturas[nombre];
 }
 
