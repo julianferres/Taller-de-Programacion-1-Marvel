@@ -69,13 +69,13 @@ void Servidor::esperarConexiones(){
 		}
 	}
 }
-void Servidor::enviarIdCliente(int idCliente,int socketCliente){
+void Servidor::enviarInfoCliente(int idCliente,int socketCliente){
 	this->sisEnvio.enviarString("Conectado",socketCliente);
 	this->sisEnvio.enviarEntero(idCliente,socketCliente);
 }
 
 void *Servidor::conexionCliente(void*cliente){
 	Cliente* argumentos = (Cliente*) cliente;
-	((Servidor*)argumentos->servidor)->enviarIdCliente(argumentos->id,argumentos->socket);
+	((Servidor*)argumentos->servidor)->enviarInfoCliente(argumentos->id,argumentos->socket);
 }
 

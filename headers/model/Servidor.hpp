@@ -15,7 +15,7 @@ class Servidor{
 
 	public:
 		Servidor();
-		void enviarIdCliente(int idCliente,int socketCliente);
+		void enviarInfoCliente(int idCliente,int socketCliente);
 		static void *conexionCliente(void *cliente);
 		void crearSocket();
 		void esperarConexiones();
