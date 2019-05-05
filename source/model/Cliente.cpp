@@ -6,43 +6,56 @@
 #include <netdb.h>
 #include <strings.h>
 #include <iostream>
+#include <string.h>
 #include <Cliente.hpp>
 
 using namespace std;
 
 #define PUERTO 5001
 
-#define MAXDATOS 256 // podemos enviar solo 100 bytes
+#define MAXDATOS 256
 
 Cliente::Cliente( char * direccionIP){
-	int socket1,numeroBytes,conexion;
-	char buffer[MAXDATOS];
+	int socketConexion,numeroBytes,conexion;
 	struct hostent *nodoServidor;
 	struct sockaddr_in servidor;
 
-	nodoServidor=gethostbyname(direccionIP); //la direccion ip que le pasamos por parametro
+	nodoServidor=gethostbyname(direccionIP);
 	if(nodoServidor==NULL){
 		cout<<"error en la direccion"<<endl;
 	}
 
-	socket1=socket(AF_INET, SOCK_STREAM, 0); //lanzamos el socket
-
-	servidor.sin_family=AF_INET; // lo mismo que el servidor
+	socketConexion=socket(AF_INET, SOCK_STREAM, 0);
+	servidor.sin_family=AF_INET;
 	servidor.sin_port=htons(PUERTO);
 	servidor.sin_addr=*((struct in_addr *)nodoServidor->h_addr);
 	bzero(&(servidor.sin_zero),8);
 
-	conexion=connect(socket1,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
-	if(conexion==-1){
+	conexion=connect(socketConexion,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
+
+	if(conexion<0){
 	cout<<"error al conectar"<<endl;
-	}
-	while(true){
-		numeroBytes=recv(socket1,buffer,MAXDATOS,0);
-		if(numeroBytes==-1){
-			cout<<"error al recibir datos"<<endl;
-		}
-		buffer[numeroBytes]='\0';
-		cout<<"mensaje: "<<buffer<<endl;
-	}
-	close(socket1);
+	};
+	//Recibir Entero
+	void * buffer =malloc(4);
+	recv(socketConexion,buffer,4,0);
+	int cliente;
+	memcpy(&cliente,buffer,4);
+	std::cout<<"tengo id: "<<cliente<<endl;
+	this->idCliente=cliente;
+
+	std::cout<<"tengo guardado id: "<<this->idCliente<<endl;
+	//Recibir String
+	buffer=malloc(4);
+	recv(socketConexion,buffer,4,0);
+	int largo;
+	memcpy(&largo,buffer,4);
+	char bufer[largo+1];
+	recv(socketConexion,bufer,largo+1,0);
+	string mensaje(bufer);
+	std::cout<<"mensaje: "<<mensaje<<endl;
+
+	recv(socketConexion,bufer,largo+1,0); //esto hace que no termine el cliente
+
+	close(socketConexion);
 }

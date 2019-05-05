@@ -5,6 +5,8 @@ class Cliente{
 
 	public:
 		Cliente(char * direccionIP);
-	};
+	private:
+		int idCliente;
 
+};
 #endif

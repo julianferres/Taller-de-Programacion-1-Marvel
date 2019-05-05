@@ -7,51 +7,87 @@
 #include <iostream>
 #include <string.h>
 #include <Servidor.hpp>
+#include <pthread.h>
+#include <stdio.h>
 
 using namespace std;
 
 #define PUERTO 5001
-#define CANTIDADDECONEXIONES 5
+struct infoCliente{
+	Servidor *servidor;
+	int id;
+	int socket;
+};
+typedef struct infoCliente Cliente;
 
 Servidor::Servidor(){
+	this->cantidadDeClientes=0;
 
-	int socket1,socket2,enlace;
+	int socketServidor,socketCliente,cantidadClientes;
 	struct sockaddr_in servidor; // informacion de la direccion del servidor
 	struct sockaddr_in cliente; // informacion de la direccion del cliente
-	unsigned int tamanioCliente;
+	int tamanioCliente;
+	cantidadClientes=0;
 
 
-	socket1=socket(AF_INET,SOCK_STREAM,0);//AF_INET IPV4,SOCK_STREAM TCP
-	if (socket1==-1){
+	socketServidor=socket(AF_INET,SOCK_STREAM,0);//AF_INET IPV4,SOCK_STREAM TCP
+	if (socketServidor==-1){
 		cout<<"error en el socket"<<endl;
 	};
 	servidor.sin_family=AF_INET;
 	servidor.sin_port=htons(PUERTO); //definimos el puerto
 	servidor.sin_addr.s_addr=INADDR_ANY;// ponemos nuestra ip
-	bzero(&(servidor.sin_zero),8); // una cadena de ceros
 
-	enlace=bind(socket1,(struct sockaddr*)&servidor,sizeof(struct sockaddr));
-	if(enlace==-1){
+
+	if((bind(socketServidor,(struct sockaddr*)&servidor,sizeof(struct sockaddr)))<0){
 		cout<<"error en el enlace"<<endl;
 	};
-	listen(socket1,CANTIDADDECONEXIONES);
+
+	listen(socketServidor,3);
+	puts("Esperando conexiones");
+	tamanioCliente=sizeof(cliente);
+	pthread_t thread_id;
+	Cliente * infoCliente=(Cliente*)malloc(sizeof(Cliente));
 	while(true){
-		tamanioCliente=sizeof(cliente);
-		socket2=accept(socket1,(struct sockaddr*)&cliente,&tamanioCliente);
-		if(socket2==-1){
+		if(this->cantidadDeClientes<CANT_MAX_CLIENTES){
+		socketCliente=accept(socketServidor,(struct sockaddr*)&cliente,(socklen_t*)&tamanioCliente);
+
+		if(socketCliente<0){
 			cout<<"error al aceptar"<<endl;
 		};
-		cout<<"se conecto alguien"<<endl;
-		char mensaje[256];
-		//unsigned long int tamanio;
-		while(mensaje!="salir"){
-			cin>>mensaje;
-			//tamanio=sizeof(mensaje);
-			send(socket2,mensaje,256,0);
+		puts("conexion acceptada");
+		this->cantidadDeClientes++;
+		infoCliente->servidor=this;
+		infoCliente->id=this->cantidadDeClientes;
+		infoCliente->socket=socketCliente;
+		if((pthread_create(&thread_id,NULL,Servidor::conexionCliente,(void*)infoCliente))<0){
+			std::cout<<"error al creal el socket"<<endl;
+		};
+		cout<<"Bienvenido: "<<this->cantidadDeClientes<<endl;
 		}
-		close(socket2);
+		else{
+			std::cout<<"todo lleno"<<endl;
+		}
 	}
 }
+void Servidor::enviarIdCliente(int idCliente,int socketCliente){
+	//Enviar Entero
+	void * buffer=malloc(4);
+	memcpy(buffer,&(idCliente),4);
+	send(socketCliente,buffer,4,0);
+	//Enviar string
+	string mensaje="Conectado";
+	int largo=mensaje.size();
+	buffer=malloc(4);
+	memcpy(buffer,&(largo), 4);
+	send(socketCliente,buffer,4,0);
+	char mensajeEnviar[mensaje.size()+1];
+	strcpy(mensajeEnviar,mensaje.c_str());
+	send(socketCliente,mensajeEnviar,mensaje.size()+1, 0);
+}
 
-
+void *Servidor::conexionCliente(void*cliente){
+	Cliente* argumentos = (Cliente*) cliente;
+	((Servidor*)argumentos->servidor)->enviarIdCliente(argumentos->id,argumentos->socket);
+}
 

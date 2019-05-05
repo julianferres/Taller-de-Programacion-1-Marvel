@@ -23,14 +23,14 @@ int main(int argc, char **argv){
 		}
 	}
 
-	else
+	/*else
 		argumentoConsola = "";
 	controladorLogger->registrarEvento("INFO", "main::Comienzo a leer el json");
 	controladorJson->leerArchivo(argumentoConsola);
 	controladorLogger->registrarEvento("INFO", "main::Json leido. Comienzo el juego");
 	Juego *juego = new Juego();
 	delete juego;
-	controladorLogger->registrarEvento("INFO", "main::Juego Finalizado");
+	controladorLogger->registrarEvento("INFO", "main::Juego Finalizado");*/
 	return 0;
 
 }
