@@ -9,13 +9,14 @@ class GameMenu{
 
 	public:
 
-		GameMenu(ControladorGrafico &graficos);
+		GameMenu(ControladorGrafico &graficos,int idCliente);
 		~GameMenu();
 		void crearBotones(ControladorGrafico &graficos);
 		void crearBotonParaPersonaje(ControladorGrafico &graficos, int i);
 		void handleEvent(ControladorGrafico &graficos);
 		void dibujar(ControladorGrafico &graficos);
 		void elegirPersonajes(ControladorGrafico &graficos);
+		string personajeElegidoPorCliente();
 
 	private:
 
@@ -33,6 +34,7 @@ class GameMenu{
 		int alto_ventana;
 		int ancho_maximo_ventana = 1400;
 		int alto_maximo_ventana = 1000;
+		string personajeElegido;
 
 };
 

@@ -9,6 +9,8 @@ ControladorJson *controladorJson = new ControladorJson();
 ControladorLogger *controladorLogger = new ControladorLogger();
 
 int main(int argc, char **argv){
+	controladorLogger->registrarEvento("INFO", "main::Comienzo a leer el json");
+	controladorJson->leerArchivo("");
 	std::string argumentoConsola ;
 	if(argc == 2){
 		argumentoConsola = argv[1];

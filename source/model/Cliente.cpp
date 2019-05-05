@@ -1,12 +1,18 @@
 #include <Cliente.hpp>
 #include <ControladorEnvio.hpp>
+#include <GameMenu.hpp>
+#include <ControladorGrafico.hpp>
 using namespace std;
 
 #define PUERTO 5001
 
 #define MAXDATOS 256
 
+extern ControladorJson *controladorJson;
+extern ControladorLogger *controladorLogger;
+
 Cliente::Cliente( char * direccionIP){
+	controladorJson->leerArchivo("");
 	this->sisEnvio=ControladorEnvio();
 	int socketConexion,numeroBytes,conexion;
 	struct hostent *nodoServidor;
@@ -36,6 +42,17 @@ Cliente::Cliente( char * direccionIP){
 	this->idCliente=cliente;
 	std::cout<<"tengo guardado id: "<<this->idCliente<<endl;
 
+	SDL_Init(0);
+	SDL_VideoInit(NULL);
+	SDL_InitSubSystem(SDL_INIT_TIMER);
+	ControladorGrafico *graficos = new ControladorGrafico();
+	GameMenu *menu = new GameMenu(*graficos,this->idCliente);
+	SDL_VideoQuit();
+	SDL_QuitSubSystem(SDL_INIT_TIMER);
+	SDL_Quit();
+
+	std:: cout<<"Personaje Elejido: "<<menu->personajeElegidoPorCliente()<<endl;
+	delete menu;
 
 	void *bufer;
 	recv(socketConexion,bufer,20,0); //esto hace que no termine el cliente

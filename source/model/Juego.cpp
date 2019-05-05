@@ -44,7 +44,7 @@ Juego::~Juego(){
 
 void Juego::startGameMenu(){
 	controladorLogger->registrarEvento("DEBUG", "Juego::Inicio menu");
-	GameMenu *menu = new GameMenu(*graficos);
+	GameMenu *menu = new GameMenu(*graficos,2);
 	delete menu;
 }
 
