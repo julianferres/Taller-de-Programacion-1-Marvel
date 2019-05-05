@@ -9,7 +9,7 @@
 #include <Servidor.hpp>
 #include <pthread.h>
 #include <stdio.h>
-
+#include <ControladorEnvio.hpp>
 using namespace std;
 
 #define PUERTO 5001
@@ -21,6 +21,7 @@ struct infoCliente{
 typedef struct infoCliente Cliente;
 
 Servidor::Servidor(){
+	this->sisEnvio=ControladorEnvio();
 	this->cantidadDeClientes=0;
 
 	int socketServidor,socketCliente,cantidadClientes;
@@ -71,19 +72,8 @@ Servidor::Servidor(){
 	}
 }
 void Servidor::enviarIdCliente(int idCliente,int socketCliente){
-	//Enviar Entero
-	void * buffer=malloc(4);
-	memcpy(buffer,&(idCliente),4);
-	send(socketCliente,buffer,4,0);
-	//Enviar string
-	string mensaje="Conectado";
-	int largo=mensaje.size();
-	buffer=malloc(4);
-	memcpy(buffer,&(largo), 4);
-	send(socketCliente,buffer,4,0);
-	char mensajeEnviar[mensaje.size()+1];
-	strcpy(mensajeEnviar,mensaje.c_str());
-	send(socketCliente,mensajeEnviar,mensaje.size()+1, 0);
+	this->sisEnvio.enviarEntero(idCliente,socketCliente);
+	this->sisEnvio.enviarString("Conectado",socketCliente);
 }
 
 void *Servidor::conexionCliente(void*cliente){

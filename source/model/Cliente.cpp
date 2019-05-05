@@ -1,14 +1,5 @@
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <netdb.h>
-#include <strings.h>
-#include <iostream>
-#include <string.h>
 #include <Cliente.hpp>
-
+#include <ControladorEnvio.hpp>
 using namespace std;
 
 #define PUERTO 5001
@@ -16,6 +7,7 @@ using namespace std;
 #define MAXDATOS 256
 
 Cliente::Cliente( char * direccionIP){
+	this->sisEnvio=ControladorEnvio();
 	int socketConexion,numeroBytes,conexion;
 	struct hostent *nodoServidor;
 	struct sockaddr_in servidor;
@@ -36,26 +28,17 @@ Cliente::Cliente( char * direccionIP){
 	if(conexion<0){
 	cout<<"error al conectar"<<endl;
 	};
-	//Recibir Entero
-	void * buffer =malloc(4);
-	recv(socketConexion,buffer,4,0);
-	int cliente;
-	memcpy(&cliente,buffer,4);
+	//Recivo id
+	int cliente=this->sisEnvio.recibirEntero(socketConexion);
 	std::cout<<"tengo id: "<<cliente<<endl;
 	this->idCliente=cliente;
-
 	std::cout<<"tengo guardado id: "<<this->idCliente<<endl;
-	//Recibir String
-	buffer=malloc(4);
-	recv(socketConexion,buffer,4,0);
-	int largo;
-	memcpy(&largo,buffer,4);
-	char bufer[largo+1];
-	recv(socketConexion,bufer,largo+1,0);
-	string mensaje(bufer);
+	//Recivo cadena
+	string mensaje=this->sisEnvio.recibirString(socketConexion);
 	std::cout<<"mensaje: "<<mensaje<<endl;
 
-	recv(socketConexion,bufer,largo+1,0); //esto hace que no termine el cliente
+	void *bufer;
+	recv(socketConexion,bufer,20,0); //esto hace que no termine el cliente
 
 	close(socketConexion);
 }
