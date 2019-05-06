@@ -19,12 +19,19 @@ class Cliente{
 		void iniciarConexion(char * direccionIP);
 		void cargarContenidos();
 		void recibirIDcliente();
+		void recibirParaDibujar();
 		void elegirPersonaje();
+		void enviarEvento();
+		void recibirPersonajes();
+		void recibirFondos();
 
 	private:
 		JuegoCliente *juegoCliente;
 		int idCliente;
 		int numeroSocket;
+		char buffer[MAXDATOS];
+		vector<tuple<string, const string>> personajesYfondos;
+
 	};
 
 #endif

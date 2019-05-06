@@ -186,6 +186,11 @@ std::string Personaje::getNombre(){
 void Personaje::actualizarPiso(){
 	this->posy = controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
 }
+
+SpriteAnimado *Personaje::obtenerSprite(){
+	return this->spriteAnimado;
+}
+
 /*
 bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
 	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+15, static_cast<int>(posy), ancho, alto};

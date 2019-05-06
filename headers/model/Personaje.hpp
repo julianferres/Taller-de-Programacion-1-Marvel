@@ -38,6 +38,7 @@ class Personaje{
 		float getPosY();
 		SDL_Rect  obtenerRectangulo();
 		std::string getNombre();
+		SpriteAnimado *obtenerSprite();
 
 	private:
 

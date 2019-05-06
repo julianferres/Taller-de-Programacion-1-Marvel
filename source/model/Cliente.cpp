@@ -53,9 +53,7 @@ void Cliente::iniciarConexion(char* direccionIP){
 
 void Cliente::recibirIDcliente(){
 
-	int idClienteRecibido;
-	recv(numeroSocket,&idClienteRecibido,sizeof(int),0);//se conectaron todos los jugadores
-	idCliente= ntohl(idClienteRecibido);
+	recv(numeroSocket,&idCliente,sizeof(idCliente),0);//se conectaron todos los jugadores
 	controladorLogger->registrarEvento("INFO", "Cliente::El cliente "+to_string(idCliente)+"se conecto correctamente");
 
 }
@@ -71,34 +69,59 @@ void Cliente::elegirPersonaje(){
 }
 
 void Cliente::cargarContenidos(){
-	char buffer[MAXDATOS];
-	vector<tuple<string, const string>> personajesYfondos;
-	for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){//Aca llegan los jugadores seleccionados por todos
+
+	this->recibirPersonajes();
+	this->recibirFondos();
+	juegoCliente->cargarTexturas(personajesYfondos);//creo el mapa(nombre,textura)
+}
+
+void Cliente::recibirPersonajes(){
+	for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
 		recv(numeroSocket,buffer,MAXDATOS,0);
 		const string &filePath = controladorJson->pathImagen(string(buffer));
 		tuple <string, const string> tuplaPersonaje=make_tuple(string(buffer),filePath);
 		personajesYfondos.push_back(tuplaPersonaje);
 		send(numeroSocket,buffer,MAXDATOS,0);//le aviso que termine de trabajar
+		cout<<buffer<<endl;
 	}
+}
 
-	int zindex;
+void Cliente::recibirFondos(){
 	int cantidadZindex = controladorJson->getZindexes().size();
+	int zindexArecibir[cantidadZindex];
+	recv(numeroSocket,zindexArecibir,sizeof(zindexArecibir),0);
 	for(int i=0; i <cantidadZindex;i++){
-		recv(numeroSocket,&zindex,sizeof(zindex),0);
+		int zindex = zindexArecibir[i];
 		const string &filePath = controladorJson->pathFondo(zindex);
 		tuple <string, const string> tuplaFondo=make_tuple(to_string(zindex),filePath);
 		personajesYfondos.push_back(tuplaFondo);
-		send(numeroSocket,buffer,MAXDATOS,0);//le aviso que termine de trabajar
+		cout<<zindex<<endl;
+		cout<<filePath<<endl;
 	}
-
-	juegoCliente->cargarTexturas(personajesYfondos);//creo el mapa(nombre,textura)
-
-	/*ejemplo de como deberia dibujar el cliente
-	SDL_Rect rectanguloOrigen = {0,16,100,120};
-	SDL_Rect rectanguloOrigen1 = {0,0,800,480};
-	SDL_Rect rectanguloDestino = {50,300,200,320};
-	juegoCliente->graficos()->limpiar();
-	juegoCliente->graficos()->dibujarImagen(juegoCliente->getTextura("1"), &rectanguloOrigen1, NULL, SDL_FLIP_NONE);
-	juegoCliente->graficos()->dibujarImagen(juegoCliente->getTextura("CapitanAmerica"), &rectanguloOrigen, &rectanguloDestino, SDL_FLIP_NONE);
-	juegoCliente->graficos()->render();*/
 }
+
+
+
+void Cliente::recibirParaDibujar(){
+	juegoCliente->graficos()->limpiar();
+	char nombreTextura[MAXDATOS];
+	for(int i = 0;i<5;i++){
+		recv(numeroSocket,nombreTextura,MAXDATOS,0);
+		send(numeroSocket,buffer,MAXDATOS,0);
+		int posiciones[8] ;
+		recv(numeroSocket,posiciones,sizeof(posiciones),0);
+		juegoCliente->cargarRectangulos(posiciones);
+		juegoCliente->dibujar(string(nombreTextura));
+		send(numeroSocket,buffer,MAXDATOS,0);
+	}
+	juegoCliente->graficos()->render();
+
+}
+
+
+
+
+
+
+
+

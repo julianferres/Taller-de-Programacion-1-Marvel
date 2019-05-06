@@ -25,8 +25,9 @@ Juego::Juego(){
 Juego::~Juego(){
 	delete teclado;
 	delete parallax;
-	delete jugador1;
-	delete jugador2;
+	delete equipo1;
+	delete equipo2;
+
 }
 
 void Juego::crearJugador(std::string nombre,int cliente){
@@ -61,12 +62,14 @@ void Juego::gameLoop(){
 	while (isRunning){
 		this->startTime = SDL_GetTicks();
 		this->teclear();
-		//this->dibujar();
+		this->dibujar();
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
 
 	}
 }
+
+
 
 bool Juego::compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugador *, int> zindex2){
 		return (std::get<1>(zindex1) <= std::get<1>(zindex2));
@@ -82,47 +85,64 @@ std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
 	return zindexs_personajes;
 }
 
-/*CAMBIAR PARA QUE NO DIBUJE ACA
-void Juego::dibujar(){
-	cliente->graficos()->limpiar();
+
+std::vector<std::tuple<std::string,SDL_Rect, SDL_Rect >>Juego::dibujar(){
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
-
+	std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect >> dibujables;
 	std::vector<std::tuple<Jugador *, int>> zindexs_personajes = obtenerOrdenDibujo();
-	std::vector<int> zindexs_fondos = cliente->fondos()->getzindexes();
-
+	std::vector<int>zindexes = controladorJson->getZindexes();
 	this->verificarCambioDeLado();
 
 	int fondos_dibujados = 0;
 	int personajes_dibujados = 0;
 	while(fondos_dibujados + personajes_dibujados < 5){
+		SDL_Rect origen;
+		SDL_Rect destino;
 		if(fondos_dibujados == 3 && personajes_dibujados < 2){
-			get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(*cliente->graficos());
+			//get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(*cliente->graficos());
+			Jugador * jugador = get<0>(zindexs_personajes[personajes_dibujados]);
+			origen = jugador->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
+			destino = jugador->devolverPersonajeActual()->obtenerRectangulo();
+			dibujables.push_back(std::make_tuple(jugador->nombreJugador(),origen,destino));
 			personajes_dibujados++;
 		}
 
-		else if ((personajes_dibujados < 2) && get<1>(zindexs_personajes[personajes_dibujados]) <= zindexs_fondos[fondos_dibujados]){
-			get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(*cliente->graficos());
+		else if ((personajes_dibujados < 2) && get<1>(zindexs_personajes[personajes_dibujados]) <= zindexes[fondos_dibujados]){
+			//get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(*cliente->graficos());
+			Jugador * jugador = get<0>(zindexs_personajes[personajes_dibujados]);
+			origen = jugador->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
+			destino = jugador->devolverPersonajeActual()->obtenerRectangulo();
+			dibujables.push_back(std::make_tuple(jugador->nombreJugador(),origen,destino));
 			personajes_dibujados++;
 		}
 		else{
+			SDL_Rect *dest =&destino;
+			dest = NULL;
 			if(fondos_dibujados == 0 ){
-				cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz1(), parallax->camaraz1(), NULL, flip);
+				//cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz1(), parallax->camaraz1(), NULL, flip);
+				SDL_Rect* origen = parallax->camaraz1();
+				dibujables.push_back(std::make_tuple(std::to_string(zindexes[0]),*origen,destino));
 			}
-			ESTO ES LO QUE HAY QUE ENVIAR AL CLIENTE, EN VEZ DE DIBUJAR ACA
-			else if(fondos_dibujados == 1 )
-				cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz2(), parallax->camaraz2(), NULL, flip);
+
+			else if(fondos_dibujados == 1 ){
+				//cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz2(), parallax->camaraz2(), NULL, flip);
+				SDL_Rect *origen = parallax->camaraz2();
+				dibujables.push_back(std::make_tuple(std::to_string(zindexes[1]),*origen,destino));
+			}
 
 
 			else if(fondos_dibujados == 2 ){
-				cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz3(), parallax->camaraz3() , NULL, flip);
+				//cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz3(), parallax->camaraz3() , NULL, flip);
+				SDL_Rect *origen = parallax->camaraz3();
+				dibujables.push_back(std::make_tuple(std::to_string(zindexes[2]),*origen,destino));
+
 			}
 			fondos_dibujados++;
-
 		}
 	}
+	return dibujables;
 
-	cliente->graficos()->render();
-}*/
+}
 
 void Juego::verificarCambioDeLado(){
 	if (this->jugador1->estaDelladoDerecho()){

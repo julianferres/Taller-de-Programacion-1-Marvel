@@ -21,12 +21,14 @@ class Jugador{
 		void actualizarPiso();
 		float posicionActual();
 		bool estaDelladoDerecho();
+		std::string nombreJugador();
 		Personaje * devolverPersonajeActual();
 
 	private:
 
 		Personaje *personaje;
 		bool ladoDerecho;
+		std::string nombre;
 
 };
 

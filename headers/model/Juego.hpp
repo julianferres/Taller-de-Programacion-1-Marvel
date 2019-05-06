@@ -28,7 +28,7 @@ class Juego{
 		~Juego();
 		bool running() {return isRunning;}
 		void gameLoop();
-		void dibujar();
+		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect>> dibujar();
 		void teclear();
 		void verificarCambioDeLado();
 		void crearEquipos();

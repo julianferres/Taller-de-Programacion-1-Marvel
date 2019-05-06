@@ -25,8 +25,14 @@ public:
 	Server();
 	void crearSocket();
 	void esperarConexiones();
-	void* conexionInicial(void *socket_desc);
-	static void*connection_handler_wrapper(void *args);
+	void enviarNombresJugadores(int socketCliente);
+	void enviarFondos(int socketCliente);
+	void enviarParaDibujar(int socketCliente);
+	void crearJugador(char* nombrePersonaje, int idCliente);
+	void* conexionConCliente(void *socket_desc);
+	static void*conexionConClienteWrapper(void *args);
+	void* actualizarModelo(void *args);
+	static void*actualizarModeloWrapper(void *args);
 
 private:
 	Juego *juego ;
@@ -35,6 +41,7 @@ private:
 	int socketCliente;
 	vector<char*> vectorPersonajes;
 	struct sockaddr_in server , client;
+	char buffer[MAXDATOS];
 
 
 };

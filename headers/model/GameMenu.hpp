@@ -33,7 +33,7 @@ class GameMenu{
 		SDL_Texture* subTituloTexture;
 		SDL_Surface* actionSurface;
 		SDL_Texture* actionTexture;
-		string personajeElegido;
+		string personajeElegido ="";
 		int ancho_ventana;
 		int alto_ventana;
 		int ancho_maximo_ventana = 1400;

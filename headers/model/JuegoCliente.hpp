@@ -20,11 +20,15 @@ public:
 	SDL_Texture * getTextura(string nombre);
 	void iniciarGraficos();
 	void cargarTexturas(vector<tuple<string, const string>> nombresYpaths);
+	void cargarRectangulos(int posiciones[8]);
+	void dibujar(std::string nombre);
 
 private:
 	ControladorGrafico *grafico;
 	TexturasFondos *texturasFondos;
 	Texturas *texturas;
+	SDL_Rect origen;
+	SDL_Rect destino;
 
 };
 

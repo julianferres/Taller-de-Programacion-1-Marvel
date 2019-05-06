@@ -13,8 +13,8 @@ extern ControladorLogger *controladorLogger;
 struct arg_struct {
 		Server *este;
 		int client_sock;
-	 }args;
-	 typedef struct arg_struct parametros;
+ }args;
+ typedef struct arg_struct parametros;
 
 
  Server::Server(){
@@ -26,8 +26,7 @@ struct arg_struct {
 	 }
 
 	 close(socketServidor);
-
- }
+}
 
 void Server::crearSocket(){
    socketServidor = socket(AF_INET , SOCK_STREAM , 0);
@@ -60,7 +59,7 @@ void Server::esperarConexiones(){
 			 controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo aceptar la conexion .");
 		args->client_sock=socketCliente;
 		puts("Connection accepted");
-		if( pthread_create( &thread_id , NULL , Server::connection_handler_wrapper , (void*) args)  < 0)
+		if( pthread_create( &thread_id , NULL , Server::conexionConClienteWrapper , (void*) args)  < 0)
 			controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el hilo .");
 
 		cantidad_actual_clientes++;
@@ -73,57 +72,95 @@ void Server::esperarConexiones(){
 
 
 
-void *Server::connection_handler_wrapper(void *args){
+void *Server::conexionConClienteWrapper(void *args){
 	parametros* argumentos = (parametros*) args;
-	 return ((Server *)argumentos->este)->conexionInicial((void*)&argumentos->client_sock);
+	 return ((Server *)argumentos->este)->conexionConCliente((void*)&argumentos->client_sock);
 }
  
-void *Server::conexionInicial(void *socket_desc)
-{
-	mutex personajes_mutex;
-    int sock = *(int*)socket_desc;
-    int *idCliente = (int*) malloc(sizeof(int));
-    char nombrePersonaje[MAXDATOS];
-    char buffer[MAXDATOS];
-    //El id es segun el orden en que hayan llegado los jugadores
-    *idCliente = cantidad_actual_clientes;
+void *Server::conexionConCliente(void *socket_desc){
 
-   while(cantidad_actual_clientes<CANTIDAD_MAXIMA_JUGADORES){
-	   //esperando que lleguen todos los jugadores
-    }
+	int sock = *(int*)socket_desc;
+	int *idCliente = (int*) malloc(sizeof(int));
+	char nombrePersonaje[MAXDATOS];
+	*idCliente = cantidad_actual_clientes;//El id es segun el orden en que hayan llegado los jugadores
 
-   //Convierto el id en bytes para que sean enviados
-	int idConvertidoParaEnviar = htonl(*idCliente);
-   send(sock,(const char *)&idConvertidoParaEnviar,sizeof(int),0);//envio al cliente su id, y le aviso que ya estan todos conectados
+	while(cantidad_actual_clientes<CANTIDAD_MAXIMA_JUGADORES){
+	}
 
-   //recibo el personaje elegido
-   recv(sock,nombrePersonaje,MAXDATOS,0);
-   personajes_mutex.lock();
-   juego->crearJugador(string(nombrePersonaje),*idCliente);
-   vectorPersonajes.push_back(nombrePersonaje);//creo al jugador
-   personajes_mutex.unlock();
+	send(sock,&*idCliente,sizeof(*idCliente),0);//envio al cliente su id, y le aviso que ya estan todos conectados
+	recv(sock,nombrePersonaje,MAXDATOS,0);   //recibo el personaje elegido
 
-   while(vectorPersonajes.size()<CANTIDAD_MAXIMA_JUGADORES){
-	   //puts("hay jugadores que no seleccionaron todavia");
-   }
+	this->crearJugador(nombrePersonaje, *idCliente);
 
-   for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
-		char* personajeElegido = vectorPersonajes[i];
-		send(sock,personajeElegido,MAXDATOS,0);//le envio el personaje al cliente
-		recv(sock,buffer,MAXDATOS,0); //significa que le llego y puedo seguir
-   }
+	while(vectorPersonajes.size()<CANTIDAD_MAXIMA_JUGADORES){
+	}
 
-   std::vector<int>zindexes = controladorJson->getZindexes();
-   for(int i=0;i<zindexes.size();i++){
-	   int zindex = zindexes[i];
-	   send(sock,&zindex,sizeof(zindex),0);
-	   recv(sock,buffer,MAXDATOS,0); //significa que le llego y puedo seguir
-   }
+	this->enviarNombresJugadores(sock);
+	this->enviarFondos(sock);
 
-   while(true){}
+	while(true){}
 
-   //juego->gameLoop();
-
-         
-    return 0;
+	return 0;
 } 
+
+void Server::enviarNombresJugadores(int socketCliente){
+	mutex personajes_mutex;
+	personajes_mutex.lock();
+	for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
+		char* personajeElegido = vectorPersonajes[i];
+		send(socketCliente,personajeElegido,MAXDATOS,0);//le envio el personaje al cliente
+		recv(socketCliente,buffer,MAXDATOS,0); //significa que le llego y puedo seguir
+		cout<<socketCliente<<endl;
+	}
+	personajes_mutex.unlock();
+
+}
+
+void Server::enviarFondos(int socketCliente){
+	cout<<socketCliente<<endl;
+	vector<int>zindexes = controladorJson->getZindexes();
+	int cantidadZindex = zindexes.size();
+	int zindexAenviar[cantidadZindex] ;
+	for(int i=0;i<zindexes.size();i++){
+		zindexAenviar[i] = zindexes[i];
+	}
+	send(socketCliente,zindexAenviar,sizeof(zindexAenviar),0);
+}
+
+void Server::crearJugador(char* nombrePersonaje, int idCliente){
+	mutex personajes_mutex;
+	personajes_mutex.lock();
+	juego->crearJugador(string(nombrePersonaje),idCliente);
+	vectorPersonajes.push_back(nombrePersonaje);
+	personajes_mutex.unlock();
+}
+
+void Server::enviarParaDibujar(int socketCliente){
+	vector<tuple<string,SDL_Rect , SDL_Rect >> dibujables=juego->dibujar();
+	for(int i=0;i<dibujables.size();i++){
+		string nombre = get<0>(dibujables[i]);
+		send(socketCliente,nombre.c_str(),MAXDATOS,0);
+		recv(socketCliente,buffer,MAXDATOS,0);
+		SDL_Rect origen = get<1>(dibujables[i]);
+		SDL_Rect destino = get<2>(dibujables[i]);
+		int posiciones[8] ;
+		posiciones[0]=origen.x;
+		posiciones[1]=origen.y;
+		posiciones[2]=origen.w;
+		posiciones[3]=origen.h;
+		if(!destino.w){//revisar
+			posiciones[4]=-1;
+			posiciones[5]=-1;
+			posiciones[6]=-1;
+			posiciones[7]=-1;
+		}
+		else{
+			posiciones[4]=destino.x;
+			posiciones[5]=destino.y;
+			posiciones[6]=destino.w;
+			posiciones[7]=destino.h;
+		}
+		send(socketCliente,posiciones,sizeof(posiciones),0);
+		recv(socketCliente,buffer,MAXDATOS,0);
+	}
+}

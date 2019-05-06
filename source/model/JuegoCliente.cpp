@@ -41,4 +41,25 @@ SDL_Texture * JuegoCliente::getTextura(string nombre){
 	return this->texturas->getTextura(nombre);
 }
 
+void JuegoCliente::cargarRectangulos(int posiciones[8]){
+	origen.x = posiciones[0];
+	origen.y = posiciones[1];
+	origen.w = posiciones[2];
+	origen.h = posiciones[3];
+	if(posiciones[4]==-1){
+		SDL_Rect *dest =&destino;
+		dest = NULL;
+	}
+
+	else{
+		destino.x = posiciones[4];
+		destino.y = posiciones[5];
+		destino.w = posiciones[6];
+		destino.h = posiciones[7];
+	}
+}
+
+void JuegoCliente::dibujar(string nombre){
+	this->grafico->dibujarImagen(getTextura(nombre),&origen, &destino, SDL_FLIP_NONE);
+}
 

@@ -6,6 +6,7 @@
 Jugador::Jugador(std::string nombrePersonaje, int posicionXinicial, SDL_RendererFlip flip, bool ladoDerecho){
 	this->personaje = new Personaje(nombrePersonaje, posicionXinicial, flip);
 	this->ladoDerecho = ladoDerecho;
+	this->nombre = nombrePersonaje;
 }
 
 Jugador::~Jugador(){
@@ -24,6 +25,10 @@ void Jugador::personajeActualDibujar(ControladorGrafico &graficos){
 
 Personaje* Jugador::devolverPersonajeActual(){
 	return this->personaje;
+}
+
+std::string Jugador::nombreJugador(){
+	return this->nombre;
 }
 
 
