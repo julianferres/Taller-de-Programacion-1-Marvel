@@ -72,6 +72,19 @@ void Servidor::esperarConexiones(){
 void Servidor::enviarInfoCliente(int idCliente,int socketCliente){
 	this->sisEnvio.enviarString("Conectado",socketCliente);
 	this->sisEnvio.enviarEntero(idCliente,socketCliente);
+
+
+	//Espera hasta que se cumpla la condicion y mande un true al cliente
+	while(true){
+		if(this->cantidadDeClientes<CANT_MAX_CLIENTES){
+			continue;
+		}
+		else{
+			this->sisEnvio.enviarEntero(1,socketCliente);// envio true para que se habra menu;
+			break;
+		}
+	}
+	//fin de la espera
 }
 
 void *Servidor::conexionCliente(void*cliente){

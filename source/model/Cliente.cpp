@@ -41,19 +41,20 @@ Cliente::Cliente( char * direccionIP){
 	std::cout<<"tengo id: "<<cliente<<endl;
 	this->idCliente=cliente;
 	std::cout<<"tengo guardado id: "<<this->idCliente<<endl;
-
-	SDL_Init(0);
-	SDL_VideoInit(NULL);
-	SDL_InitSubSystem(SDL_INIT_TIMER);
-	ControladorGrafico *graficos = new ControladorGrafico();
-	GameMenu *menu = new GameMenu(*graficos,this->idCliente);
-	SDL_VideoQuit();
-	SDL_QuitSubSystem(SDL_INIT_TIMER);
-	SDL_Quit();
-
-	std:: cout<<"Personaje Elejido: "<<menu->personajeElegidoPorCliente()<<endl;
-	delete menu;
-
+	//=========
+	int abrirMenu=this->sisEnvio.recibirEntero(socketConexion);
+	if(abrirMenu==1){
+		SDL_Init(0);
+		SDL_VideoInit(NULL);
+		SDL_InitSubSystem(SDL_INIT_TIMER);
+		ControladorGrafico *graficos = new ControladorGrafico();
+		GameMenu *menu = new GameMenu(*graficos,this->idCliente);
+		SDL_VideoQuit();
+		SDL_QuitSubSystem(SDL_INIT_TIMER);
+		SDL_Quit();
+		std:: cout<<"Personaje Elejido: "<<menu->personajeElegidoPorCliente()<<endl;
+		delete menu;
+	}
 	void *bufer;
 	recv(socketConexion,bufer,20,0); //esto hace que no termine el cliente
 
