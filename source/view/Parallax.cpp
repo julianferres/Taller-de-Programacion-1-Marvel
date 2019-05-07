@@ -17,8 +17,8 @@ Parallax::Parallax(){
 		}
 	}
 	SDL_Surface *background_z1 = IMG_Load(fondos[0].c_str());
-	SDL_Surface *background_z2 = IMG_Load(fondos[0].c_str());
-	SDL_Surface *background_z3 = IMG_Load(fondos[0].c_str());
+	SDL_Surface *background_z2 = IMG_Load(fondos[1].c_str());
+	SDL_Surface *background_z3 = IMG_Load(fondos[2].c_str());
 	fondo1_w = background_z1->w;
 	fondo2_w = background_z2->w;
 	fondo3_w = background_z3->w;

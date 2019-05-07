@@ -23,9 +23,7 @@ Cliente::Cliente( char * direccionIP){
 	this->cargarContenidos();
 
 	while(true){
-		//enviarEventos  send(socketCliente, evento,sizeof(evento),0);
-		 // recibir vista recv(socket1,buffer,MAXDATOS,0);
-		 // dibujar
+		recibirParaDibujar();
 	}
 
 	close(numeroSocket);
@@ -107,12 +105,11 @@ void Cliente::recibirParaDibujar(){
 	char nombreTextura[MAXDATOS];
 	for(int i = 0;i<5;i++){
 		recv(numeroSocket,nombreTextura,MAXDATOS,0);
-		send(numeroSocket,buffer,MAXDATOS,0);
+		send(numeroSocket,nombreTextura,MAXDATOS,0);
 		int posiciones[8] ;
 		recv(numeroSocket,posiciones,sizeof(posiciones),0);
-		juegoCliente->cargarRectangulos(posiciones);
-		juegoCliente->dibujar(string(nombreTextura));
-		send(numeroSocket,buffer,MAXDATOS,0);
+		juegoCliente->dibujar(string(nombreTextura),posiciones);
+		send(numeroSocket,nombreTextura,MAXDATOS,0);
 	}
 	juegoCliente->graficos()->render();
 

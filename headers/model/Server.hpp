@@ -31,8 +31,9 @@ public:
 	void crearJugador(char* nombrePersonaje, int idCliente);
 	void* conexionConCliente(void *socket_desc);
 	static void*conexionConClienteWrapper(void *args);
-	void* actualizarModelo(void *args);
+	void* actualizarModelo();
 	static void*actualizarModeloWrapper(void *args);
+	void crearThreadServer();
 
 private:
 	Juego *juego ;
@@ -42,6 +43,10 @@ private:
 	vector<char*> vectorPersonajes;
 	struct sockaddr_in server , client;
 	char buffer[MAXDATOS];
+	vector<int> clientesConectados;
+	vector<tuple<string,SDL_Rect , SDL_Rect >> dibujables;
+	bool esperandoParaDibujar=true;
+
 
 
 };

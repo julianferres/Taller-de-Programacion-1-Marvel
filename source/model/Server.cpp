@@ -18,15 +18,44 @@ struct arg_struct {
 
 
  Server::Server(){
-	juego = new Juego();
+	this->crearThreadServer();
 	this->crearSocket();
 	this->esperarConexiones();
 
-	 while(true){
-	 }
-
 	 close(socketServidor);
 }
+
+ void Server::crearThreadServer(){
+	pthread_t thread_id;
+	if( pthread_create( &thread_id , NULL , Server::actualizarModeloWrapper , this)  < 0)
+		controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el hilo del servidor");
+
+}
+
+ void* Server::actualizarModeloWrapper(void *args){
+ 	 Server* serv = (Server * )args;
+ 	 return serv->actualizarModelo();
+}
+
+  void *Server::actualizarModelo(){
+ 	this->juego = new Juego();
+ 	while(vectorPersonajes.size()<CANTIDAD_MAXIMA_JUGADORES){}
+
+ 	for (int i=0; i < this->clientesConectados.size();i++){
+ 		this->enviarNombresJugadores(this->clientesConectados[i]);
+ 		this->enviarFondos(this->clientesConectados[i]);
+ 	}
+
+ 	juego->crearEquipos();
+ 	dibujables = juego->dibujar();
+ 	esperandoParaDibujar=false;
+
+ 	while(true){
+
+ 	}
+
+ 	return NULL;
+  }
 
 void Server::crearSocket(){
    socketServidor = socket(AF_INET , SOCK_STREAM , 0);
@@ -53,7 +82,7 @@ void Server::esperarConexiones(){
 	puts("Waiting for incoming connections...");
 	int c = sizeof(struct sockaddr_in);
 	pthread_t thread_id;
-	while( vectorPersonajes.size() < CANTIDAD_MAXIMA_JUGADORES){
+	while( true){
 		socketCliente = accept(socketServidor, (struct sockaddr *)&client, (socklen_t*)&c);
 		 if (socketCliente < 0)
 			 controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo aceptar la conexion .");
@@ -61,7 +90,7 @@ void Server::esperarConexiones(){
 		puts("Connection accepted");
 		if( pthread_create( &thread_id , NULL , Server::conexionConClienteWrapper , (void*) args)  < 0)
 			controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el hilo .");
-
+		clientesConectados.push_back(socketCliente);
 		cantidad_actual_clientes++;
 		//pthread_join( thread_id , NULL);
 		cout<<"Bienvenido jugador "+to_string(cantidad_actual_clientes)<<endl;
@@ -91,14 +120,15 @@ void *Server::conexionConCliente(void *socket_desc){
 	recv(sock,nombrePersonaje,MAXDATOS,0);   //recibo el personaje elegido
 
 	this->crearJugador(nombrePersonaje, *idCliente);
-
-	while(vectorPersonajes.size()<CANTIDAD_MAXIMA_JUGADORES){
-	}
+	/*
+	while(esperandoParaDibujar){}
 
 	this->enviarNombresJugadores(sock);
 	this->enviarFondos(sock);
-
-	while(true){}
+	*/
+	while(true){
+		enviarParaDibujar(sock);
+	}
 
 	return 0;
 } 
@@ -110,14 +140,12 @@ void Server::enviarNombresJugadores(int socketCliente){
 		char* personajeElegido = vectorPersonajes[i];
 		send(socketCliente,personajeElegido,MAXDATOS,0);//le envio el personaje al cliente
 		recv(socketCliente,buffer,MAXDATOS,0); //significa que le llego y puedo seguir
-		cout<<socketCliente<<endl;
 	}
 	personajes_mutex.unlock();
 
 }
 
 void Server::enviarFondos(int socketCliente){
-	cout<<socketCliente<<endl;
 	vector<int>zindexes = controladorJson->getZindexes();
 	int cantidadZindex = zindexes.size();
 	int zindexAenviar[cantidadZindex] ;
@@ -136,11 +164,11 @@ void Server::crearJugador(char* nombrePersonaje, int idCliente){
 }
 
 void Server::enviarParaDibujar(int socketCliente){
-	vector<tuple<string,SDL_Rect , SDL_Rect >> dibujables=juego->dibujar();
+	char bufferAux[MAXDATOS];
 	for(int i=0;i<dibujables.size();i++){
 		string nombre = get<0>(dibujables[i]);
 		send(socketCliente,nombre.c_str(),MAXDATOS,0);
-		recv(socketCliente,buffer,MAXDATOS,0);
+		recv(socketCliente,bufferAux,MAXDATOS,0);
 		SDL_Rect origen = get<1>(dibujables[i]);
 		SDL_Rect destino = get<2>(dibujables[i]);
 		int posiciones[8] ;
@@ -148,19 +176,11 @@ void Server::enviarParaDibujar(int socketCliente){
 		posiciones[1]=origen.y;
 		posiciones[2]=origen.w;
 		posiciones[3]=origen.h;
-		if(!destino.w){//revisar
-			posiciones[4]=-1;
-			posiciones[5]=-1;
-			posiciones[6]=-1;
-			posiciones[7]=-1;
-		}
-		else{
-			posiciones[4]=destino.x;
-			posiciones[5]=destino.y;
-			posiciones[6]=destino.w;
-			posiciones[7]=destino.h;
-		}
+		posiciones[4]=destino.x;
+		posiciones[5]=destino.y;
+		posiciones[6]=destino.w;
+		posiciones[7]=destino.h;
 		send(socketCliente,posiciones,sizeof(posiciones),0);
-		recv(socketCliente,buffer,MAXDATOS,0);
+		recv(socketCliente,bufferAux,MAXDATOS,0);
 	}
 }

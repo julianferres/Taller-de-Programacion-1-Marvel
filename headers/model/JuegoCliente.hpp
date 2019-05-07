@@ -20,8 +20,7 @@ public:
 	SDL_Texture * getTextura(string nombre);
 	void iniciarGraficos();
 	void cargarTexturas(vector<tuple<string, const string>> nombresYpaths);
-	void cargarRectangulos(int posiciones[8]);
-	void dibujar(std::string nombre);
+	void dibujar(std::string nombre,int posiciones[8]);
 
 private:
 	ControladorGrafico *grafico;
