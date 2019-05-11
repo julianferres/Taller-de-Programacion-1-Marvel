@@ -8,6 +8,13 @@
 #include <iostream>
 
 using namespace std;
+struct vector4{
+	int x;
+	int y;
+	int w;
+	int h;
+};
+typedef struct vector4 vectorEntero;
 
 class ControladorEnvio{
 	public:
@@ -16,6 +23,8 @@ class ControladorEnvio{
 		void enviarString(string cadena,int socket);
 		int recibirEntero(int socket);
 		string recibirString(int socket);
+		void enviarArrayEnteros(struct vector4 datos,int socket);
+		struct vector4 recibirArrayEnteros(int socket);
 	private:
 
 };

@@ -11,6 +11,7 @@ using namespace std;
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
+
 Cliente::Cliente( char * direccionIP){
 	controladorJson->leerArchivo("");
 	this->sisEnvio=ControladorEnvio();
@@ -54,7 +55,18 @@ Cliente::Cliente( char * direccionIP){
 		SDL_Quit();
 		std:: cout<<"Personaje Elejido: "<<menu->personajeElegidoPorCliente()<<endl;
 		delete menu;
+		delete graficos;
 	}
+
+	string saludo=this->sisEnvio.recibirString(socketConexion);
+	cout<<"mensaje: "<<saludo<<endl;
+
+	//recibo entero
+	vectorEntero prueba=this->sisEnvio.recibirArrayEnteros(socketConexion);
+	cout<<"nuemro x: "<<prueba.x<<endl;
+	//fin del recibo entero;
+
+
 	void *bufer;
 	recv(socketConexion,bufer,20,0); //esto hace que no termine el cliente
 

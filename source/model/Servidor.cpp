@@ -85,6 +85,14 @@ void Servidor::enviarInfoCliente(int idCliente,int socketCliente){
 		}
 	}
 	//fin de la espera
+	this->sisEnvio.enviarString("hola",socketCliente);
+	//envio Entero
+	vectorEntero prueba;
+	prueba={1,2,3,4};
+	this->sisEnvio.enviarArrayEnteros(prueba,socketCliente);
+	//fin del envio entero;
+
+
 }
 
 void *Servidor::conexionCliente(void*cliente){
