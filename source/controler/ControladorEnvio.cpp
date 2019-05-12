@@ -6,6 +6,7 @@ void ControladorEnvio::enviarEntero(int entero,int socket){
 	void * buffer=malloc(4);
 	memcpy(buffer,&(entero),4);
 	send(socket,buffer,4,0);
+	free(buffer);
 }
 void ControladorEnvio::enviarString(string cadena,int socket){
 	int largo=cadena.size();
@@ -15,6 +16,7 @@ void ControladorEnvio::enviarString(string cadena,int socket){
 	char mensajeEnviar[cadena.size()+1];
 	strcpy(mensajeEnviar,cadena.c_str());
 	send(socket,mensajeEnviar,cadena.size()+1, 0);
+	free(buffer);
 }
 
 int ControladorEnvio::recibirEntero(int socket){
@@ -23,6 +25,7 @@ int ControladorEnvio::recibirEntero(int socket){
 	recv(socket,buffer,4,0);
 	memcpy(&entero,buffer,4);
 	return entero;
+	free(buffer);
 }
 
 string ControladorEnvio::recibirString(int socket){
@@ -34,6 +37,7 @@ string ControladorEnvio::recibirString(int socket){
 	recv(socket,bufer,largo+1,0);
 	string mensaje(bufer);
 	return mensaje;
+	free(buffer);
 }
 
 void ControladorEnvio::enviarArrayEnteros(struct vector4 datos,int socket){
@@ -43,16 +47,18 @@ void ControladorEnvio::enviarArrayEnteros(struct vector4 datos,int socket){
 	memcpy(buffer+8,&(datos.w),4);
 	memcpy(buffer+12,&(datos.h),4);
 	send(socket,buffer,16,0);
+	free(buffer);
 
 }
 
 struct vector4 ControladorEnvio::recibirArrayEnteros(int socket){
 	void* buffer=malloc(16);
 	recv(socket,buffer,16,0);
-	vectorEntero vector;
+	vector4Entero vector;
 	memcpy(&(vector.x), buffer, 4);
 	memcpy(&(vector.y), buffer+4, 4);
 	memcpy(&(vector.w), buffer+8, 4);
 	memcpy(&(vector.h), buffer+12, 4);
 	return vector;
+	free(buffer);
 }

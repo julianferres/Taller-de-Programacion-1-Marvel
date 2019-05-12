@@ -17,6 +17,7 @@ class Cliente{
 	private:
 		int idCliente;
 		ControladorEnvio sisEnvio;
+		string personaje;
 
 };
 #endif

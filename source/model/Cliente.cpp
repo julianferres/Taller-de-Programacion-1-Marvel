@@ -2,11 +2,11 @@
 #include <ControladorEnvio.hpp>
 #include <GameMenu.hpp>
 #include <ControladorGrafico.hpp>
+#include <JuegoCliente.hpp>
 using namespace std;
 
 #define PUERTO 5001
 
-#define MAXDATOS 256
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -53,19 +53,28 @@ Cliente::Cliente( char * direccionIP){
 		SDL_VideoQuit();
 		SDL_QuitSubSystem(SDL_INIT_TIMER);
 		SDL_Quit();
-		std:: cout<<"Personaje Elejido: "<<menu->personajeElegidoPorCliente()<<endl;
+		this->personaje=menu->personajeElegidoPorCliente();
+		std:: cout<<"Personaje Elejido: "<<this->personaje<<endl;
 		delete menu;
 		delete graficos;
 	}
 
-	string saludo=this->sisEnvio.recibirString(socketConexion);
-	cout<<"mensaje: "<<saludo<<endl;
 
-	//recibo entero
-	vectorEntero prueba=this->sisEnvio.recibirArrayEnteros(socketConexion);
-	cout<<"nuemro x: "<<prueba.x<<endl;
-	//fin del recibo entero;
+	this->sisEnvio.enviarString(this->personaje,socketConexion);
+	string pathRecibido=this->sisEnvio.recibirString(socketConexion);
+	cout<<pathRecibido<<endl;
 
+	/*//recibo entero
+	vector4Entero prueba=this->sisEnvio.recibirArrayEnteros(socketConexion);
+	cout<<"numero x: "<<prueba.x<<endl;
+	cout<<"numero y: "<<prueba.y<<endl;
+	cout<<"numero w: "<<prueba.w<<endl;
+	cout<<"numero h: "<<prueba.h<<endl;
+	int suma=prueba.x+prueba.y+prueba.w+prueba.h;
+	cout<<"suma>: "<<suma<<endl;
+	//fin del recibo entero;*/
+	JuegoCliente *jCliente=new JuegoCliente();
+	jCliente->~JuegoCliente();
 
 	void *bufer;
 	recv(socketConexion,bufer,20,0); //esto hace que no termine el cliente

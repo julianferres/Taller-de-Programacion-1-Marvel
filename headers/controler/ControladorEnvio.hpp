@@ -14,7 +14,7 @@ struct vector4{
 	int w;
 	int h;
 };
-typedef struct vector4 vectorEntero;
+typedef struct vector4 vector4Entero;
 
 class ControladorEnvio{
 	public:

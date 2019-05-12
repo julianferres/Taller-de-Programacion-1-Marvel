@@ -9,8 +9,10 @@
 #include<arpa/inet.h>
 #include<unistd.h>
 #include <ControladorEnvio.hpp>
+#include <ControladorJson.hpp>
 
-#define CANT_MAX_CLIENTES 4
+#define CANT_MAX_CLIENTES 2
+extern ControladorJson *controladorJson;
 class Servidor{
 
 	public:

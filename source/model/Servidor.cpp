@@ -85,12 +85,15 @@ void Servidor::enviarInfoCliente(int idCliente,int socketCliente){
 		}
 	}
 	//fin de la espera
-	this->sisEnvio.enviarString("hola",socketCliente);
-	//envio Entero
-	vectorEntero prueba;
+
+
+	string nombrePersonaje=this->sisEnvio.recibirString(socketCliente);
+	this->sisEnvio.enviarString(controladorJson->pathImagen(nombrePersonaje),socketCliente);
+	/*//envio Entero
+	vector4Entero prueba;
 	prueba={1,2,3,4};
 	this->sisEnvio.enviarArrayEnteros(prueba,socketCliente);
-	//fin del envio entero;
+	//fin del envio entero;*/
 
 
 }
