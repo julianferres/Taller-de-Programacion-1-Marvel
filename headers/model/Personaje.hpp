@@ -33,6 +33,7 @@ class Personaje{
 		void detenerAnimacion();
 		void cambiarAnimacion(string nombre);
 		void Flip();
+		SDL_RendererFlip getFlip();
 		void actualizarPiso();
 		float getPosX();
 		float getPosY();

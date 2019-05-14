@@ -213,8 +213,10 @@ void SpriteAnimado::update(){
 	if (frameIndex < animacionActual->getFrames() - 1 )
 		frameIndex++;
 	else{
-		if(animacionActual->getNombre()=="agacharse")
+		if(animacionActual->getNombre()=="agacharse"){
 			return;
+		}
+
 		this->frameIndex=0;
 		this->animacionFinalizada();
 	}

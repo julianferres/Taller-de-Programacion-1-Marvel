@@ -19,9 +19,13 @@ Cliente::Cliente( char * direccionIP){
 	juegoCliente = new JuegoCliente();
 	this->iniciarConexion(direccionIP);
 	juegoCliente->iniciarGraficos();
-	const string &filePath = controladorJson->pathImagen(string("Venom"));
-	tuple <string, const string> tuplaPersonaje=make_tuple(string("Venom"),filePath);
-	personajesYfondos.push_back(tuplaPersonaje);
+	const string &filePath1 = controladorJson->pathImagen(string("Venom"));
+	tuple <string, const string> tuplaPersonaje1=make_tuple(string("Venom"),filePath1);
+	const string &filePath2 = controladorJson->pathImagen(string("Spiderman"));
+	tuple <string, const string> tuplaPersonaje2=make_tuple(string("Spiderman"),filePath2);
+	personajesYfondos.push_back(tuplaPersonaje1);
+	personajesYfondos.push_back(tuplaPersonaje2);
+
 	for(int i=1;i<4;i++){
 		const string &filePath = controladorJson->pathFondo(i);
 		tuple <string, const string> tuplaFondo=make_tuple(to_string(i),filePath);
@@ -71,6 +75,7 @@ void Cliente::recibirParaDibujar(){
 	char fondo3[MAXDATOS];
 	char personaje1[MAXDATOS];
 	char personaje2[MAXDATOS];
+	SDL_RendererFlip flipFondo1,flipFondo2,flipFondo3,flipPersonaje1,flipPersonaje2;
 
 	while(true){
 		juegoCliente->graficos()->limpiar();
@@ -92,11 +97,17 @@ void Cliente::recibirParaDibujar(){
 		recv(numeroSocket,personaje1,MAXDATOS,0);
 		recv(numeroSocket,personaje2,MAXDATOS,0);
 
-		juegoCliente->dibujar(string(fondo1),posicion1);
-		juegoCliente->dibujar(string(fondo2),posicion2);
-		juegoCliente->dibujar(string(fondo3),posicion3);
-		juegoCliente->dibujar(string(personaje1),posicion4);
-		juegoCliente->dibujar(string(personaje2),posicion5);
+		recv(numeroSocket,&flipFondo1,sizeof(flipFondo1),0);
+		recv(numeroSocket,&flipFondo2,sizeof(flipFondo2),0);
+		recv(numeroSocket,&flipFondo3,sizeof(flipFondo3),0);
+		recv(numeroSocket,&flipPersonaje1,sizeof(flipPersonaje1),0);
+		recv(numeroSocket,&flipPersonaje2,sizeof(flipPersonaje2),0);
+
+		juegoCliente->dibujar(string(fondo1),posicion1,flipFondo1);
+		juegoCliente->dibujar(string(fondo2),posicion2,flipFondo2);
+		juegoCliente->dibujar(string(fondo3),posicion3,flipFondo3);
+		juegoCliente->dibujar(string(personaje1),posicion4,flipPersonaje1);
+		juegoCliente->dibujar(string(personaje2),posicion5,flipPersonaje2);
 
 		juegoCliente->graficos()->render();
 

@@ -21,7 +21,7 @@ Juego::Juego(){
 	this->teclado = new ControladorTeclado();
 	this-> parallax = new Parallax();
 	controladorLogger->registrarEvento("INFO", "Juego::Se inicio el juego");
-	for (int i=0;i<4;i++) jugadores.push_back(NULL);
+
 }
 
 Juego::~Juego(){
@@ -55,15 +55,14 @@ void Juego::crearJugador(std::string nombre,int cliente){
 void Juego::crearEquipos(){
 	this->equipo1 = new Equipo(jugadores[0],jugadores[1]);
 	this->equipo2 = new Equipo(jugadores[2],jugadores[3]);
-	this->jugador1 = equipo1->JugadorActual();
-	this->jugador2 = equipo2->JugadorActual();
+	this->jugadorActualEquipo1 = equipo1->JugadorActual();
+	this->jugadorActualEquipo2 = equipo2->JugadorActual();
 }
 
 void Juego::gameLoop(){
 	this->isRunning=true;
 	while (isRunning){
 		this->startTime = SDL_GetTicks();
-		//this->teclear();
 		this->dibujar();
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
@@ -79,18 +78,19 @@ bool Juego::compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugad
 
 std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
 	std::vector<std::tuple<Jugador *, int>> zindexs_personajes;
-
-	zindexs_personajes.push_back(std::make_tuple(jugador1, jugador1->devolverPersonajeActual()->zindexPersonaje()));
-	zindexs_personajes.push_back(std::make_tuple(jugador2, jugador2->devolverPersonajeActual()->zindexPersonaje()));
+	this->jugadorActualEquipo1 = equipo1->JugadorActual();
+	this->jugadorActualEquipo2 = equipo2->JugadorActual();
+	zindexs_personajes.push_back(std::make_tuple(jugadorActualEquipo1, jugadorActualEquipo1->devolverPersonajeActual()->zindexPersonaje()));
+	zindexs_personajes.push_back(std::make_tuple(jugadorActualEquipo2, jugadorActualEquipo2->devolverPersonajeActual()->zindexPersonaje()));
 
 	std::sort(zindexs_personajes.begin(), zindexs_personajes.end(), Juego::compare_zindexs);
 	return zindexs_personajes;
 }
 
 
-std::vector<std::tuple<std::string,SDL_Rect, SDL_Rect >>Juego::dibujar(){
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
-	std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect >> dibujables;
+std::vector<std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
+	SDL_RendererFlip flip ;
+	std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip >> dibujables;
 	std::vector<std::tuple<Jugador *, int>> zindexs_personajes = obtenerOrdenDibujo();
 	std::vector<int>zindexes = controladorJson->getZindexes();
 	this->verificarCambioDeLado();
@@ -102,29 +102,28 @@ std::vector<std::tuple<std::string,SDL_Rect, SDL_Rect >>Juego::dibujar(){
 		SDL_Rect origen;
 		SDL_Rect destino;
 		if(fondos_dibujados == 3 || get<1>(zindexs_personajes[personajes_dibujados]) <= zindexes[fondos_dibujados]){
-			//get<0>(zindexs_personajes[personajes_dibujados])->personajeActualDibujar(*cliente->graficos());
 			Jugador * jugador = get<0>(zindexs_personajes[personajes_dibujados]);
 			origen = jugador->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
 			destino = jugador->devolverPersonajeActual()->obtenerRectangulo();
-			dibujables.push_back(std::make_tuple(jugador->nombreJugador(),origen,destino));
+			flip = jugador->getFlip();
+			dibujables.push_back(std::make_tuple(jugador->nombreJugador(),origen,destino,flip));
 			personajes_dibujados++;
 		}
 		else{
+			flip = SDL_FLIP_NONE;
 			destino ={-1,-1,-1,-1};
 			if(fondos_dibujados == 0 ){
-				//cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz1(), parallax->camaraz1(), NULL, flip);
 				SDL_Rect* origen = parallax->camaraz1();
-				dibujables.push_back(std::make_tuple(std::to_string(zindexes[2]),*origen,destino));
+				dibujables.push_back(std::make_tuple(std::to_string(zindexes[2]),*origen,destino,flip));
 			}
 			else if(fondos_dibujados == 1 ){
-				//cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz2(), parallax->camaraz2(), NULL, flip);
 				SDL_Rect *origen = parallax->camaraz2();
-				dibujables.push_back(std::make_tuple(std::to_string(zindexes[1]),*origen,destino));
+				dibujables.push_back(std::make_tuple(std::to_string(zindexes[1]),*origen,destino,flip));
 			}
 			else if(fondos_dibujados == 2 ){
-				//cliente->graficos()->dibujarImagen(cliente->fondos()->backgroundz3(), parallax->camaraz3() , NULL, flip);
+
 				SDL_Rect *origen = parallax->camaraz3();
-				dibujables.push_back(std::make_tuple(std::to_string(zindexes[0]),*origen,destino));
+				dibujables.push_back(std::make_tuple(std::to_string(zindexes[0]),*origen,destino,flip));
 			}
 			fondos_dibujados++;
 		}
@@ -134,13 +133,14 @@ std::vector<std::tuple<std::string,SDL_Rect, SDL_Rect >>Juego::dibujar(){
 }
 
 void Juego::verificarCambioDeLado(){
-	if (this->jugador1->estaDelladoDerecho()){
-		if (this->jugador1->posicionActual() < this->jugador2->posicionActual()){
+	if (this->jugadorActualEquipo1->estaDelladoDerecho()){
+		if (this->jugadorActualEquipo1->posicionActual() < this->jugadorActualEquipo2->posicionActual()){
 			this->equipo1->cambiarDeLado();
 			this->equipo2->cambiarDeLado();
 		}
-	}else{
-		if (this->jugador2->posicionActual() < this->jugador1->posicionActual()){
+	}
+	else{
+		if (this->jugadorActualEquipo2->posicionActual() < this->jugadorActualEquipo1->posicionActual()){
 			this->equipo2->cambiarDeLado();
 			this->equipo1->cambiarDeLado();
 		}
@@ -149,8 +149,8 @@ void Juego::verificarCambioDeLado(){
 
 
 void Juego::teclear(SDL_Event evento){
-	Personaje* personaje1 = jugador1->devolverPersonajeActual();
-	Personaje* personaje2 = jugador2->devolverPersonajeActual();
+	Personaje* personaje1 = jugadorActualEquipo1->devolverPersonajeActual();
+	Personaje* personaje2 = jugadorActualEquipo2->devolverPersonajeActual();
 	bool finEscenarioDerecha = parallax->finDeEscenarioDerecha();
 	bool finEscenarioIzquierda = parallax->finDeEscenarioIzquierda();
 	teclado->reiniciar();
@@ -207,11 +207,14 @@ void Juego::teclear(SDL_Event evento){
 		personaje1->agacharse();
 		controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
 	}
+	if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S)){
+			personaje1->cambiarAnimacion("quieto");
+	}
 
 	if(teclado->sePresionoUnaTecla(SDL_SCANCODE_E) ){
-			this->equipo1->cambiarJugador();
-			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 1");
-		}
+		this->equipo1->cambiarJugador();
+		controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 1");
+	}
 
 	if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_LEFT)){
 		if (personaje2->moverIzquierda(personaje1,finEscenarioIzquierda)){
@@ -244,6 +247,10 @@ void Juego::teclear(SDL_Event evento){
 	if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_DOWN)){
 		personaje2->agacharse();
 		controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 agachado");
+	}
+
+	if(teclado->seSoltoUnaTecla(SDL_SCANCODE_DOWN)){
+			personaje2->cambiarAnimacion("quieto");
 	}
 
 	if(teclado->sePresionoUnaTecla(SDL_SCANCODE_M)  ){

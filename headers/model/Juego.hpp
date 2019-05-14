@@ -28,7 +28,7 @@ class Juego{
 		~Juego();
 		bool running() {return isRunning;}
 		void gameLoop();
-		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect>> dibujar();
+		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujar();
 		void teclear(SDL_Event evento);
 		void verificarCambioDeLado();
 		void crearEquipos();
@@ -40,11 +40,11 @@ class Juego{
 	private:
 
 		ControladorTeclado *teclado;
-		Jugador *jugador1;
-		Jugador *jugador2;
+		Jugador *jugadorActualEquipo1;
+		Jugador *jugadorActualEquipo2;
 		Parallax *parallax;
 		Uint32 startTime;
-		vector<Jugador*> jugadores;
+		vector<Jugador*> jugadores={NULL,NULL,NULL,NULL};
 		Equipo *equipo1;
 		Equipo *equipo2 ;
 		bool isRunning;

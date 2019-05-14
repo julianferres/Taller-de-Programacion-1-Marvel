@@ -48,12 +48,7 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 void Personaje::actualizar(){
 	if(saltando)
 		this->saltar();
-	if(!agachado && spriteAnimado->getAnimacionActual()=="agacharse")
-			spriteAnimado->iniciarAnimacion("quieto");
-	//this->spriteAnimado->dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
 	this->spriteAnimado->update();
-	agachado = false;
-
 }
 
 void Personaje::cambiarAnimacion(string nombre){
@@ -117,7 +112,7 @@ void Personaje::correrADerecha(){
 }
 
 void Personaje::agacharse(){
-	if(saltando) return;
+	if(saltando ) return;
 	agachado = true;
 	this->spriteAnimado->iniciarAnimacion("agacharse");
 }
@@ -160,6 +155,10 @@ void Personaje::Flip(){
 	}else{
 		this->flip = SDL_FLIP_NONE;
 	}
+}
+
+SDL_RendererFlip Personaje::getFlip(){
+	return this->flip;
 }
 
 float Personaje::getPosX(){

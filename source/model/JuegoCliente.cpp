@@ -41,20 +41,20 @@ SDL_Texture * JuegoCliente::getTextura(string nombre){
 	return this->texturas->getTextura(nombre);
 }
 
-void JuegoCliente::dibujar(string nombre,int posiciones[8]){
+void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip){
 	origen.x = posiciones[0];
 	origen.y = posiciones[1];
 	origen.w = posiciones[2];
 	origen.h = posiciones[3];
 	if(posiciones[4]==-1){
-		this->grafico->dibujarImagen(getTextura(nombre),&origen, NULL, SDL_FLIP_NONE);
+		this->grafico->dibujarImagen(getTextura(nombre),&origen, NULL, flip);
 	}
 	else{
 		destino.x = posiciones[4];
 		destino.y = posiciones[5];
 		destino.w = posiciones[6];
 		destino.h = posiciones[7];
-		this->grafico->dibujarImagen(getTextura(nombre),&origen, &destino, SDL_FLIP_NONE);
+		this->grafico->dibujarImagen(getTextura(nombre),&origen, &destino, flip);
 	}
 
 }

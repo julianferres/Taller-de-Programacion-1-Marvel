@@ -14,13 +14,12 @@ class Jugador{
 
 		Jugador(std::string nombrePersonaje, int IDcliente,SDL_RendererFlip flip, bool ladoDerecho);
 		~Jugador();
-		//void personajeActualDibujar(ControladorGrafico &grafico);
 		void cambiarPersonaje();
-		void flip();
 		void cambiarDeLado();
 		void actualizarPiso();
 		float posicionActual();
 		bool estaDelladoDerecho();
+		SDL_RendererFlip getFlip();
 		std::string nombreJugador();
 		Personaje * devolverPersonajeActual();
 

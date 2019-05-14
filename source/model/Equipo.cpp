@@ -12,10 +12,12 @@ Equipo::Equipo(Jugador *jugador1, Jugador *jugador2){
 }
 
 void Equipo::cambiarJugador(){
-	if(jugadorActual==jugadores[0])
+	if(jugadorActual==jugadores[0]){
 		jugadorActual= jugadores[1];
-	else
+	}
+	else{
 		jugadorActual = jugadores[0];
+	}
 	jugadorActual->cambiarPersonaje();
 }
 

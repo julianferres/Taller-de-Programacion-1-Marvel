@@ -7,6 +7,7 @@ Jugador::Jugador(std::string nombrePersonaje, int posicionXinicial, SDL_Renderer
 	this->personaje = new Personaje(nombrePersonaje, posicionXinicial, flip);
 	this->ladoDerecho = ladoDerecho;
 	this->nombre = nombrePersonaje;
+
 }
 
 Jugador::~Jugador(){
@@ -17,11 +18,6 @@ void Jugador::cambiarPersonaje(){
 	this->personaje->cambio();
 
 }
-
-/*
-void Jugador::personajeActualDibujar(ControladorGrafico &graficos){
-	this->personaje->dibujar(graficos);
-}*/
 
 Personaje* Jugador::devolverPersonajeActual(){
 	return this->personaje;
@@ -36,8 +32,8 @@ float Jugador::posicionActual(){
 	return this->personaje->getPosX();
 }
 
-void Jugador::flip(){
-	this->personaje->Flip();
+SDL_RendererFlip Jugador::getFlip(){
+	return this->personaje->getFlip();
 }
 
 bool Jugador::estaDelladoDerecho(){
