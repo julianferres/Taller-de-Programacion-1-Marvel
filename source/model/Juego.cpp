@@ -9,6 +9,7 @@
 #include <JuegoCliente.hpp>
 #include <Equipo.hpp>
 #include <string>
+#include<iostream>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -62,7 +63,7 @@ void Juego::gameLoop(){
 	this->isRunning=true;
 	while (isRunning){
 		this->startTime = SDL_GetTicks();
-		this->teclear();
+		//this->teclear();
 		this->dibujar();
 		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
 			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
@@ -95,7 +96,8 @@ std::vector<std::tuple<std::string,SDL_Rect, SDL_Rect >>Juego::dibujar(){
 	this->verificarCambioDeLado();
 	int fondos_dibujados = 0;
 	int personajes_dibujados = 0;
-
+	get<0>(zindexs_personajes[0])->devolverPersonajeActual()->actualizar();
+	get<0>(zindexs_personajes[1])->devolverPersonajeActual()->actualizar();
 	while(fondos_dibujados + personajes_dibujados < 5){
 		SDL_Rect origen;
 		SDL_Rect destino;
@@ -146,35 +148,33 @@ void Juego::verificarCambioDeLado(){
 }
 
 
-void Juego::teclear(){
-	SDL_Event evento;
+void Juego::teclear(SDL_Event evento){
 	Personaje* personaje1 = jugador1->devolverPersonajeActual();
 	Personaje* personaje2 = jugador2->devolverPersonajeActual();
 	bool finEscenarioDerecha = parallax->finDeEscenarioDerecha();
 	bool finEscenarioIzquierda = parallax->finDeEscenarioIzquierda();
 	teclado->reiniciar();
 
-	while(SDL_PollEvent(&evento)){
-		if (evento.type == SDL_QUIT   ){
-			isRunning = false;
-			break;
-		}
 
-		if (evento.window.event == SDL_WINDOWEVENT_RESIZED){
-			//cliente->graficos()->maximizarVentana(evento.window.data1, evento.window.data2);
-			this->equipo1->actualizarPiso();
-			this->equipo1->actualizarPiso();
-		}
-
-		 switch( evento.type ){
-		 	 case SDL_KEYDOWN:
-		 		 teclado->eventoPresionarTecla(evento);
-		 		 break;
-		 	 case SDL_KEYUP:
-		 		 teclado->eventoSoltarTecla(evento);
-		 		 break;
-		 }
+	if (evento.type == SDL_QUIT   ){
+		isRunning = false;
 	}
+
+	if (evento.window.event == SDL_WINDOWEVENT_RESIZED){
+		//cliente->graficos()->maximizarVentana(evento.window.data1, evento.window.data2);
+		this->equipo1->actualizarPiso();
+		this->equipo1->actualizarPiso();
+	}
+
+	 switch( evento.type ){
+		 case SDL_KEYDOWN:
+			 teclado->eventoPresionarTecla(evento);
+			 break;
+		 case SDL_KEYUP:
+			 teclado->eventoSoltarTecla(evento);
+			 break;
+	 }
+
 
 	if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_D)){
 		 if(personaje1->moverDerecha(personaje2,finEscenarioDerecha)){

@@ -19,7 +19,7 @@ class Personaje{
 		~Personaje();
 		int getFrameIndex();
 		int zindexPersonaje();
-		void dibujar(ControladorGrafico &grafico);
+		void actualizar();
 		bool moverDerecha(Personaje *enemigo, bool finEscenarioDerecha);
 		bool moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda);
 		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);

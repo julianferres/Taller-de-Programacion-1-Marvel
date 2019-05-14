@@ -25,15 +25,14 @@ public:
 	Server();
 	void crearSocket();
 	void esperarConexiones();
-	void enviarNombresJugadores(int socketCliente);
-	void enviarFondos(int socketCliente);
-	void enviarParaDibujar(int socketCliente);
-	void crearJugador(char* nombrePersonaje, int idCliente);
-	void* conexionConCliente(void *socket_desc);
-	static void*conexionConClienteWrapper(void *args);
+	void* enviarParaDibujar(void *socket_desc);
+	static void*enviarParaDibujarWrapper(void *args);
+	static void*recibirTeclasWrapper(void *args);
+	void* recibirTeclas(void* socket);
 	void* actualizarModelo();
 	static void*actualizarModeloWrapper(void *args);
 	void crearThreadServer();
+
 
 private:
 	Juego *juego ;
@@ -42,7 +41,6 @@ private:
 	int socketCliente;
 	vector<char*> vectorPersonajes;
 	struct sockaddr_in server , client;
-	char buffer[MAXDATOS];
 	vector<int> clientesConectados;
 	vector<tuple<string,SDL_Rect , SDL_Rect >> dibujables;
 	bool esperandoParaDibujar=true;

@@ -24,6 +24,7 @@ class Cliente{
 		void enviarEvento();
 		void recibirPersonajes();
 		void recibirFondos();
+		static void* enviarEventos(void* arg);
 
 	private:
 		JuegoCliente *juegoCliente;

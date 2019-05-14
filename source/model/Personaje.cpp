@@ -45,12 +45,12 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 
 }
 
-void Personaje::dibujar(ControladorGrafico &graficos){
+void Personaje::actualizar(){
 	if(saltando)
 		this->saltar();
 	if(!agachado && spriteAnimado->getAnimacionActual()=="agacharse")
 			spriteAnimado->iniciarAnimacion("quieto");
-	this->spriteAnimado->dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
+	//this->spriteAnimado->dibujar(graficos,this->posx,this->posy,alto, ancho, this->flip);
 	this->spriteAnimado->update();
 	agachado = false;
 

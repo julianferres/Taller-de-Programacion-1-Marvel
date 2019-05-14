@@ -18,9 +18,20 @@ extern ControladorLogger *controladorLogger;
 Cliente::Cliente( char * direccionIP){
 	juegoCliente = new JuegoCliente();
 	this->iniciarConexion(direccionIP);
-	this->recibirIDcliente();
-	this->elegirPersonaje();
-	this->cargarContenidos();
+	juegoCliente->iniciarGraficos();
+	const string &filePath = controladorJson->pathImagen(string("Venom"));
+	tuple <string, const string> tuplaPersonaje=make_tuple(string("Venom"),filePath);
+	personajesYfondos.push_back(tuplaPersonaje);
+	for(int i=1;i<4;i++){
+		const string &filePath = controladorJson->pathFondo(i);
+		tuple <string, const string> tuplaFondo=make_tuple(to_string(i),filePath);
+		personajesYfondos.push_back(tuplaFondo);
+	}
+	juegoCliente->cargarTexturas(personajesYfondos);
+	pthread_t thread_id;
+	int *arg = (int*)malloc(sizeof(*arg));
+	*arg = numeroSocket;
+	pthread_create( &thread_id , NULL , &Cliente::enviarEventos , arg);
 
 	while(true){
 		recibirParaDibujar();
@@ -49,69 +60,62 @@ void Cliente::iniciarConexion(char* direccionIP){
 		controladorLogger->registrarEvento("ERROR", "Cliente::Error al conectar con el servidor");
 }
 
-void Cliente::recibirIDcliente(){
 
-	recv(numeroSocket,&idCliente,sizeof(idCliente),0);//se conectaron todos los jugadores
-	controladorLogger->registrarEvento("INFO", "Cliente::El cliente "+to_string(idCliente)+"se conecto correctamente");
-
-}
-
-void Cliente::elegirPersonaje(){
-	juegoCliente->iniciarGraficos();
-	GameMenu *menu = new GameMenu(*juegoCliente->graficos(),idCliente);//inicio el menu
-
-	//Seleccionamos el personaje y lo enviamos al server
-	string personajeElegido = menu->personajeSeleccionado();//ya seleccione mi personaje
-	controladorLogger->registrarEvento("INFO", "Cliente::El cliente "+to_string(idCliente)+" eligio al personaje" + personajeElegido);
-	send(numeroSocket,(personajeElegido.c_str()),MAXDATOS,0);//le envio el personaje al servidor
-}
-
-void Cliente::cargarContenidos(){
-
-	this->recibirPersonajes();
-	this->recibirFondos();
-	juegoCliente->cargarTexturas(personajesYfondos);//creo el mapa(nombre,textura)
-}
-
-void Cliente::recibirPersonajes(){
-	for(int i=0; i <CANTIDAD_MAXIMA_JUGADORES;i++){
-		recv(numeroSocket,buffer,MAXDATOS,0);
-		const string &filePath = controladorJson->pathImagen(string(buffer));
-		tuple <string, const string> tuplaPersonaje=make_tuple(string(buffer),filePath);
-		personajesYfondos.push_back(tuplaPersonaje);
-		send(numeroSocket,buffer,MAXDATOS,0);//le aviso que termine de trabajar
-		cout<<buffer<<endl;
-	}
-}
-
-void Cliente::recibirFondos(){
-	int cantidadZindex = controladorJson->getZindexes().size();
-	int zindexArecibir[cantidadZindex];
-	recv(numeroSocket,zindexArecibir,sizeof(zindexArecibir),0);
-	for(int i=0; i <cantidadZindex;i++){
-		int zindex = zindexArecibir[i];
-		const string &filePath = controladorJson->pathFondo(zindex);
-		tuple <string, const string> tuplaFondo=make_tuple(to_string(zindex),filePath);
-		personajesYfondos.push_back(tuplaFondo);
-		cout<<zindex<<endl;
-		cout<<filePath<<endl;
-	}
-}
 
 
 
 void Cliente::recibirParaDibujar(){
-	juegoCliente->graficos()->limpiar();
-	char nombreTextura[MAXDATOS];
-	for(int i = 0;i<5;i++){
-		recv(numeroSocket,nombreTextura,MAXDATOS,0);
-		send(numeroSocket,nombreTextura,MAXDATOS,0);
-		int posiciones[8] ;
-		recv(numeroSocket,posiciones,sizeof(posiciones),0);
-		juegoCliente->dibujar(string(nombreTextura),posiciones);
-		send(numeroSocket,nombreTextura,MAXDATOS,0);
+	int i=0;
+	char fondo1[MAXDATOS];
+	char fondo2[MAXDATOS];
+	char fondo3[MAXDATOS];
+	char personaje1[MAXDATOS];
+	char personaje2[MAXDATOS];
+
+	while(true){
+		juegoCliente->graficos()->limpiar();
+		int posicion1[8];
+		int posicion2[8];
+		int posicion3[8];
+		int posicion4[8];
+		int posicion5[8];
+
+		recv(numeroSocket,posicion1,sizeof(posicion1),0);
+		recv(numeroSocket,posicion2,sizeof(posicion2),0);
+		recv(numeroSocket,posicion3,sizeof(posicion3),0);
+		recv(numeroSocket,posicion4,sizeof(posicion4),0);
+		recv(numeroSocket,posicion5,sizeof(posicion5),0);
+
+		recv(numeroSocket,fondo1,MAXDATOS,0);
+		recv(numeroSocket,fondo2,MAXDATOS,0);
+		recv(numeroSocket,fondo3,MAXDATOS,0);
+		recv(numeroSocket,personaje1,MAXDATOS,0);
+		recv(numeroSocket,personaje2,MAXDATOS,0);
+
+		juegoCliente->dibujar(string(fondo1),posicion1);
+		juegoCliente->dibujar(string(fondo2),posicion2);
+		juegoCliente->dibujar(string(fondo3),posicion3);
+		juegoCliente->dibujar(string(personaje1),posicion4);
+		juegoCliente->dibujar(string(personaje2),posicion5);
+
+		juegoCliente->graficos()->render();
+
+		puts(to_string(i).c_str());
+		i++;
 	}
-	juegoCliente->graficos()->render();
+
+
+}
+
+void *Cliente::enviarEventos(void* arg){
+	while(true){
+		SDL_Event evento;
+		while(SDL_PollEvent(&evento)){
+			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT){
+				send(*(int*)arg,&evento,sizeof(evento),0);
+			}
+		}
+	}
 
 }
 
