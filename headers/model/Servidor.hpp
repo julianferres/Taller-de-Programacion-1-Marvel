@@ -11,6 +11,7 @@
 #include <Juego.hpp>
 #include <ControladorLogger.hpp>
 #include <ControladorEnvio.hpp>
+#include <queue>
 
 using namespace std;
 
@@ -40,14 +41,15 @@ public:
 private:
 	ControladorEnvio sistemaEnvio;
 	Juego *juego ;
-	int cantidad_actual_clientes =0;
+	int cantidad_actual_clientes = 0;
 	int socketServidor;
 	int socketCliente;
 	vector<char*> vectorPersonajes;
 	struct sockaddr_in server , client;
 	vector<int> clientesConectados;
-	vector<tuple<string,SDL_Rect , SDL_Rect >> dibujables;
+	vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujables;
 	bool esperandoParaDibujar=true;
+	queue<vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>>> dibujablesCliente1;
 
 
 

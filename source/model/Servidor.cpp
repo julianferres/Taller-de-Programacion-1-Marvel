@@ -9,6 +9,7 @@ using namespace std;
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
+mutex server_mutex;
 
 struct arg_struct {
 		Servidor *servidor;
@@ -46,8 +47,16 @@ struct arg_struct {
 	  juego->crearJugador("Venom", 3);
 	  juego->crearJugador("Venom", 4);
 	  juego->crearEquipos();
+	  Uint32 tiempoInicial;
 
-	  while(true){}
+	  while(true){
+			server_mutex.lock();
+			this->dibujables = juego->dibujar();
+			server_mutex.unlock();
+
+			  if(SDL_GetTicks() - tiempoInicial < 1000/60)
+			  			SDL_Delay( 1000/60 - SDL_GetTicks() +tiempoInicial );
+	  }
 
 
  	return NULL;
@@ -110,7 +119,7 @@ void *Servidor::enviarParaDibujarWrapper(void *args){
 }
  
 void Servidor::enviarParaDibujar(int socket){
-	int i=0;
+	//int i=0;
 	char fondo1[MAXDATOS];
 	char fondo2[MAXDATOS];
 	char fondo3[MAXDATOS];
@@ -122,7 +131,12 @@ void Servidor::enviarParaDibujar(int socket){
 
 	while(true){
 		tiempoInicial= SDL_GetTicks();
-		dibujablesThread= juego->dibujar();
+
+		server_mutex.lock();
+		dibujablesThread = this->dibujables;
+		server_mutex.unlock();
+
+
 		SDL_Rect rect1 =get<1>(dibujablesThread[0]);
 		SDL_Rect rect2 =get<2>(dibujablesThread[0]);
 		SDL_Rect rect3 =get<1>(dibujablesThread[1]);
@@ -172,8 +186,8 @@ void Servidor::enviarParaDibujar(int socket){
 		if(SDL_GetTicks() - tiempoInicial < 1000/60)
 			SDL_Delay( 1000/60 - SDL_GetTicks() +tiempoInicial );
 
-		puts(to_string(i).c_str());
-		i++;
+		//puts(to_string(i).c_str());
+		//i++;
 
 	}
 } 

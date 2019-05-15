@@ -70,7 +70,7 @@ void Cliente::iniciarConexion(char* direccionIP){
 
 
 void Cliente::recibirParaDibujar(){
-	int i=0;
+	//int i=0;
 	char fondo1[MAXDATOS];
 	char fondo2[MAXDATOS];
 	char fondo3[MAXDATOS];
@@ -112,8 +112,8 @@ void Cliente::recibirParaDibujar(){
 
 		juegoCliente->graficos()->render();
 
-		puts(to_string(i).c_str());
-		i++;
+		//puts(to_string(i).c_str());
+		//i++;
 	}
 
 
