@@ -62,6 +62,7 @@ void Cliente::iniciarConexion(char* direccionIP){
 	conexion=connect(numeroSocket,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
 	if(conexion==-1)
 		controladorLogger->registrarEvento("ERROR", "Cliente::Error al conectar con el servidor");
+	puts("Conectado...");
 }
 
 
@@ -119,11 +120,12 @@ void Cliente::recibirParaDibujar(){
 }
 
 void *Cliente::enviarEventos(void* arg){
+	int socketConexion=*(int*)arg;
 	while(true){
 		SDL_Event evento;
 		while(SDL_PollEvent(&evento)){
 			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT){
-				send(*(int*)arg,&evento,sizeof(evento),0);
+				send(socketConexion,&evento,sizeof(evento),0);
 			}
 		}
 	}

@@ -3,6 +3,7 @@
 #include <GameMenu.hpp>
 #include <JuegoCliente.hpp>
 #include <ControladorLogger.hpp>
+#include <ControladorEnvio.hpp>
 #include <string>
 #include <tuple>
 
@@ -28,6 +29,7 @@ class Cliente{
 
 	private:
 		JuegoCliente *juegoCliente;
+		ControladorEnvio sistemaEnvio;
 		int idCliente;
 		int numeroSocket;
 		char buffer[MAXDATOS];

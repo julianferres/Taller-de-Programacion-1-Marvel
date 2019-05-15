@@ -1,4 +1,4 @@
-#include<Server.hpp>
+#include <Servidor.hpp>
 #include <iostream>
 #include <vector>
 #include <tuple>
@@ -11,13 +11,13 @@ extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
 struct arg_struct {
-		Server *este;
-		int client_sock;
+		Servidor *servidor;
+		int csocket;
  }args;
  typedef struct arg_struct parametros;
 
 
- Server::Server(){
+ Servidor::Servidor(){
 	this->crearThreadServer();
 	this->crearSocket();
 	this->esperarConexiones();
@@ -25,21 +25,21 @@ struct arg_struct {
 	 close(socketServidor);
 }
 
- void Server::crearThreadServer(){
+ void Servidor::crearThreadServer(){
 	pthread_t thread_id;
-	if( pthread_create( &thread_id , NULL , Server::actualizarModeloWrapper , this)  < 0)
+	if( pthread_create( &thread_id , NULL , Servidor::actualizarModeloWrapper , this)  < 0)
 		controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el hilo del servidor");
 
 }
 
- void* Server::actualizarModeloWrapper(void *args){
- 	 Server* serv = (Server * )args;
+ void* Servidor::actualizarModeloWrapper(void *args){
+	 Servidor* serv = (Servidor * )args;
  	 return serv->actualizarModelo();
 }
 
 
 
-  void *Server::actualizarModelo(){
+  void *Servidor::actualizarModelo(){
 	  juego = new Juego();
 	  juego->crearJugador("Venom", 1);
 	  juego->crearJugador("Spiderman", 2);
@@ -53,7 +53,7 @@ struct arg_struct {
  	return NULL;
   }
 
-void Server::crearSocket(){
+void Servidor::crearSocket(){
    socketServidor = socket(AF_INET , SOCK_STREAM , 0);
 	if (socketServidor == -1)
 		controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el socket .");
@@ -65,14 +65,14 @@ void Server::crearSocket(){
 	server.sin_port = htons( PUERTO );
 
 	if( bind(socketServidor,(struct sockaddr *)&server , sizeof(server)) < 0)
-		perror("bind failed. Error");
+		perror("enlace fallido. Error");
 }
 
-void Server::esperarConexiones(){
+void Servidor::esperarConexiones(){
 	parametros* args = (parametros*) malloc(sizeof(arg_struct));
-	args->este=this;
+	args->servidor=this;
 	listen(socketServidor , 3);
-	puts("Waiting for incoming connections...");
+	puts("Esperando conexiones...");
 
 	int c = sizeof(struct sockaddr_in);
 	pthread_t thread_enviar;
@@ -81,12 +81,12 @@ void Server::esperarConexiones(){
 		socketCliente = accept(socketServidor, (struct sockaddr *)&client, (socklen_t*)&c);
 		 if (socketCliente < 0)
 			 controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo aceptar la conexion .");
-		args->client_sock=socketCliente;
-		puts("Connection accepted");
+		args->csocket=socketCliente;
+		puts("Conexion aceptada");
 
-		if( pthread_create( &thread_enviar , NULL , Server::enviarParaDibujarWrapper , (void*) args)  < 0)
+		if( pthread_create( &thread_enviar , NULL , Servidor::enviarParaDibujarWrapper , (void*) args)  < 0)
 			controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el hilo .");
-		if( pthread_create( &thread_recibir , NULL , Server::recibirTeclasWrapper , (void*) args)  < 0)
+		if( pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args)  < 0)
 			controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el hilo .");
 		clientesConectados.push_back(socketCliente);
 		cantidad_actual_clientes++;
@@ -96,19 +96,20 @@ void Server::esperarConexiones(){
 	free(args);
 }
 
-void *Server::recibirTeclasWrapper(void *args){
+void *Servidor::recibirTeclasWrapper(void *args){
 	parametros* argumentos = (parametros*) args;
-	 return ((Server *)argumentos->este)->recibirTeclas((void*)&argumentos->client_sock);
+	((Servidor *)argumentos->servidor)->recibirTeclas(argumentos->csocket);
+	return NULL;
 }
 
 
-void *Server::enviarParaDibujarWrapper(void *args){
+void *Servidor::enviarParaDibujarWrapper(void *args){
 	parametros* argumentos = (parametros*) args;
-	 return ((Server *)argumentos->este)->enviarParaDibujar((void*)&argumentos->client_sock);
+	((Servidor *)argumentos->servidor)->enviarParaDibujar(argumentos->csocket);
+	return NULL;
 }
  
-void *Server::enviarParaDibujar(void *socket_desc){
-	int socket = *((int *)socket_desc);
+void Servidor::enviarParaDibujar(int socket){
 	int i=0;
 	char fondo1[MAXDATOS];
 	char fondo2[MAXDATOS];
@@ -175,21 +176,17 @@ void *Server::enviarParaDibujar(void *socket_desc){
 		i++;
 
 	}
-
-	return 0;
 } 
 
-void* Server::recibirTeclas(void* socket_desc){
+void Servidor::recibirTeclas(int csocket){
 	SDL_Event evento;
-	int socket = *((int *)socket_desc);
 	while(true){
-		recv(socket,&evento,sizeof(evento),0);
+		recv(csocket,&evento,sizeof(evento),0);
 		mutex juegoMutex;
 		juegoMutex.lock();
 		juego->teclear(evento);
 		juegoMutex.unlock();
 	}
-
 }
 
 

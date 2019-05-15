@@ -11,9 +11,10 @@
 #include <string>
 #include<iostream>
 
+using namespace std;
+
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
-using namespace std;
 
 
 Juego::Juego(){

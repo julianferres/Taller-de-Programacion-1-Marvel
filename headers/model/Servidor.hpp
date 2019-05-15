@@ -1,5 +1,5 @@
-#ifndef HEADERS_MODEL_SERVER_HPP_
-#define HEADERS_MODEL_SERVER_HPP_
+#ifndef HEADERS_MODEL_SERVIDOR_HPP_
+#define HEADERS_MODEL_SERVIDOR_HPP_
 
 #include<stdio.h>
 #include<string.h>
@@ -10,31 +10,35 @@
 #include<pthread.h>
 #include <Juego.hpp>
 #include <ControladorLogger.hpp>
+#include <ControladorEnvio.hpp>
 
 using namespace std;
 
-#define CANTIDAD_MAXIMA_JUGADORES 4
+#define CANTIDAD_MAXIMA_JUGADORES 2
 #define MAXDATOS 1000
 #define PUERTO 5001
 
 
-class Server{
+class Servidor{
 
 
 public:
-	Server();
+	Servidor();
 	void crearSocket();
 	void esperarConexiones();
-	void* enviarParaDibujar(void *socket_desc);
+	//void* enviarParaDibujar(void *socket_desc);
+	void enviarParaDibujar(int csocket);
 	static void*enviarParaDibujarWrapper(void *args);
 	static void*recibirTeclasWrapper(void *args);
-	void* recibirTeclas(void* socket);
+	//void* recibirTeclas(void* socket);
+	void recibirTeclas(int csocket);
 	void* actualizarModelo();
 	static void*actualizarModeloWrapper(void *args);
 	void crearThreadServer();
 
 
 private:
+	ControladorEnvio sistemaEnvio;
 	Juego *juego ;
 	int cantidad_actual_clientes =0;
 	int socketServidor;

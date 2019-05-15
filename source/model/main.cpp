@@ -2,8 +2,8 @@
 #include <string>
 #include <ControladorJson.hpp>
 #include <ControladorLogger.hpp>
-#include <Server.hpp>
 #include <Cliente.hpp>
+#include <Servidor.hpp>
 
 ControladorJson *controladorJson = new ControladorJson();
 ControladorLogger *controladorLogger = new ControladorLogger();
@@ -17,7 +17,7 @@ int main(int argc, char **argv){
 
 	if(argc == 2){
 		if(argumentoConsola == "Server"){
-			Server *server = new Server();
+			Servidor *servidor = new Servidor();
 		}
 	}
 	else if(argc == 3){
