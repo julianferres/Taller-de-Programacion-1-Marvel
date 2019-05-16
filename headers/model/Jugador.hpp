@@ -28,6 +28,7 @@ class Jugador{
 		Personaje *personaje;
 		bool ladoDerecho;
 		std::string nombre;
+		int tipoTeclado;
 
 };
 

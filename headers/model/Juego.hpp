@@ -28,7 +28,7 @@ class Juego{
 		bool running() {return isRunning;}
 		void gameLoop();
 		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujar();
-		void teclear(SDL_Event evento);
+		void teclear(SDL_Event evento,int tipoTeclado);
 		void verificarCambioDeLado();
 		void crearEquipos();
 		void crearJugador(string nombre,int cliente);

@@ -11,11 +11,11 @@ extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 mutex server_mutex;
 
-struct arg_struct {
+struct infoServidor {
 		Servidor *servidor;
 		int csocket;
- }args;
- typedef struct arg_struct parametros;
+ };
+ typedef struct infoServidor iServidor;
 
 
  Servidor::Servidor(int puerto){
@@ -78,7 +78,7 @@ void Servidor::crearSocket(int puerto){
 }
 
 void Servidor::esperarConexiones(){
-	parametros* args = (parametros*) malloc(sizeof(arg_struct));
+	iServidor* args = (iServidor*) malloc(sizeof(infoServidor));
 	args->servidor=this;
 	listen(socketServidor , 3);
 	puts("Esperando conexiones...");
@@ -88,6 +88,8 @@ void Servidor::esperarConexiones(){
 	pthread_t thread_recibir;
 	while( true){
 		socketCliente = accept(socketServidor, (struct sockaddr *)&client, (socklen_t*)&c);
+		cantidad_actual_clientes++;
+		this->sistemaEnvio.enviarEntero(cantidad_actual_clientes,socketCliente);
 		 if (socketCliente < 0)
 			 controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo aceptar la conexion .");
 		args->csocket=socketCliente;
@@ -98,7 +100,6 @@ void Servidor::esperarConexiones(){
 		if( pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args)  < 0)
 			controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el hilo .");
 		clientesConectados.push_back(socketCliente);
-		cantidad_actual_clientes++;
 		cout<<"Bienvenido jugador "+to_string(cantidad_actual_clientes)<<endl;
 
 	}
@@ -106,20 +107,19 @@ void Servidor::esperarConexiones(){
 }
 
 void *Servidor::recibirTeclasWrapper(void *args){
-	parametros* argumentos = (parametros*) args;
+	iServidor* argumentos = (iServidor*) args;
 	((Servidor *)argumentos->servidor)->recibirTeclas(argumentos->csocket);
 	return NULL;
 }
 
 
 void *Servidor::enviarParaDibujarWrapper(void *args){
-	parametros* argumentos = (parametros*) args;
+	iServidor* argumentos = (iServidor*) args;
 	((Servidor *)argumentos->servidor)->enviarParaDibujar(argumentos->csocket);
 	return NULL;
 }
  
 void Servidor::enviarParaDibujar(int socket){
-	//int i=0;
 	char fondo1[MAXDATOS];
 	char fondo2[MAXDATOS];
 	char fondo3[MAXDATOS];
@@ -186,19 +186,17 @@ void Servidor::enviarParaDibujar(int socket){
 		if(SDL_GetTicks() - tiempoInicial < 1000/60)
 			SDL_Delay( 1000/60 - SDL_GetTicks() +tiempoInicial );
 
-		//puts(to_string(i).c_str());
-		//i++;
-
 	}
 } 
 
 void Servidor::recibirTeclas(int csocket){
 	SDL_Event evento;
 	while(true){
+		int tipoTeclado=this->sistemaEnvio.recibirEntero(csocket);
 		recv(csocket,&evento,sizeof(evento),0);
 		mutex juegoMutex;
 		juegoMutex.lock();
-		juego->teclear(evento);
+		juego->teclear(evento,tipoTeclado);
 		juegoMutex.unlock();
 	}
 }

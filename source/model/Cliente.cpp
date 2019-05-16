@@ -15,7 +15,15 @@ using namespace std;
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
+struct infoCliente {
+		Cliente *cliente;
+		int ssocket;
+ };
+ typedef struct infoCliente iCliente;
+
 Cliente::Cliente( char * direccionIP,int puerto){
+	iCliente* args = (iCliente*) malloc(sizeof(infoCliente));
+	args->cliente=this;
 	juegoCliente = new JuegoCliente();
 	this->iniciarConexion(direccionIP,puerto);
 	juegoCliente->iniciarGraficos();
@@ -32,10 +40,9 @@ Cliente::Cliente( char * direccionIP,int puerto){
 		personajesYfondos.push_back(tuplaFondo);
 	}
 	juegoCliente->cargarTexturas(personajesYfondos);
+	args->ssocket=numeroSocket;
 	pthread_t thread_id;
-	int *arg = (int*)malloc(sizeof(*arg));
-	*arg = numeroSocket;
-	pthread_create( &thread_id , NULL , &Cliente::enviarEventos , arg);
+	pthread_create( &thread_id , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
 
 	while(true){
 		recibirParaDibujar();
@@ -62,7 +69,9 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 	conexion=connect(numeroSocket,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
 	if(conexion==-1)
 		controladorLogger->registrarEvento("ERROR", "Cliente::Error al conectar con el servidor");
-	puts("Conectado...");
+	this->idCliente=this->sistemaEnvio.recibirEntero(numeroSocket);
+	cout<<"Conectado..."<<endl;
+	cout<<"tengo id: "<<this->idCliente<<endl;
 }
 
 
@@ -114,21 +123,20 @@ void Cliente::recibirParaDibujar(){
 	}
 }
 
-void *Cliente::enviarEventos(void* arg){
-	int socketConexion=*(int*)arg;
-	while(true){
-		SDL_Event evento;
-		while(SDL_PollEvent(&evento)){
-			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT)
-				send(socketConexion,&evento,sizeof(evento),0);
-		}
-	}
+void *Cliente::enviarEventosWrapper(void* arg){
+	iCliente* argumentos = (iCliente*) arg;
+	((Cliente *)argumentos->cliente)->enviarEventos(argumentos->ssocket);
+	return NULL;
 }
-
-
-
-
-
-
-
+void Cliente::enviarEventos(int socket){
+	while(true){
+			SDL_Event evento;
+			while(SDL_PollEvent(&evento)){
+				if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT){
+					this->sistemaEnvio.enviarEntero(this->idCliente,socket);
+					send(socket,&evento,sizeof(evento),0);
+				}
+			}
+		}
+}
 

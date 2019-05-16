@@ -21,11 +21,10 @@ class Cliente{
 		void recibirIDcliente();
 		void recibirParaDibujar();
 		void elegirPersonaje();
-		void enviarEvento();
+		void enviarEventos(int socket);
 		void recibirPersonajes();
 		void recibirFondos();
-		static void* enviarEventos(void* arg);
-
+		static void* enviarEventosWrapper(void* arg);
 	private:
 		JuegoCliente *juegoCliente;
 		ControladorEnvio sistemaEnvio;
