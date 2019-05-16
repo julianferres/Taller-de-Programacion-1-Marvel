@@ -3,8 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include <ControladorGrafico.hpp>
 #include <ControladorJson.hpp>
-#include <TexturasFondos.hpp>
-#include <iostream>
+
 using namespace std;
 
 JuegoCliente::JuegoCliente(){
@@ -23,10 +22,6 @@ JuegoCliente::~JuegoCliente(){
 
 ControladorGrafico* JuegoCliente::graficos(){
 	return (this->grafico);
-}
-
-TexturasFondos* JuegoCliente::fondos(){
-	return this->texturasFondos;
 }
 
 void JuegoCliente::cargarTexturas(vector<tuple<string, const string>> nombresYpaths){

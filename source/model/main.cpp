@@ -15,15 +15,11 @@ int main(int argc, char **argv){
 	controladorJson->leerArchivo(argumentoConsola);
 	controladorLogger->registrarEvento("INFO", "main::Json leido. Comienzo el juego");
 
-	if(argc == 2){
-		if(argumentoConsola == "Server"){
-			Servidor *servidor = new Servidor();
-		}
+	if(argc == 3 && argumentoConsola == "Server" ){
+		Servidor *servidor = new Servidor(atoi(argv[2]));
 	}
-	else if(argc == 3){
-		if(argumentoConsola=="Cliente"){
-			Cliente * cliente1 = new Cliente(argv[2]);
-		}
+	else if(argc == 4 && argumentoConsola=="Cliente"){
+		Cliente * cliente1 = new Cliente(argv[2],atoi(argv[3]));
 	}
 
 	controladorLogger->registrarEvento("INFO", "main::Juego Finalizado");

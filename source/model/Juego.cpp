@@ -5,7 +5,6 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorTeclado.hpp>
 #include <GameMenu.hpp>
-#include <TexturasFondos.hpp>
 #include <JuegoCliente.hpp>
 #include <Equipo.hpp>
 #include <string>

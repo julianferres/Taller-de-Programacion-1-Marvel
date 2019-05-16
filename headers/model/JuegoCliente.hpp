@@ -8,7 +8,7 @@
 #include <ControladorTeclado.hpp>
 #include <Parallax.hpp>
 #include <Texturas.hpp>
-#include <TexturasFondos.hpp>
+
 
 class JuegoCliente{
 
@@ -16,7 +16,6 @@ public:
 	JuegoCliente();
 	~JuegoCliente();
 	ControladorGrafico *graficos();
-	TexturasFondos * fondos();
 	SDL_Texture * getTextura(string nombre);
 	void iniciarGraficos();
 	void cargarTexturas(vector<tuple<string, const string>> nombresYpaths);
@@ -24,7 +23,6 @@ public:
 
 private:
 	ControladorGrafico *grafico;
-	TexturasFondos *texturasFondos;
 	Texturas *texturas;
 	SDL_Rect origen;
 	SDL_Rect destino;

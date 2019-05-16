@@ -18,9 +18,9 @@ struct arg_struct {
  typedef struct arg_struct parametros;
 
 
- Servidor::Servidor(){
+ Servidor::Servidor(int puerto){
 	this->crearThreadServer();
-	this->crearSocket();
+	this->crearSocket(puerto);
 	this->esperarConexiones();
 
 	 close(socketServidor);
@@ -50,19 +50,19 @@ struct arg_struct {
 	  Uint32 tiempoInicial;
 
 	  while(true){
-			server_mutex.lock();
-			this->dibujables = juego->dibujar();
-			server_mutex.unlock();
-			tiempoInicial= SDL_GetTicks();
-			  if(SDL_GetTicks() - tiempoInicial < 1000/60)
-			  			SDL_Delay( 1000/60 - SDL_GetTicks() +tiempoInicial );
+		server_mutex.lock();
+		this->dibujables = juego->dibujar();
+		server_mutex.unlock();
+		tiempoInicial= SDL_GetTicks();
+		 if(SDL_GetTicks() - tiempoInicial < 1000/60)
+					SDL_Delay( 1000/60 - SDL_GetTicks() +tiempoInicial );
 	  }
 
 
  	return NULL;
   }
 
-void Servidor::crearSocket(){
+void Servidor::crearSocket(int puerto){
    socketServidor = socket(AF_INET , SOCK_STREAM , 0);
 	if (socketServidor == -1)
 		controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el socket .");
@@ -71,7 +71,7 @@ void Servidor::crearSocket(){
 
 	server.sin_family = AF_INET;
 	server.sin_addr.s_addr = INADDR_ANY;
-	server.sin_port = htons( PUERTO );
+	server.sin_port = htons( puerto );
 
 	if( bind(socketServidor,(struct sockaddr *)&server , sizeof(server)) < 0)
 		perror("enlace fallido. Error");

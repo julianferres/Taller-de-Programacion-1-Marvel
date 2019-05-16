@@ -1,6 +1,5 @@
 #include <ControladorGrafico.hpp>
 #include <ControladorJson.hpp>
-#include <TexturasFondos.hpp>
 #include <map>
 #include <tuple>
 #include <SpriteAnimado.hpp>

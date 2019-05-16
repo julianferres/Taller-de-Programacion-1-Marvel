@@ -7,7 +7,6 @@
 #include <string>
 #include <tuple>
 
-#define PUERTO 5001
 #define MAXDATOS 1000
 #define CANTIDAD_MAXIMA_JUGADORES 4
 
@@ -16,8 +15,8 @@ class JuegoCliente;
 class Cliente{
 
 	public:
-		Cliente(char * direccionIP);
-		void iniciarConexion(char * direccionIP);
+		Cliente(char * direccionIP,int puerto);
+		void iniciarConexion(char * direccionIP,int puerto);
 		void cargarContenidos();
 		void recibirIDcliente();
 		void recibirParaDibujar();

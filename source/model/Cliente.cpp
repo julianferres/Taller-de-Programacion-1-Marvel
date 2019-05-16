@@ -15,9 +15,9 @@ using namespace std;
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
-Cliente::Cliente( char * direccionIP){
+Cliente::Cliente( char * direccionIP,int puerto){
 	juegoCliente = new JuegoCliente();
-	this->iniciarConexion(direccionIP);
+	this->iniciarConexion(direccionIP,puerto);
 	juegoCliente->iniciarGraficos();
 	const string &filePath1 = controladorJson->pathImagen(string("Venom"));
 	tuple <string, const string> tuplaPersonaje1=make_tuple(string("Venom"),filePath1);
@@ -45,7 +45,7 @@ Cliente::Cliente( char * direccionIP){
 }
 
 
-void Cliente::iniciarConexion(char* direccionIP){
+void Cliente::iniciarConexion(char* direccionIP,int puerto){
 	int  conexion;
 	struct hostent *nodoServidor;
 	struct sockaddr_in servidor;
@@ -56,7 +56,7 @@ void Cliente::iniciarConexion(char* direccionIP){
 
 	numeroSocket=socket(AF_INET, SOCK_STREAM, 0);
 	servidor.sin_family=AF_INET;
-	servidor.sin_port=htons(PUERTO);
+	servidor.sin_port=htons(puerto);
 	servidor.sin_addr=*((struct in_addr *)nodoServidor->h_addr);
 	bzero(&(servidor.sin_zero),8);
 	conexion=connect(numeroSocket,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
@@ -70,21 +70,20 @@ void Cliente::iniciarConexion(char* direccionIP){
 
 
 void Cliente::recibirParaDibujar(){
-	//int i=0;
+
 	char fondo1[MAXDATOS];
 	char fondo2[MAXDATOS];
 	char fondo3[MAXDATOS];
 	char personaje1[MAXDATOS];
 	char personaje2[MAXDATOS];
+	int posicion1[8];
+	int posicion2[8];
+	int posicion3[8];
+	int posicion4[8];
+	int posicion5[8];
 	SDL_RendererFlip flipFondo1,flipFondo2,flipFondo3,flipPersonaje1,flipPersonaje2;
 
 	while(true){
-
-		int posicion1[8];
-		int posicion2[8];
-		int posicion3[8];
-		int posicion4[8];
-		int posicion5[8];
 
 		recv(numeroSocket,posicion1,sizeof(posicion1),0);
 		recv(numeroSocket,posicion2,sizeof(posicion2),0);
@@ -103,6 +102,7 @@ void Cliente::recibirParaDibujar(){
 		recv(numeroSocket,&flipFondo3,sizeof(flipFondo3),0);
 		recv(numeroSocket,&flipPersonaje1,sizeof(flipPersonaje1),0);
 		recv(numeroSocket,&flipPersonaje2,sizeof(flipPersonaje2),0);
+
 		juegoCliente->graficos()->limpiar();
 		juegoCliente->dibujar(string(fondo1),posicion1,flipFondo1);
 		juegoCliente->dibujar(string(fondo2),posicion2,flipFondo2);
@@ -111,12 +111,7 @@ void Cliente::recibirParaDibujar(){
 		juegoCliente->dibujar(string(personaje2),posicion5,flipPersonaje2);
 
 		juegoCliente->graficos()->render();
-
-		//puts(to_string(i).c_str());
-		//i++;
 	}
-
-
 }
 
 void *Cliente::enviarEventos(void* arg){
@@ -124,12 +119,10 @@ void *Cliente::enviarEventos(void* arg){
 	while(true){
 		SDL_Event evento;
 		while(SDL_PollEvent(&evento)){
-			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT){
+			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT)
 				send(socketConexion,&evento,sizeof(evento),0);
-			}
 		}
 	}
-
 }
 
 

@@ -7,7 +7,6 @@
 #include <ControladorJson.hpp>
 #include <ControladorTeclado.hpp>
 #include <Parallax.hpp>
-#include <TexturasFondos.hpp>
 #include <JuegoCliente.hpp>
 #include <Equipo.hpp>
 #include<vector>
