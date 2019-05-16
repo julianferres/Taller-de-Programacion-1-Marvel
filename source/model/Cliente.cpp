@@ -79,7 +79,7 @@ void Cliente::recibirParaDibujar(){
 	SDL_RendererFlip flipFondo1,flipFondo2,flipFondo3,flipPersonaje1,flipPersonaje2;
 
 	while(true){
-		juegoCliente->graficos()->limpiar();
+
 		int posicion1[8];
 		int posicion2[8];
 		int posicion3[8];
@@ -103,7 +103,7 @@ void Cliente::recibirParaDibujar(){
 		recv(numeroSocket,&flipFondo3,sizeof(flipFondo3),0);
 		recv(numeroSocket,&flipPersonaje1,sizeof(flipPersonaje1),0);
 		recv(numeroSocket,&flipPersonaje2,sizeof(flipPersonaje2),0);
-
+		juegoCliente->graficos()->limpiar();
 		juegoCliente->dibujar(string(fondo1),posicion1,flipFondo1);
 		juegoCliente->dibujar(string(fondo2),posicion2,flipFondo2);
 		juegoCliente->dibujar(string(fondo3),posicion3,flipFondo3);

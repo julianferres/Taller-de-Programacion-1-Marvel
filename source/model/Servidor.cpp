@@ -53,7 +53,7 @@ struct arg_struct {
 			server_mutex.lock();
 			this->dibujables = juego->dibujar();
 			server_mutex.unlock();
-
+			tiempoInicial= SDL_GetTicks();
 			  if(SDL_GetTicks() - tiempoInicial < 1000/60)
 			  			SDL_Delay( 1000/60 - SDL_GetTicks() +tiempoInicial );
 	  }
