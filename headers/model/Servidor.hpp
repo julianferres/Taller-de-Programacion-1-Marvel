@@ -24,8 +24,7 @@ class Servidor{
 		Servidor(int puerto);
 		void crearSocket(int puerto);
 		void esperarConexiones();
-		void enviarParaDibujar(int csocket);
-		static void*enviarParaDibujarWrapper(void *args);
+		void enviarParaDibujar(int csocket,vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread);
 		static void*recibirTeclasWrapper(void *args);
 		void recibirTeclas(int csocket);
 		void* actualizarModelo();
