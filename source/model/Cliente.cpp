@@ -27,26 +27,24 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	juegoCliente = new JuegoCliente();
 	this->iniciarConexion(direccionIP,puerto);
 	juegoCliente->iniciarGraficos();
-	const string &filePath1 = controladorJson->pathImagen(string("Venom"));
-	tuple <string, const string> tuplaPersonaje1=make_tuple(string("Venom"),filePath1);
-	const string &filePath2 = controladorJson->pathImagen(string("Spiderman"));
-	tuple <string, const string> tuplaPersonaje2=make_tuple(string("Spiderman"),filePath2);
-	personajesYfondos.push_back(tuplaPersonaje1);
-	personajesYfondos.push_back(tuplaPersonaje2);
 
-	for(int i=1;i<4;i++){
-		const string &filePath = controladorJson->pathFondo(i);
-		tuple <string, const string> tuplaFondo=make_tuple(to_string(i),filePath);
-		personajesYfondos.push_back(tuplaFondo);
+	vector<string> personajes = controladorJson->getNombresPersonajes();
+	for(size_t i=0;i<personajes.size();i++){
+		const string &filePath = controladorJson->pathImagen(personajes[i]);
+		personajesYfondos.push_back(make_tuple(personajes[i],filePath));
 	}
+	vector<int> fondos = controladorJson->getZindexes();
+	for(size_t i=0;i<fondos.size();i++){
+		const string &filePath = controladorJson->pathFondo(fondos[i]);
+		personajesYfondos.push_back(make_tuple(to_string(fondos[i]),filePath));
+	}
+
 	juegoCliente->cargarTexturas(personajesYfondos);
 	args->ssocket=numeroSocket;
 	pthread_t thread_id;
 	pthread_create( &thread_id , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
+	recibirParaDibujar();
 
-	while(true){
-		recibirParaDibujar();
-	}
 
 	close(numeroSocket);
 }

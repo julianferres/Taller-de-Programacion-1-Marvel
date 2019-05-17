@@ -4,6 +4,7 @@
 #include <string>
 
 extern ControladorLogger *controladorLogger;
+using namespace std;
 
 void ControladorJson::leerArchivo(std::string argumentoConsola){
 
@@ -23,7 +24,6 @@ void ControladorJson::leerArchivo(std::string argumentoConsola){
 		this -> setCantidadJugadores(j);
 		this -> setPersonajes(j);
 		this -> setFondos(j);
-		this -> elegirPersonajes(j);
 
 		controladorLogger->registrarEvento("INFO","ControladorJson::Archivo de configuracion JSON leido correctamente");
 	}
@@ -90,18 +90,22 @@ bool ControladorJson::esfullscreen(){
 	return fullscreen;
 }
 
-std::string ControladorJson::nivelDebug(){
+string ControladorJson::nivelDebug(){
 	return nivel_debug;
 }
 
-std::vector<int>ControladorJson::getZindexes(){
+vector<int>ControladorJson::getZindexes(){
 	for(int i=0;i<fondos.size();i++){
 		zindexes.push_back(std::get<1>(fondos[i]));
 	}
 	return zindexes;
 }
 
-std::string ControladorJson::pathFondo(int zindex){
+vector<string>ControladorJson::getNombresPersonajes(){
+	return nombresPersonajes;
+}
+
+string ControladorJson::pathFondo(int zindex){
     for (int i = 0; i < cantidad_fondos; i++){
             if(std::get<1>(fondos[i]) == zindex)
                 return std::get<0>(fondos[i]);
@@ -109,7 +113,7 @@ std::string ControladorJson::pathFondo(int zindex){
     return "";
 }
 
-std::string ControladorJson::pathImagen(std::string nombrePersonaje){
+string ControladorJson::pathImagen(string nombrePersonaje){
     for (int i = 0; i < cantidad_personajes; i++){
             if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
             	return std::get<1>(personajes[i]);
@@ -118,12 +122,12 @@ std::string ControladorJson::pathImagen(std::string nombrePersonaje){
     return "";
 }
 
-std::string ControladorJson::nombrePersonajeI(int i){
+string ControladorJson::nombrePersonajeI(int i){
 	return std::get<0>(personajes[i]);
 }
 
 
-std::string ControladorJson::pathBoton(std::string nombrePersonaje){
+string ControladorJson::pathBoton(string nombrePersonaje){
 	for (int i = 0; i < cantidad_personajes; i++){
 		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
 			return std::get<5>(personajes[i]);
@@ -132,7 +136,7 @@ std::string ControladorJson::pathBoton(std::string nombrePersonaje){
 	return "";
 }
 
-bool ControladorJson::existePersonaje(std::string nombrePersonaje){
+bool ControladorJson::existePersonaje(string nombrePersonaje){
 	for (int i = 0; i < cantidad_personajes; i++){
 		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
 			controladorLogger->registrarEvento("DEBUG","ControladorJson::Personaje encontrado: "+ nombrePersonaje);
@@ -144,7 +148,7 @@ bool ControladorJson::existePersonaje(std::string nombrePersonaje){
 
 }
 
-int ControladorJson::alturaPersonaje(std::string nombrePersonaje){
+int ControladorJson::alturaPersonaje(string nombrePersonaje){
     for (int i = 0; i < cantidad_personajes; i++){
 		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
 			int altura = std::get<2>(personajes[i]);
@@ -158,7 +162,7 @@ int ControladorJson::alturaPersonaje(std::string nombrePersonaje){
     return -1;
 }
 
-int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
+int ControladorJson::anchoPersonaje(string nombrePersonaje){
     for (int i = 0; i < cantidad_personajes; i++){
 		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
 			int ancho = std::get<3>(personajes[i]);
@@ -174,7 +178,7 @@ int ControladorJson::anchoPersonaje(std::string nombrePersonaje){
 
 
 
-int ControladorJson::zindexPersonaje(std::string nombrePersonaje){
+int ControladorJson::zindexPersonaje(string nombrePersonaje){
     for (int i = 0; i < cantidad_personajes; i++){
 		if(std::get<0>(personajes[i]).compare(nombrePersonaje) == 0){
 			int zindex_personaje = std::get<4>(personajes[i]);
@@ -188,7 +192,7 @@ int ControladorJson::zindexPersonaje(std::string nombrePersonaje){
     return -1;
 }
 
-void ControladorJson::setLogLevel(json j,std::string argumentoConsola)throw(){
+void ControladorJson::setLogLevel(json j,string argumentoConsola)throw(){
 	try{
 		if(argumentoConsola.empty())
 			nivel_debug = j["logLevel"];
@@ -295,7 +299,7 @@ void ControladorJson::setCantidadFondos(json j)throw(){
 void ControladorJson::setFondos(json j)throw(){
 	try{
 		for (int i = 0; i < cantidad_fondos; i++){
-			std::string filepath_fondo = j["battlefield"][i]["background"]["filepath"];
+			string filepath_fondo = j["battlefield"][i]["background"]["filepath"];
 			int zindex_fondo = j["battlefield"][i]["background"]["zindex"];
 
 			std::ifstream file(filepath_fondo.c_str());
@@ -311,7 +315,7 @@ void ControladorJson::setFondos(json j)throw(){
 		fondos.clear();
 		for (int i = 0; i < cantidad_fondos; i++){
 			int zindex_fondo = 3 - i;
-			std::string filepath_fondo = "contents/auxiliar/capa" + std::to_string(zindex_fondo) + "aux.png";
+			string filepath_fondo = "contents/auxiliar/capa" + std::to_string(zindex_fondo) + "aux.png";
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de fondo no encontrada. Se carga una por defecto");
 			fondos.push_back(std::make_tuple(filepath_fondo , zindex_fondo));
 		}
@@ -325,20 +329,21 @@ int ControladorJson::cantidadPersonajes(){
 void ControladorJson::setPersonajes(json j)throw(){
 	try{
 		for (int i = 0; i < cantidad_personajes; i++){
-			std::string nombre_personaje = j["characters"][i]["name"];
-			std::string filepath_personaje = j["characters"][i]["filepath"];
-			std::string file_boton_personaje = j["characters"][i]["buttonpath"];
+			string nombre_personaje = j["characters"][i]["name"];
+			string filepath_personaje = j["characters"][i]["filepath"];
+			string file_boton_personaje = j["characters"][i]["buttonpath"];
 			int height_personaje = j["characters"][i]["height"];
 			int width_personaje = j["characters"][i]["width"];
 			int zindex_personaje = j["characters"][i]["zindex"];
 
-			std::ifstream file(filepath_personaje.c_str());
+			ifstream file(filepath_personaje.c_str());
 			if (file.good() == false){
 				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
 				nombre_personaje = "sinSprite";
 				filepath_personaje = "contents/images/sinSprite.png";
 			}
 			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje, file_boton_personaje));
+			nombresPersonajes.push_back(nombre_personaje);
 		}
 		controladorLogger->registrarEvento("DEBUG","ControladorJson::Personajes seteados");
 	}
@@ -346,9 +351,9 @@ void ControladorJson::setPersonajes(json j)throw(){
 		personajes.clear();
 		controladorLogger->registrarEvento("ERROR","ControladorJson::Hubo un error de tipo en el parse de datos de uno o varios personajes. Se cargan personajes por defecto");
 		for (int i = 0; i < cantidad_personajes; i++){
-			std::string nombre_personaje = nombre_personaje_default;
-			std::string filepath_personaje = "contents/images/sinSprite.png";
-			std::string file_boton_personaje = "contents/images/sinSprite.png";
+			string nombre_personaje = nombre_personaje_default;
+			string filepath_personaje = "contents/images/sinSprite.png";
+			string file_boton_personaje = "contents/images/sinSprite.png";
 			int height_personaje = height_personaje_default;
 			int width_personaje = width_personaje_default;
 			int zindex_personaje = zindex_personaje_default;
@@ -359,7 +364,7 @@ void ControladorJson::setPersonajes(json j)throw(){
 
 }
 
-void ControladorJson::setPersonajeJugador(int personaje, int jugador, std::string nombre){
+void ControladorJson::setPersonajeJugador(int personaje, int jugador, string nombre){
 	if(nombre!="CapitanAmerica" && nombre!="Venom" && nombre!="Spiderman" && nombre!="Hulk"){
 		controladorLogger->registrarEvento("ERROR","ControladroJson::No es un nombre valido: "+ nombre );
 		nombre = "sinSprite";
@@ -373,53 +378,11 @@ void ControladorJson::setPersonajeJugador(int personaje, int jugador, std::strin
 	}
 }
 
-void ControladorJson::elegirPersonajes(json j)throw(){
-	try {
-		std::string personaje1 = j["jugadores"][0]["jugador"]["personaje1"];
-		if(!this->existePersonaje(personaje1))
-			this->personajesJugador1.push_back("sinSprite");
-		else
-			this->personajesJugador1.push_back(personaje1);
-	}catch(json::type_error &e){
-		this->personajesJugador1.push_back("sinSprite");
-	}
-
-	try {
-		std::string personaje2 = j["jugadores"][0]["jugador"]["personaje2"];
-		if(!this->existePersonaje(personaje2))
-					this->personajesJugador1.push_back("sinSprite");
-		else
-			this->personajesJugador1.push_back(personaje2);
-	}catch(json::type_error &e){
-		this->personajesJugador1.push_back("sinSprite");
-	}
-
-	try {
-		std::string personaje3 = j["jugadores"][1]["jugador"]["personaje1"];
-		if(!this->existePersonaje(personaje3))
-			this->personajesJugador2.push_back("sinSprite");
-		else
-			this->personajesJugador2.push_back(personaje3);
-	}catch(json::type_error &e){
-		this->personajesJugador2.push_back("sinSprite");
-	}
-
-	try {
-		std::string personaje4 = j["jugadores"][1]["jugador"]["personaje2"];
-		if(!this->existePersonaje(personaje4))
-			this->personajesJugador2.push_back("sinSprite");
-		else
-			this->personajesJugador2.push_back(personaje4);
-	}catch(json::type_error &e){
-		this->personajesJugador2.push_back("sinSprite");
-	}
-}
-
-std::string ControladorJson::jugador1Personaje(int numero){
+string ControladorJson::jugador1Personaje(int numero){
 	return personajesJugador1[numero];
 }
 
-std::string ControladorJson::jugador2Personaje(int numero){
+string ControladorJson::jugador2Personaje(int numero){
 	return personajesJugador2[numero];
 }
 
@@ -434,9 +397,6 @@ void ControladorJson::setCantidadJugadores(json j)throw(){
 	controladorLogger->registrarEvento("DEBUG","ControladorJson::Jugadores contados = " + std::to_string(cantidad_jugadores));
 }
 
-int ControladorJson::cantidadJugadores(){
-	return this->cantidad_jugadores;
-}
 
 void ControladorJson::cambiarPantallaCompleta(){
 	this->fullscreen = not this->fullscreen;

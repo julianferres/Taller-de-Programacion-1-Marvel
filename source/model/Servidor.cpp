@@ -48,18 +48,22 @@ struct infoServidor {
 	  juego->crearJugador("Venom", 4);
 	  juego->crearEquipos();
 	  Uint32 tiempoInicial,tiempoActual;
+	  int FPS = controladorJson->cantidadFPS();
 
 	  while(true){
 		tiempoInicial= SDL_GetTicks();
 		server_mutex.lock();
 		this->dibujables = juego->dibujar();
 		server_mutex.unlock();
+
 		for(int i=0;i<clientesConectados.size();i++){
 			enviarParaDibujar(clientesConectados[i],dibujables);
 		}
+
 		tiempoActual = SDL_GetTicks();
-		 if(tiempoActual - tiempoInicial < 1000/60)
-			SDL_Delay( 1000/60 - tiempoActual +tiempoInicial );
+		 if(tiempoActual - tiempoInicial < 1000/FPS)
+			SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
+
 	  }
 
 

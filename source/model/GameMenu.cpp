@@ -33,7 +33,7 @@ GameMenu::GameMenu(ControladorGrafico &graficos, int idCliente){
 }
 
 GameMenu::~GameMenu(){
-	for(int i=0;i<botones.size();i++)
+	for(size_t i=0;i<botones.size();i++)
 		delete botones[i];
 	SDL_DestroyTexture(actionTexture);
 	SDL_FreeSurface(actionSurface);
@@ -68,7 +68,7 @@ void GameMenu::handleEvent(ControladorGrafico &graficos){//int personaje, int ju
 			if( e.type == SDL_QUIT ){
 				quit = true;
 			}
-			for (int i = 0; i< this->botones.size(); i++){
+			for (size_t i = 0; i< this->botones.size(); i++){
 				//controladorLogger->registrarEvento("DEBUG", "GameMenu::handleando evento para boton " + std::to_string(i));
 				this->botones[i]->handleEvent(e);
 				if (e.type == SDL_MOUSEBUTTONUP && this->botones[i]->fueClickeado()){
@@ -90,7 +90,7 @@ void GameMenu::dibujar(ControladorGrafico &graficos){
 	SDL_Rect sourceRect = { (this->ancho_ventana -w)/2,(10 * this->alto_ventana) / this->alto_maximo_ventana,w,h};
 	graficos.dibujarImagen(tituloTexture, NULL, &sourceRect, SDL_FLIP_NONE);
 
-	for (int i = 0; i< this->botones.size(); i++){
+	for (size_t i = 0; i< this->botones.size(); i++){
 		this->botones[i]->dibujar(graficos);
 	}
 

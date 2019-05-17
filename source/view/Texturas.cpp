@@ -8,7 +8,7 @@
 using namespace std;
 
 Texturas::Texturas(ControladorGrafico &graficos,vector<tuple<string, const string>> nombresYpaths){
-	for(int i=0;i<nombresYpaths.size();i++){
+	for(size_t i=0;i<nombresYpaths.size();i++){
 		tuple<string,const string> tuplai = nombresYpaths[i];
 		const string &filePath = get<1>(tuplai);
 		string nombre = get<0>(tuplai);

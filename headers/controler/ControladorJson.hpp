@@ -7,7 +7,8 @@
 #include <vector>
 
 using json = nlohmann::json;
-typedef std::tuple<std::string, std::string, int, int, int, std::string> tuplaPersonaje;
+using namespace std;
+typedef tuple<string, std::string, int, int, int, std::string> tuplaPersonaje;
 
 class ControladorJson{
 
@@ -20,7 +21,6 @@ class ControladorJson{
 		int anchoPersonaje(std::string);
 		int zindexPersonaje(std::string nombrePersonaje);
 		int cantidadFondos();
-		int cantidadJugadores();
 		int cantidadPersonajes();
 		int getPosicionXInicialEquipo1();
 		int getPosicionXInicialEquipo2();
@@ -30,21 +30,23 @@ class ControladorJson{
 		int alturaPersonajeDefault();
 		int anchoPersonajeDefault();
 		bool esfullscreen();
-		bool existePersonaje(std::string);
-		std::string nivelDebug();
-		std::string pathFondo(int zindex);
-		std::string pathImagen(std::string nombrePersonaje);
-		std::string pathBoton(std::string nombrePersonaje);
-		std::string nombrePersonajeI(int i);
-		std::string menuImage();
-		std::vector<int>getZindexes();
-		std::string jugador1Personaje(int numero);
-		std::string jugador2Personaje(int numero);
-		void leerArchivo(std::string argumentoConsola);
+		bool existePersonaje(string);
+		void leerArchivo(string argumentoConsola);
 		void leerArchivoDefault();
 		void cambiarPantallaCompleta();
 		void maximizarVentana(int ancho, int alto);
-		void setPersonajeJugador(int personaje, int jugador, std::string nombre);
+		void setPersonajeJugador(int personaje, int jugador, string nombre);
+		string nivelDebug();
+		string pathFondo(int zindex);
+		string pathImagen(string nombrePersonaje);
+		string pathBoton(string nombrePersonaje);
+		string nombrePersonajeI(int i);
+		string menuImage();
+		string jugador1Personaje(int numero);
+		string jugador2Personaje(int numero);
+		vector <string> getNombresPersonajes();
+		vector<int>getZindexes();
+
 
 	private:
 
@@ -58,15 +60,18 @@ class ControladorJson{
 		int width_personaje_default = 200;
 		int zindex_personaje_default = 99;
 		bool fullscreen;
-		std::string nivel_debug;
-		std::vector<int>zindexes;
-		std::vector<tuplaPersonaje> personajes;
-		std::vector<std::tuple<std::string, int>> fondos;
-		std::string configPath = "source/config/config.json";
-		std::vector<std::string> personajesJugador1;
-		std::vector<std::string> personajesJugador2;
-		const std::string configPathDefault = "source/default/configaux.json";
-		const std::string nivel_debug_default = "DEBUG";
+
+		string nivel_debug;
+		vector<string> nombresPersonajes;
+		vector<int>zindexes;
+		vector<tuplaPersonaje> personajes;
+		vector<tuple<string, int>> fondos;
+		string configPath = "source/config/config.json";
+		vector<string> personajesJugador1;
+		vector<string> personajesJugador2;
+
+		const string configPathDefault = "source/default/configaux.json";
+		const string nivel_debug_default = "DEBUG";
 		const int altura_ventana_default = 600;
 		const int ancho_ventana_default = 800;
 		const int altura_personaje_default = 300;
@@ -75,15 +80,14 @@ class ControladorJson{
 		const int cantidad_fondos_default = 3;
 		const int FPS_default = 60;
 		const bool fullscreen_default = false;
-		const std::string nombre_personaje_default = "sinSprite";
-
+		const string nombre_personaje_default = "sinSprite";
 		const int rango_altura_ventana[2] = {600, 1000};
 		const int rango_ancho_ventana[2] = {800, 1400};
 		const int rango_altura_personaje[2] = {50,400};
 		const int rango_ancho_personaje[2] = {50,350};
 		const int rango_FPS[2] = {30, 60};
 
-		void setLogLevel(json j, std::string argumentoConsola)throw();
+		void setLogLevel(json j, string argumentoConsola)throw();
 		void setAlturaVentana(json j)throw();
 		void setAnchoVentana(json j)throw();
 		void setPantallaCompleta(json j)throw();
