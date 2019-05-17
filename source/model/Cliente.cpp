@@ -80,56 +80,33 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 
 void Cliente::recibirParaDibujar(){
 
-	char fondo1[MAXDATOS];
-	char fondo2[MAXDATOS];
-	char fondo3[MAXDATOS];
-	char personaje1[MAXDATOS];
-	char personaje2[MAXDATOS];
-	int posicion1[8];
-	int posicion2[8];
-	int posicion3[8];
-	int posicion4[8];
-	int posicion5[8];
-	SDL_RendererFlip flipFondo1,flipFondo2,flipFondo3,flipPersonaje1,flipPersonaje2;
+	char textura[MAXDATOS];
+	int posiciones[8];
+	SDL_RendererFlip flip;
 
 	while(true){
-
-		recv(numeroSocket,posicion1,sizeof(posicion1),MSG_WAITALL);
-		recv(numeroSocket,posicion2,sizeof(posicion2),MSG_WAITALL);
-		recv(numeroSocket,posicion3,sizeof(posicion3),MSG_WAITALL);
-		recv(numeroSocket,posicion4,sizeof(posicion4),MSG_WAITALL);
-		recv(numeroSocket,posicion5,sizeof(posicion5),MSG_WAITALL);
-
-		recv(numeroSocket,fondo1,MAXDATOS,MSG_WAITALL);
-		recv(numeroSocket,fondo2,MAXDATOS,MSG_WAITALL);
-		recv(numeroSocket,fondo3,MAXDATOS,MSG_WAITALL);
-		recv(numeroSocket,personaje1,MAXDATOS,MSG_WAITALL);
-		recv(numeroSocket,personaje2,MAXDATOS,MSG_WAITALL);
-
-		recv(numeroSocket,&flipFondo1,sizeof(flipFondo1),MSG_WAITALL);
-		recv(numeroSocket,&flipFondo2,sizeof(flipFondo2),MSG_WAITALL);
-		recv(numeroSocket,&flipFondo3,sizeof(flipFondo3),MSG_WAITALL);
-		recv(numeroSocket,&flipPersonaje1,sizeof(flipPersonaje1),MSG_WAITALL);
-		recv(numeroSocket,&flipPersonaje2,sizeof(flipPersonaje2),MSG_WAITALL);
-
 		juegoCliente->graficos()->limpiar();
-		juegoCliente->dibujar(string(fondo1),posicion1,flipFondo1);
-		juegoCliente->dibujar(string(fondo2),posicion2,flipFondo2);
-		juegoCliente->dibujar(string(fondo3),posicion3,flipFondo3);
-		juegoCliente->dibujar(string(personaje1),posicion4,flipPersonaje1);
-		juegoCliente->dibujar(string(personaje2),posicion5,flipPersonaje2);
-		juegoCliente->graficos()->render();
 
+		for(int i=0;i<5;i++){
+			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
+			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
+			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
+			juegoCliente->dibujar(string(textura),posiciones,flip);
+		}
+
+		juegoCliente->graficos()->render();
 	}
 }
+
 void *Cliente::enviarEventosWrapper(void* arg){
 	iCliente* argumentos = (iCliente*) arg;
 	((Cliente *)argumentos->cliente)->enviarEventos(argumentos->ssocket);
 	return NULL;
 }
+
 void Cliente::enviarEventos(int socket){
+	SDL_Event evento;
 	while(true){
-		SDL_Event evento;
 		while(SDL_PollEvent(&evento)){
 			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT){
 				this->sistemaEnvio.enviarEntero(this->idCliente,socket);
