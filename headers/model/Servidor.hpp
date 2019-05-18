@@ -12,6 +12,7 @@
 #include <ControladorLogger.hpp>
 #include <ControladorEnvio.hpp>
 #include <queue>
+#include <mutex>
 
 using namespace std;
 
@@ -32,6 +33,7 @@ class Servidor{
 
 
 	private:
+		mutex mutex_conecciones;
 		ControladorEnvio sistemaEnvio;
 		Juego *juego ;
 		int socketServidor;

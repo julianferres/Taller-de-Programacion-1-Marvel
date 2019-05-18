@@ -2,7 +2,7 @@
 #include <vector>
 #include <tuple>
 #include <string>
-#include <mutex>
+
 
 using namespace std;
 
@@ -42,8 +42,12 @@ struct infoServidor {
 
   void *Servidor::actualizarModelo(){
 	  juego = new Juego();
+	  while (this->clientesConectados.size() < this->cantidadClientesPermitidos){
+		  controladorLogger->registrarEvento("INFO", "Servidor:: Esperando Jugadores. Actualmente hay: " + to_string(clientesConectados.size()) + "/" + to_string(this->cantidadClientesPermitidos));
+		  SDL_Delay( 1000);//controladorJson->cantidadFPS());
+	  }
 	  std::vector<std::string> nombres_jugadores = juego->gameMenu();
-	  //std::vector<std::string> jugadores = juego->gameMenu();
+
 	  controladorLogger->registrarEvento("INFO", "Servidor:: Jugadores elegidos: " + nombres_jugadores[0] + ", " + nombres_jugadores[1] + ", " + nombres_jugadores[2] + ", " + nombres_jugadores[3] );
 	  controladorLogger->registrarEvento("INFO", "Servidor:: Cantidad de jugadores " + to_string(nombres_jugadores.size()));
 
@@ -61,7 +65,6 @@ struct infoServidor {
 		server_mutex.lock();
 		this->dibujables = juego->dibujar();
 		server_mutex.unlock();
-
 		for(size_t i=0;i<clientesConectados.size();i++){
 			enviarParaDibujar(clientesConectados[i],dibujables);
 		}
