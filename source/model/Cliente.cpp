@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <netdb.h>
 #include <strings.h>
-#include <iostream>
 #include <Cliente.hpp>
 #include <string>
 #include <tuple>
@@ -22,10 +21,16 @@ struct infoCliente {
  typedef struct infoCliente iCliente;
 
 Cliente::Cliente( char * direccionIP,int puerto){
+	this->iniciarConexion(direccionIP,puerto);
+	if(idCliente == -1){//significa que el server esta lleno, me cierro
+		controladorLogger->registrarEvento("ERROR", "Cliente::El server esta lleno.");
+		close(numeroSocket);
+		return;
+	}
+
 	iCliente* args = (iCliente*) malloc(sizeof(infoCliente));
 	args->cliente=this;
 	juegoCliente = new JuegoCliente();
-	this->iniciarConexion(direccionIP,puerto);
 	juegoCliente->iniciarGraficos();
 
 	vector<string> personajes = controladorJson->getNombresPersonajes();
@@ -41,11 +46,13 @@ Cliente::Cliente( char * direccionIP,int puerto){
 
 	juegoCliente->cargarTexturas(personajesYfondos);
 	args->ssocket=numeroSocket;
+
 	pthread_t thread_id;
 	pthread_create( &thread_id , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
 	recibirParaDibujar();
 
-
+	pthread_join(thread_id, NULL);
+	delete juegoCliente;
 	close(numeroSocket);
 }
 
@@ -67,9 +74,12 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 	conexion=connect(numeroSocket,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
 	if(conexion==-1)
 		controladorLogger->registrarEvento("ERROR", "Cliente::Error al conectar con el servidor");
+	else
+		controladorLogger->registrarEvento("INFO", "Cliente::Conectado al servidor correctamente.");
+
 	this->idCliente=this->sistemaEnvio.recibirEntero(numeroSocket);
 	cout<<"Conectado..."<<endl;
-	cout<<"tengo id: "<<this->idCliente<<endl;
+
 }
 
 
@@ -86,7 +96,11 @@ void Cliente::recibirParaDibujar(){
 		juegoCliente->graficos()->limpiar();
 
 		for(int i=0;i<5;i++){
-			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
+			if(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)==0){
+				controladorLogger->registrarEvento("ERROR", "Cliente::Se desconecto el server. Procedo a cerrarme ");
+				running = false;
+				return;
+			}
 			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
 			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
@@ -104,7 +118,7 @@ void *Cliente::enviarEventosWrapper(void* arg){
 
 void Cliente::enviarEventos(int socket){
 	SDL_Event evento;
-	while(true){
+	while(running){
 		while(SDL_PollEvent(&evento)){
 			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT){
 				this->sistemaEnvio.enviarEntero(this->idCliente,socket);

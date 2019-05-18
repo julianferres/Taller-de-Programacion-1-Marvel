@@ -22,7 +22,6 @@ int main(int argc, char **argv){
 		Cliente * cliente1 = new Cliente(argv[2],atoi(argv[3]));
 	}
 
-	controladorLogger->registrarEvento("INFO", "main::Juego Finalizado");
 	return 0;
 
 }

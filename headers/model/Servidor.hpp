@@ -15,7 +15,6 @@
 
 using namespace std;
 
-#define CANTIDAD_MAXIMA_JUGADORES 2
 #define MAXDATOS 1000
 
 class Servidor{
@@ -35,15 +34,14 @@ class Servidor{
 	private:
 		ControladorEnvio sistemaEnvio;
 		Juego *juego ;
-		int cantidad_actual_clientes = 0;
 		int socketServidor;
 		int socketCliente;
+		int cantidadClientesPermitidos;
 		vector<char*> vectorPersonajes;
-		struct sockaddr_in server , client;
 		vector<int> clientesConectados;
+		vector<int> clientesDesconectados;
+		struct sockaddr_in server , client;
 		vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujables;
-		bool esperandoParaDibujar=true;
-		queue<vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>>> dibujablesCliente1;
 
 };
 

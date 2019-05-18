@@ -1,5 +1,4 @@
 #include <Servidor.hpp>
-#include <iostream>
 #include <vector>
 #include <tuple>
 #include <string>
@@ -19,6 +18,7 @@ struct infoServidor {
 
 
  Servidor::Servidor(int puerto){
+	 cantidadClientesPermitidos = controladorJson->cantidadClientes();
 	this->crearThreadServer();
 	this->crearSocket(puerto);
 	this->esperarConexiones();
@@ -56,7 +56,7 @@ struct infoServidor {
 		this->dibujables = juego->dibujar();
 		server_mutex.unlock();
 
-		for(int i=0;i<clientesConectados.size();i++){
+		for(size_t i=0;i<clientesConectados.size();i++){
 			enviarParaDibujar(clientesConectados[i],dibujables);
 		}
 
@@ -95,17 +95,22 @@ void Servidor::esperarConexiones(){
 
 	while( true){
 		socketCliente = accept(socketServidor, (struct sockaddr *)&client, (socklen_t*)&c);
-		cantidad_actual_clientes++;
-		this->sistemaEnvio.enviarEntero(cantidad_actual_clientes,socketCliente);
 		 if (socketCliente < 0)
-			 controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo aceptar la conexion .");
-		args->csocket=socketCliente;
-		puts("Conexion aceptada");
+			controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo aceptar la conexion .");
+		 else
+			 controladorLogger->registrarEvento("INFO", "Servidor::Se acepto la conexion correctamente.");
+		 if(clientesConectados.size()>=cantidadClientesPermitidos){
+			 this->sistemaEnvio.enviarEntero(-1,socketCliente);
+			 continue;
+		 }
 
-		if( pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args)  < 0)
-			controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el hilo .");
 		clientesConectados.push_back(socketCliente);
-		cout<<"Bienvenido jugador "+to_string(cantidad_actual_clientes)<<endl;
+		this->sistemaEnvio.enviarEntero(clientesConectados.size(),socketCliente);
+		args->csocket=socketCliente;
+
+		pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args);
+
+		cout<<"Bienvenido jugador "+to_string(clientesConectados.size())<<endl;
 
 	}
 	free(args);
@@ -123,7 +128,7 @@ void Servidor::enviarParaDibujar(int socket,vector<tuple<string,SDL_Rect , SDL_R
 	SDL_Rect rectDestino;
 	SDL_RendererFlip flip;
 
-	for(int i=0;i<dibujablesThread.size();i++){
+	for(size_t i=0;i<dibujablesThread.size();i++){
 			strcpy(textura,  get<0>(dibujablesThread[i]).c_str());
 			rectOrigen =get<1>(dibujablesThread[i]);
 			rectDestino =get<2>(dibujablesThread[i]);
@@ -141,7 +146,15 @@ void Servidor::recibirTeclas(int csocket){
 	SDL_Event evento;
 	while(true){
 		int tipoTeclado=this->sistemaEnvio.recibirEntero(csocket);
-		recv(csocket,&evento,sizeof(evento),0);
+		if(recv(csocket,&evento,sizeof(evento),0)==0){
+			controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(csocket));
+			for(size_t i=0;i<clientesConectados.size();i++){
+				if(clientesConectados[i]==csocket)
+					clientesConectados.erase(clientesConectados.begin()+i);
+			}
+			clientesDesconectados.push_back(csocket);
+			return;
+		}
 		mutex juegoMutex;
 		juegoMutex.lock();
 		juego->teclear(evento,tipoTeclado);

@@ -19,6 +19,7 @@ void ControladorJson::leerArchivo(std::string argumentoConsola){
 		this -> setAnchoVentana(j);
 		this -> setPantallaCompleta(j);
 		this -> setFPS(j);
+		this-> setCantidadClientes(j);
 		this -> setCantidadPersonajes(j);
 		this -> setCantidadFondos(j);
 		this -> setCantidadJugadores(j);
@@ -210,6 +211,14 @@ void ControladorJson::setLogLevel(json j,string argumentoConsola)throw(){
 	controladorLogger->setNivelDebug(nivel_debug);
 	controladorLogger->registrarEvento("INFO","ControladorJson::Log level = " + nivel_debug);
 
+}
+
+void ControladorJson::setCantidadClientes(json j){
+	cantidad_clientes = j["cantidadClientes"];
+}
+
+int ControladorJson::cantidadClientes(){
+	return cantidad_clientes;
 }
 
 void ControladorJson::setAlturaVentana(json j)throw(){

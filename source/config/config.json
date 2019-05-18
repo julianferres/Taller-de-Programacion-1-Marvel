@@ -1,6 +1,7 @@
 {
     "logLevel": "DEBUG",
     "FPS": 60,
+    "cantidadClientes" : 4,
     "battlefield":
         [
             {"background":

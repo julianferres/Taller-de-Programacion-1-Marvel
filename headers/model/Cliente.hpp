@@ -25,12 +25,14 @@ class Cliente{
 		void recibirPersonajes();
 		void recibirFondos();
 		static void* enviarEventosWrapper(void* arg);
+
 	private:
 		JuegoCliente *juegoCliente;
 		ControladorEnvio sistemaEnvio;
 		int idCliente;
 		int numeroSocket;
 		char buffer[MAXDATOS];
+		bool running = true;
 		vector<tuple<string, const string>> personajesYfondos;
 
 	};

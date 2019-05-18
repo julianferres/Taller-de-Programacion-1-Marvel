@@ -22,6 +22,7 @@ class ControladorJson{
 		int zindexPersonaje(std::string nombrePersonaje);
 		int cantidadFondos();
 		int cantidadPersonajes();
+		int cantidadClientes();
 		int getPosicionXInicialEquipo1();
 		int getPosicionXInicialEquipo2();
 		int getLimiteFondoIzq();
@@ -54,6 +55,7 @@ class ControladorJson{
 		int ancho_ventana;
 		int cantidad_personajes;
 		int cantidad_fondos;
+		int cantidad_clientes;
 		int FPS;
 		int cantidad_jugadores;
 		int height_personaje_default = 200;
@@ -99,6 +101,7 @@ class ControladorJson{
 		void setPersonajes(json j)throw();
 		void elegirPersonajes(json j) throw();
 		void fallaPersonajes();
+		void setCantidadClientes(json j);
 
 		int posicionXInicialJugador1; //= controladorJson->anchoVentana() * 1/16;
 		int posicionXInicialJugador2; //= controladorJson->anchoVentana() *3/4;
