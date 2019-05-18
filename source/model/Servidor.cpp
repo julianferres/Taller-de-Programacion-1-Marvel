@@ -18,7 +18,7 @@ struct infoServidor {
 
 
  Servidor::Servidor(int puerto){
-	 cantidadClientesPermitidos = controladorJson->cantidadClientes();
+	cantidadClientesPermitidos = controladorJson->cantidadClientes();
 	this->crearThreadServer();
 	this->crearSocket(puerto);
 	this->esperarConexiones();
@@ -89,10 +89,9 @@ void Servidor::esperarConexiones(){
 	iServidor* args = (iServidor*) malloc(sizeof(infoServidor));
 	args->servidor=this;
 	listen(socketServidor , 3);
-	puts("Esperando conexiones...");
+	cout << "Esperando conexiones. Faltan " << to_string(cantidadClientesPermitidos) << " clientes" << endl;
 	int c = sizeof(struct sockaddr_in);
 	pthread_t thread_recibir;
-
 	while( true){
 		socketCliente = accept(socketServidor, (struct sockaddr *)&client, (socklen_t*)&c);
 		 if (socketCliente < 0)
@@ -110,9 +109,14 @@ void Servidor::esperarConexiones(){
 
 		pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args);
 
-		cout<<"Bienvenido jugador "+to_string(clientesConectados.size())<<endl;
+		cout<<"Bienvenido jugador "+to_string(clientesConectados.size()) << ". ";
+		if (cantidadClientesPermitidos - clientesConectados.size() == 0)
+			cout << "La partida esta llena. No se aceptaran mas jugadores." << endl;
+		else
+			cout << "Falta(n) " << to_string(cantidadClientesPermitidos - clientesConectados.size()) << " jugador(es)" << endl;
 
 	}
+
 	free(args);
 }
 
@@ -145,7 +149,7 @@ void Servidor::enviarParaDibujar(int socket,vector<tuple<string,SDL_Rect , SDL_R
 void Servidor::recibirTeclas(int csocket){
 	SDL_Event evento;
 	while(true){
-		int tipoTeclado=this->sistemaEnvio.recibirEntero(csocket);
+		int idCliente=this->sistemaEnvio.recibirEntero(csocket);
 		if(recv(csocket,&evento,sizeof(evento),0)==0){
 			controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(csocket));
 			for(size_t i=0;i<clientesConectados.size();i++){
@@ -157,7 +161,7 @@ void Servidor::recibirTeclas(int csocket){
 		}
 		mutex juegoMutex;
 		juegoMutex.lock();
-		juego->teclear(evento,tipoTeclado);
+		juego->teclear(evento,idCliente);
 		juegoMutex.unlock();
 	}
 }

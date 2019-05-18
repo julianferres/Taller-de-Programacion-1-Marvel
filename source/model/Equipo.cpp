@@ -34,3 +34,7 @@ void Equipo::actualizarPiso(){
 	jugadores[0]->actualizarPiso();
 	jugadores[1]->actualizarPiso();
 }
+
+int Equipo::obtenerIdJugadorActual(){
+	return(this->jugadorActual->obtenerId());
+}

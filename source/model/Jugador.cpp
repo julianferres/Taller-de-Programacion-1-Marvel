@@ -3,11 +3,11 @@
 #include <SpriteAnimado.hpp>
 #include <ControladorGrafico.hpp>
 
-Jugador::Jugador(std::string nombrePersonaje, int posicionXinicial, SDL_RendererFlip flip, bool ladoDerecho){
+Jugador::Jugador(std::string nombrePersonaje, int posicionXinicial, SDL_RendererFlip flip, bool ladoDerecho, int idCliente){
 	this->personaje = new Personaje(nombrePersonaje, posicionXinicial, flip);
 	this->ladoDerecho = ladoDerecho;
 	this->nombre = nombrePersonaje;
-
+	this->id = idCliente;
 }
 
 Jugador::~Jugador(){
@@ -47,4 +47,8 @@ void Jugador::cambiarDeLado(){
 
 void Jugador::actualizarPiso(){
 	this->personaje->actualizarPiso();
+}
+
+int Jugador::obtenerId(){
+	return(this->id);
 }

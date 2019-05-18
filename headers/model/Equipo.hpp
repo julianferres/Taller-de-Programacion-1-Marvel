@@ -16,6 +16,7 @@ public:
 	Jugador *JugadorActual();
 	void cambiarDeLado();
 	void actualizarPiso();
+	int obtenerIdJugadorActual();
 
 private:
 	vector<Jugador*> jugadores;

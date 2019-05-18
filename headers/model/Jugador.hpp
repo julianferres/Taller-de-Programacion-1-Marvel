@@ -12,7 +12,7 @@ class Jugador{
 
 	public:
 
-		Jugador(std::string nombrePersonaje, int IDcliente,SDL_RendererFlip flip, bool ladoDerecho);
+		Jugador(std::string nombrePersonaje, int IDcliente,SDL_RendererFlip flip, bool ladoDerecho, int idCliente);
 		~Jugador();
 		void cambiarPersonaje();
 		void cambiarDeLado();
@@ -22,13 +22,14 @@ class Jugador{
 		SDL_RendererFlip getFlip();
 		std::string nombreJugador();
 		Personaje * devolverPersonajeActual();
-
+		int obtenerId();
 	private:
 
 		Personaje *personaje;
 		bool ladoDerecho;
 		std::string nombre;
 		int tipoTeclado;
+		int id;
 
 };
 
