@@ -270,3 +270,12 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		 isRunning=false;
 	 }
 }
+
+std::vector<std::string> Juego::gameMenu(){
+	std::vector<std::string> nombres_jugadores;
+	nombres_jugadores.push_back("Venom");
+	nombres_jugadores.push_back("Spiderman");
+	nombres_jugadores.push_back("Venom");
+	nombres_jugadores.push_back("Hulk");
+	return nombres_jugadores;
+}

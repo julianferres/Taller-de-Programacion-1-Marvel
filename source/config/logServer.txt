@@ -1,32 +1,36 @@
-INFO ; Archivo de logging creado! ; Thu May  2 23:53:33 2019
-INFO ; main::Comienzo a leer el json ; Thu May  2 23:53:33 2019
-ERROR ; ControladorJson::Nivel de Debug no corresponde a ERROR, INFO o DEBUG. Se setea en DEBUG ; Thu May  2 23:53:33 2019
-INFO ; ControladorJson::Log level = DEBUG ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Altura ventana seteada: 1000 ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Ancho ventana seteada: 1400 ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Fullscreen = 0 ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::FPS seteados = 60 ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Personajes contados = 4 ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Fondos contados = 3 ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Jugadores contados = 2 ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Personajes seteados ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Fondos seteados ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Personaje encontrado: CapitanAmerica ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Personaje encontrado: Venom ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Personaje encontrado: Spiderman ; Thu May  2 23:53:33 2019
-DEBUG ; ControladorJson::Personaje encontrado: Hulk ; Thu May  2 23:53:33 2019
-INFO ; ControladorJson::Archivo de configuracion JSON leido correctamente ; Thu May  2 23:53:33 2019
-INFO ; main::Json leido. Comienzo el juego ; Thu May  2 23:53:33 2019
-DEBUG ; Parallax::Camara 1 inicializada ; Thu May  2 23:53:33 2019
-DEBUG ; Parallax::Camara 2 inicializada ; Thu May  2 23:53:33 2019
-DEBUG ; Parallax::Camara 3 inicializada ; Thu May  2 23:53:33 2019
-INFO ; Juego::Se inicio el juego ; Thu May  2 23:53:33 2019
-INFO ; Servidor::Socket creado. ; Thu May  2 23:53:33 2019
-INFO ; Jugador 4 al equipo 2 ; Thu May  2 23:53:46 2019
-INFO ; Personaje:: Personaje creado: CapitanAmerica ; Thu May  2 23:53:46 2019
-INFO ; Jugador 3 al equipo 2 ; Thu May  2 23:53:47 2019
-INFO ; Personaje:: Personaje creado: Venom ; Thu May  2 23:53:47 2019
-INFO ; Jugador 2 al equipo 1 ; Thu May  2 23:53:49 2019
-INFO ; Personaje:: Personaje creado: Spiderman ; Thu May  2 23:53:49 2019
-INFO ; Jugador 1 al equipo 1 ; Thu May  2 23:53:51 2019
-INFO ; Personaje:: Personaje creado: Hulk ; Thu May  2 23:53:51 2019
+INFO ; Archivo de logging creado! ; Sat May 18 18:48:56 2019
+INFO ; main::Comienzo a leer el json ; Sat May 18 18:48:56 2019
+ERROR ; ControladorJson::Nivel de Debug no corresponde a ERROR, INFO o DEBUG. Se setea en DEBUG ; Sat May 18 18:48:56 2019
+INFO ; ControladorJson::Log level = DEBUG ; Sat May 18 18:48:56 2019
+DEBUG ; ControladorJson::Altura ventana seteada: 1000 ; Sat May 18 18:48:56 2019
+DEBUG ; ControladorJson::Ancho ventana seteada: 1400 ; Sat May 18 18:48:56 2019
+DEBUG ; ControladorJson::Fullscreen = 0 ; Sat May 18 18:48:56 2019
+DEBUG ; ControladorJson::FPS seteados = 60 ; Sat May 18 18:48:56 2019
+DEBUG ; ControladorJson::Personajes contados = 4 ; Sat May 18 18:48:56 2019
+DEBUG ; ControladorJson::Fondos contados = 3 ; Sat May 18 18:48:56 2019
+DEBUG ; ControladorJson::Jugadores contados = 2 ; Sat May 18 18:48:56 2019
+DEBUG ; ControladorJson::Personajes seteados ; Sat May 18 18:48:56 2019
+DEBUG ; ControladorJson::Fondos seteados ; Sat May 18 18:48:56 2019
+INFO ; ControladorJson::Archivo de configuracion JSON leido correctamente ; Sat May 18 18:48:56 2019
+INFO ; main::Json leido. Comienzo el juego ; Sat May 18 18:48:56 2019
+INFO ; Servidor::Socket creado. ; Sat May 18 18:48:56 2019
+DEBUG ; Parallax::Camara 1 inicializada ; Sat May 18 18:48:56 2019
+DEBUG ; Parallax::Camara 2 inicializada ; Sat May 18 18:48:56 2019
+DEBUG ; Parallax::Camara 3 inicializada ; Sat May 18 18:48:56 2019
+INFO ; Juego::Se inicio el juego ; Sat May 18 18:48:56 2019
+INFO ; Servidor:: Jugadores elegidos: Venom, Spiderman, Venom, Hulk ; Sat May 18 18:48:56 2019
+INFO ; Servidor:: Cantidad de jugadores 4 ; Sat May 18 18:48:56 2019
+INFO ; Servidor: Creando jugador 1 ; Sat May 18 18:48:56 2019
+INFO ; Jugador 1 al equipo 1 ; Sat May 18 18:48:56 2019
+INFO ; Personaje:: Personaje creado: Venom ; Sat May 18 18:48:56 2019
+INFO ; Servidor: Creando jugador 2 ; Sat May 18 18:48:56 2019
+INFO ; Jugador 2 al equipo 1 ; Sat May 18 18:48:56 2019
+INFO ; Personaje:: Personaje creado: Spiderman ; Sat May 18 18:48:56 2019
+INFO ; Servidor: Creando jugador 3 ; Sat May 18 18:48:56 2019
+INFO ; Jugador 3 al equipo 2 ; Sat May 18 18:48:56 2019
+INFO ; Personaje:: Personaje creado: Venom ; Sat May 18 18:48:56 2019
+INFO ; Servidor: Creando jugador 4 ; Sat May 18 18:48:56 2019
+INFO ; Jugador 4 al equipo 2 ; Sat May 18 18:48:56 2019
+INFO ; Personaje:: Personaje creado: Hulk ; Sat May 18 18:48:56 2019
+INFO ; Servidor::Se acepto la conexion correctamente. ; Sat May 18 18:49:12 2019
+DEBUG ; Juego::Cambio de jugador del equipo 1 ; Sat May 18 18:49:15 2019
