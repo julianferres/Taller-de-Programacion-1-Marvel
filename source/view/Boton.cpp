@@ -35,8 +35,8 @@ bool Boton::fueClickeado(){
 
 void Boton::handleEvent(SDL_Event e){
 	//If mouse event happened
-	this->botonClickeado = false;
-	if( e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP ){
+	//this->botonClickeado = false;
+	if( not this->botonClickeado && (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP )){
 		//Obtengo posicion del mouse
 		int x, y;
 		x=e.button.x;
