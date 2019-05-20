@@ -36,6 +36,7 @@ class Juego{
 		static bool compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugador *, int> zindex2);
 		std::vector<std::tuple<Jugador *, int>> obtenerOrdenDibujo();
 		void crearJugadores(string nombre, const string &filePath, int cliente);
+		void actualizarConexion(int idCliente);
 
 	private:
 

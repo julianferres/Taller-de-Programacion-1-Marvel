@@ -12,7 +12,7 @@ class Jugador{
 
 	public:
 
-		Jugador(std::string nombrePersonaje, int IDcliente,SDL_RendererFlip flip, bool ladoDerecho, int idCliente);
+		Jugador(std::string nombrePersonaje, int posicionXinicial,SDL_RendererFlip flip, bool ladoDerecho, int idCliente);
 		~Jugador();
 		void cambiarPersonaje();
 		void cambiarDeLado();

@@ -148,6 +148,11 @@ void Juego::verificarCambioDeLado(){
 }
 
 
+void Juego::actualizarConexion(int idCliente){
+	this->equipo1->actualizarConexion(idCliente);
+	this->equipo2->actualizarConexion(idCliente);
+}
+
 void Juego::teclear(SDL_Event evento, int idCliente){
 	Personaje* personaje1 = jugadorActualEquipo1->devolverPersonajeActual();
 	Personaje* personaje2 = jugadorActualEquipo2->devolverPersonajeActual();
@@ -155,10 +160,6 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 	bool finEscenarioIzquierda = parallax->finDeEscenarioIzquierda();
 	teclado->reiniciar();
 
-
-	if (evento.type == SDL_QUIT   ){
-		isRunning = false;
-	}
 
 	if (evento.window.event == SDL_WINDOWEVENT_RESIZED){
 		//cliente->graficos()->maximizarVentana(evento.window.data1, evento.window.data2);
@@ -175,7 +176,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 			 break;
 	 }
 
-	 if(equipo1->obtenerIdJugadorActual() == idCliente){
+	 if(equipo1->obtenerIdJugadorActual() == idCliente || equipo1->TecladoHabilitado()){
 		 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_D)){
 				 if(personaje1->moverDerecha(personaje2,finEscenarioDerecha)){
 					 this->parallax->moverCamaraDerecha();
@@ -217,7 +218,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 	 }
 	 else{
 
-		 if(equipo2->obtenerIdJugadorActual() == idCliente){
+		 if(equipo2->obtenerIdJugadorActual() == idCliente  || equipo2->TecladoHabilitado()){
 			 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_LEFT)){
 					if (personaje2->moverIzquierda(personaje1,finEscenarioIzquierda)){
 						this->parallax->moverCamaraIzquierda();

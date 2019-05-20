@@ -17,8 +17,10 @@ public:
 	void cambiarDeLado();
 	void actualizarPiso();
 	int obtenerIdJugadorActual();
-
+	void actualizarConexion(int idCliente);
+	bool TecladoHabilitado();
 private:
+	bool tecladoHabilitado = false;
 	vector<Jugador*> jugadores;
 	Jugador * jugadorActual ;
 

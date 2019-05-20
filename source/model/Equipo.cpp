@@ -38,3 +38,12 @@ void Equipo::actualizarPiso(){
 int Equipo::obtenerIdJugadorActual(){
 	return(this->jugadorActual->obtenerId());
 }
+
+void Equipo::actualizarConexion(int idCliente){
+	if(idCliente == this->jugadores[0]->obtenerId() || idCliente == this->jugadores[1]->obtenerId())
+		this->tecladoHabilitado = !this->tecladoHabilitado;
+}
+
+bool Equipo::TecladoHabilitado(){
+	return this->tecladoHabilitado;
+}

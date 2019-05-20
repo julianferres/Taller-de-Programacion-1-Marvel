@@ -127,6 +127,8 @@ void Servidor::esperarConexiones(){
 		 }
 
 		clientesConectados.push_back(socketCliente);
+		conectados[socketCliente] =true;
+		mapaIDClientes[socketCliente]= clientesConectados.size();
 		this->sistemaEnvio.enviarEntero(clientesConectados.size(),socketCliente);
 		this->enviarTitulos(socketCliente);
 		args->csocket=socketCliente;
@@ -199,13 +201,19 @@ void Servidor::enviarTitulos(int csocket){
 void Servidor::recibirTeclas(int csocket){
 	SDL_Event evento;
 	while(true){
-		int idCliente=this->sistemaEnvio.recibirEntero(csocket);
+		int idCliente=mapaIDClientes[csocket];
 		if(recv(csocket,&evento,sizeof(evento),0)==0){
-			controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(csocket));
-			conectados[csocket] =false;
+			if(conectados[csocket] ){
+				juego->actualizarConexion(idCliente);
+				controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(csocket));
+				conectados[csocket] =false;
+			}
 			continue;
 		}
-		conectados[csocket] =true;
+		if(!conectados[csocket]){
+			juego->actualizarConexion(idCliente);
+			conectados[csocket] =true;
+		}
 		mutex juegoMutex;
 		juegoMutex.lock();
 		if(enMenu)
@@ -213,6 +221,11 @@ void Servidor::recibirTeclas(int csocket){
 		else
 			juego->teclear(evento,idCliente);
 		juegoMutex.unlock();
+		if(evento.type == SDL_QUIT){
+			juego->actualizarConexion(idCliente);
+			conectados[csocket] =false;
+			return;
+		}
 	}
 }
 

@@ -94,11 +94,11 @@ void Cliente::recibirParaDibujar(){
 	int posiciones[8];
 	SDL_RendererFlip flip;
 	int size;
-	while(true){
+	while(running){
 		juegoCliente->graficos()->limpiar();
 		recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
 		for(int i=0;i<size;i++){
-			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)==0);
+			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
 			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
 			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
@@ -121,8 +121,11 @@ void Cliente::enviarEventos(int socket){
 			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT
 			||evento.type==SDL_MOUSEBUTTONDOWN||evento.type==SDL_MOUSEBUTTONUP
 			||evento.type== SDL_MOUSEMOTION)   {
-				this->sistemaEnvio.enviarEntero(this->idCliente,socket);
 				send(socket,&evento,sizeof(evento),0);
+			}
+			if(evento.type==SDL_QUIT){
+				running=false;
+				return;
 			}
 		}
 	}
