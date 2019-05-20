@@ -98,11 +98,7 @@ void Cliente::recibirParaDibujar(){
 		juegoCliente->graficos()->limpiar();
 		recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
 		for(int i=0;i<size;i++){
-			if(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)==0){
-				controladorLogger->registrarEvento("ERROR", "Cliente::Se desconecto el server. Procedo a cerrarme ");
-				running = false;
-				return;
-			}
+			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)==0);
 			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
 			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
 			juegoCliente->dibujar(string(textura),posiciones,flip);

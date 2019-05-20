@@ -79,7 +79,8 @@ struct infoServidor {
 		this->dibujables = juego->dibujar();
 		server_mutex.unlock();
 		for(size_t i=0;i<clientesConectados.size();i++){
-			enviarParaDibujar(clientesConectados[i],dibujables);
+			if(conectados[clientesConectados[i]])
+				enviarParaDibujar(clientesConectados[i],dibujables);
 		}
 
 		tiempoActual = SDL_GetTicks();
@@ -201,13 +202,10 @@ void Servidor::recibirTeclas(int csocket){
 		int idCliente=this->sistemaEnvio.recibirEntero(csocket);
 		if(recv(csocket,&evento,sizeof(evento),0)==0){
 			controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(csocket));
-			for(size_t i=0;i<clientesConectados.size();i++){
-				if(clientesConectados[i]==csocket)
-					clientesConectados.erase(clientesConectados.begin()+i);
-			}
-			clientesDesconectados.push_back(csocket);
-			return;
+			conectados[csocket] =false;
+			continue;
 		}
+		conectados[csocket] =true;
 		mutex juegoMutex;
 		juegoMutex.lock();
 		if(enMenu)
