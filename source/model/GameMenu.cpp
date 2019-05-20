@@ -1,7 +1,7 @@
 #include <GameMenu.hpp>
 #include <ControladorGrafico.hpp>
 #include <Boton.hpp>
-
+#include <iostream>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
