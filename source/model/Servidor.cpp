@@ -50,7 +50,7 @@ struct infoServidor {
 		  controladorLogger->registrarEvento("INFO", "Servidor:: Esperando Jugadores. Actualmente hay: " + to_string(clientesConectados.size()) + "/" + to_string(this->cantidadClientesPermitidos));
 	  }*/
 
-	  while(true){
+	  while(enMenu){
 		  tiempoInicial= SDL_GetTicks();
 		  server_mutex.lock();
 		  this->dibujables = menu->getDibujables();
@@ -61,24 +61,17 @@ struct infoServidor {
 			tiempoActual = SDL_GetTicks();
 			if(tiempoActual - tiempoInicial < 1000/FPS)
 				SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
-
+			enMenu = !menu->finalizado();
 	  }
 
-	  std::vector<std::string> nombres_jugadores = juego->gameMenu();
-
-	  controladorLogger->registrarEvento("INFO", "Servidor:: Jugadores elegidos: " + nombres_jugadores[0] + ", " + nombres_jugadores[1] + ", " + nombres_jugadores[2] + ", " + nombres_jugadores[3] );
-	  controladorLogger->registrarEvento("INFO", "Servidor:: Cantidad de jugadores " + to_string(nombres_jugadores.size()));
-
-	  for(int i=0;i<nombres_jugadores.size();i++){
-		  controladorLogger->registrarEvento("INFO", "Servidor: Creando jugador " + to_string(i+1));
-		  juego->crearJugador(nombres_jugadores[i], i+1);
+	  map<int, string> personajesElegidos=menu->getPersonajesElegidos();
+	  for(size_t i=0;i<personajesElegidos.size();i++){
+		  string nombrePersonaje = personajesElegidos[i+1];
+		  juego->crearJugador(nombrePersonaje, i+1);
 	  }
+
 
 	  juego->crearEquipos();
-
-
-
-
 
 	  while(true){
 		tiempoInicial= SDL_GetTicks();
@@ -178,7 +171,7 @@ void Servidor::enviarParaDibujar(int socket,vector<tuple<string,SDL_Rect , SDL_R
 
 
 void Servidor::enviarTitulos(int csocket){
-	vector<tuple<string,char*,int,char*,int ,int ,int >>titulos = this->menu->getTitulos();
+	vector<tuple<string,string,int,string,int ,int ,int >>titulos = this->menu->getTitulos(clientesConectados.size());
 	char nombre[MAXDATOS];
 	char path[MAXDATOS];
 	int size;
@@ -186,9 +179,9 @@ void Servidor::enviarTitulos(int csocket){
 	int r,g,b;
 	for(size_t i=0;i<titulos.size();i++){
 		strcpy(nombre,  get<0>(titulos[i]).c_str());
-		strcpy(path,  get<1>(titulos[i]));
+		strcpy(path,  get<1>(titulos[i]).c_str());
 		size = get<2>(titulos[i]);
-		strcpy(descripcion,  get<3>(titulos[i]));
+		strcpy(descripcion,  get<3>(titulos[i]).c_str());
 		r = get<4>(titulos[i]);
 		g = get<5>(titulos[i]);
 		b = get<6>(titulos[i]);
@@ -217,7 +210,10 @@ void Servidor::recibirTeclas(int csocket){
 		}
 		mutex juegoMutex;
 		juegoMutex.lock();
-		juego->teclear(evento,idCliente);
+		if(enMenu)
+			menu->handleEvent(evento,idCliente);
+		else
+			juego->teclear(evento,idCliente);
 		juegoMutex.unlock();
 	}
 }

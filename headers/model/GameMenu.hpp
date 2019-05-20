@@ -17,23 +17,17 @@ class GameMenu{
 		~GameMenu();
 		void crearBotones();
 		void crearBotonParaPersonaje( int i);
-		void handleEvent(SDL_Event e);
+		void handleEvent(SDL_Event e,int idCliente);
 		vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >> getDibujables();
-		vector<tuple<string,char*,int,char*,int ,int ,int >> getTitulos();
+		vector<tuple<string,string,int,string,int ,int ,int >> getTitulos(int csocket);
+		bool finalizado();
+		map<int, string> getPersonajesElegidos();
 
 	private:
 
-		std::vector<Boton*> botones;
-		TTF_Font* marvelFont;
-		TTF_Font* selectFont;
-		TTF_Font* pixelFont;
-		SDL_Surface* tituloSurface;
-		SDL_Texture* tituloTexture;
-		SDL_Surface* subTituloSurface;
-		SDL_Texture* subTituloTexture;
-		SDL_Surface* actionSurface;
-		SDL_Texture* actionTexture;
-		vector<string> personajesElegidos;
+		vector<Boton*> botones;
+		map<int, string> personajesElegidos;
+		map<int, bool> clientesYaEligieron;
 		int ancho_ventana;
 		int alto_ventana;
 		int ancho_maximo_ventana = 1400;

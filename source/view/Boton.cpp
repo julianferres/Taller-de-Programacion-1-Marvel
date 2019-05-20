@@ -1,5 +1,6 @@
 #include <Boton.hpp>
 #include <ControladorGrafico.hpp>
+#include <iostream>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -38,10 +39,11 @@ void Boton::handleEvent(SDL_Event e){
 	if( e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP ){
 		//Obtengo posicion del mouse
 		int x, y;
-		SDL_GetMouseState( &x, &y );
+		x=e.button.x;
+		y=e.button.y;
+
 		//Mouse est[a dentro del boton
 		bool inside = true;
-
 		//El Mouse est[a fuera del boton
 		if( x < this->posicion.x ){
 			inside = false;
@@ -84,7 +86,6 @@ void Boton::handleEvent(SDL_Event e){
 			case BOTON_SPRITE_MOUSE_UP:
 				this->spriteAnimado->cambiarAnimacion("mouseUp");
 				this->botonClickeado = true;
-			//	controladorJson->setPersonajeJugador();
 				break;
         	}
 	}

@@ -47,6 +47,7 @@ class Servidor{
 		vector<int> clientesDesconectados;
 		struct sockaddr_in server , client;
 		vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujables;
+		bool enMenu = true;
 
 };
 

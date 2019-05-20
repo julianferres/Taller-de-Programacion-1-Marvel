@@ -122,7 +122,9 @@ void Cliente::enviarEventos(int socket){
 	SDL_Event evento;
 	while(running){
 		while(SDL_PollEvent(&evento)){
-			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT){
+			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT
+			||evento.type==SDL_MOUSEBUTTONDOWN||evento.type==SDL_MOUSEBUTTONUP
+			||evento.type== SDL_MOUSEMOTION)   {
 				this->sistemaEnvio.enviarEntero(this->idCliente,socket);
 				send(socket,&evento,sizeof(evento),0);
 			}

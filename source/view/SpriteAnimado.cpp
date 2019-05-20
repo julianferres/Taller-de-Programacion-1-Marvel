@@ -16,8 +16,6 @@ SpriteAnimado::~SpriteAnimado(){
 }
 
 SpriteAnimado::SpriteAnimado(string nombre){
-	//surface = graficos.cargarImagen(filePath);
-	//this->spriteSheet = SDL_CreateTextureFromSurface(graficos.getRenderer(),surface);
 	this->nombreSprite = nombre;
 	cargarAnimaciones(nombre);
 }
