@@ -31,7 +31,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	iCliente* args = (iCliente*) malloc(sizeof(infoCliente));
 	args->cliente=this;
 	juegoCliente = new JuegoCliente();
-	juegoCliente->iniciarGraficos();
+	juegoCliente->iniciarGraficos(idCliente);
 	this->cargarContenidos();
 	args->ssocket=numeroSocket;
 	juegoCliente->cargarTexturas(personajesYfondos);

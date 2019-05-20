@@ -14,7 +14,7 @@ class ControladorGrafico{
 
 	public:
 
-		ControladorGrafico();
+		ControladorGrafico(int idCliente);
 		~ControladorGrafico();
 		SDL_Surface* cargarImagen(const string &filePath);
 		SDL_Renderer* getRenderer() const;

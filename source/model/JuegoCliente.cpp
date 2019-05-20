@@ -33,8 +33,8 @@ void JuegoCliente::cargarTitulosMenu(vector<tuple<string,string,int,string,int ,
 	this->texturas->cargarTitulos(*grafico,titulos);
 }
 
-void JuegoCliente::iniciarGraficos(){
-	this->grafico = new ControladorGrafico();
+void JuegoCliente::iniciarGraficos(int idCliente){
+	this->grafico = new ControladorGrafico(idCliente);
 }
 
 SDL_Texture * JuegoCliente::getTextura(string nombre){

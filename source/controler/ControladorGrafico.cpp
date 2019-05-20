@@ -6,11 +6,12 @@ using namespace std;
 
 extern ControladorJson *controladorJson;
 
-ControladorGrafico::ControladorGrafico(){
+ControladorGrafico::ControladorGrafico(int idCliente){
 	if(controladorJson->esfullscreen())
 		this->sizePantalla = SDL_WINDOW_FULLSCREEN;
 	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), sizePantalla, &this->_window, &this->_renderer);
-	SDL_SetWindowTitle(this->_window, "Marvel vs Capcom");
+	string tituloVentana = "Marvel vs Capcom - Jugador "+to_string(idCliente);
+	SDL_SetWindowTitle(this->_window,tituloVentana.c_str());
 }
 
 ControladorGrafico::~ControladorGrafico(){
