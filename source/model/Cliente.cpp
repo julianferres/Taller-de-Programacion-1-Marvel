@@ -97,6 +97,10 @@ void Cliente::recibirParaDibujar(){
 	while(running){
 		juegoCliente->graficos()->limpiar();
 		recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
+		if(size==-1){
+			enMenu=false;
+			continue;
+		}
 		for(int i=0;i<size;i++){
 			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
 			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
@@ -118,11 +122,15 @@ void Cliente::enviarEventos(int socket){
 	SDL_Event evento;
 	while(running){
 		while(SDL_PollEvent(&evento)){
-			if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT
-			||evento.type==SDL_MOUSEBUTTONDOWN||evento.type==SDL_MOUSEBUTTONUP
-			||evento.type== SDL_MOUSEMOTION)   {
-				send(socket,&evento,sizeof(evento),0);
+			if(enMenu){
+				if(evento.type==SDL_QUIT||evento.type==SDL_MOUSEBUTTONDOWN
+				||evento.type==SDL_MOUSEBUTTONUP	||evento.type== SDL_MOUSEMOTION)
+					send(socket,&evento,sizeof(evento),0);
 			}
+			else
+				if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT)
+					send(socket,&evento,sizeof(evento),0);
+
 			if(evento.type==SDL_QUIT){
 				running=false;
 				return;
@@ -138,7 +146,9 @@ void Cliente::recibirTitulos(){
 	int size;
 	char descripcion[MAXDATOS];
 	int r,g,b;
-	for(size_t i=0;i<3;i++){
+	int cantidadTitulos;
+	recv(numeroSocket,&cantidadTitulos,sizeof(cantidadTitulos),MSG_WAITALL);
+	for(size_t i=0;i<cantidadTitulos;i++){
 		recv(numeroSocket,nombre,MAXDATOS,MSG_WAITALL);
 		recv(numeroSocket,path,MAXDATOS,MSG_WAITALL);
 		recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);

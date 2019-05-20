@@ -69,9 +69,11 @@ struct infoServidor {
 		  string nombrePersonaje = personajesElegidos[i+1];
 		  juego->crearJugador(nombrePersonaje, i+1);
 	  }
-
-
 	  juego->crearEquipos();
+	  for(size_t i=0;i<clientesConectados.size();i++){
+		  int finalizoMenu=-1;
+		  send(clientesConectados[i],&finalizoMenu,sizeof(int),MSG_WAITALL);
+		}
 
 	  while(true){
 		tiempoInicial= SDL_GetTicks();
@@ -180,7 +182,9 @@ void Servidor::enviarTitulos(int csocket){
 	int size;
 	char descripcion[MAXDATOS];
 	int r,g,b;
-	for(size_t i=0;i<titulos.size();i++){
+	int cantidadTitulos = titulos.size();
+	send(csocket,&cantidadTitulos,sizeof(int),0);
+	for(size_t i=0;i<cantidadTitulos;i++){
 		strcpy(nombre,  get<0>(titulos[i]).c_str());
 		strcpy(path,  get<1>(titulos[i]).c_str());
 		size = get<2>(titulos[i]);
@@ -223,9 +227,9 @@ void Servidor::recibirTeclas(int csocket){
 		juegoMutex.unlock();
 		if(evento.type == SDL_QUIT){
 			juego->actualizarConexion(idCliente);
-			conectados[csocket] =false;
 			return;
 		}
+
 	}
 }
 

@@ -34,6 +34,7 @@ class Cliente{
 		int numeroSocket;
 		char buffer[MAXDATOS];
 		bool running = true;
+		bool enMenu = true;
 		vector<tuple<string, const string>> personajesYfondos;
 
 	};
