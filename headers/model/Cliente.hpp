@@ -24,6 +24,7 @@ class Cliente{
 		void enviarEventos(int socket);
 		void recibirPersonajes();
 		void recibirFondos();
+		void recibirTitulos();
 		static void* enviarEventosWrapper(void* arg);
 
 	private:

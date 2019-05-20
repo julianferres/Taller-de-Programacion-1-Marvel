@@ -42,10 +42,28 @@ struct infoServidor {
 
   void *Servidor::actualizarModelo(){
 	  juego = new Juego();
-	  while (this->clientesConectados.size() < this->cantidadClientesPermitidos){
+	  menu = new GameMenu();
+	  Uint32 tiempoInicial,tiempoActual;
+	  int FPS = controladorJson->cantidadFPS();
+
+	/*  while (this->clientesConectados.size() < this->cantidadClientesPermitidos){
 		  controladorLogger->registrarEvento("INFO", "Servidor:: Esperando Jugadores. Actualmente hay: " + to_string(clientesConectados.size()) + "/" + to_string(this->cantidadClientesPermitidos));
-		  SDL_Delay( 1000);//controladorJson->cantidadFPS());
+	  }*/
+
+	  while(true){
+		  tiempoInicial= SDL_GetTicks();
+		  server_mutex.lock();
+		  this->dibujables = menu->getDibujables();
+		  server_mutex.unlock();
+		  for(size_t i=0;i<clientesConectados.size();i++){
+				enviarParaDibujar(clientesConectados[i],dibujables);
+			}
+			tiempoActual = SDL_GetTicks();
+			if(tiempoActual - tiempoInicial < 1000/FPS)
+				SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
+
 	  }
+
 	  std::vector<std::string> nombres_jugadores = juego->gameMenu();
 
 	  controladorLogger->registrarEvento("INFO", "Servidor:: Jugadores elegidos: " + nombres_jugadores[0] + ", " + nombres_jugadores[1] + ", " + nombres_jugadores[2] + ", " + nombres_jugadores[3] );
@@ -57,8 +75,10 @@ struct infoServidor {
 	  }
 
 	  juego->crearEquipos();
-	  Uint32 tiempoInicial,tiempoActual;
-	  int FPS = controladorJson->cantidadFPS();
+
+
+
+
 
 	  while(true){
 		tiempoInicial= SDL_GetTicks();
@@ -114,6 +134,7 @@ void Servidor::esperarConexiones(){
 
 		clientesConectados.push_back(socketCliente);
 		this->sistemaEnvio.enviarEntero(clientesConectados.size(),socketCliente);
+		this->enviarTitulos(socketCliente);
 		args->csocket=socketCliente;
 
 		pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args);
@@ -140,8 +161,9 @@ void Servidor::enviarParaDibujar(int socket,vector<tuple<string,SDL_Rect , SDL_R
 	SDL_Rect rectOrigen;
 	SDL_Rect rectDestino;
 	SDL_RendererFlip flip;
-
-	for(size_t i=0;i<dibujablesThread.size();i++){
+	int size = dibujablesThread.size();
+	send(socket,&size,sizeof(int),0);
+	for(size_t i=0;i<size;i++){
 			strcpy(textura,  get<0>(dibujablesThread[i]).c_str());
 			rectOrigen =get<1>(dibujablesThread[i]);
 			rectDestino =get<2>(dibujablesThread[i]);
@@ -152,8 +174,33 @@ void Servidor::enviarParaDibujar(int socket,vector<tuple<string,SDL_Rect , SDL_R
 			send(socket,posiciones,sizeof(posiciones),0);
 			send(socket,&flip,sizeof(flip),0);
 		}
+}
 
-} 
+
+void Servidor::enviarTitulos(int csocket){
+	vector<tuple<string,char*,int,char*,int ,int ,int >>titulos = this->menu->getTitulos();
+	char nombre[MAXDATOS];
+	char path[MAXDATOS];
+	int size;
+	char descripcion[MAXDATOS];
+	int r,g,b;
+	for(size_t i=0;i<titulos.size();i++){
+		strcpy(nombre,  get<0>(titulos[i]).c_str());
+		strcpy(path,  get<1>(titulos[i]));
+		size = get<2>(titulos[i]);
+		strcpy(descripcion,  get<3>(titulos[i]));
+		r = get<4>(titulos[i]);
+		g = get<5>(titulos[i]);
+		b = get<6>(titulos[i]);
+		send(csocket,nombre,MAXDATOS,MSG_WAITALL);
+		send(csocket,path,MAXDATOS,MSG_WAITALL);
+		send(csocket,&size,sizeof(size),MSG_WAITALL);
+		send(csocket,descripcion,MAXDATOS,MSG_WAITALL);
+		send(csocket,&r,sizeof(r),MSG_WAITALL);
+		send(csocket,&g,sizeof(g),MSG_WAITALL);
+		send(csocket,&b,sizeof(b),MSG_WAITALL);
+	}
+}
 
 void Servidor::recibirTeclas(int csocket){
 	SDL_Event evento;

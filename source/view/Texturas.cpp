@@ -4,6 +4,7 @@
 #include <tuple>
 #include <SpriteAnimado.hpp>
 #include <Texturas.hpp>
+#include <iostream>
 
 using namespace std;
 
@@ -22,3 +23,18 @@ SDL_Texture * Texturas::getTextura(string nombre){
 	return this->texturas[nombre];
 }
 
+
+void Texturas::cargarTitulos(ControladorGrafico &graficos,vector<tuple<string,string,int,string,int ,int ,int >>titulos){
+	TTF_Init();
+	for(size_t i=0;i<titulos.size();i++){
+		string nombre = get<0>(titulos[i]);
+		string path = get<1>(titulos[i]);
+		int size = get<2>(titulos[i]);
+		string descripcion = get<3>(titulos[i]);
+		SDL_Color color ={get<4>(titulos[i]),get<5>(titulos[i]),get<6>(titulos[i])};
+		TTF_Font* font = TTF_OpenFont(path.c_str(),size);
+		SDL_Surface* tituloSurface=TTF_RenderText_Solid(font,descripcion.c_str(), color);
+		SDL_Texture *textura = SDL_CreateTextureFromSurface(graficos.getRenderer(),tituloSurface);
+		texturas[nombre] = textura;
+	}
+}

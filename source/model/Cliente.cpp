@@ -32,20 +32,10 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	args->cliente=this;
 	juegoCliente = new JuegoCliente();
 	juegoCliente->iniciarGraficos();
-
-	vector<string> personajes = controladorJson->getNombresPersonajes();
-	for(size_t i=0;i<personajes.size();i++){
-		const string &filePath = controladorJson->pathImagen(personajes[i]);
-		personajesYfondos.push_back(make_tuple(personajes[i],filePath));
-	}
-	vector<int> fondos = controladorJson->getZindexes();
-	for(size_t i=0;i<fondos.size();i++){
-		const string &filePath = controladorJson->pathFondo(fondos[i]);
-		personajesYfondos.push_back(make_tuple(to_string(fondos[i]),filePath));
-	}
-
-	juegoCliente->cargarTexturas(personajesYfondos);
+	this->cargarContenidos();
 	args->ssocket=numeroSocket;
+	juegoCliente->cargarTexturas(personajesYfondos);
+	this->recibirTitulos();
 
 	pthread_t thread_id;
 	pthread_create( &thread_id , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
@@ -56,6 +46,21 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	close(numeroSocket);
 }
 
+
+void Cliente::cargarContenidos(){
+	vector<string> personajes = controladorJson->getNombresPersonajes();
+	for(size_t i=0;i<personajes.size();i++){
+		const string &filePath = controladorJson->pathImagen(personajes[i]);
+		personajesYfondos.push_back(make_tuple(personajes[i],filePath));
+		const string &buttonPath = controladorJson->pathBoton((personajes[i]));
+		personajesYfondos.push_back(make_tuple(personajes[i]+"Boton",buttonPath));
+	}
+	vector<int> fondos = controladorJson->getZindexes();
+	for(size_t i=0;i<fondos.size();i++){
+		const string &filePath = controladorJson->pathFondo(fondos[i]);
+		personajesYfondos.push_back(make_tuple(to_string(fondos[i]),filePath));
+	}
+}
 
 void Cliente::iniciarConexion(char* direccionIP,int puerto){
 	int  conexion;
@@ -83,19 +88,16 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 }
 
 
-
-
-
 void Cliente::recibirParaDibujar(){
 
 	char textura[MAXDATOS];
 	int posiciones[8];
 	SDL_RendererFlip flip;
-
+	int size;
 	while(true){
 		juegoCliente->graficos()->limpiar();
-
-		for(int i=0;i<5;i++){
+		recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
+		for(int i=0;i<size;i++){
 			if(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)==0){
 				controladorLogger->registrarEvento("ERROR", "Cliente::Se desconecto el server. Procedo a cerrarme ");
 				running = false;
@@ -128,3 +130,22 @@ void Cliente::enviarEventos(int socket){
 	}
 }
 
+void Cliente::recibirTitulos(){
+	vector<tuple<string,string,int,string,int ,int ,int >>titulos;
+	char nombre[MAXDATOS];
+	char path[MAXDATOS];
+	int size;
+	char descripcion[MAXDATOS];
+	int r,g,b;
+	for(size_t i=0;i<3;i++){
+		recv(numeroSocket,nombre,MAXDATOS,MSG_WAITALL);
+		recv(numeroSocket,path,MAXDATOS,MSG_WAITALL);
+		recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
+		recv(numeroSocket,descripcion,MAXDATOS,MSG_WAITALL);
+		recv(numeroSocket,&r,sizeof(r),MSG_WAITALL);
+		recv(numeroSocket,&g,sizeof(g),MSG_WAITALL);
+		recv(numeroSocket,&b,sizeof(b),MSG_WAITALL);
+		titulos.push_back(make_tuple(string(nombre),string(path),size,string(descripcion),r,g,b));
+	}
+	this->juegoCliente->cargarTitulosMenu(titulos);
+}

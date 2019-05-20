@@ -11,6 +11,7 @@
 #include <Juego.hpp>
 #include <ControladorLogger.hpp>
 #include <ControladorEnvio.hpp>
+#include <GameMenu.hpp>
 #include <queue>
 #include <mutex>
 
@@ -25,6 +26,7 @@ class Servidor{
 		void crearSocket(int puerto);
 		void esperarConexiones();
 		void enviarParaDibujar(int csocket,vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread);
+		void enviarTitulos(int csocket);
 		static void*recibirTeclasWrapper(void *args);
 		void recibirTeclas(int csocket);
 		void* actualizarModelo();
@@ -36,6 +38,7 @@ class Servidor{
 		mutex mutex_conecciones;
 		ControladorEnvio sistemaEnvio;
 		Juego *juego ;
+		GameMenu *menu;
 		int socketServidor;
 		int socketCliente;
 		int cantidadClientesPermitidos;

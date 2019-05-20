@@ -1,11 +1,10 @@
 #include <Boton.hpp>
 #include <ControladorGrafico.hpp>
 
-
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
-Boton::Boton(ControladorGrafico &graficos, int posX, int posY, int width, int heigth, std::string nombre){
+Boton::Boton(int posX, int posY, int width, int heigth, std::string nombre){
 	this->botonClickeado=false;
 	this->nombre=nombre;
 	this->posicion.x = posX;
@@ -13,12 +12,7 @@ Boton::Boton(ControladorGrafico &graficos, int posX, int posY, int width, int he
 	this->width = width;
 	this->height = heigth;
 	this->spriteActual = BOTON_SPRITE_MOUSE_OUT;
-	const string &filePath = controladorJson->pathBoton(nombre);
-	this->textura = SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
-	this->spriteAnimado=new SpriteAnimado(nombre + "Boton");
-	//this->spriteAnimado->iniciarAnimacion("mouseOut");ya se inicia en el sprite
-
-
+	this->spriteAnimado=new SpriteAnimado(nombre);
 }
 
 Boton::~Boton(){
@@ -96,10 +90,9 @@ void Boton::handleEvent(SDL_Event e){
 	}
 }
 
-void Boton::dibujar(ControladorGrafico &graficos){
-	//this->spriteAnimado->dibujar(graficos,this->posicion.x,this->posicion.y,this->width, this->height, SDL_FLIP_NONE);
+tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Boton::getDibujable(){
 	SDL_Rect sourceRect =this->spriteAnimado->rectOrigen();
 	SDL_Rect rectanguloDestino={this->posicion.x, this->posicion.y, this->width,this->height};
-	graficos.dibujarImagen(textura,&sourceRect,&rectanguloDestino,SDL_FLIP_NONE);
 	this->spriteAnimado->update();
+	return make_tuple(this->nombre,sourceRect,rectanguloDestino,SDL_FLIP_NONE);
 }

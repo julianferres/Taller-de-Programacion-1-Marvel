@@ -19,7 +19,7 @@ ControladorLogger::ControladorLogger(){
 
 void ControladorLogger::crearLog(std::string nombre){
 	std::ofstream file;
-	nombreArchivo +=nombre+std::string(".txt");
+	nombreArchivo +=nombre+obtenerTiempo()+std::string(".txt");
 
 	try{
 		file.open(nombreArchivo,std::ofstream::trunc);

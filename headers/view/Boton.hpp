@@ -18,13 +18,13 @@ class Boton{
 
 	public:
 
-		Boton(ControladorGrafico &graficos, int posX, int posY, int width, int heigth, std::string nombre);
+		Boton( int posX, int posY, int width, int heigth, std::string nombre);
 		~Boton();
 		void setPosicion(int x, int y);
 		void handleEvent(SDL_Event e);
-		void dibujar(ControladorGrafico &graficos);
 		bool fueClickeado();
 		std::string Nombre();
+		tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getDibujable();
 
 	private:
 
@@ -33,7 +33,6 @@ class Boton{
 		int height;
 		std::string nombre;
 		SpriteAnimado *spriteAnimado;
-		SDL_Texture *textura;
 		SDL_Point posicion;
 		BotonSprite spriteActual;
 
