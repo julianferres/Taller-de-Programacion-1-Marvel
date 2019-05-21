@@ -103,7 +103,7 @@ void *Servidor::actualizarModelo(){
 	Uint32 tiempoInicial,tiempoActual;
 	int FPS = controladorJson->cantidadFPS();
 
-	this->esperarClientes();
+	//this->esperarClientes();
 
 	this->correrMenu();
 
