@@ -1,0 +1,17 @@
+INFO ; Archivo de logging creado! ; Tue May 21 14:54:42 2019
+INFO ; main::Comienzo a leer el json ; Tue May 21 14:54:42 2019
+ERROR ; ControladorJson::Nivel de Debug no corresponde a ERROR, INFO o DEBUG. Se setea en DEBUG ; Tue May 21 14:54:42 2019
+INFO ; ControladorJson::Log level = DEBUG ; Tue May 21 14:54:42 2019
+DEBUG ; ControladorJson::Altura ventana seteada: 1000 ; Tue May 21 14:54:42 2019
+DEBUG ; ControladorJson::Ancho ventana seteada: 1400 ; Tue May 21 14:54:42 2019
+DEBUG ; ControladorJson::Fullscreen = 0 ; Tue May 21 14:54:42 2019
+DEBUG ; ControladorJson::FPS seteados = 60 ; Tue May 21 14:54:42 2019
+DEBUG ; ControladorJson::Personajes contados = 4 ; Tue May 21 14:54:42 2019
+DEBUG ; ControladorJson::Fondos contados = 3 ; Tue May 21 14:54:42 2019
+DEBUG ; ControladorJson::Jugadores contados = 2 ; Tue May 21 14:54:42 2019
+ERROR ; ControladorJson::Imagen de personajeCapitanAmericakmlk no encontrada. Se carga una por defecto ; Tue May 21 14:54:42 2019
+DEBUG ; ControladorJson::Personajes seteados ; Tue May 21 14:54:42 2019
+DEBUG ; ControladorJson::Fondos seteados ; Tue May 21 14:54:42 2019
+INFO ; ControladorJson::Archivo de configuracion JSON leido correctamente ; Tue May 21 14:54:42 2019
+INFO ; main::Json leido. Comienzo el juego ; Tue May 21 14:54:42 2019
+INFO ; Cliente::Conectado al servidor correctamente. ; Tue May 21 14:54:42 2019

@@ -107,7 +107,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animaciones.push_back(cambioEntrada);
 		animacionActual = quieto;
 	}
-	else if(nombre=="sinSprite" ){
+	else if(nombre=="SinSprite" ){
 		Animacion *quieto = new Animacion("quieto",1,0,0,600,600,10);
 		Animacion *moverDerecha = new Animacion("movDerecha",1,0,0,600,600,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",1,0,0,600,600,4);
@@ -149,9 +149,9 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 	}
 	else if(nombre=="HulkBoton"){
 		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,164,129,10);
-		Animacion *mouseOver = new Animacion("mouseOver",1,164,0,164,129,10);
-		Animacion *mouseDown = new Animacion("mouseDown",1,328,0,164,129,10);
-		Animacion *mouseUp = new Animacion("mouseUp",1,492,0,164,129,10);
+		Animacion *mouseOver = new Animacion("mouseOver",1,165,0,164,129,10);
+		Animacion *mouseDown = new Animacion("mouseDown",1,330,0,164,129,10);
+		Animacion *mouseUp = new Animacion("mouseUp",1,495,0,164,129,10);
 		animaciones.push_back(mouseOut);
 		animaciones.push_back(mouseOver);
 		animaciones.push_back(mouseDown);
@@ -160,16 +160,26 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 	}
 	else if(nombre=="VenomBoton"){
 		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,175,145,10);
-		Animacion *mouseOver = new Animacion("mouseOver",1,175,0,175,145,10);
-		Animacion *mouseDown = new Animacion("mouseDown",1,350,0,175,145,10);
-		Animacion *mouseUp = new Animacion("mouseUp",1,525,0,175,145,10);
+		Animacion *mouseOver = new Animacion("mouseOver",1,176,0,175,145,10);
+		Animacion *mouseDown = new Animacion("mouseDown",1,352,0,175,145,10);
+		Animacion *mouseUp = new Animacion("mouseUp",1,528,0,175,145,10);
 		animaciones.push_back(mouseOut);
 		animaciones.push_back(mouseOver);
 		animaciones.push_back(mouseDown);
 		animaciones.push_back(mouseUp);
 		animacionActual = mouseOut;
 	}
-	else {
+	else if(nombre=="SinSpriteBoton"){
+		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,71,61,10);
+		Animacion *mouseOver = new Animacion("mouseOver",1,72,0,71,61,10);
+		Animacion *mouseDown = new Animacion("mouseDown",1,144,0,71,61,10);
+		Animacion *mouseUp = new Animacion("mouseUp",1,216,0,71,61,10);
+		animaciones.push_back(mouseOut);
+		animaciones.push_back(mouseOver);
+		animaciones.push_back(mouseDown);
+		animaciones.push_back(mouseUp);
+		animacionActual = mouseOut;
+	}else {
 		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,175,145,10);
 		Animacion *mouseOver = new Animacion("mouseOver",1,175,0,175,145,10);
 		Animacion *mouseDown = new Animacion("mouseDown",1,350,0,175,145,10);

@@ -345,11 +345,33 @@ void ControladorJson::setPersonajes(json j)throw(){
 			int width_personaje = j["characters"][i]["width"];
 			int zindex_personaje = j["characters"][i]["zindex"];
 
+			std::vector<std::string> vec;
+			vec.push_back("CapitanAmerica");
+			vec.push_back("Hulk");
+			vec.push_back("Venom");
+			vec.push_back("Spiderman");
+
+			if ( std::find(vec.begin(), vec.end(), nombre_personaje) == vec.end() ){
+				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
+				nombre_personaje = "SinSprite";
+				filepath_personaje = "contents/images/sinSprite.png";
+				file_boton_personaje = "contents/images/BotonSinSprite.png";
+			}
+
+
 			ifstream file(filepath_personaje.c_str());
 			if (file.good() == false){
 				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
-				nombre_personaje = "sinSprite";
+				nombre_personaje = "SinSprite";
 				filepath_personaje = "contents/images/sinSprite.png";
+				file_boton_personaje = "contents/images/BotonSinSprite.png";
+			}
+			ifstream fileboton(file_boton_personaje.c_str());
+			if (fileboton.good() == false){
+				controladorLogger->registrarEvento("ERROR","ControladorJson::Boton del personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
+				nombre_personaje = "SinSprite";
+				filepath_personaje = "contents/images/sinSprite.png";
+				file_boton_personaje = "contents/images/BotonSinSprite.png";
 			}
 			personajes.push_back(std::make_tuple(nombre_personaje, filepath_personaje, height_personaje, width_personaje, zindex_personaje, file_boton_personaje));
 			nombresPersonajes.push_back(nombre_personaje);
