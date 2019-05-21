@@ -32,6 +32,10 @@ class Servidor{
 		void* actualizarModelo();
 		static void*actualizarModeloWrapper(void *args);
 		void crearThreadServer();
+		void esperarClientes();
+		void correrMenu();
+		void crearEquipos();
+		void gameLoop();
 
 	private:
 		mutex mutex_conecciones;

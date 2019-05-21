@@ -27,6 +27,12 @@ ControladorGrafico* JuegoCliente::graficos(){
 
 void JuegoCliente::cargarTexturas(vector<tuple<string, const string>> nombresYpaths){
 	this->texturas = new Texturas(*grafico,nombresYpaths);
+	const string filepath = "sinSprite.png";
+	SDL_Texture* textura = SDL_CreateTextureFromSurface(grafico->getRenderer(),grafico->cargarImagen(filepath));
+	this->texturas->agregarTextura("SinSprite", textura );
+	//filepath = "BotonSinSprite.jpg";
+	//textura = SDL_CreateTextureFromSurface(grafico->getRenderer(),grafico->cargarImagen(filepath));
+	//this->texturas->agregarTextura("BotonSinSprite", textura );
 }
 
 void JuegoCliente::cargarTitulosMenu(vector<tuple<string,string,int,string,int ,int ,int >>titulos){

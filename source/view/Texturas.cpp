@@ -38,3 +38,7 @@ void Texturas::cargarTitulos(ControladorGrafico &graficos,vector<tuple<string,st
 		texturas[nombre] = textura;
 	}
 }
+
+void Texturas::agregarTextura(string nombre, SDL_Texture* textura){
+	texturas[nombre] = textura;
+}

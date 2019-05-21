@@ -38,45 +38,49 @@ struct infoServidor {
  	 return serv->actualizarModelo();
 }
 
+void Servidor::esperarClientes(){
+	controladorLogger->registrarEvento("DEBUG", "Servidor:: Esperando Jugadores. Actualmente hay: " + to_string(clientesConectados.size()) + "/" + to_string(this->cantidadClientesPermitidos));
+	while (this->clientesConectados.size() < this->cantidadClientesPermitidos){
 
+	}
+}
 
-  void *Servidor::actualizarModelo(){
-	  juego = new Juego();
-	  menu = new GameMenu();
-	  Uint32 tiempoInicial,tiempoActual;
-	  int FPS = controladorJson->cantidadFPS();
-
-	/*  while (this->clientesConectados.size() < this->cantidadClientesPermitidos){
-		  controladorLogger->registrarEvento("INFO", "Servidor:: Esperando Jugadores. Actualmente hay: " + to_string(clientesConectados.size()) + "/" + to_string(this->cantidadClientesPermitidos));
-	  }*/
-
-	  while(enMenu){
-		  tiempoInicial= SDL_GetTicks();
-		  server_mutex.lock();
-		  this->dibujables = menu->getDibujables();
-		  server_mutex.unlock();
-		  for(size_t i=0;i<clientesConectados.size();i++){
-			//if(conectados[clientesConectados[i]])
-				enviarParaDibujar(clientesConectados[i],dibujables);
-			}
-			tiempoActual = SDL_GetTicks();
-			if(tiempoActual - tiempoInicial < 1000/FPS)
-				SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
-			enMenu = !menu->finalizado();
-	  }
-
-	  map<int, string> personajesElegidos=menu->getPersonajesElegidos();
-	  for(size_t i=0;i<personajesElegidos.size();i++){
-		  string nombrePersonaje = personajesElegidos[i+1];
-		  juego->crearJugador(nombrePersonaje, i+1);
-	  }
-	  juego->crearEquipos();
-	  for(size_t i=0;i<clientesConectados.size();i++){
-		  int finalizoMenu=-1;
-		  send(clientesConectados[i],&finalizoMenu,sizeof(int),MSG_WAITALL);
+void Servidor::correrMenu(){
+	Uint32 tiempoInicial,tiempoActual;
+	int FPS = controladorJson->cantidadFPS();
+	while(enMenu){
+		tiempoInicial= SDL_GetTicks();
+		server_mutex.lock();
+		this->dibujables = menu->getDibujables();
+		server_mutex.unlock();
+		for(size_t i=0;i<clientesConectados.size();i++){
+		//if(conectados[clientesConectados[i]])
+			enviarParaDibujar(clientesConectados[i],dibujables);
 		}
+		tiempoActual = SDL_GetTicks();
+		if(tiempoActual - tiempoInicial < 1000/FPS)
+			SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
+		enMenu = !menu->finalizado();
+		}
+}
 
-	  while(true){
+void Servidor::crearEquipos(){
+	map<int, string> personajesElegidos=menu->getPersonajesElegidos();
+	for(size_t i=0;i<personajesElegidos.size();i++){
+	  string nombrePersonaje = personajesElegidos[i+1];
+	  juego->crearJugador(nombrePersonaje, i+1);
+	}
+	juego->crearEquipos();
+	for(size_t i=0;i<clientesConectados.size();i++){
+	  int finalizoMenu=-1;
+	  send(clientesConectados[i],&finalizoMenu,sizeof(int),MSG_WAITALL);
+	}
+}
+
+void Servidor::gameLoop(){
+	Uint32 tiempoInicial,tiempoActual;
+	int FPS = controladorJson->cantidadFPS();
+	while(true){
 		tiempoInicial= SDL_GetTicks();
 		server_mutex.lock();
 		this->dibujables = juego->dibujar();
@@ -90,8 +94,22 @@ struct infoServidor {
 		 if(tiempoActual - tiempoInicial < 1000/FPS)
 			SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
 
-	  }
+		}
+}
 
+void *Servidor::actualizarModelo(){
+	this->juego = new Juego();
+	this->menu = new GameMenu();
+	Uint32 tiempoInicial,tiempoActual;
+	int FPS = controladorJson->cantidadFPS();
+
+	this->esperarClientes();
+
+	this->correrMenu();
+
+	this->crearEquipos();
+
+	this->gameLoop();
 
  	return NULL;
   }
@@ -157,7 +175,7 @@ void *Servidor::recibirTeclasWrapper(void *args){
 }
 
 void Servidor::enviarParaDibujar(int socket,vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread){
-	puts("chau");
+
 	char textura[MAXDATOS];
 	SDL_Rect rectOrigen;
 	SDL_Rect rectDestino;
