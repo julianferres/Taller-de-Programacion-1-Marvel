@@ -56,6 +56,7 @@ struct infoServidor {
 		  this->dibujables = menu->getDibujables();
 		  server_mutex.unlock();
 		  for(size_t i=0;i<clientesConectados.size();i++){
+			if(conectados[clientesConectados[i]])
 				enviarParaDibujar(clientesConectados[i],dibujables);
 			}
 			tiempoActual = SDL_GetTicks();
@@ -117,6 +118,7 @@ void Servidor::esperarConexiones(){
 	cout << "Esperando conexiones. Faltan " << to_string(cantidadClientesPermitidos) << " clientes" << endl;
 	int c = sizeof(struct sockaddr_in);
 	pthread_t thread_recibir;
+	pthread_t heartBeat;
 	while( true){
 		socketCliente = accept(socketServidor, (struct sockaddr *)&client, (socklen_t*)&c);
 		 if (socketCliente < 0)
@@ -136,6 +138,7 @@ void Servidor::esperarConexiones(){
 		args->csocket=socketCliente;
 
 		pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args);
+		pthread_create( &heartBeat , NULL , Servidor::heartBeatWrapper ,(void*)args );
 
 		cout<<"Bienvenido jugador "+to_string(clientesConectados.size()) << ". ";
 		if (cantidadClientesPermitidos - clientesConectados.size() == 0)
@@ -151,6 +154,12 @@ void Servidor::esperarConexiones(){
 void *Servidor::recibirTeclasWrapper(void *args){
 	iServidor* argumentos = (iServidor*) args;
 	((Servidor *)argumentos->servidor)->recibirTeclas(argumentos->csocket);
+	return NULL;
+}
+
+void *Servidor::heartBeatWrapper(void *args){
+	iServidor* argumentos = (iServidor*) args;
+	((Servidor *)argumentos->servidor)->heartBeat(argumentos->csocket);
 	return NULL;
 }
 
@@ -207,16 +216,10 @@ void Servidor::recibirTeclas(int csocket){
 	while(true){
 		int idCliente=mapaIDClientes[csocket];
 		if(recv(csocket,&evento,sizeof(evento),0)==0){
-			if(conectados[csocket] ){
-				juego->actualizarConexion(idCliente);
-				controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(csocket));
-				conectados[csocket] =false;
-			}
-			continue;
-		}
-		if(!conectados[csocket]){
 			juego->actualizarConexion(idCliente);
-			conectados[csocket] =true;
+			controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(csocket));
+			conectados[csocket] =false;
+			return;
 		}
 		mutex juegoMutex;
 		juegoMutex.lock();
@@ -225,12 +228,29 @@ void Servidor::recibirTeclas(int csocket){
 		else
 			juego->teclear(evento,idCliente);
 		juegoMutex.unlock();
-		if(evento.type == SDL_QUIT){
-			juego->actualizarConexion(idCliente);
-			return;
-		}
-
 	}
+}
+
+void Servidor::heartBeat(int csocket){
+	fd_set set;
+	struct timeval timeout;
+	int primerBeat;
+	recv(csocket,&primerBeat,sizeof(primerBeat),MSG_WAITALL);
+	while(true){
+		FD_ZERO(&set);
+		FD_SET(csocket, &set);
+		timeout.tv_sec = 2;
+		timeout.tv_usec = 0;
+		int rv = select(csocket+1, &set, NULL, NULL, &timeout);
+		if(rv==0){
+			cout<<csocket<<endl;
+			conectados[csocket] =false;
+			continue;
+		}
+		if(!conectados[csocket])
+			conectados[csocket] =true;//me reconecte
+	}
+
 }
 
 

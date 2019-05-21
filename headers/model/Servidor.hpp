@@ -32,7 +32,8 @@ class Servidor{
 		void* actualizarModelo();
 		static void*actualizarModeloWrapper(void *args);
 		void crearThreadServer();
-
+		void heartBeat(int csocket);
+		static void* heartBeatWrapper(void*args);
 
 	private:
 		mutex mutex_conecciones;

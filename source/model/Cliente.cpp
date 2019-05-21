@@ -120,20 +120,23 @@ void *Cliente::enviarEventosWrapper(void* arg){
 
 void Cliente::enviarEventos(int socket){
 	SDL_Event evento;
+	int beat=1;
+	send(socket,&beat,sizeof(beat),0);
 	while(running){
+		send(socket,&beat,sizeof(beat),0);
 		while(SDL_PollEvent(&evento)){
 			if(enMenu){
-				if(evento.type==SDL_QUIT||evento.type==SDL_MOUSEBUTTONDOWN
-				||evento.type==SDL_MOUSEBUTTONUP	||evento.type== SDL_MOUSEMOTION)
+				if(evento.type==SDL_MOUSEBUTTONDOWN||evento.type==SDL_MOUSEBUTTONUP
+					||evento.type== SDL_MOUSEMOTION)
 					send(socket,&evento,sizeof(evento),0);
 			}
-			else
+			else{
 				if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT)
 					send(socket,&evento,sizeof(evento),0);
-
-			if(evento.type==SDL_QUIT){
-				running=false;
-				return;
+				if(evento.type==SDL_QUIT){
+					running=false;
+					return;
+				}
 			}
 		}
 	}
