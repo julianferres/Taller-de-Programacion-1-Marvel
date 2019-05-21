@@ -89,7 +89,8 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 
 
 void Cliente::recibirParaDibujar(){
-
+	SDL_Event evento;
+	evento.type = SDL_MOUSEWHEEL;
 	char textura[MAXDATOS];
 	int posiciones[8];
 	SDL_RendererFlip flip;
@@ -107,8 +108,8 @@ void Cliente::recibirParaDibujar(){
 			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
-
 		juegoCliente->graficos()->render();
+		send(numeroSocket,&evento,sizeof(evento),0);
 	}
 }
 
@@ -120,10 +121,7 @@ void *Cliente::enviarEventosWrapper(void* arg){
 
 void Cliente::enviarEventos(int socket){
 	SDL_Event evento;
-	int beat=1;
-	send(socket,&beat,sizeof(beat),0);
 	while(running){
-		send(socket,&beat,sizeof(beat),0);
 		while(SDL_PollEvent(&evento)){
 			if(enMenu){
 				if(evento.type==SDL_MOUSEBUTTONDOWN||evento.type==SDL_MOUSEBUTTONUP
