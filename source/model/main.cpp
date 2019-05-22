@@ -12,7 +12,7 @@ int main(int argc, char **argv){
 	std::string argumentoConsola = argv[1];
 	controladorLogger->crearLog(argumentoConsola);
 	controladorLogger->registrarEvento("INFO", "main::Comienzo a leer el json");
-	controladorJson->leerArchivo(argumentoConsola);
+	controladorJson->leerArchivo("");
 	controladorLogger->registrarEvento("INFO", "main::Json leido. Comienzo el juego");
 
 	if(argc == 3 && argumentoConsola == "Server" ){
