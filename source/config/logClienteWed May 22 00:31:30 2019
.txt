@@ -1,0 +1,15 @@
+INFO ; Archivo de logging creado! ; Wed May 22 00:31:30 2019
+INFO ; main::Comienzo a leer el json ; Wed May 22 00:31:30 2019
+ERROR ; ControladorJson::Nivel de Debug no corresponde a ERROR, INFO o DEBUG. Se setea en DEBUG ; Wed May 22 00:31:30 2019
+INFO ; ControladorJson::Log level = DEBUG ; Wed May 22 00:31:30 2019
+DEBUG ; ControladorJson::Altura ventana seteada: 1000 ; Wed May 22 00:31:30 2019
+DEBUG ; ControladorJson::Ancho ventana seteada: 1400 ; Wed May 22 00:31:30 2019
+DEBUG ; ControladorJson::Fullscreen = 0 ; Wed May 22 00:31:30 2019
+DEBUG ; ControladorJson::FPS seteados = 60 ; Wed May 22 00:31:30 2019
+DEBUG ; ControladorJson::Personajes contados = 4 ; Wed May 22 00:31:30 2019
+DEBUG ; ControladorJson::Fondos contados = 3 ; Wed May 22 00:31:30 2019
+DEBUG ; ControladorJson::Personajes seteados ; Wed May 22 00:31:30 2019
+DEBUG ; ControladorJson::Fondos seteados ; Wed May 22 00:31:30 2019
+INFO ; ControladorJson::Archivo de configuracion JSON leido correctamente ; Wed May 22 00:31:30 2019
+INFO ; main::Json leido. Comienzo el juego ; Wed May 22 00:31:30 2019
+INFO ; Cliente::Conectado al servidor correctamente. ; Wed May 22 00:31:30 2019

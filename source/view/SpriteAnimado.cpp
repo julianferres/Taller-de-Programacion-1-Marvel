@@ -93,7 +93,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 
 	}
 	else if(nombre=="Hulk" ){
-		Animacion *quieto = new Animacion("quieto",8,0,0,170,125,10);
+		Animacion *quieto = new Animacion("quieto",8,0,0,170,129,10);
 		Animacion *moverDerecha = new Animacion("movDerecha",16,0,280,170,150,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",16,0,130,170,143,4);
 		Animacion *salto = new Animacion("salto",10,0,580,170,215,8);
