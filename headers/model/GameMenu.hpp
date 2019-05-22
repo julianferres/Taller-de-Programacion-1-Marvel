@@ -28,6 +28,7 @@ class GameMenu{
 		vector<Boton*> botones;
 		map<int, string> personajesElegidos;
 		map<int, bool> clientesYaEligieron;
+		map<int, bool> elegir_segundo_personaje;
 		int ancho_ventana;
 		int alto_ventana;
 		int ancho_maximo_ventana = 1400;

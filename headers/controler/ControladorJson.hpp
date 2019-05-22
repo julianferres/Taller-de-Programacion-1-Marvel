@@ -82,7 +82,7 @@ class ControladorJson{
 		const int cantidad_fondos_default = 3;
 		const int FPS_default = 60;
 		const bool fullscreen_default = false;
-		const string nombre_personaje_default = "sinSprite";
+		const string nombre_personaje_default = "SinSprite";
 		const int rango_altura_ventana[2] = {600, 1000};
 		const int rango_ancho_ventana[2] = {800, 1400};
 		const int rango_altura_personaje[2] = {50,400};

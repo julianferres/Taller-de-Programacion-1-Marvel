@@ -7,6 +7,7 @@ extern ControladorLogger *controladorLogger;
 
 Boton::Boton(int posX, int posY, int width, int heigth, std::string nombre){
 	this->botonClickeado=false;
+	this->botonBlockeado=false;
 	this->nombre=nombre;
 	this->posicion.x = posX;
 	this->posicion.y = posY;
@@ -33,10 +34,14 @@ bool Boton::fueClickeado(){
 	return this->botonClickeado;
 }
 
+bool Boton::fueBlockeado(){
+	return this->botonBlockeado;
+}
+
 void Boton::handleEvent(SDL_Event e){
 	//If mouse event happened
-	//this->botonClickeado = false;
-	if( not this->botonClickeado && (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP )){
+	this->botonClickeado = false;
+	if( not this->botonBlockeado && (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP )){
 		//Obtengo posicion del mouse
 		int x, y;
 		x=e.button.x;
@@ -86,6 +91,7 @@ void Boton::handleEvent(SDL_Event e){
 			case BOTON_SPRITE_MOUSE_UP:
 				this->spriteAnimado->cambiarAnimacion("mouseUp");
 				this->botonClickeado = true;
+				this->botonBlockeado = true;
 				break;
         	}
 	}

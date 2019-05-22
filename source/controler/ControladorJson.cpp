@@ -22,7 +22,7 @@ void ControladorJson::leerArchivo(std::string argumentoConsola){
 		this-> setCantidadClientes(j);
 		this -> setCantidadPersonajes(j);
 		this -> setCantidadFondos(j);
-		this -> setCantidadJugadores(j);
+		//this -> setCantidadJugadores(j);
 		this -> setPersonajes(j);
 		this -> setFondos(j);
 
@@ -214,7 +214,23 @@ void ControladorJson::setLogLevel(json j,string argumentoConsola)throw(){
 }
 
 void ControladorJson::setCantidadClientes(json j){
-	cantidad_clientes = j["cantidadClientes"];
+	try{
+		cantidad_clientes = j["cantidadClientes"];
+	}catch(json::type_error &e){
+		controladorLogger->registrarEvento("ERROR", "Cantidad de clientes debe ser un número. Seteado a 4 por default.");
+		cantidad_clientes = 4;
+		return;
+	}
+	if (cantidad_clientes > 4){
+		controladorLogger->registrarEvento("ERROR", "El servidor no soporta m[as de 4 jugadores, seteado a 4 por default.");
+		cantidad_clientes = 4;
+		return;
+	}
+	if (cantidad_clientes < 1){
+		controladorLogger->registrarEvento("ERROR", "El servidor necesita al menos 1 jugador, seteado a 1 por default.");
+		cantidad_clientes = 1;
+		return;
+	}
 }
 
 int ControladorJson::cantidadClientes(){

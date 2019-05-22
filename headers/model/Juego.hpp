@@ -37,6 +37,8 @@ class Juego{
 		std::vector<std::tuple<Jugador *, int>> obtenerOrdenDibujo();
 		void crearJugadores(string nombre, const string &filePath, int cliente);
 		void actualizarConexion(int idCliente);
+		Equipo * getEquipo1();
+		Equipo * getEquipo2();
 
 	private:
 

@@ -65,12 +65,36 @@ void Servidor::correrMenu(){
 }
 
 void Servidor::crearEquipos(){
-	map<int, string> personajesElegidos=menu->getPersonajesElegidos();
-	for(size_t i=0;i<personajesElegidos.size();i++){
-	  string nombrePersonaje = personajesElegidos[i+1];
-	  juego->crearJugador(nombrePersonaje, i+1);
+	map<int, string> personajesElegidos = menu->getPersonajesElegidos();
+	bool equipo1formado = false;
+	for(size_t i=1;i<this->cantidadClientesPermitidos+1;i++){
+	  string nombrePersonaje = personajesElegidos[i];
+	  juego->crearJugador(nombrePersonaje, i);
+	  if(this->cantidadClientesPermitidos == 1 ){
+		  nombrePersonaje = personajesElegidos[i+1];
+		  juego->crearJugador(nombrePersonaje, i+1);
+		  nombrePersonaje = personajesElegidos[i+2];
+		  juego->crearJugador(nombrePersonaje, i+2);
+		  nombrePersonaje = personajesElegidos[i+3];
+		  juego->crearJugador(nombrePersonaje, i+3);
+	  }
+	  if(this->cantidadClientesPermitidos == 2 ){
+		  nombrePersonaje = personajesElegidos[i+10];
+		  juego->crearJugador(nombrePersonaje, i+10);
+	  }if(this->cantidadClientesPermitidos == 3 && not equipo1formado){
+		  nombrePersonaje = personajesElegidos[i+10];
+		  juego->crearJugador(nombrePersonaje, i+10);
+		  equipo1formado = true;
+	  }
 	}
 	juego->crearEquipos();
+	if(this->cantidadClientesPermitidos == 2 || this->cantidadClientesPermitidos == 1){
+		juego->getEquipo1()->habilitarTeclado();
+		juego->getEquipo2()->habilitarTeclado();
+	}
+	if(this->cantidadClientesPermitidos == 3){
+		juego->getEquipo1()->habilitarTeclado();
+	}
 	for(size_t i=0;i<clientesConectados.size();i++){
 	  int finalizoMenu=-1;
 	  send(clientesConectados[i],&finalizoMenu,sizeof(int),MSG_WAITALL);

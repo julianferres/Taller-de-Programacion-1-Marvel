@@ -23,12 +23,14 @@ class Boton{
 		void setPosicion(int x, int y);
 		void handleEvent(SDL_Event e);
 		bool fueClickeado();
+		bool fueBlockeado();
 		std::string Nombre();
 		tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getDibujable();
 
 	private:
 
 		bool botonClickeado;
+		bool botonBlockeado;
 		int width;
 		int height;
 		std::string nombre;

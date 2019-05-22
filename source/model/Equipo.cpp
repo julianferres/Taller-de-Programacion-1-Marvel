@@ -39,6 +39,15 @@ int Equipo::obtenerIdJugadorActual(){
 	return(this->jugadorActual->obtenerId());
 }
 
+int Equipo::obtenerIdCompaniero(){
+	if(jugadorActual==jugadores[0]){
+		return jugadores[1]->obtenerId();
+	}
+	else{
+		return jugadores[0]->obtenerId();
+		}
+}
+
 void Equipo::actualizarConexion(int idCliente){
 	if(idCliente == this->jugadores[0]->obtenerId() || idCliente == this->jugadores[1]->obtenerId())
 		this->tecladoHabilitado = !this->tecladoHabilitado;
@@ -46,4 +55,8 @@ void Equipo::actualizarConexion(int idCliente){
 
 bool Equipo::TecladoHabilitado(){
 	return this->tecladoHabilitado;
+}
+
+void Equipo::habilitarTeclado(){
+	this->tecladoHabilitado = true;
 }

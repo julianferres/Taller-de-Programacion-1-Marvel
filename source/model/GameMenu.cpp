@@ -29,7 +29,7 @@ vector<tuple<string,string,int,string,int ,int ,int >> GameMenu::getTitulos(int 
 	string nombre2 = string("SubTitulo");
 	string path2="contents/Fonts/select.ttf";
 	int size2 = (100 * this->ancho_ventana) / this->ancho_maximo_ventana;
-	string descripcion2 = "ELIJE A TUS HEROES";
+	string descripcion2 = "ELIGE A TUS HEROES";
 	SDL_Color color2 = { 255, 252, 51};
 	tuple<string,string,int,string,int ,int ,int > subtitulo=make_tuple(nombre2,path2,size2,descripcion2,color2.r,color2.g,color2.b);
 	titulos.push_back(subtitulo);
@@ -75,13 +75,52 @@ void GameMenu::crearBotonParaPersonaje(int i){
 void GameMenu::handleEvent(SDL_Event e,int idCliente){
 	if(clientesYaEligieron[idCliente])
 		return;
-	for (size_t i = 0; i< this->botones.size(); i++){
-		this->botones[i]->handleEvent(e);
-		if (e.type == SDL_MOUSEBUTTONUP && this->botones[i]->fueClickeado()){
-			controladorLogger->registrarEvento("DEBUG", "GameMenu::Personaje "+this->botones[i]->Nombre()+" Seteado");
-			string nombrePersonaje = this->botones[i]->Nombre();
-			personajesElegidos[idCliente]=nombrePersonaje.substr(0,nombrePersonaje.size()-5);
-			clientesYaEligieron[idCliente]=true;
+	if (controladorJson->cantidadClientes() == 1 ){
+		for (size_t i = 0; i< this->botones.size(); i++){
+			this->botones[i]->handleEvent(e);
+			if (e.type == SDL_MOUSEBUTTONUP && this->botones[i]->fueClickeado()){
+				controladorLogger->registrarEvento("DEBUG", "GameMenu::Personaje "+this->botones[i]->Nombre()+" Seteado");
+				string nombrePersonaje = this->botones[i]->Nombre();
+				personajesElegidos[idCliente + personajesElegidos.size()]=nombrePersonaje.substr(0,nombrePersonaje.size()-5);
+				clientesYaEligieron[idCliente] = personajesElegidos.size() == 4;
+			}
+		}
+	}
+	bool elegirDosPersonajes = controladorJson->cantidadClientes() == 2 || (controladorJson->cantidadClientes() == 3 && idCliente ==1);
+	if (not elegirDosPersonajes){
+
+		for (size_t i = 0; i< this->botones.size(); i++){
+			this->botones[i]->handleEvent(e);
+			if (e.type == SDL_MOUSEBUTTONUP && this->botones[i]->fueClickeado()){
+				controladorLogger->registrarEvento("DEBUG", "GameMenu::Personaje "+this->botones[i]->Nombre()+" Seteado");
+				string nombrePersonaje = this->botones[i]->Nombre();
+				personajesElegidos[idCliente]=nombrePersonaje.substr(0,nombrePersonaje.size()-5);
+				clientesYaEligieron[idCliente]=true;
+			}
+		}
+	}
+	else if (elegirDosPersonajes){
+		//elijo primer personaje
+		if (not elegir_segundo_personaje[idCliente]){
+			for (size_t i = 0; i< this->botones.size(); i++){
+				this->botones[i]->handleEvent(e);
+				if (e.type == SDL_MOUSEBUTTONUP && this->botones[i]->fueClickeado()){
+					controladorLogger->registrarEvento("DEBUG", "GameMenu::Personaje "+this->botones[i]->Nombre()+" Seteado");
+					string nombrePersonaje = this->botones[i]->Nombre();
+					personajesElegidos[idCliente]=nombrePersonaje.substr(0,nombrePersonaje.size()-5);
+					elegir_segundo_personaje[idCliente] = true;
+				}
+			}
+		}else{ //elijo segundo personaje
+			for (size_t i = 0; i< this->botones.size(); i++){
+				this->botones[i]->handleEvent(e);
+				if (e.type == SDL_MOUSEBUTTONUP && this->botones[i]->fueClickeado()){
+					controladorLogger->registrarEvento("DEBUG", "GameMenu::Personaje "+this->botones[i]->Nombre()+" Seteado");
+					string nombrePersonaje = this->botones[i]->Nombre();
+					personajesElegidos[idCliente+10]=nombrePersonaje.substr(0,nombrePersonaje.size()-5);
+					clientesYaEligieron[idCliente]=true;
+				}
+			}
 		}
 	}
 }
@@ -114,7 +153,7 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >> GameMenu::getDibujab
 
 
 bool GameMenu::finalizado(){
-	return personajesElegidos.size()==controladorJson->cantidadClientes();
+	return personajesElegidos.size()==4;
 }
 
 

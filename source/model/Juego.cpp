@@ -32,29 +32,65 @@ Juego::~Juego(){
 
 }
 
+Equipo* Juego::getEquipo1(){
+	return this->equipo1;
+}
+
+Equipo* Juego::getEquipo2(){
+	return this->equipo2;
+}
+
 void Juego::crearJugador(std::string nombre,int cliente){
 	int posicionXinicial;
 	SDL_RendererFlip flip;
 	bool ladoDerecho;
-	if(cliente<3){//sos del equipo1
+	bool equipo1;
+	switch(controladorJson->cantidadClientes()){
+		case 4:
+			equipo1= cliente<3;
+			break;
+		case 3:
+			equipo1 = cliente == 1 || cliente ==11;
+			break;
+		case 2:
+			equipo1 = cliente == 1 || cliente ==11;
+			break;
+		case 1:
+			equipo1= cliente<3;
+	}
+	if(equipo1){//sos del equipo1
 		posicionXinicial = controladorJson->getPosicionXInicialEquipo1();
 		flip = SDL_FLIP_NONE;
 		ladoDerecho = false;
-		controladorLogger->registrarEvento("INFO","Jugador "+to_string(cliente) +" al equipo 1");
+		controladorLogger->registrarEvento("INFO","Juego::Jugador "+to_string(cliente) +" al equipo 1");
+		//cliente =1;
 	}
 	else{//sos del equipo 2
 		posicionXinicial = controladorJson->getPosicionXInicialEquipo2();
 		flip = SDL_FLIP_HORIZONTAL;
 		ladoDerecho = true;
-		controladorLogger->registrarEvento("INFO","Jugador "+to_string(cliente)+" al equipo 2");
+		controladorLogger->registrarEvento("INFO","Juego::Jugador "+to_string(cliente)+" al equipo 2");
+		//cliente = 2;
 	}
+
 	Jugador *jugador = new Jugador(nombre,posicionXinicial,flip,ladoDerecho, cliente);
 	jugadores[cliente-1]=jugador;
 }
 
 void Juego::crearEquipos(){
-	this->equipo1 = new Equipo(jugadores[0],jugadores[1]);
-	this->equipo2 = new Equipo(jugadores[2],jugadores[3]);
+	if (controladorJson->cantidadClientes() == 4 || controladorJson->cantidadClientes() == 1){
+		this->equipo1 = new Equipo(jugadores[0],jugadores[1]);
+		this->equipo2 = new Equipo(jugadores[2],jugadores[3]);
+	}
+	else if (controladorJson->cantidadClientes()== 2){
+		this->equipo1 = new Equipo(jugadores[0],jugadores[10]);
+		this->equipo2 = new Equipo(jugadores[1],jugadores[11]);
+	}
+	else if (controladorJson->cantidadClientes()== 3){
+		this->equipo1 = new Equipo(jugadores[0],jugadores[10]);
+		this->equipo2 = new Equipo(jugadores[1],jugadores[2]);
+	}
+
 	this->jugadorActualEquipo1 = equipo1->JugadorActual();
 	this->jugadorActualEquipo2 = equipo2->JugadorActual();
 }
@@ -147,7 +183,6 @@ void Juego::verificarCambioDeLado(){
 	}
 }
 
-
 void Juego::actualizarConexion(int idCliente){
 	this->equipo1->actualizarConexion(idCliente);
 	this->equipo2->actualizarConexion(idCliente);
@@ -175,8 +210,10 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 			 teclado->eventoSoltarTecla(evento);
 			 break;
 	 }
+	 bool puedoMoverPersonaje1 = jugadorActualEquipo1->obtenerId() == idCliente || (equipo1->TecladoHabilitado() && (equipo1->obtenerIdJugadorActual() == idCliente || equipo1->obtenerIdCompaniero() == idCliente));
+	 bool puedoMoverPersonaje2 = jugadorActualEquipo2->obtenerId() == idCliente || (equipo2->TecladoHabilitado() && (equipo2->obtenerIdJugadorActual() == idCliente || equipo2->obtenerIdCompaniero() == idCliente));
 
-	 if(equipo1->obtenerIdJugadorActual() == idCliente || equipo1->TecladoHabilitado()){
+	 if(puedoMoverPersonaje1 || controladorJson->cantidadClientes() == 1){
 		 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_D)){
 				 if(personaje1->moverDerecha(personaje2,finEscenarioDerecha)){
 					 this->parallax->moverCamaraDerecha();
@@ -216,9 +253,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 1");
 			}
 	 }
-	 else{
-
-		 if(equipo2->obtenerIdJugadorActual() == idCliente  || equipo2->TecladoHabilitado()){
+	 if(puedoMoverPersonaje2 || controladorJson->cantidadClientes() == 1){
 			 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_LEFT)){
 					if (personaje2->moverIzquierda(personaje1,finEscenarioIzquierda)){
 						this->parallax->moverCamaraIzquierda();
@@ -260,7 +295,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 					this->equipo2->cambiarJugador();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 2");
 				}
-		 }
+
 
 	 }
 	 if(teclado->sePresionoUnaTecla(SDL_SCANCODE_F11)){

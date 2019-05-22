@@ -1,84 +1,65 @@
 {
     "logLevel": "DEBUG",
     "FPS": 60,
+    "cantidadClientes" : 4,
     "battlefield":
         [
             {"background":
                 {
-                    "filepath":"contents/auxiliar/capa3aux.png",
+                    "filepath":"contents/images/capa3.png",
                     "zindex":3
                 }
             },
             {"background":
                 {
-                    "filepath":"contents/auxiliar/capa2aux.png",
+                    "filepath":"contents/images/capa2.png",
                     "zindex":2
                 }
             },
             {"background":
                 {
-                    "filepath":"contents/auxiliar/capa1aux.png",
+                    "filepath":"contents/images/capa1.png",
                     "zindex":1
                 }
             }
         ],
     "characters":
         [
-           {"name":"CapitanAmerica",
+            {"name":"CapitanAmerica",
             "filepath":"contents/images/CaptainAmericaSprites.png",
-            "height":200,
-            "width":120,
+            "height":320,
+            "width":200,
             "zindex":99,
-			"buttonpath": "contents/images/BotonCapitanAmerica.png"	    
+			"buttonpath": "contents/images/BotonCapitanAmerica.png"
             },
 	    {"name":"Venom",
             "filepath":"contents/images/Venom.png",
-            "height":200,
-            "width":120,
+            "height":320,
+            "width":200,
             "zindex":99,
-			"buttonpath": "contents/images/BotonVenom.png" 	    
+			"buttonpath": "contents/images/BotonVenom.png"  
             },
-	    {"name":"MegaMan",
-            "filepath":"contents/images/MegaMan.png",
-            "height":200,
-            "width":120,
-            "zindex":99,
-			"buttonpath": "contents/images/BotonVenom.png" 	    
-            },
-            {"name":"Spiderman",
+        {"name":"Spiderman",
             "filepath":"contents/images/SpidermanSprites.png",
-            "height":200,
-            "width":120,
+            "height":320,
+            "width":200,
             "zindex":99,
-			"buttonpath": "contents/images/BotonSpiderman.png"            
+			"buttonpath": "contents/images/BotonSpiderman.png"          
             },
 	    {"name":"Hulk",
             "filepath":"contents/images/Hulk.png",
             "height":320,
             "width":200,
-            "zindex":99,
-			"buttonpath": "contents/images/BotonHulk.png" 	    
-            }      
+            "zindex":99	,
+			"buttonpath": "contents/images/BotonHulk.png"     
+                      
+            }       
 
         ],
-    "jugadores":
-        [
-            {"jugador":
-                {
-                    "personaje1":"CapitanAmerica",
-                    "personaje2":"Venom"
-                }
-            },
-            {"jugador":
-                {
-                    "personaje1":"Spiderman",
-                    "personaje2":"Hulk"
-                }
-            }
-        ],
+
     "window":{
-        "height":600,
-        "width":800,
+        "height":1000,
+        "width":1400,
 	"fullscreen": false
     }
 }

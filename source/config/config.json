@@ -57,21 +57,6 @@
 
         ],
 
-    "jugadores":
-        [
-            {"jugador":
-                {
-                    "personaje1":"CapitanAmerica",
-                    "personaje2":"Venom"
-                }
-            },
-            {"jugador":
-                {
-                    "personaje1":"Spiderman",
-                    "personaje2":"Hulk"
-                }
-            }
-        ],
     "window":{
         "height":1000,
         "width":1400,
