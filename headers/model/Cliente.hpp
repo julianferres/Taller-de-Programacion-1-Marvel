@@ -36,6 +36,7 @@ class Cliente{
 		bool running = true;
 		bool enMenu = true;
 		vector<tuple<string, const string>> personajesYfondos;
+		bool conectado=true;
 
 	};
 

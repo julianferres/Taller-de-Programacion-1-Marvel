@@ -30,6 +30,8 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	}
 	cout<<"Conectado con el servidor exitosamente."<<endl;
 
+	struct timeval tv = {2, 0};
+	setsockopt(numeroSocket, SOL_SOCKET, SO_RCVTIMEO, (struct timeval *)&tv, sizeof(struct timeval));
 	iCliente* args = (iCliente*) malloc(sizeof(infoCliente));
 	args->cliente=this;
 	juegoCliente = new JuegoCliente();
@@ -91,17 +93,25 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 
 
 void Cliente::recibirParaDibujar(){
+	SDL_Event evento;
+	evento.type = SDL_MOUSEWHEEL;
 	char textura[MAXDATOS];
 	int posiciones[8];
 	SDL_RendererFlip flip;
 	int size;
 	while(running){
-		juegoCliente->graficos()->limpiar();
-		recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
+
+		if(recv(numeroSocket,&size,sizeof(size),MSG_WAITALL)<0){
+			cout<<"Desconectado"<<endl;
+			conectado = false;
+			continue;
+		}
+		conectado = true;
 		if(size==-1){
 			enMenu=false;
 			continue;
 		}
+		juegoCliente->graficos()->limpiar();
 		for(int i=0;i<size;i++){
 			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
 			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
@@ -109,6 +119,7 @@ void Cliente::recibirParaDibujar(){
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
 		juegoCliente->graficos()->render();
+		send(numeroSocket,&evento,sizeof(evento),0);
 	}
 }
 
@@ -122,6 +133,7 @@ void Cliente::enviarEventos(int socket){
 	SDL_Event evento;
 	while(running){
 		while(SDL_PollEvent(&evento)){
+			if(!conectado) continue;
 			if(enMenu){
 				if(evento.type==SDL_MOUSEBUTTONDOWN||evento.type==SDL_MOUSEBUTTONUP
 					||evento.type== SDL_MOUSEMOTION)

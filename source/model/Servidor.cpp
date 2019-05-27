@@ -152,6 +152,7 @@ void Servidor::crearSocket(int puerto){
 
 	if( bind(socketServidor,(struct sockaddr *)&server , sizeof(server)) < 0)
 		perror("enlace fallido. Error");
+
 }
 
 void Servidor::esperarConexiones(){
@@ -179,7 +180,6 @@ void Servidor::esperarConexiones(){
 		this->sistemaEnvio.enviarEntero(clientesConectados.size(),socketCliente);
 		this->enviarTitulos(socketCliente);
 		args->csocket=socketCliente;
-
 		pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args);
 		pthread_create( &thread_enviar , NULL , Servidor::enviarWrapper , (void*) args);
 		cout<<"Bienvenido jugador "+to_string(clientesConectados.size()) << ". ";
@@ -210,6 +210,8 @@ void Servidor::enviarParaDibujar(int socket){
 	vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread;
 
 	while(true){
+		if(!conectados[socket])
+			continue;
 		char textura[1000];
 		SDL_Rect rectOrigen;
 		SDL_Rect rectDestino;
@@ -222,6 +224,7 @@ void Servidor::enviarParaDibujar(int socket){
 		server_mutex.unlock();
 
 		int size = dibujablesThread.size();
+
 		send(socket,&size,sizeof(int),0);
 		for(size_t i=0;i<size;i++){
 				strcpy(textura,  get<0>(dibujablesThread[i]).c_str());
@@ -271,16 +274,34 @@ void Servidor::enviarTitulos(int csocket){
 }
 
 void Servidor::recibirTeclas(int csocket){
+	struct timeval tv = {1, 0};
+	setsockopt(csocket, SOL_SOCKET, SO_RCVTIMEO, (struct timeval *)&tv, sizeof(struct timeval));
 	SDL_Event evento;
 	int idCliente=mapaIDClientes[csocket];
+	recv(csocket,&evento,sizeof(evento),MSG_WAITALL);
 	while(true){
-		int numBytes = recv(csocket,&evento,sizeof(evento),0);
+		int numBytes = recv(csocket,&evento,sizeof(evento),MSG_WAITALL);
 		if(numBytes==0){
 			juego->actualizarConexion(idCliente);
 			controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(csocket));
 			conectados[csocket] =false;
 			return;
 		}
+		if(numBytes<0){
+			if(conectados[csocket] && !enMenu){
+				juego->actualizarConexion(idCliente);
+				conectados[csocket] =false;
+			}
+			cout<<"Se desconecto el cliente "<<idCliente<<endl;
+			continue;
+		}
+		if(!conectados[csocket]){
+			conectados[csocket]=true;
+			juego->actualizarConexion(idCliente);
+		}
+
+		if(evento.type==SDL_MOUSEWHEEL)
+			continue;
 		server_mutex.lock();
 		if(enMenu)
 			menu->handleEvent(evento,idCliente);
