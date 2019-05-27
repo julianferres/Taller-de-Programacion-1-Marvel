@@ -24,9 +24,11 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	this->iniciarConexion(direccionIP,puerto);
 	if(idCliente == -1){//significa que el server esta lleno, me cierro
 		controladorLogger->registrarEvento("ERROR", "Cliente::El server esta lleno.");
+		cout<<"El servidor esta lleno. Este cliente se va a desconectar."<<endl;
 		close(numeroSocket);
 		return;
 	}
+	cout<<"Conectado con el servidor exitosamente."<<endl;
 
 	iCliente* args = (iCliente*) malloc(sizeof(infoCliente));
 	args->cliente=this;
@@ -40,8 +42,9 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	pthread_t thread_id;
 	pthread_create( &thread_id , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
 	recibirParaDibujar();
-
 	pthread_join(thread_id, NULL);
+
+	cout<<"Conexion finalizada."<<endl;
 	delete juegoCliente;
 	close(numeroSocket);
 }
@@ -83,7 +86,6 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 		controladorLogger->registrarEvento("INFO", "Cliente::Conectado al servidor correctamente.");
 
 	this->idCliente=this->sistemaEnvio.recibirEntero(numeroSocket);
-	cout<<"Conectado..."<<endl;
 
 }
 

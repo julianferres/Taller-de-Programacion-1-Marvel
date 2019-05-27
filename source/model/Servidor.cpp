@@ -8,7 +8,7 @@ using namespace std;
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
-
+mutex server_mutex;
 
 struct infoServidor {
 		Servidor *servidor;
@@ -48,13 +48,13 @@ void Servidor::esperarClientes(){
 void Servidor::correrMenu(){
 	Uint32 tiempoInicial,tiempoActual;
 	int FPS = controladorJson->cantidadFPS();
-	mutex menu_mutex;
+
 	while(enMenu){
-		menu_mutex.lock();
+		server_mutex.lock();
 		tiempoInicial= SDL_GetTicks();
 		this->dibujables = menu->getDibujables();
 		tiempoActual = SDL_GetTicks();
-		menu_mutex.unlock();
+		server_mutex.unlock();
 
 		if(tiempoActual - tiempoInicial < 1000/FPS)
 			SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
@@ -105,15 +105,17 @@ void Servidor::crearEquipos(){
 void Servidor::gameLoop(){
 	Uint32 tiempoInicial,tiempoActual;
 	int FPS = controladorJson->cantidadFPS();
-	mutex game_mutex;
-	while(true){
-		game_mutex.lock();
-		tiempoInicial= SDL_GetTicks();
-		this->dibujables = juego->dibujar();
 
+	while(true){
+
+		tiempoInicial= SDL_GetTicks();
+
+		server_mutex.lock();
+		this->dibujables = juego->dibujar();
+		server_mutex.unlock();
 
 		tiempoActual = SDL_GetTicks();
-		game_mutex.unlock();
+
 		 if(tiempoActual - tiempoInicial < 1000/FPS)
 			SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
 
@@ -205,7 +207,6 @@ void *Servidor::enviarWrapper(void *args){
 
 void Servidor::enviarParaDibujar(int socket){
 	Uint32 tiempoInicial,tiempoActual;
-	mutex enviar_mutex;
 	vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread;
 
 	while(true){
@@ -214,9 +215,12 @@ void Servidor::enviarParaDibujar(int socket){
 		SDL_Rect rectDestino;
 		SDL_RendererFlip flip;
 
-		enviar_mutex.lock();
 		tiempoInicial= SDL_GetTicks();
+
+		server_mutex.lock();
 		dibujablesThread=this->dibujables;
+		server_mutex.unlock();
+
 		int size = dibujablesThread.size();
 		send(socket,&size,sizeof(int),0);
 		for(size_t i=0;i<size;i++){
@@ -230,7 +234,7 @@ void Servidor::enviarParaDibujar(int socket){
 				send(socket,posiciones,sizeof(posiciones),0);
 				send(socket,&flip,sizeof(flip),0);
 		}
-		enviar_mutex.unlock();
+
 
 		tiempoActual = SDL_GetTicks();
 		 if(tiempoActual - tiempoInicial < 1000/60)
@@ -269,7 +273,6 @@ void Servidor::enviarTitulos(int csocket){
 void Servidor::recibirTeclas(int csocket){
 	SDL_Event evento;
 	int idCliente=mapaIDClientes[csocket];
-	mutex juegoMutex;
 	while(true){
 		int numBytes = recv(csocket,&evento,sizeof(evento),0);
 		if(numBytes==0){
@@ -278,12 +281,12 @@ void Servidor::recibirTeclas(int csocket){
 			conectados[csocket] =false;
 			return;
 		}
-		juegoMutex.lock();
+		server_mutex.lock();
 		if(enMenu)
 			menu->handleEvent(evento,idCliente);
 		else
 			juego->teclear(evento,idCliente);
-		juegoMutex.unlock();
+		server_mutex.unlock();
 	}
 }
 
