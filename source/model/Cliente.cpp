@@ -23,13 +23,11 @@ struct infoCliente {
 Cliente::Cliente( char * direccionIP,int puerto){
 	this->iniciarConexion(direccionIP,puerto);
 	if(idCliente == -1){//significa que el server esta lleno, me cierro
-		controladorLogger->registrarEvento("ERROR", "Cliente::El server esta lleno.");
-		cout<<"El servidor esta lleno. Este cliente se va a desconectar."<<endl;
+		controladorLogger->registrarEvento("ERROR", "Cliente::El server esta lleno, me desconecto.");
+		this->partidallena();
 		close(numeroSocket);
 		return;
 	}
-	cout<<"Conectado con el servidor exitosamente."<<endl;
-
 	struct timeval tv = {2, 0};
 	setsockopt(numeroSocket, SOL_SOCKET, SO_RCVTIMEO, (struct timeval *)&tv, sizeof(struct timeval));
 	iCliente* args = (iCliente*) malloc(sizeof(infoCliente));
@@ -45,8 +43,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	pthread_create( &thread_id , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
 	recibirParaDibujar();
 	pthread_join(thread_id, NULL);
-
-	cout<<"Conexion finalizada."<<endl;
+	controladorLogger->registrarEvento("INFO", "Cliente::Conexion finalizada.");
 	delete juegoCliente;
 	close(numeroSocket);
 }
@@ -91,6 +88,32 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 
 }
 
+void Cliente::partidallena(){
+	bool close=false;
+	SDL_Event eventoLLeno;
+	SDL_Init( SDL_INIT_VIDEO );
+	SDL_Window* ventana;
+	SDL_Renderer* rendererizar;
+	SDL_CreateWindowAndRenderer(800,600, false, &ventana, &rendererizar);
+	SDL_SetWindowTitle(ventana, "Marvel vs Capcom");
+	SDL_Surface* fondo = IMG_Load("contents/images/partidaLLena.png");
+	SDL_Texture * texture = SDL_CreateTextureFromSurface(rendererizar, fondo);
+	while (!close){
+		SDL_WaitEvent(&eventoLLeno);
+		switch (eventoLLeno.type)
+		{
+		case SDL_QUIT:
+			close = true;
+			break;
+		}
+		SDL_RenderCopy(rendererizar, texture, NULL, NULL);
+		SDL_RenderPresent(rendererizar);
+		}
+	SDL_DestroyTexture(texture);
+	SDL_FreeSurface(fondo);
+	SDL_DestroyRenderer(rendererizar);
+	SDL_DestroyWindow(ventana);
+}
 
 void Cliente::recibirParaDibujar(){
 	SDL_Event evento;

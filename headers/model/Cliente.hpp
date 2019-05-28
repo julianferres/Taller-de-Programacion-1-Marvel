@@ -6,6 +6,7 @@
 #include <ControladorEnvio.hpp>
 #include <string>
 #include <tuple>
+#include <SDL2/SDL_image.h>
 
 #define MAXDATOS 1000
 #define CANTIDAD_MAXIMA_JUGADORES 4
@@ -26,6 +27,7 @@ class Cliente{
 		void recibirFondos();
 		void recibirTitulos();
 		static void* enviarEventosWrapper(void* arg);
+		void partidallena();
 
 	private:
 		JuegoCliente *juegoCliente;
