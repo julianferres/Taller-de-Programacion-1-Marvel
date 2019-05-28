@@ -7,16 +7,13 @@
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
-#define constanteDeAltura 39.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
+#define constanteDeAltura 20.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
 #define constanteTiempoCiclos 0.3
-
-
-
 
 using namespace std;
 
 Personaje::~Personaje(){
-	//delete spriteAnimado;
+	delete spriteAnimado;
 }
 
 Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip){
@@ -143,7 +140,6 @@ void Personaje::saltar(){
 			tiempo += constanteTiempoCiclos;
 			float alturaPrevia  = alturaActualSalto;
 			alturaActualSalto = (velocidadInicial - 4.9* tiempo)*tiempo;
-			//El 4.9 viene de 0.5*gravedad
 			posy -= (alturaActualSalto - alturaPrevia);
 		}
 	}

@@ -16,7 +16,13 @@ Texturas::Texturas(ControladorGrafico &graficos,vector<tuple<string, const strin
 		 SDL_Texture *t1 =SDL_CreateTextureFromSurface(graficos.getRenderer(),graficos.cargarImagen(filePath));
 		 texturas[nombre] = t1;
 	}
+}
 
+Texturas::~Texturas(){
+	for (std::map<string, SDL_Texture*>::iterator it=texturas.begin(); it!=texturas.end(); ++it){
+		SDL_DestroyTexture(it->second);
+	}
+	TTF_Quit();
 }
 
 SDL_Texture * Texturas::getTextura(string nombre){

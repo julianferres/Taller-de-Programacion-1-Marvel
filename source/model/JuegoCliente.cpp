@@ -15,6 +15,7 @@ JuegoCliente::JuegoCliente(){
 
 JuegoCliente::~JuegoCliente(){
 	delete grafico;
+	delete texturas;
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	SDL_VideoQuit();
 	SDL_QuitSubSystem(SDL_INIT_TIMER);

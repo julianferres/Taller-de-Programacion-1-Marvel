@@ -49,15 +49,6 @@ vector<tuple<string,string,int,string,int ,int ,int >> GameMenu::getTitulos(int 
 GameMenu::~GameMenu(){
 	for(size_t i=0;i<botones.size();i++)
 		delete botones[i];
-	/*SDL_DestroyTexture(actionTexture);
-	SDL_FreeSurface(actionSurface);
-	SDL_DestroyTexture(subTituloTexture);
-	SDL_FreeSurface(subTituloSurface);
-	SDL_DestroyTexture(tituloTexture);
-	SDL_FreeSurface(tituloSurface);
-	TTF_CloseFont(selectFont);
-	TTF_CloseFont(marvelFont);
-	TTF_Quit();*/
 }
 
 

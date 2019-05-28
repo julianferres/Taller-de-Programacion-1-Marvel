@@ -13,6 +13,7 @@ using namespace std;
 class Texturas {
 	public:
 		Texturas(ControladorGrafico &graficos,vector<tuple<string, const string>> nombresYpaths);
+		~Texturas();
 		SDL_Texture * getTextura(string nombre);
 		void cargarTitulos(ControladorGrafico &graficos,vector<tuple<string,string,int,string,int ,int ,int >>titulos);
 		void agregarTextura(string nombre, SDL_Texture* textura);

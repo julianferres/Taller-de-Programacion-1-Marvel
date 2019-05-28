@@ -212,10 +212,8 @@ void Servidor::enviarParaDibujar(int socket){
 	vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread;
 
 	while(true){
-		if(!conectados[socket]){
-			puts("hola");
+		if(!conectados[socket])
 			continue;
-		}
 
 		char textura[1000];
 		SDL_Rect rectOrigen;
