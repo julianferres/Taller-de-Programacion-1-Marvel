@@ -141,9 +141,22 @@ void Cliente::recibirParaDibujar(){
 		}
 		juegoCliente->graficos()->limpiar();
 		for(int i=0;i<size;i++){
-			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
-			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
-			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
+			recibido = verificarConexion(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL));
+			if(recibido<0)
+				break;
+			if(recibido==0)
+				return;
+			recibido = verificarConexion(recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL));
+				if(recibido<0)
+					break;
+				if(recibido==0)
+					return;
+			recibido = verificarConexion(recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL));
+				if(recibido<0)
+					break;
+				if(recibido==0)
+					return;
+
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
 		juegoCliente->graficos()->render();

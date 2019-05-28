@@ -161,7 +161,7 @@ void Servidor::esperarConexiones(){
 	listen(socketServidor , 3);
 	cout<<"Servidor iniciado."<<endl;
 	cout << "Esperando conexiones."<<endl;
-	cout<<" Faltan " << to_string(cantidadClientesPermitidos) << " clientes" << endl;
+	cout<<"Faltan " << to_string(cantidadClientesPermitidos) << " clientes." << endl;
 	int c = sizeof(struct sockaddr_in);
 	pthread_t thread_recibir,thread_enviar;
 
@@ -182,8 +182,8 @@ void Servidor::esperarConexiones(){
 		this->sistemaEnvio.enviarEntero(clientesConectados.size(),socketCliente);
 		this->enviarTitulos(socketCliente);
 		args->csocket=socketCliente;
-		pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args);
 		pthread_create( &thread_enviar , NULL , Servidor::enviarWrapper , (void*) args);
+		pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args);
 		cout<<"Bienvenido jugador "+to_string(clientesConectados.size()) << ". "<<endl;
 		if (cantidadClientesPermitidos - clientesConectados.size() == 0)
 			cout << "La partida esta llena. No se aceptaran mas jugadores." << endl;
@@ -212,8 +212,11 @@ void Servidor::enviarParaDibujar(int socket){
 	vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread;
 
 	while(true){
-		if(!conectados[socket])
+		if(!conectados[socket]){
+			puts("hola");
 			continue;
+		}
+
 		char textura[1000];
 		SDL_Rect rectOrigen;
 		SDL_Rect rectDestino;
