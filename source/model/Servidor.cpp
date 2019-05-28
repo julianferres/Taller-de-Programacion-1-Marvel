@@ -159,7 +159,9 @@ void Servidor::esperarConexiones(){
 	iServidor* args = (iServidor*) malloc(sizeof(infoServidor));
 	args->servidor=this;
 	listen(socketServidor , 3);
-	cout << "Esperando conexiones. Faltan " << to_string(cantidadClientesPermitidos) << " clientes" << endl;
+	cout<<"Servidor iniciado."<<endl;
+	cout << "Esperando conexiones."<<endl;
+	cout<<" Faltan " << to_string(cantidadClientesPermitidos) << " clientes" << endl;
 	int c = sizeof(struct sockaddr_in);
 	pthread_t thread_recibir,thread_enviar;
 
@@ -182,7 +184,7 @@ void Servidor::esperarConexiones(){
 		args->csocket=socketCliente;
 		pthread_create( &thread_recibir , NULL , Servidor::recibirTeclasWrapper , (void*) args);
 		pthread_create( &thread_enviar , NULL , Servidor::enviarWrapper , (void*) args);
-		cout<<"Bienvenido jugador "+to_string(clientesConectados.size()) << ". ";
+		cout<<"Bienvenido jugador "+to_string(clientesConectados.size()) << ". "<<endl;
 		if (cantidadClientesPermitidos - clientesConectados.size() == 0)
 			cout << "La partida esta llena. No se aceptaran mas jugadores." << endl;
 		else
@@ -283,7 +285,8 @@ void Servidor::recibirTeclas(int csocket){
 		int numBytes = recv(csocket,&evento,sizeof(evento),MSG_WAITALL);
 		if(numBytes==0){
 			juego->actualizarConexion(idCliente);
-			controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(csocket));
+			cout<<"Se desconecto el cliente "+to_string(idCliente)<<endl;
+			controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(idCliente));
 			conectados[csocket] =false;
 			return;
 		}
@@ -291,16 +294,17 @@ void Servidor::recibirTeclas(int csocket){
 			if(conectados[csocket] && !enMenu){
 				juego->actualizarConexion(idCliente);
 				conectados[csocket] =false;
+				cout<<"Se desconecto el cliente "<<idCliente<<endl;
 			}
-			cout<<"Se desconecto el cliente "<<idCliente<<endl;
 			continue;
 		}
 		if(!conectados[csocket]){
+			cout<<"Se reconecto el cliente "<<idCliente<<endl;
 			conectados[csocket]=true;
 			juego->actualizarConexion(idCliente);
 		}
 
-		if(evento.type==SDL_MOUSEWHEEL)
+		if(evento.type==SDL_MOUSEWHEEL)//descarto el heartbeat
 			continue;
 		server_mutex.lock();
 		if(enMenu)

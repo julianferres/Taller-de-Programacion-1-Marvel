@@ -23,11 +23,13 @@ struct infoCliente {
 Cliente::Cliente( char * direccionIP,int puerto){
 	this->iniciarConexion(direccionIP,puerto);
 	if(idCliente == -1){//significa que el server esta lleno, me cierro
+		cout<<"El servidor esta lleno. Este cliente se va a desconectar."<<endl;
 		controladorLogger->registrarEvento("ERROR", "Cliente::El server esta lleno, me desconecto.");
 		this->partidallena();
 		close(numeroSocket);
 		return;
 	}
+	cout<<"Conectado al servidor con exito."<<endl;
 	struct timeval tv = {2, 0};
 	setsockopt(numeroSocket, SOL_SOCKET, SO_RCVTIMEO, (struct timeval *)&tv, sizeof(struct timeval));
 	iCliente* args = (iCliente*) malloc(sizeof(infoCliente));
@@ -43,6 +45,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	pthread_create( &thread_id , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
 	recibirParaDibujar();
 	pthread_join(thread_id, NULL);
+	cout<<"Conexion finalizada."<<endl;
 	controladorLogger->registrarEvento("INFO", "Cliente::Conexion finalizada.");
 	delete juegoCliente;
 	close(numeroSocket);
@@ -122,13 +125,15 @@ void Cliente::recibirParaDibujar(){
 	int posiciones[8];
 	SDL_RendererFlip flip;
 	int size;
+	int recibido;
 	while(running){
-
-		if(recv(numeroSocket,&size,sizeof(size),MSG_WAITALL)<0){
-			cout<<"Desconectado"<<endl;
-			conectado = false;
+		recibido=verificarConexion(recv(numeroSocket,&size,sizeof(size),MSG_WAITALL));
+		if(recibido<0)//timeout
 			continue;
-		}
+		if(recibido==0)//se cerro el server
+			return;
+		if(!conectado)
+			cout<<"Reconectado con el servidor."<<endl;
 		conectado = true;
 		if(size==-1){
 			enMenu=false;
@@ -142,7 +147,22 @@ void Cliente::recibirParaDibujar(){
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
 		juegoCliente->graficos()->render();
-		send(numeroSocket,&evento,sizeof(evento),0);
+		send(numeroSocket,&evento,sizeof(evento),0);//heartbeat
+	}
+}
+
+int Cliente::verificarConexion(int recibido){
+	if(recibido<0){
+		if(conectado)
+			cout<<"Conexion perdida con el servidor."<<endl;
+		cout<<"Intentando reconectar con el servidor..."<<endl;
+		conectado = false;
+		return -1;
+	}
+	if(recibido==0){
+		cout<<"El servidor se ha cerrado. Este cliente se va a desconectar."<<endl;
+		running = false;
+		return 0;
 	}
 }
 

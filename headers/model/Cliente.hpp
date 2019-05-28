@@ -28,6 +28,7 @@ class Cliente{
 		void recibirTitulos();
 		static void* enviarEventosWrapper(void* arg);
 		void partidallena();
+		int verificarConexion(int recibido);
 
 	private:
 		JuegoCliente *juegoCliente;
