@@ -45,7 +45,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animacionActual = quieto;
 	}
 	else if(nombre=="Spiderman"){
-		Animacion *quieto = new Animacion("quieto",10,0,0,125,115,5);
+		Animacion *quieto = new Animacion("quieto",10,1365,7,105,85,5);
 		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,99,2);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,2);
 		Animacion *salto = new Animacion("salto",14,0,473,100,135,3);

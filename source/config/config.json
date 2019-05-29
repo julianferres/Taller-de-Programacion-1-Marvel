@@ -58,8 +58,8 @@
         ],
 
     "window":{
-        "height":1000,
-        "width":1400,
+        "height":640,
+        "width":800,
 	"fullscreen": false
     }
 }
