@@ -54,6 +54,7 @@ class Servidor{
 		map<int,int> mapaIDClientes;
 		vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujables;
 		bool enMenu = true;
+		queue<tuple<SDL_Event,int>>colaEventos;
 
 };
 

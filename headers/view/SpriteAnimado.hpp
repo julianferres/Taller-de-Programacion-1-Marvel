@@ -21,8 +21,6 @@ class SpriteAnimado{
 		void dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho, SDL_RendererFlip flip);
 		void cambiarAnimacion(string animacion);
 		void agregarAnimacion(int frames, int x, int y, string nombre, int ancho, int alto);
-		void pararAnimacion();
-		void animacionFinalizada();
 		void cargarAnimaciones(string nombre);
 		int getFrameIndex();
 		string getAnimacionActual();
@@ -38,7 +36,6 @@ class SpriteAnimado{
 		SDL_Surface* surface;
 		int frameIndex = 0;
 		int regulador = 0;
-		bool visible = true;
 		string nombreSprite;
 
 };

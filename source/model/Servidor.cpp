@@ -48,14 +48,20 @@ void Servidor::esperarClientes(){
 void Servidor::correrMenu(){
 	Uint32 tiempoInicial,tiempoActual;
 	int FPS = controladorJson->cantidadFPS();
-
+	tuple<SDL_Event,int>tuplaEvento;
 	while(enMenu){
-		server_mutex.lock();
 		tiempoInicial= SDL_GetTicks();
+
+		server_mutex.lock();
+		while(!colaEventos.empty()){
+			tuplaEvento = colaEventos.front();
+			colaEventos.pop();
+			menu->handleEvent(get<0>(tuplaEvento),get<1>(tuplaEvento));
+		}
 		this->dibujables = menu->getDibujables();
-		tiempoActual = SDL_GetTicks();
 		server_mutex.unlock();
 
+		tiempoActual = SDL_GetTicks();
 		if(tiempoActual - tiempoInicial < 1000/FPS)
 			SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
 		enMenu = !menu->finalizado();
@@ -105,12 +111,17 @@ void Servidor::crearEquipos(){
 void Servidor::gameLoop(){
 	Uint32 tiempoInicial,tiempoActual;
 	int FPS = controladorJson->cantidadFPS();
-
+	tuple<SDL_Event,int>tuplaEvento;
 	while(true){
 
 		tiempoInicial= SDL_GetTicks();
 
 		server_mutex.lock();
+		while(!colaEventos.empty()){
+			tuplaEvento = colaEventos.front();
+			colaEventos.pop();
+			juego->teclear(get<0>(tuplaEvento),get<1>(tuplaEvento));
+		}
 		this->dibujables = juego->dibujar();
 		server_mutex.unlock();
 
@@ -308,10 +319,7 @@ void Servidor::recibirTeclas(int csocket){
 		if(evento.type==SDL_MOUSEWHEEL)//descarto el heartbeat
 			continue;
 		server_mutex.lock();
-		if(enMenu)
-			menu->handleEvent(evento,idCliente);
-		else
-			juego->teclear(evento,idCliente);
+		colaEventos.push(make_tuple(evento,idCliente));
 		server_mutex.unlock();
 	}
 }

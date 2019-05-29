@@ -194,10 +194,9 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 
 bool SpriteAnimado::iniciarAnimacion(string nombre){
 	if(animacionActual->getNombre().compare("cambioEntrada") == 0) return false;
-	if( animacionActual->getNombre() != nombre){
+	if( animacionActual->getNombre() != nombre || nombre=="quieto")
 		cambiarAnimacion(nombre);
-		frameIndex = 0;
-	}
+
 	return true;
 }
 
@@ -206,11 +205,7 @@ void SpriteAnimado::cambiarAnimacion(string nombre){
 		if(animaciones[i]->getNombre() == nombre )
 			animacionActual = animaciones[i];
 	}
-}
-
-void SpriteAnimado::pararAnimacion(){
-	this->frameIndex = 0;
-	this->cambiarAnimacion("quieto");
+	frameIndex = 0;
 }
 
 void SpriteAnimado::update(){
@@ -221,12 +216,11 @@ void SpriteAnimado::update(){
 	if (frameIndex < animacionActual->getFrames() - 1 )
 		frameIndex++;
 	else{
-		if(animacionActual->getNombre()=="agacharse"){
+		if(animacionActual->getNombre()=="agacharse")
 			return;
-		}
-
-		this->frameIndex=0;
-		this->animacionFinalizada();
+		frameIndex=0;
+		if(animacionActual->getNombre()!="movDerecha" && animacionActual->getNombre()!="movIzquierda")
+			iniciarAnimacion("quieto");
 	}
 	regulador = 0;
 }
@@ -246,8 +240,4 @@ void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y,int alto,
 	SDL_Rect rectanguloDestino={x, y, ancho,alto};
 	graficos.dibujarImagen(this->spriteSheet, &sourceRect, &rectanguloDestino, flip);
 
-}
-
-void SpriteAnimado::animacionFinalizada(){
-	this->cambiarAnimacion("quieto");
 }

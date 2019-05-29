@@ -74,10 +74,6 @@ int Personaje::getFrameIndex(){
 	return this->spriteAnimado->getFrameIndex();
 }
 
-void Personaje::detenerAnimacion(){
-	this->spriteAnimado->pararAnimacion();
-}
-
 bool Personaje::moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando)

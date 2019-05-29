@@ -235,7 +235,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				 }
 			 }
 
-			if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_W)){
+			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_W)){
 				personaje1->saltar();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 salta");
 			}
@@ -244,7 +244,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				personaje1->agacharse();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
 			}
-			if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S)){
+			if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A) ){
 					personaje1->cambiarAnimacion("quieto");
 			}
 
@@ -277,7 +277,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				   }
 				}
 
-				if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_UP)){
+				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_UP)){
 					personaje2->saltar();
 					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 salta");
 				}
@@ -287,7 +287,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 agachado");
 				}
 
-				if(teclado->seSoltoUnaTecla(SDL_SCANCODE_DOWN)){
+				if(teclado->seSoltoUnaTecla(SDL_SCANCODE_DOWN) || teclado->seSoltoUnaTecla(SDL_SCANCODE_LEFT) || teclado->seSoltoUnaTecla(SDL_SCANCODE_RIGHT)){
 						personaje2->cambiarAnimacion("quieto");
 				}
 
