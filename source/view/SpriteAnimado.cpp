@@ -220,7 +220,7 @@ void SpriteAnimado::update(){
 			return;
 		frameIndex=0;
 		if(animacionActual->getNombre()!="movDerecha" && animacionActual->getNombre()!="movIzquierda")
-			iniciarAnimacion("quieto");
+			cambiarAnimacion("quieto");
 	}
 	regulador = 0;
 }
