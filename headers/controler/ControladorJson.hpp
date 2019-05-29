@@ -87,7 +87,7 @@ class ControladorJson{
 		const int rango_ancho_ventana[2] = {800, 1400};
 		const int rango_altura_personaje[2] = {50,400};
 		const int rango_ancho_personaje[2] = {50,350};
-		const int rango_FPS[2] = {30, 60};
+		const int rango_FPS[2] = {30, 120};
 
 		void setLogLevel(json j, string argumentoConsola)throw();
 		void setAlturaVentana(json j)throw();

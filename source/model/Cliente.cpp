@@ -29,6 +29,11 @@ Cliente::Cliente( char * direccionIP,int puerto){
 		close(numeroSocket);
 		return;
 	}
+	if(idCliente==0){
+		cout<<"Servidor no encontrado."<<endl;
+		close(numeroSocket);
+		return;
+	}
 	cout<<"Conectado al servidor con exito."<<endl;
 	struct timeval tv = {2, 0};
 	setsockopt(numeroSocket, SOL_SOCKET, SO_RCVTIMEO, (struct timeval *)&tv, sizeof(struct timeval));
@@ -82,11 +87,12 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 	servidor.sin_addr=*((struct in_addr *)nodoServidor->h_addr);
 	bzero(&(servidor.sin_zero),8);
 	conexion=connect(numeroSocket,(struct sockaddr *)&servidor,sizeof(struct sockaddr));
-	if(conexion==-1)
+	if(conexion==-1){
 		controladorLogger->registrarEvento("ERROR", "Cliente::Error al conectar con el servidor");
-	else
-		controladorLogger->registrarEvento("INFO", "Cliente::Conectado al servidor correctamente.");
-
+		this->idCliente=0;
+		return;
+	}
+	controladorLogger->registrarEvento("INFO", "Cliente::Conectado al servidor correctamente.");
 	this->idCliente=this->sistemaEnvio.recibirEntero(numeroSocket);
 
 }

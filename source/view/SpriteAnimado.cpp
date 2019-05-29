@@ -33,9 +33,9 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,6);
 		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,4);
-		Animacion *salto = new Animacion("salto",8,0,595,125,135,10);
+		Animacion *salto = new Animacion("salto",8,0,590,125,140,7);
 		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,105,4);
-		Animacion *cambioEntrada = new Animacion("cambioEntrada",8,0,420,125,158,2);
+		Animacion *cambioEntrada = new Animacion("cambioEntrada",7,125,420,125,158,2);
 		animaciones.push_back(quieto);
 		animaciones.push_back(moverDerecha);
 		animaciones.push_back(moverIzquierda);
@@ -48,7 +48,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *quieto = new Animacion("quieto",10,0,0,125,115,5);
 		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,99,2);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,2);
-		Animacion *salto = new Animacion("salto",14,0,473,100,135,2);
+		Animacion *salto = new Animacion("salto",14,0,473,100,135,3);
 		Animacion *agacharse = new Animacion("agacharse",13,0,1180,110,90,4);
 		Animacion *cambioEntrada = new Animacion("cambioEntrada",14,0,227,110,133,2);
 		animaciones.push_back(quieto);
@@ -64,7 +64,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *quieto = new Animacion("quieto",13,0,519,160,123,5);
 		Animacion *moverDerecha = new Animacion("movDerecha",10,0,2905,160,130,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",10,0,2905,160,130,4);
-		Animacion *salto = new Animacion("salto",11,0,5408,160,172,8);
+		Animacion *salto = new Animacion("salto",11,0,5408,160,172,6);
 		Animacion *agacharse = new Animacion("agacharse",10,0,3580,150,125,2);
 		Animacion *cambioEntrada = new Animacion("cambioEntrada",11,0,5668,160,162,2);
 		animaciones.push_back(quieto);
@@ -94,9 +94,9 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 	}
 	else if(nombre=="Hulk" ){
 		Animacion *quieto = new Animacion("quieto",8,0,0,170,129,10);
-		Animacion *moverDerecha = new Animacion("movDerecha",16,0,280,170,150,4);
-		Animacion *moverIzquierda = new Animacion("movIzquierda",16,0,130,170,143,4);
-		Animacion *salto = new Animacion("salto",10,0,580,170,215,8);
+		Animacion *moverDerecha = new Animacion("movDerecha",16,0,130,170,150,4);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",16,0,130,170,150,4);
+		Animacion *salto = new Animacion("salto",10,0,580,170,215,6);
 		Animacion *agacharse = new Animacion("agacharse",5,0,445,170,123,4);
 		Animacion *cambioEntrada = new Animacion("cambioEntrada",8,0,1112,170,248,3);
 		animaciones.push_back(quieto);

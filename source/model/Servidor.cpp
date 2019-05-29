@@ -210,7 +210,7 @@ void *Servidor::enviarWrapper(void *args){
 void Servidor::enviarParaDibujar(int socket){
 	Uint32 tiempoInicial,tiempoActual;
 	vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread;
-
+	int FPS = controladorJson->cantidadFPS();
 	while(true){
 		if(!conectados[socket])
 			continue;
@@ -243,8 +243,8 @@ void Servidor::enviarParaDibujar(int socket){
 
 
 		tiempoActual = SDL_GetTicks();
-		 if(tiempoActual - tiempoInicial < 1000/60)
-			SDL_Delay( 1000/60 - tiempoActual +tiempoInicial );
+		 if(tiempoActual - tiempoInicial < 1000/FPS)
+			SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
 
 	}
 }
