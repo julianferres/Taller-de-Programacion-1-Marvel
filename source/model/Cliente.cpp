@@ -133,13 +133,18 @@ void Cliente::recibirParaDibujar(){
 	int size;
 	int recibido;
 	while(running){
-		recibido=verificarConexion(recv(numeroSocket,&size,sizeof(size),MSG_WAITALL));
-		if(recibido<0)//timeout
+		recibido = recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
+		if(recibido<0){
+			if(conectado)
+				cout<<"Conexion perdida con el servidor."<<endl;
+			cout<<"Intentando reconectar con el servidor..."<<endl;
+			conectado = false;
 			continue;
-		if(recibido==0)//se cerro el server
+		}
+		if(recibido == 0){
+			cout<<"El servidor se ha cerrado. Este cliente se va a desconectar."<<endl;
 			return;
-		if(!conectado)
-			cout<<"Reconectado con el servidor."<<endl;
+		}
 		conectado = true;
 		if(size==-1){
 			enMenu=false;
@@ -147,22 +152,9 @@ void Cliente::recibirParaDibujar(){
 		}
 		juegoCliente->graficos()->limpiar();
 		for(int i=0;i<size;i++){
-			recibido = verificarConexion(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL));
-			if(recibido<0)
-				break;
-			if(recibido==0)
-				return;
-			recibido = verificarConexion(recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL));
-				if(recibido<0)
-					break;
-				if(recibido==0)
-					return;
-			recibido = verificarConexion(recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL));
-				if(recibido<0)
-					break;
-				if(recibido==0)
-					return;
-
+			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
+			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
+			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
 		juegoCliente->graficos()->render();
