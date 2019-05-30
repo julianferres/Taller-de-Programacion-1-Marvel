@@ -20,8 +20,8 @@ struct infoServidor {
  Servidor::Servidor(int puerto){
 	cantidadClientesPermitidos = controladorJson->cantidadClientes();
 	this->crearThreadServer();
-	this->crearSocket(puerto);
-	this->esperarConexiones();
+	if(this->crearSocket(puerto))
+		this->esperarConexiones();
 
 	 close(socketServidor);
 }
@@ -150,7 +150,7 @@ void *Servidor::actualizarModelo(){
  	return NULL;
   }
 
-void Servidor::crearSocket(int puerto){
+bool Servidor::crearSocket(int puerto){
    socketServidor = socket(AF_INET , SOCK_STREAM , 0);
 	if (socketServidor == -1)
 		controladorLogger->registrarEvento("ERROR", "Servidor::No se pudo crear el socket .");
@@ -161,8 +161,13 @@ void Servidor::crearSocket(int puerto){
 	server.sin_addr.s_addr = INADDR_ANY;
 	server.sin_port = htons( puerto );
 
-	if( bind(socketServidor,(struct sockaddr *)&server , sizeof(server)) < 0)
+	if( bind(socketServidor,(struct sockaddr *)&server , sizeof(server)) < 0){
 		perror("enlace fallido. Error");
+		cout<<"ERROR: El servidor no pudo inicializarse. "<<endl;
+		return false;
+	}
+	return true;
+
 
 }
 
@@ -296,7 +301,8 @@ void Servidor::recibirTeclas(int csocket){
 	while(true){
 		int numBytes = recv(csocket,&evento,sizeof(evento),MSG_WAITALL);
 		if(numBytes==0){
-			juego->actualizarConexion(idCliente);
+			if(!enMenu)
+				juego->actualizarConexion(idCliente);
 			cout<<"Se desconecto el cliente "+to_string(idCliente)<<endl;
 			controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(idCliente));
 			conectados[csocket] =false;
@@ -304,7 +310,8 @@ void Servidor::recibirTeclas(int csocket){
 		}
 		if(numBytes<0){
 			if(conectados[csocket] && !enMenu){
-				juego->actualizarConexion(idCliente);
+				if(!enMenu)
+					juego->actualizarConexion(idCliente);
 				conectados[csocket] =false;
 				cout<<"Se desconecto el cliente "<<idCliente<<endl;
 			}

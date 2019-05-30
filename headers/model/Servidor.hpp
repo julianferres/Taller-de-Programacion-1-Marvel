@@ -23,7 +23,7 @@ class Servidor{
 
 	public:
 		Servidor(int puerto);
-		void crearSocket(int puerto);
+		bool crearSocket(int puerto);
 		void esperarConexiones();
 		void enviarParaDibujar(int csocket);
 		static void* enviarWrapper(void* args);

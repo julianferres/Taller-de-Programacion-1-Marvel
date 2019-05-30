@@ -143,8 +143,11 @@ void Cliente::recibirParaDibujar(){
 		}
 		if(recibido == 0){
 			cout<<"El servidor se ha cerrado. Este cliente se va a desconectar."<<endl;
+			running = false;
 			return;
 		}
+		if(!conectado)
+			cout<<"Reconectado con el servidor."<<endl;
 		conectado = true;
 		if(size==-1){
 			enMenu=false;
@@ -162,20 +165,7 @@ void Cliente::recibirParaDibujar(){
 	}
 }
 
-int Cliente::verificarConexion(int recibido){
-	if(recibido<0){
-		if(conectado)
-			cout<<"Conexion perdida con el servidor."<<endl;
-		cout<<"Intentando reconectar con el servidor..."<<endl;
-		conectado = false;
-		return -1;
-	}
-	if(recibido==0){
-		cout<<"El servidor se ha cerrado. Este cliente se va a desconectar."<<endl;
-		running = false;
-		return 0;
-	}
-}
+
 
 void *Cliente::enviarEventosWrapper(void* arg){
 	iCliente* argumentos = (iCliente*) arg;
@@ -188,19 +178,20 @@ void Cliente::enviarEventos(int socket){
 	while(running){
 		while(SDL_PollEvent(&evento)){
 			if(!conectado) continue;
+			if(evento.type==SDL_QUIT){
+				running=false;
+				return;
+			}
 			if(enMenu){
 				if(evento.type==SDL_MOUSEBUTTONDOWN||evento.type==SDL_MOUSEBUTTONUP
 					||evento.type== SDL_MOUSEMOTION)
 					send(socket,&evento,sizeof(evento),0);
 			}
 			else{
-				if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP || evento.type==SDL_QUIT)
+				if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP )
 					send(socket,&evento,sizeof(evento),0);
-				if(evento.type==SDL_QUIT){
-					running=false;
-					return;
-				}
 			}
+
 		}
 	}
 }
