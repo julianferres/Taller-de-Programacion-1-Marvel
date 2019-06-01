@@ -134,7 +134,6 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 		}
 		else{
 			flip = SDL_FLIP_NONE;
-			destino ={-1,-1,-1,-1};
 			if(fondos_dibujados == 0 ){
 				SDL_Rect* origen = parallax->camaraz1();
 				SDL_Rect* destinoz1 = parallax->getDestinoZ1();

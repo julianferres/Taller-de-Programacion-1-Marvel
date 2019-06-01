@@ -1,7 +1,7 @@
 {
     "logLevel": "DEBUG",
     "FPS": 60,
-    "cantidadClientes" : 4,
+    "cantidadClientes" : 2,
     "battlefield":
         [
             {"background":
@@ -58,8 +58,8 @@
         ],
 
     "window":{
-        "height":640,
-        "width":800,
+        "height":700,
+        "width":1200,
 	"fullscreen": false
     }
 }

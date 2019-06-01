@@ -107,7 +107,7 @@ class ControladorJson{
 		int posicionXInicialJugador2; //= controladorJson->anchoVentana() *3/4;
 		int limiteFondoIzq;// = controladorJson->anchoVentana() * 1/8;
 		int limiteFondoDer;// = controladorJson->anchoVentana() * 15/16;
-		int altura_piso = 80;
+		int altura_piso = 60;
 
 };
 

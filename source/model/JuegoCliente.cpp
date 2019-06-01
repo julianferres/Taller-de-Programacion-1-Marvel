@@ -59,11 +59,6 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 	if(nombre=="Titulo" ||nombre=="SubTitulo" || nombre=="Eleccion")
 		SDL_QueryTexture(getTextura(nombre), NULL, NULL,&w , &h);
 
-	if(posiciones[4]==-1){
-		this->grafico->dibujarImagen(getTextura(nombre),&origen, NULL, flip);
-		return;
-	}
-
 	destino.x = posiciones[4]-(w/2);
 	destino.y = posiciones[5];
 	destino.w = posiciones[6]+w;

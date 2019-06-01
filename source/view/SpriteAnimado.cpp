@@ -30,7 +30,7 @@ string SpriteAnimado::getNombre(){
 
 void SpriteAnimado::cargarAnimaciones(string nombre){
 	if(nombre == "CapitanAmerica" ){
-		Animacion *quieto = new Animacion("quieto",9,0,16,100,120,6);
+		Animacion *quieto = new Animacion("quieto",9,11,16,100,120,6);
 		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,4);
 		Animacion *salto = new Animacion("salto",8,0,590,125,140,7);
@@ -93,12 +93,12 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 
 	}
 	else if(nombre=="Hulk" ){
-		Animacion *quieto = new Animacion("quieto",8,0,0,170,129,10);
+		Animacion *quieto = new Animacion("quieto",8,0,0,170,130,10);
 		Animacion *moverDerecha = new Animacion("movDerecha",16,0,130,170,150,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",16,0,130,170,150,4);
 		Animacion *salto = new Animacion("salto",10,0,580,170,215,6);
-		Animacion *agacharse = new Animacion("agacharse",5,0,445,170,123,4);
-		Animacion *cambioEntrada = new Animacion("cambioEntrada",8,0,1112,170,248,3);
+		Animacion *agacharse = new Animacion("agacharse",5,0,450,170,123,4);
+		Animacion *cambioEntrada = new Animacion("cambioEntrada",8,0,1119,170,248,3);
 		animaciones.push_back(quieto);
 		animaciones.push_back(moverDerecha);
 		animaciones.push_back(moverIzquierda);
@@ -232,7 +232,6 @@ int SpriteAnimado::getFrameIndex(){
 SDL_Rect SpriteAnimado::rectOrigen(){
 	return animacionActual->getRectOrigen(this->frameIndex);
 }
-
 
 void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho, SDL_RendererFlip flip){
 
