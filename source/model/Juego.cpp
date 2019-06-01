@@ -95,19 +95,6 @@ void Juego::crearEquipos(){
 	this->jugadorActualEquipo2 = equipo2->JugadorActual();
 }
 
-void Juego::gameLoop(){
-	this->isRunning=true;
-	while (isRunning){
-		this->startTime = SDL_GetTicks();
-		this->dibujar();
-		if(SDL_GetTicks() - startTime < MAX_FRAME_TIME)
-			SDL_Delay( MAX_FRAME_TIME - SDL_GetTicks() +startTime );
-
-	}
-}
-
-
-
 bool Juego::compare_zindexs(std::tuple<Jugador *, int> zindex1, std::tuple<Jugador *, int> zindex2){
 		return (std::get<1>(zindex1) <= std::get<1>(zindex2));
 }
@@ -124,11 +111,11 @@ std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
 }
 
 
-std::vector<std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
+vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 	SDL_RendererFlip flip ;
-	std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip >> dibujables;
-	std::vector<std::tuple<Jugador *, int>> zindexs_personajes = obtenerOrdenDibujo();
-	std::vector<int>zindexes = controladorJson->getZindexes();
+	vector<tuple<string,SDL_Rect , SDL_Rect,SDL_RendererFlip >> dibujables;
+	vector<tuple<Jugador *, int>> zindexs_personajes = obtenerOrdenDibujo();
+	vector<int>zindexes = controladorJson->getZindexes();
 	this->verificarCambioDeLado();
 	int fondos_dibujados = 0;
 	int personajes_dibujados = 0;
@@ -142,7 +129,7 @@ std::vector<std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego:
 			origen = jugador->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
 			destino = jugador->devolverPersonajeActual()->obtenerRectangulo();
 			flip = jugador->getFlip();
-			dibujables.push_back(std::make_tuple(jugador->nombreJugador(),origen,destino,flip));
+			dibujables.push_back(make_tuple(jugador->nombreJugador(),origen,destino,flip));
 			personajes_dibujados++;
 		}
 		else{
@@ -150,16 +137,18 @@ std::vector<std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego:
 			destino ={-1,-1,-1,-1};
 			if(fondos_dibujados == 0 ){
 				SDL_Rect* origen = parallax->camaraz1();
-				dibujables.push_back(std::make_tuple(std::to_string(zindexes[2]),*origen,destino,flip));
+				SDL_Rect* destinoz1 = parallax->getDestinoZ1();
+				dibujables.push_back(make_tuple(to_string(zindexes[2]),*origen,*destinoz1,flip));
 			}
 			else if(fondos_dibujados == 1 ){
 				SDL_Rect *origen = parallax->camaraz2();
-				dibujables.push_back(std::make_tuple(std::to_string(zindexes[1]),*origen,destino,flip));
+				SDL_Rect* destinoz2 = parallax->getDestinoZ2();
+				dibujables.push_back(make_tuple(to_string(zindexes[1]),*origen,*destinoz2,flip));
 			}
 			else if(fondos_dibujados == 2 ){
-
 				SDL_Rect *origen = parallax->camaraz3();
-				dibujables.push_back(std::make_tuple(std::to_string(zindexes[0]),*origen,destino,flip));
+				SDL_Rect* destinoz3 = parallax->getDestinoZ3();
+				dibujables.push_back(make_tuple(to_string(zindexes[0]),*origen,*destinoz3,flip));
 			}
 			fondos_dibujados++;
 		}

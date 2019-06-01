@@ -25,8 +25,6 @@ class Juego{
 
 		Juego();
 		~Juego();
-		bool running() {return isRunning;}
-		void gameLoop();
 		std::vector<std::string> gameMenu();
 		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujar();
 		void teclear(SDL_Event evento,int tipoTeclado);

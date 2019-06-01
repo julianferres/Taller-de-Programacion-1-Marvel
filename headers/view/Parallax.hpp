@@ -21,8 +21,9 @@ class Parallax{
 		SDL_Rect *camaraz1();
 		SDL_Rect *camaraz2();
 		SDL_Rect *camaraz3();
-
-
+		SDL_Rect *getDestinoZ1();
+		SDL_Rect *getDestinoZ2();
+		SDL_Rect *getDestinoZ3();
 
 	private:
 
@@ -37,7 +38,9 @@ class Parallax{
 		SDL_Rect camera_z1;
 		SDL_Rect camera_z2;
 		SDL_Rect camera_z3;
-
+		SDL_Rect destinoZ1 = {0,0,W,H};
+		SDL_Rect destinoZ2 = {0,0,W,H};
+		SDL_Rect destinoZ3 = {0,H-600,W,600};
 
 };
 

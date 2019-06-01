@@ -31,7 +31,6 @@ Parallax::~Parallax(){
 
 }
 
-
 void Parallax::iniciarCamaras(){
 
 		camera_z1.x = fondo1_w/2 - W/2;
@@ -126,5 +125,15 @@ SDL_Rect *Parallax::camaraz3(){
 	return &camera_z3;
 }
 
+SDL_Rect *Parallax::getDestinoZ1(){
+	return &destinoZ1;
+}
 
+SDL_Rect *Parallax::getDestinoZ2(){
+	return &destinoZ2;
+}
+
+SDL_Rect *Parallax::getDestinoZ3(){
+	return &destinoZ3;
+}
 
