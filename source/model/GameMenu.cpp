@@ -59,7 +59,7 @@ void GameMenu::crearBotones(){
 }
 
 void GameMenu::crearBotonParaPersonaje(int i){
-	Boton *boton = new Boton(((250* this->ancho_ventana) / this->ancho_maximo_ventana)*(i+1), (400 * this->alto_ventana) / this->alto_maximo_ventana , (200 * this->ancho_ventana) / this->ancho_maximo_ventana, (200 * this->alto_ventana) / this->alto_maximo_ventana, controladorJson->nombrePersonajeI(i)+"Boton");
+	Boton *boton = new Boton(((250* this->ancho_ventana) / this->ancho_maximo_ventana)*(i+1), (425 * this->alto_ventana) / this->alto_maximo_ventana , (200 * this->ancho_ventana) / this->ancho_maximo_ventana, (200 * this->alto_ventana) / this->alto_maximo_ventana, controladorJson->nombrePersonajeI(i)+"Boton");
 	this->botones.push_back(boton);
 }
 
