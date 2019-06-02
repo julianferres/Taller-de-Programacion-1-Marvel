@@ -54,8 +54,13 @@ void Personaje::cambiarAnimacion(string nombre){
 
 bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
-	if(!saltando)
-		this->spriteAnimado->iniciarAnimacion("movDerecha");
+	if(!saltando){
+		if(flip==0)
+			this->spriteAnimado->iniciarAnimacion("movDerecha");
+		else
+			this->spriteAnimado->iniciarAnimacion("movIzquierda");
+	}
+
 	if(posx + ancho > (controladorJson-> getLimiteFondoDer())){
 		if (rect_enemigo.x > (controladorJson->getLimiteFondoIzq()) && !finEscenarioDerecha){
 			enemigo->correrAIzquierda();
@@ -72,8 +77,12 @@ bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 
 bool Personaje::moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
-	if(!saltando)
-		this->spriteAnimado->iniciarAnimacion("movIzquierda");
+	if(!saltando){
+			if(flip==0)
+				this->spriteAnimado->iniciarAnimacion("movIzquierda");
+			else
+				this->spriteAnimado->iniciarAnimacion("movDerecha");
+		}
 	if(posx  < controladorJson->getLimiteFondoIzq()){
 		if (rect_enemigo.x + rect_enemigo.w < controladorJson->getLimiteFondoDer() && !finEscenarioIzquierda){
 			enemigo->correrADerecha();
