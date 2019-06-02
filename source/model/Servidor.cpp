@@ -40,6 +40,7 @@ struct infoServidor {
 
 void Servidor::esperarClientes(){
 	controladorLogger->registrarEvento("DEBUG", "Servidor:: Esperando Jugadores. Actualmente hay: " + to_string(clientesConectados.size()) + "/" + to_string(this->cantidadClientesPermitidos));
+	cout<< "Esperando a otros jugadores..." << endl;
 	while (this->clientesConectados.size() < this->cantidadClientesPermitidos){
 
 	}

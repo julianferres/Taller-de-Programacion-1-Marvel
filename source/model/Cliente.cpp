@@ -70,6 +70,7 @@ void Cliente::cargarContenidos(){
 		const string &filePath = controladorJson->pathFondo(fondos[i]);
 		personajesYfondos.push_back(make_tuple(to_string(fondos[i]),filePath));
 	}
+	personajesYfondos.push_back(make_tuple(string("Fondo"), string("contents/images/fondo.png")));
 }
 
 void Cliente::iniciarConexion(char* direccionIP,int puerto){

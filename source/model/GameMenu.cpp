@@ -123,7 +123,9 @@ map<int, string> GameMenu::getPersonajesElegidos(){
 
 vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >> GameMenu::getDibujables(){
 	vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >> dibujables;
-
+	SDL_Rect org = {0,0,1920, 1788};
+	SDL_Rect dest = {0,0,this->ancho_ventana, this->alto_ventana};
+	dibujables.push_back(make_tuple(string("Fondo"), org , dest, SDL_FLIP_NONE));
 	SDL_Rect origen = {-1,-1,-1,-1};
 	SDL_Rect destino = { this->ancho_ventana/2,(10 * this->alto_ventana) / this->alto_maximo_ventana,0,0};
 	dibujables.push_back(make_tuple(string("Titulo"),origen,destino,SDL_FLIP_NONE));
