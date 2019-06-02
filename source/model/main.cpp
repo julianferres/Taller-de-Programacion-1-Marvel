@@ -1,4 +1,3 @@
-#include <Juego.hpp>
 #include <string>
 #include <ControladorJson.hpp>
 #include <ControladorLogger.hpp>

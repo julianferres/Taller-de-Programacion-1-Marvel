@@ -122,13 +122,11 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 	get<0>(zindexs_personajes[0])->devolverPersonajeActual()->actualizar();
 	get<0>(zindexs_personajes[1])->devolverPersonajeActual()->actualizar();
 	while(fondos_dibujados + personajes_dibujados < 5){
-		SDL_Rect origen;
-		SDL_Rect destino;
 		if(fondos_dibujados == 3 || get<1>(zindexs_personajes[personajes_dibujados]) <= zindexes[fondos_dibujados]){
 			Jugador * jugador = get<0>(zindexs_personajes[personajes_dibujados]);
-			origen = jugador->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
-			destino = jugador->devolverPersonajeActual()->obtenerRectangulo();
-			flip = jugador->getFlip();
+			SDL_Rect origen = jugador->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
+			SDL_Rect destino = jugador->devolverPersonajeActual()->obtenerRectangulo();
+			flip =  jugador->devolverPersonajeActual()->getFlip();
 			dibujables.push_back(make_tuple(jugador->nombreJugador(),origen,destino,flip));
 			personajes_dibujados++;
 		}
@@ -290,9 +288,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		 //cliente->graficos()->cambiarPantallaCompleta();
 		 controladorLogger->registrarEvento("DEBUG", "Se cambia a pantalla completa");
 	 }
-	 if(teclado->sePresionoUnaTecla(SDL_SCANCODE_ESCAPE)){
-		 isRunning=false;
-	 }
+
 }
 
 std::vector<std::string> Juego::gameMenu(){

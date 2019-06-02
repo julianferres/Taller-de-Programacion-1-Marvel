@@ -70,10 +70,6 @@ bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	return false;
 }
 
-int Personaje::getFrameIndex(){
-	return this->spriteAnimado->getFrameIndex();
-}
-
 bool Personaje::moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando)
@@ -142,11 +138,11 @@ void Personaje::saltar(){
 }
 
 void Personaje::Flip(){
-	if (this->flip == 0){
+	if (this->flip == 0)
 		this->flip = SDL_FLIP_HORIZONTAL;
-	}else{
+	else
 		this->flip = SDL_FLIP_NONE;
-	}
+
 }
 
 SDL_RendererFlip Personaje::getFlip(){

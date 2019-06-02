@@ -41,6 +41,9 @@ class Parallax{
 		SDL_Rect destinoZ1 = {0,0,W,H};
 		SDL_Rect destinoZ2 = {0,H-605,W,605};
 		SDL_Rect destinoZ3 = {0,H-500,W,500};
+		SDL_Surface *background_z1;
+		SDL_Surface *background_z2;
+		SDL_Surface *background_z3;
 
 };
 

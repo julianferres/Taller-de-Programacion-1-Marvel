@@ -32,10 +32,6 @@ float Jugador::posicionActual(){
 	return this->personaje->getPosX();
 }
 
-SDL_RendererFlip Jugador::getFlip(){
-	return this->personaje->getFlip();
-}
-
 bool Jugador::estaDelladoDerecho(){
 	return this->ladoDerecho;
 }

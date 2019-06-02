@@ -17,7 +17,6 @@ class Personaje{
 
 		Personaje( std::string nombre, int posicionXinicial, SDL_RendererFlip flip);
 		~Personaje();
-		int getFrameIndex();
 		int zindexPersonaje();
 		void actualizar();
 		bool moverDerecha(Personaje *enemigo, bool finEscenarioDerecha);

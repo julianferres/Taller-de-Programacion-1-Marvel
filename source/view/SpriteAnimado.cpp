@@ -12,7 +12,6 @@ SpriteAnimado::~SpriteAnimado(){
 		if(animaciones[i]) delete animaciones[i];
 
 	animaciones.clear();
-	SDL_FreeSurface(surface);
 }
 
 SpriteAnimado::SpriteAnimado(string nombre){
@@ -231,12 +230,4 @@ int SpriteAnimado::getFrameIndex(){
 
 SDL_Rect SpriteAnimado::rectOrigen(){
 	return animacionActual->getRectOrigen(this->frameIndex);
-}
-
-void SpriteAnimado::dibujar(ControladorGrafico &graficos, int x, int y,int alto, int ancho, SDL_RendererFlip flip){
-
-	SDL_Rect sourceRect = animacionActual->getRectOrigen(this->frameIndex);
-	SDL_Rect rectanguloDestino={x, y, ancho,alto};
-	graficos.dibujarImagen(this->spriteSheet, &sourceRect, &rectanguloDestino, flip);
-
 }

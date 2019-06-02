@@ -16,9 +16,9 @@ Parallax::Parallax(){
 			fondos.push_back(fondo);
 		}
 	}
-	SDL_Surface *background_z1 = IMG_Load(fondos[0].c_str());
-	SDL_Surface *background_z2 = IMG_Load(fondos[1].c_str());
-	SDL_Surface *background_z3 = IMG_Load(fondos[2].c_str());
+	background_z1 = IMG_Load(fondos[0].c_str());
+	background_z2 = IMG_Load(fondos[1].c_str());
+	background_z3 = IMG_Load(fondos[2].c_str());
 	fondo1_w = background_z1->w;
 	fondo2_w = background_z2->w;
 	fondo3_w = background_z3->w;
@@ -28,7 +28,9 @@ Parallax::Parallax(){
 }
 
 Parallax::~Parallax(){
-
+	SDL_FreeSurface(background_z1);
+	SDL_FreeSurface(background_z2);
+	SDL_FreeSurface(background_z3);
 }
 
 void Parallax::iniciarCamaras(){
@@ -56,57 +58,41 @@ void Parallax::iniciarCamaras(){
 }
 
 void Parallax::moverCamaraDerecha(){
-	if(finDeEscenarioDerecha() ){
+	if(finDeEscenarioDerecha() )
 		return;
-	}
 
-		camera_z1.x += SPEED_z1;
-
-		camera_z2.x += SPEED_z2;
-
-		camera_z3.x += SPEED_z3;
+	camera_z1.x += SPEED_z1;
+	camera_z2.x += SPEED_z2;
+	camera_z3.x += SPEED_z3;
 
 }
 
 
 void Parallax::moverCamaraIzquierda(){
-	if(finDeEscenarioIzquierda()){
+	if(finDeEscenarioIzquierda())
 		return;
-	}
 
-		camera_z1.x -= SPEED_z1;
-
-
-		camera_z2.x -= SPEED_z2;
-
-
-		camera_z3.x -= SPEED_z3;
+	camera_z1.x -= SPEED_z1;
+	camera_z2.x -= SPEED_z2;
+	camera_z3.x -= SPEED_z3;
 
 }
 
 bool Parallax::finDeEscenarioIzquierda(){
 	bool finEscenario = false;
 
-		finEscenario = finEscenario || camera_z1.x <= 0;
+	finEscenario = finEscenario || camera_z1.x <= 0;
+	finEscenario = finEscenario || camera_z2.x <= 0;
+	finEscenario = finEscenario || camera_z3.x <= 0;
 
-
-		finEscenario = finEscenario || camera_z2.x <= 0;
-
-
-		finEscenario = finEscenario || camera_z3.x <= 0;
-
-	return finEscenario;//camera_z1.x <= 0 || camera_z2.x <= 0 || camera_z3.x <= 0;
+	return finEscenario;
 }
 
 bool Parallax::finDeEscenarioDerecha(){
 	bool finEscenario = false;
 
 	finEscenario = finEscenario || camera_z1.x >= fondo1_w - W;
-
-
 	finEscenario = finEscenario || camera_z2.x >= fondo2_w - W ;
-
-
 	finEscenario = finEscenario || camera_z3.x >= fondo3_w - W;
 
 	return finEscenario;

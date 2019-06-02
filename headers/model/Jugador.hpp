@@ -19,7 +19,6 @@ class Jugador{
 		void actualizarPiso();
 		float posicionActual();
 		bool estaDelladoDerecho();
-		SDL_RendererFlip getFlip();
 		std::string nombreJugador();
 		Personaje * devolverPersonajeActual();
 		int obtenerId();
