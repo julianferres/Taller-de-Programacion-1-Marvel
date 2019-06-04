@@ -58,6 +58,8 @@ Cliente::Cliente( char * direccionIP,int puerto){
 
 
 void Cliente::cargarContenidos(){
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	juegoCliente->correrCancion("contents/sounds/Menu/menu.mp3");
 	vector<string> personajes = controladorJson->getNombresPersonajes();
 	for(size_t i=0;i<personajes.size();i++){
 		const string &filePath = controladorJson->pathImagen(personajes[i]);
@@ -152,6 +154,7 @@ void Cliente::recibirParaDibujar(){
 		conectado = true;
 		if(size==-1){
 			enMenu=false;
+			juegoCliente->detenerCancion();
 			continue;
 		}
 		juegoCliente->graficos()->limpiar();
@@ -185,14 +188,14 @@ void Cliente::enviarEventos(int socket){
 			}
 			if(enMenu){
 				if(evento.type==SDL_MOUSEBUTTONDOWN||evento.type==SDL_MOUSEBUTTONUP
-					||evento.type== SDL_MOUSEMOTION)
+					||evento.type== SDL_MOUSEMOTION )
 					send(socket,&evento,sizeof(evento),0);
 			}
 			else{
 				if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP )
 					send(socket,&evento,sizeof(evento),0);
 			}
-
+			juegoCliente->handleEvents(evento);
 		}
 	}
 }
