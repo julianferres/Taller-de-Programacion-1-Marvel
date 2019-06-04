@@ -28,6 +28,7 @@ class Personaje{
 		void correrAIzquierda();
 		void saltar();
 		void cambio();
+		void golpe(string tipoDeGolpe);
 		void agacharse();
 		void cambiarAnimacion(string nombre);
 		void Flip();
