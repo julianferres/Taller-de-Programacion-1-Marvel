@@ -64,6 +64,8 @@ void Cliente::cargarContenidos(){
 		personajesYfondos.push_back(make_tuple(personajes[i],filePath));
 		const string &buttonPath = controladorJson->pathBoton((personajes[i]));
 		personajesYfondos.push_back(make_tuple(personajes[i]+"Boton",buttonPath));
+		personajesYfondos.push_back(make_tuple(personajes[i]+"-lb", "contents/images/"+personajes[i]+"-lb.png"));
+
 	}
 	vector<int> fondos = controladorJson->getZindexes();
 	for(size_t i=0;i<fondos.size();i++){

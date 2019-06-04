@@ -21,12 +21,15 @@ public:
 	void cargarTexturas(vector<tuple<string, const string>> nombresYpaths);
 	void cargarTitulosMenu(vector<tuple<string,string,int,string,int ,int ,int >>titulos);
 	void dibujar(std::string nombre,int posiciones[8],SDL_RendererFlip flip);
+	void dibujarLifeBar();
 
 private:
 	ControladorGrafico *grafico;
 	Texturas *texturas;
 	SDL_Rect origen;
 	SDL_Rect destino;
+	int anchoVentana;
+	int altoVentana;
 
 };
 

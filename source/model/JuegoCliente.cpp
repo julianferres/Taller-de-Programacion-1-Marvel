@@ -6,6 +6,7 @@
 #include<iostream>
 
 using namespace std;
+extern ControladorJson *controladorJson;
 
 JuegoCliente::JuegoCliente(){
 	SDL_Init(0);
@@ -42,6 +43,8 @@ void JuegoCliente::cargarTitulosMenu(vector<tuple<string,string,int,string,int ,
 
 void JuegoCliente::iniciarGraficos(int idCliente){
 	this->grafico = new ControladorGrafico(idCliente);
+	this->anchoVentana = controladorJson->anchoVentana();
+	this->altoVentana = controladorJson->alturaVentana();
 }
 
 SDL_Texture * JuegoCliente::getTextura(string nombre){
@@ -66,8 +69,24 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 
 	if(posiciones[0]==-1)
 		this->grafico->dibujarImagen(getTextura(nombre),NULL, &destino, flip);
-	else
+	else{
 		this->grafico->dibujarImagen(getTextura(nombre),&origen, &destino, flip);
+		if(nombre.compare("Venom") == 0 || nombre.compare("Spiderman") == 0){
+			destino.w = this->anchoVentana / 4;
+			destino.h = 100;
+			destino.x = this->anchoVentana - destino.w - 10;
+			destino.y = 10;
+
+			this->grafico->dibujarImagen(getTextura(nombre + "-lb"), NULL,&destino, SDL_FLIP_NONE);
+		}
+		else{
+			destino.x = 10;
+			destino.y = 10;
+			destino.w = this->anchoVentana / 4;
+			destino.h = 100;
+			this->grafico->dibujarImagen(getTextura(nombre + "-lb"), NULL,&destino, SDL_FLIP_HORIZONTAL);
+		}
+	}
 
 
 }
