@@ -302,9 +302,9 @@ void Servidor::recibirTeclas(int csocket){
 	while(true){
 		int numBytes = recv(csocket,&evento,sizeof(evento),MSG_WAITALL);
 		if(numBytes==0){
-			if(!enMenu)
+			if(!enMenu && conectados[csocket])
 				juego->actualizarConexion(idCliente);
-			cout<<"Se desconecto el cliente "+to_string(idCliente)<<endl;
+			cout<<"El cliente "+to_string(idCliente) +"ha cerrado la conexion."<<endl;
 			controladorLogger->registrarEvento("INFO", "Servidor::Se desconecto el cliente "+to_string(idCliente));
 			conectados[csocket] =false;
 			return;
