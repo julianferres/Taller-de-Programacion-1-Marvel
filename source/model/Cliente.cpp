@@ -35,13 +35,18 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	args->ssocket=numeroSocket;
 	juegoCliente->cargarTexturas(personajesYfondos);
 	this->recibirTitulos();
-	juegoCliente->correrCancion("contents/sounds/Announcer voice/seleheroes.wav", 1);
+
 	pthread_t thread_enviar,thread_sonidos;
 	pthread_create( &thread_enviar , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
+	pthread_create( &thread_sonidos , NULL , &Cliente::sonidosWrapper ,(void*)args);
+
 	recibirParaDibujar();
+
 	pthread_join(thread_enviar, NULL);
+	pthread_join(thread_sonidos, NULL);
 	cout<<"Conexion finalizada."<<endl;
 	controladorLogger->registrarEvento("INFO", "Cliente::Conexion finalizada.");
+	free(args);
 	delete juegoCliente;
 	close(numeroSocket);
 }
@@ -145,8 +150,6 @@ void Cliente::recibirParaDibujar(){
 		if(size==-1){
 			enMenu=false;
 			juegoCliente->detenerCancion();
-			juegoCliente->correrCancion("contents/sounds/Announcer voice/ready1.wav", 1);
-			juegoCliente->correrCancion("contents/sounds/Announcer voice/engage.wav", 1);
 			continue;
 		}
 		juegoCliente->graficos()->limpiar();
@@ -167,7 +170,19 @@ void *Cliente::enviarEventosWrapper(void* arg){
 	return NULL;
 }
 
+void *Cliente::sonidosWrapper(void* arg){
+	iCliente* argumentos = (iCliente*) arg;
+	((Cliente *)argumentos->cliente)->manejarSonidos();
+	return NULL;
+}
 
+void Cliente::manejarSonidos(){
+	juegoCliente->correrCancion("contents/sounds/Announcer voice/seleheroes.wav", 1);
+	while(enMenu){}
+	juegoCliente->correrCancion("contents/sounds/Announcer voice/ready1.wav", 1);
+	juegoCliente->correrCancion("contents/sounds/Announcer voice/engage.wav", 1);
+	while(running){}
+}
 
 void Cliente::enviarEventos(int socket){
 	SDL_Event evento;

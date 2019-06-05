@@ -22,8 +22,8 @@ void ControladorSonido::correrCancion(const char* nombre,int repeticiones){
 	}
 	else{
 		Mix_Chunk *junk = Mix_LoadWAV(nombre);
-		if(!Mix_Playing(-1))
-			Mix_PlayChannel(-1,junk,0);
+		while(Mix_Playing(-1)){}
+		Mix_PlayChannel(-1,junk,0);
 	}
 
 }
