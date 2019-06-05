@@ -109,7 +109,17 @@ void Personaje::correrADerecha(){
 	this->posx=this->posx+velocidad;
 }
 void Personaje::golpe(string tipoDeGolpe){
-	this->spriteAnimado->iniciarAnimacion(tipoDeGolpe);
+	if(saltando){
+		if(tipoDeGolpe=="golpeS"){
+			this->spriteAnimado->iniciarAnimacion("golpeSS");
+		}
+		else{
+			this->spriteAnimado->iniciarAnimacion("patadaSS");
+		}
+	}
+	else{
+			this->spriteAnimado->iniciarAnimacion(tipoDeGolpe);
+	}
 }
 
 void Personaje::agacharse(){

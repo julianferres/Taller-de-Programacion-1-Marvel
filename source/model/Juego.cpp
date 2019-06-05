@@ -242,6 +242,12 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				personaje1->agacharse();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
 			}
+			if (teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)&&teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_J)){
+				personaje1->golpe("golpeAS");
+			}
+			if (teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)&&teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_K)){
+				personaje1->golpe("patadaAS");
+			}
 			if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A) ){
 					personaje1->cambiarAnimacion("quieto");
 			}

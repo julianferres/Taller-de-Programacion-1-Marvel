@@ -90,12 +90,12 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *salto = new Animacion("salto",11,0,688,225,172,6);
 		Animacion *agacharse = new Animacion("agacharse",10,0,516,225,172,2);
 		Animacion *cambioEntrada = new Animacion("cambioEntrada",11,0,860,225,172,2);
-		Animacion *golpeS=new Animacion("golpeS",3,0,172,225,172,6);//golpe simple
-		Animacion *patadaS=new Animacion("patadaS",3,0,1376,225,172,6);//patada simple
-		Animacion *golpeAS=new Animacion("golpeAS",3,0,1032,225,172,2);//golpe agachado simple
-		Animacion *patadaAS=new Animacion("patadaAS",4,0,1548,225,172,2);//patada agachado simple
-		Animacion *golpeSS=new Animacion("golpeSS",3,0,1204,225,172,2);//golpe saltando simple
-		Animacion *patadaSS=new Animacion("patadaSS",4,0,1720,225,172,2);//patada saltando simple
+		Animacion *golpeS=new Animacion("golpeS",3,0,172,225,172,8);//golpe simple
+		Animacion *patadaS=new Animacion("patadaS",3,0,1376,225,172,8);//patada simple
+		Animacion *golpeAS=new Animacion("golpeAS",3,0,1032,225,172,8);//golpe agachado simple
+		Animacion *patadaAS=new Animacion("patadaAS",4,0,1548,225,172,6);//patada agachado simple
+		Animacion *golpeSS=new Animacion("golpeSS",9,0,1204,225,172,6);//golpe saltando simple
+		Animacion *patadaSS=new Animacion("patadaSS",9,0,1720,225,172,6);//patada saltando simple
 		animaciones.push_back(golpeS);
 		animaciones.push_back(patadaS);
 		animaciones.push_back(golpeAS);

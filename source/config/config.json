@@ -34,7 +34,7 @@
             },
 	    {"name":"Venom",
             "filepath":"contents/images/Venom.png",
-            "height":340,
+            "height":320,
             "width":220,
             "zindex":99,
 			"buttonpath": "contents/images/BotonVenom.png"  
