@@ -20,8 +20,10 @@ public:
 	void cargarTitulosMenu(vector<tuple<string,string,int,string,int ,int ,int >>titulos);
 	void dibujar(std::string nombre,int posiciones[8],SDL_RendererFlip flip);
 	void handleEvents(SDL_Event evento);
-	void correrCancion(const char* nombre,int repeticiones);
+	void correrSonido(const char* nombre);
+	void correrCancionFondo(const char* nombre,int repeticiones);
 	void detenerCancion();
+	void finalizarCancion();
 
 private:
 	ControladorGrafico *grafico;

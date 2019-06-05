@@ -10,8 +10,10 @@ class ControladorSonido{
 public:
 	ControladorSonido();
 	~ControladorSonido();
-	void correrCancion(const char* nombre,int repeticiones);
+	void correrSonido(const char* nombre);
+	void correrCancionFondo(const char* nombre,int repeticiones);
 	void detenerCancion();
+	void finalizarCancion();
 
 };
 

@@ -53,7 +53,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 
 
 void Cliente::cargarContenidos(){
-	juegoCliente->correrCancion("contents/sounds/Menu/menu.mp3",-1);
+	juegoCliente->correrCancionFondo("contents/sounds/Menu/menu.mp3",-1);
 	vector<string> personajes = controladorJson->getNombresPersonajes();
 	for(size_t i=0;i<personajes.size();i++){
 		const string &filePath = controladorJson->pathImagen(personajes[i]);
@@ -149,7 +149,6 @@ void Cliente::recibirParaDibujar(){
 		conectado = true;
 		if(size==-1){
 			enMenu=false;
-			juegoCliente->detenerCancion();
 			continue;
 		}
 		juegoCliente->graficos()->limpiar();
@@ -177,11 +176,22 @@ void *Cliente::sonidosWrapper(void* arg){
 }
 
 void Cliente::manejarSonidos(){
-	juegoCliente->correrCancion("contents/sounds/Announcer voice/seleheroes.wav", 1);
+	vector<const char* > songs;
+	songs.push_back("contents/sounds/Announcer voice/seleheroes.wav");
+	songs.push_back("contents/sounds/Announcer voice/ready1.wav");
+	songs.push_back("contents/sounds/Announcer voice/engage.wav");
+	songs.push_back("contents/sounds/Battle/Captain America Theme.mp3");
+	songs.push_back("contents/sounds/Battle/Hulk Theme.mp3");
+	songs.push_back("contents/sounds/Battle/Spider Mans Theme.mp3");
+	juegoCliente->correrSonido(songs[0]);
 	while(enMenu){}
-	juegoCliente->correrCancion("contents/sounds/Announcer voice/ready1.wav", 1);
-	juegoCliente->correrCancion("contents/sounds/Announcer voice/engage.wav", 1);
-	while(running){}
+	juegoCliente->finalizarCancion();
+	juegoCliente->correrSonido(songs[1]);
+	juegoCliente->correrSonido(songs[2]);
+	while(running){
+		int random = rand()%3 +3;
+		juegoCliente->correrCancionFondo(songs[random], 1);
+	}
 }
 
 void Cliente::enviarEventos(int socket){

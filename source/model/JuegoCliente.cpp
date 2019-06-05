@@ -59,12 +59,20 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 
 }
 
-void JuegoCliente::correrCancion(const char* nombre,int repeticiones){
-	this->sonido->correrCancion(nombre,repeticiones);
+void JuegoCliente::correrSonido(const char* nombre){
+	this->sonido->correrSonido(nombre);
+}
+
+void JuegoCliente::correrCancionFondo(const char* nombre,int repeticiones){
+	this->sonido->correrCancionFondo(nombre,repeticiones);
 }
 
 void JuegoCliente::detenerCancion(){
 	this->sonido->detenerCancion();
+}
+
+void JuegoCliente::finalizarCancion(){
+	this->sonido->finalizarCancion();
 }
 
 
@@ -73,7 +81,6 @@ void JuegoCliente::handleEvents(SDL_Event evento){
 	if(evento.type == SDL_KEYDOWN && evento.key.keysym.sym == SDLK_p)
 			this->sonido->detenerCancion();
 
-
-	if(evento.key.keysym.sym == SDLK_F11)
+	else if(evento.key.keysym.sym == SDLK_F11)
 		grafico->cambiarPantallaCompleta();
 }
