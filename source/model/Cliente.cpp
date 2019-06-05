@@ -156,9 +156,30 @@ void Cliente::recibirParaDibujar(){
 		}
 		juegoCliente->graficos()->limpiar();
 		for(int i=0;i<size;i++){
-			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
-			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
-			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
+			recibido =recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
+			if(recibido<0){
+				if(conectado)
+					cout<<"Conexion perdida con el servidor."<<endl;
+				cout<<"Intentando reconectar con el servidor..."<<endl;
+				conectado = false;
+				break;
+			}
+			recibido = recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
+			if(recibido<0){
+						if(conectado)
+							cout<<"Conexion perdida con el servidor."<<endl;
+						cout<<"Intentando reconectar con el servidor..."<<endl;
+						conectado = false;
+						break;
+					}
+			recibido = recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
+			if(recibido<0){
+						if(conectado)
+							cout<<"Conexion perdida con el servidor."<<endl;
+						cout<<"Intentando reconectar con el servidor..."<<endl;
+						conectado = false;
+						break;
+					}
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
 		juegoCliente->graficos()->render();

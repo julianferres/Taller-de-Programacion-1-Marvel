@@ -81,9 +81,9 @@ void Parallax::moverCamaraIzquierda(){
 bool Parallax::finDeEscenarioIzquierda(){
 	bool finEscenario = false;
 
-	finEscenario = finEscenario || camera_z1.x <= 0;
-	finEscenario = finEscenario || camera_z2.x <= 0;
-	finEscenario = finEscenario || camera_z3.x <= 0;
+	finEscenario = finEscenario || camera_z1.x <= 10;
+	finEscenario = finEscenario || camera_z2.x <= 10;
+	finEscenario = finEscenario || camera_z3.x <= 10;
 
 	return finEscenario;
 }
