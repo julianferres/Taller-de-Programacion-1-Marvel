@@ -1,13 +1,4 @@
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <netdb.h>
-#include <strings.h>
 #include <Cliente.hpp>
-#include <string>
-#include <tuple>
 
 using namespace std;
 
@@ -29,7 +20,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 		close(numeroSocket);
 		return;
 	}
-	if(idCliente==0){
+	if(idCliente==0){//el server nunca se levanto
 		cout<<"Servidor no encontrado."<<endl;
 		close(numeroSocket);
 		return;
@@ -39,17 +30,16 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	setsockopt(numeroSocket, SOL_SOCKET, SO_RCVTIMEO, (struct timeval *)&tv, sizeof(struct timeval));
 	iCliente* args = (iCliente*) malloc(sizeof(infoCliente));
 	args->cliente=this;
-	juegoCliente = new JuegoCliente();
-	juegoCliente->iniciarGraficos(idCliente);
+	juegoCliente = new JuegoCliente(idCliente);
 	this->cargarContenidos();
 	args->ssocket=numeroSocket;
 	juegoCliente->cargarTexturas(personajesYfondos);
 	this->recibirTitulos();
-
-	pthread_t thread_id;
-	pthread_create( &thread_id , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
+	juegoCliente->correrCancion("contents/sounds/Announcer voice/seleheroes.wav", 1);
+	pthread_t thread_enviar,thread_sonidos;
+	pthread_create( &thread_enviar , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
 	recibirParaDibujar();
-	pthread_join(thread_id, NULL);
+	pthread_join(thread_enviar, NULL);
 	cout<<"Conexion finalizada."<<endl;
 	controladorLogger->registrarEvento("INFO", "Cliente::Conexion finalizada.");
 	delete juegoCliente;
@@ -58,8 +48,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 
 
 void Cliente::cargarContenidos(){
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-	juegoCliente->correrCancion("contents/sounds/Menu/menu.mp3");
+	juegoCliente->correrCancion("contents/sounds/Menu/menu.mp3",-1);
 	vector<string> personajes = controladorJson->getNombresPersonajes();
 	for(size_t i=0;i<personajes.size();i++){
 		const string &filePath = controladorJson->pathImagen(personajes[i]);
@@ -103,7 +92,7 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 void Cliente::partidallena(){
 	bool close=false;
 	SDL_Event eventoLLeno;
-	SDL_Init( SDL_INIT_VIDEO );
+	SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO );
 	SDL_Window* ventana;
 	SDL_Renderer* rendererizar;
 	SDL_CreateWindowAndRenderer(800,600, false, &ventana, &rendererizar);
@@ -112,19 +101,20 @@ void Cliente::partidallena(){
 	SDL_Texture * texture = SDL_CreateTextureFromSurface(rendererizar, fondo);
 	while (!close){
 		SDL_WaitEvent(&eventoLLeno);
-		switch (eventoLLeno.type)
-		{
-		case SDL_QUIT:
+		switch (eventoLLeno.type){
+			case SDL_QUIT:
 			close = true;
 			break;
 		}
 		SDL_RenderCopy(rendererizar, texture, NULL, NULL);
 		SDL_RenderPresent(rendererizar);
-		}
+	}
 	SDL_DestroyTexture(texture);
 	SDL_FreeSurface(fondo);
 	SDL_DestroyRenderer(rendererizar);
 	SDL_DestroyWindow(ventana);
+	SDL_VideoQuit();
+	SDL_Quit();
 }
 
 void Cliente::recibirParaDibujar(){
@@ -155,6 +145,8 @@ void Cliente::recibirParaDibujar(){
 		if(size==-1){
 			enMenu=false;
 			juegoCliente->detenerCancion();
+			juegoCliente->correrCancion("contents/sounds/Announcer voice/ready1.wav", 1);
+			juegoCliente->correrCancion("contents/sounds/Announcer voice/engage.wav", 1);
 			continue;
 		}
 		juegoCliente->graficos()->limpiar();
@@ -169,13 +161,13 @@ void Cliente::recibirParaDibujar(){
 	}
 }
 
-
-
 void *Cliente::enviarEventosWrapper(void* arg){
 	iCliente* argumentos = (iCliente*) arg;
 	((Cliente *)argumentos->cliente)->enviarEventos(argumentos->ssocket);
 	return NULL;
 }
+
+
 
 void Cliente::enviarEventos(int socket){
 	SDL_Event evento;

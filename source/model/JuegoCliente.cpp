@@ -1,27 +1,17 @@
 #include <JuegoCliente.hpp>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <ControladorGrafico.hpp>
-#include <ControladorJson.hpp>
 #include<iostream>
 
 using namespace std;
 
-JuegoCliente::JuegoCliente(){
-	SDL_Init(0);
-	SDL_VideoInit(NULL);
-	SDL_AudioInit(NULL);
-	SDL_InitSubSystem(SDL_INIT_TIMER);
+JuegoCliente::JuegoCliente(int idCliente){
+	this->grafico = new ControladorGrafico(idCliente);
+	this->sonido = new ControladorSonido();
 }
 
 JuegoCliente::~JuegoCliente(){
-	delete grafico;
+	delete sonido;
 	delete texturas;
-	SDL_QuitSubSystem(SDL_INIT_EVENTS);
-	SDL_VideoQuit();
-	SDL_AudioQuit();
-	SDL_QuitSubSystem(SDL_INIT_TIMER);
-	SDL_Quit();
+	delete grafico;
 }
 
 ControladorGrafico* JuegoCliente::graficos(){
@@ -40,10 +30,6 @@ void JuegoCliente::cargarTexturas(vector<tuple<string, const string>> nombresYpa
 
 void JuegoCliente::cargarTitulosMenu(vector<tuple<string,string,int,string,int ,int ,int >>titulos){
 	this->texturas->cargarTitulos(*grafico,titulos);
-}
-
-void JuegoCliente::iniciarGraficos(int idCliente){
-	this->grafico = new ControladorGrafico(idCliente);
 }
 
 SDL_Texture * JuegoCliente::getTextura(string nombre){
@@ -73,24 +59,20 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 
 }
 
-void JuegoCliente::correrCancion(const char* nombre){
-	if(Mix_PlayingMusic())
-		this->detenerCancion();
-	Mix_Music *song = Mix_LoadMUS(nombre);
-	if(Mix_PlayMusic(song, 1)==-1) cout<<Mix_GetError()<<endl;
+void JuegoCliente::correrCancion(const char* nombre,int repeticiones){
+	this->sonido->correrCancion(nombre,repeticiones);
 }
 
 void JuegoCliente::detenerCancion(){
-	Mix_PauseMusic();
+	this->sonido->detenerCancion();
 }
 
+
+
 void JuegoCliente::handleEvents(SDL_Event evento){
-	if(evento.type == SDL_KEYDOWN && evento.key.keysym.sym == SDLK_p){
-		if(Mix_PausedMusic())
-			Mix_ResumeMusic();
-		else
-			this->detenerCancion();
-	}
+	if(evento.type == SDL_KEYDOWN && evento.key.keysym.sym == SDLK_p)
+			this->sonido->detenerCancion();
+
 
 	if(evento.key.keysym.sym == SDLK_F11)
 		grafico->cambiarPantallaCompleta();
