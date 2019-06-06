@@ -27,8 +27,8 @@
         [
             {"name":"CapitanAmerica",
             "filepath":"contents/images/CaptainAmericaSprites.png",
-            "height":320,
-            "width":200,
+            "height":0.1,
+            "width":0.1,
             "zindex":99,
 			"buttonpath": "contents/images/BotonCapitanAmerica.png"
             },
@@ -45,6 +45,14 @@
             "width":200,
             "zindex":99,
 			"buttonpath": "contents/images/BotonSpiderman.png"          
+            },
+        {"name":"MegaMan",
+            "filepath":"contents/images/MegaMan.png",
+            "height":320,
+            "width":200,
+            "zindex":99	,
+			"buttonpath": "contents/images/BotonMegaMan.png"     
+                      
             },
 	    {"name":"Hulk",
             "filepath":"contents/images/Hulk.png",

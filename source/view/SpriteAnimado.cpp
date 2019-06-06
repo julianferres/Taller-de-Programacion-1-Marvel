@@ -29,18 +29,18 @@ string SpriteAnimado::getNombre(){
 
 void SpriteAnimado::cargarAnimaciones(string nombre){
 	if(nombre == "CapitanAmerica" ){
-		Animacion *quieto = new Animacion("quieto",9,11,16,100,120,6);
-		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,4);
-		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,4);
-		Animacion *salto = new Animacion("salto",8,0,590,125,140,7);
-		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,105,4);
-		Animacion *cambioEntrada = new Animacion("cambioEntrada",7,125,420,125,158,2);
-		Animacion *golpeS=new Animacion("golpeS",3,0,740,100,105,4);//golpe simple
-		Animacion *patadaS=new Animacion("patadaS",3,0,740,100,105,4);//patada simple
-		Animacion *golpeAS=new Animacion("golpeAS",3,0,740,100,105,4);//golpe agachado simple
-		Animacion *patadaAS=new Animacion("patadaAS",3,0,740,100,105,4);//patada agachado simple
-		Animacion *golpeSS=new Animacion("golpeSS",3,0,740,100,105,4);//golpe saltando simple
-		Animacion *patadaSS=new Animacion("patadaSS",3,0,740,100,105,4);//patada saltando simple
+		Animacion *quieto = new Animacion("quieto",9,0,0,225,172,6);
+		Animacion *moverDerecha = new Animacion("movDerecha",6,0,172,225,172,4);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,344,225,172,4);
+		Animacion *salto = new Animacion("salto",8,0,688,225,172,7);
+		Animacion *agacharse = new Animacion("agacharse",3,0,860,225,172,4);
+		Animacion *cambioEntrada = new Animacion("cambioEntrada",7,0,516,225,172,2);
+		Animacion *golpeS=new Animacion("golpeS",3,0,1032,225,172,8);//golpe simple
+		Animacion *patadaS=new Animacion("patadaS",6,0,1204,225,172,6);//patada simple
+		Animacion *golpeAS=new Animacion("golpeAS",3,0,1548,225,172,8);//golpe agachado simple
+		Animacion *patadaAS=new Animacion("patadaAS",4,0,1376,225,172,16);//patada agachado simple
+		Animacion *golpeSS=new Animacion("golpeSS",4,0,1892,225,172,10);//golpe saltando simple
+		Animacion *patadaSS=new Animacion("patadaSS",4,0,1720,225,172,10);//patada saltando simple
 		animaciones.push_back(golpeS);
 		animaciones.push_back(patadaS);
 		animaciones.push_back(golpeAS);
@@ -93,7 +93,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *golpeS=new Animacion("golpeS",3,0,172,225,172,8);//golpe simple
 		Animacion *patadaS=new Animacion("patadaS",3,0,1376,225,172,8);//patada simple
 		Animacion *golpeAS=new Animacion("golpeAS",3,0,1032,225,172,8);//golpe agachado simple
-		Animacion *patadaAS=new Animacion("patadaAS",4,0,1548,225,172,6);//patada agachado simple
+		Animacion *patadaAS=new Animacion("patadaAS",4,0,1548,225,172,8);//patada agachado simple
 		Animacion *golpeSS=new Animacion("golpeSS",9,0,1204,225,172,6);//golpe saltando simple
 		Animacion *patadaSS=new Animacion("patadaSS",9,0,1720,225,172,6);//patada saltando simple
 		animaciones.push_back(golpeS);
@@ -112,18 +112,18 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		return;
 	}
 	else if(nombre=="MegaMan" ){
-		Animacion *quieto = new Animacion("quieto",6,0,0,80,70,15);
-		Animacion *moverDerecha = new Animacion("movDerecha",12,0,108,100,82,4);
-		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,108,100,82,4);
-		Animacion *salto = new Animacion("salto",13,0,1572,100,152,10);
-		Animacion *agacharse = new Animacion("agacharse",10,0,965,100,80,2);
-		Animacion *cambioEntrada = new Animacion("cambioEntrada",13,0,1572,100,152,10);
-		Animacion *golpeS=new Animacion("golpeS",10,0,965,100,80,2);//golpe simple
-		Animacion *patadaS=new Animacion("patadaS",10,0,965,100,80,2);//patada simple
-		Animacion *golpeAS=new Animacion("golpeAS",10,0,965,100,80,2);//golpe agachado simple
-		Animacion *patadaAS=new Animacion("patadaAS",10,0,965,100,80,2);//patada agachado simple
-		Animacion *golpeSS=new Animacion("golpeSS",10,0,965,100,80,2);//golpe saltando simple
-		Animacion *patadaSS=new Animacion("patadaSS",10,0,965,100,80,2);//patada saltando simple
+		Animacion *quieto = new Animacion("quieto",6,0,0,225,172,10);
+		Animacion *moverDerecha = new Animacion("movDerecha",12,0,172,225,172,4);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,344,225,172,4);
+		Animacion *salto = new Animacion("salto",13,0,516,225,172,4);
+		Animacion *agacharse = new Animacion("agacharse",10,0,688,225,172,2);
+		Animacion *cambioEntrada = new Animacion("cambioEntrada",13,0,1572,225,172,2);
+		Animacion *golpeS=new Animacion("golpeS",4,0,860,225,172,6);//golpe simple
+		Animacion *patadaS=new Animacion("patadaS",4,0,1032,225,172,8);//patada simple
+		Animacion *golpeAS=new Animacion("golpeAS",4,0,1204,225,172,6);//golpe agachado simple
+		Animacion *patadaAS=new Animacion("patadaAS",5,0,1376,225,172,6);//patada agachado simple
+		Animacion *golpeSS=new Animacion("golpeSS",3,0,1548,225,172,8);//golpe saltando simple
+		Animacion *patadaSS=new Animacion("patadaSS",4,0,1720,225,172,8);//patada saltando simple
 		animaciones.push_back(golpeS);
 		animaciones.push_back(patadaS);
 		animaciones.push_back(golpeAS);
@@ -219,6 +219,17 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animacionActual = mouseOut;
 	}
 	else if(nombre=="HulkBoton"){
+		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,164,129,10);
+		Animacion *mouseOver = new Animacion("mouseOver",1,165,0,164,129,10);
+		Animacion *mouseDown = new Animacion("mouseDown",1,330,0,164,129,10);
+		Animacion *mouseUp = new Animacion("mouseUp",1,495,0,164,129,10);
+		animaciones.push_back(mouseOut);
+		animaciones.push_back(mouseOver);
+		animaciones.push_back(mouseDown);
+		animaciones.push_back(mouseUp);
+		animacionActual = mouseOut;
+	}
+	else if(nombre=="MegaManBoton"){
 		Animacion *mouseOut = new Animacion("mouseOut",1,0,0,164,129,10);
 		Animacion *mouseOver = new Animacion("mouseOver",1,165,0,164,129,10);
 		Animacion *mouseDown = new Animacion("mouseDown",1,330,0,164,129,10);
