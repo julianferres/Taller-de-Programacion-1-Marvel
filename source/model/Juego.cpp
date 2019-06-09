@@ -35,8 +35,10 @@ Juego::~Juego(){
 }
 
 void Juego::nuevoRound(){
+	this->ganadores.push_back(this->getGanadorUltimoRound());
+	this->reiniciarPersonajes();
 	int nuevoNum = this->roundActual->getNumero()+1;
-	if (nuevoNum == 4){
+	if (nuevoNum == 4){//TODO Cuando se sepa el ganador posta, esto cambia si un mimo equipo gana los dos primeros rounds
 		isRunning = false;
 		return;
 	}
@@ -327,4 +329,15 @@ std::vector<std::string> Juego::gameMenu(){
 	nombres_jugadores.push_back("Venom");
 	nombres_jugadores.push_back("Hulk");
 	return nombres_jugadores;
+}
+
+Equipo * Juego::getGanadorUltimoRound(){
+	return this->equipo1;
+}
+
+void Juego::reiniciarPersonajes(){
+	//por ahora solo vuelven a la pocicion inicial
+	//TODO reiniciar vida y otras cossas
+	this->jugadorActualEquipo1->devolverPersonajeActual()->cambio();
+	this->jugadorActualEquipo2->devolverPersonajeActual()->cambio();
 }

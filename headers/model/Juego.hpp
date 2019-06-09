@@ -44,9 +44,11 @@ class Juego{
 		bool roundFinalizado();
 		bool running();
 		void actualizarTiempo();
+		Equipo * getGanadorUltimoRound();
+		void reiniciarPersonajes();
 
 	private:
-
+		vector<Equipo*> ganadores;
 		ControladorTeclado *teclado;
 		Jugador *jugadorActualEquipo1;
 		Jugador *jugadorActualEquipo2;

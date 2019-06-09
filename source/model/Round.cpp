@@ -30,3 +30,5 @@ bool Round::finalizado(){
 void Round::actualizarTiempo(){
 	this->tiempo->actualizar();
 }
+
+
