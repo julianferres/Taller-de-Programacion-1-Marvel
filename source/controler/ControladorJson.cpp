@@ -40,7 +40,7 @@ void ControladorJson::leerArchivo(std::string argumentoConsola){
 void ControladorJson::leerArchivoDefault(){
 	//TODO ARREGLAR ARCHIVO DEFAULT
 	using json = nlohmann::json;
-
+	vector<tuple<string, int>> fondos;
 	std::ifstream ifs (configPathDefault, std::ifstream::in);
 	json j = json::parse(ifs);
 	nivel_debug = j["logLevel"];
@@ -97,9 +97,9 @@ string ControladorJson::nivelDebug(){
 	return nivel_debug;
 }
 
-vector<int>ControladorJson::getZindexes(){
-	for(int i=0;i<fondos.size();i++){
-		zindexes.push_back(std::get<1>(fondos[i]));
+vector<int>ControladorJson::getZindexes(int round){
+	for(int i=0;i<escenarios[round-1].size();i++){
+		zindexes.push_back(std::get<1>(escenarios[round-1][i]));
 	}
 	return zindexes;
 }
@@ -109,9 +109,9 @@ vector<string>ControladorJson::getNombresPersonajes(){
 }
 
 string ControladorJson::pathFondo(int zindex, int round){
-    for (int i = 0; i < cantidad_fondos[round]; i++){
-		if(std::get<1>(escenarios[round][i]) == zindex)
-			return std::get<0>(escenarios[round][i]);
+    for (int i = 0; i < cantidad_fondos[round-1]; i++){
+		if(std::get<1>(escenarios[round-1][i]) == zindex)
+			return std::get<0>(escenarios[round-1][i]);
         }
     return "";
 }
@@ -315,7 +315,7 @@ void ControladorJson::setCantidadRounds(json j)throw(){
 	controladorLogger->registrarEvento("DEBUG","ControladorJson::Cantidad Rounds seteados = " + std::to_string(cantidad_rounds));
 }
 void ControladorJson::setCantidadFondos(json j)throw(){
-	controladorLogger->registrarEvento("DEBUG", "ControladorJson:: Por setear antidad fondos por round");
+	controladorLogger->registrarEvento("DEBUG", "ControladorJson:: Por setear cantidad fondos por round");
 	/*cantidad_fondos.push_back(j["round1"].size());
 	cantidad_fondos.push_back(j["round2"].size());
 	cantidad_fondos.push_back(j["round3"].size());
@@ -344,12 +344,14 @@ void ControladorJson::setRounds(json j)throw(){
 			controladorLogger->registrarEvento("DEBUG", "ControladorJson:: Fondos para escenario " + to_string(i+1) + " seteado");
 		}
 	}catch(json::type_error &e){
+		//TODO cachear error
 		controladorLogger->registrarEvento("ERROR", "ControladorJson:: Fondos para escenario no se pudo setear");
 	}
 }
 vector<tuple<string, int>> ControladorJson::setFondos(json j, int round)throw(){
+	vector<tuple<string, int>> fondos;
 	try{
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Seteando fondos para round " + std::to_string(round) + " cantidad: " + std::to_string(cantidad_fondos[round]));
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Seteando fondos para round " + std::to_string(round) + " cantidad: " + std::to_string(cantidad_fondos[round-1]));
 		for (int i = 0; i < cantidad_fondos[round-1]; i++){
 			string filepath_fondo = j["round"+ std::to_string(round)][i]["background"]["filepath"];
 			int zindex_fondo = j["round"+ std::to_string(round)][i]["background"]["zindex"];

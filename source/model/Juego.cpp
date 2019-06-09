@@ -17,9 +17,9 @@ extern ControladorLogger *controladorLogger;
 
 
 Juego::Juego(){
-
+	//TODO Parallax parametro round
 	this->teclado = new ControladorTeclado();
-	this-> parallax = new Parallax(0);
+	this-> parallax = new Parallax(3);
 	controladorLogger->registrarEvento("INFO", "Juego::Se inicio el juego");
 
 }
@@ -112,10 +112,12 @@ std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
 
 
 vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
+	//TODO Setear round
+	int round = 3;
 	SDL_RendererFlip flip ;
 	vector<tuple<string,SDL_Rect , SDL_Rect,SDL_RendererFlip >> dibujables;
 	vector<tuple<Jugador *, int>> zindexs_personajes = obtenerOrdenDibujo();
-	vector<int>zindexes = controladorJson->getZindexes();
+	vector<int>zindexes = controladorJson->getZindexes(round);
 	this->verificarCambioDeLado();
 	int fondos_dibujados = 0;
 	int personajes_dibujados = 0;

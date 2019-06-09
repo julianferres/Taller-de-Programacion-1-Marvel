@@ -46,7 +46,7 @@ class ControladorJson{
 		string jugador1Personaje(int numero);
 		string jugador2Personaje(int numero);
 		vector <string> getNombresPersonajes();
-		vector<int>getZindexes();
+		vector<int>getZindexes(int round);
 
 
 	private:
@@ -68,7 +68,7 @@ class ControladorJson{
 		vector<string> nombresPersonajes;
 		vector<int>zindexes;
 		vector<tuplaPersonaje> personajes;
-		vector<tuple<string, int>> fondos;
+		//vector<tuple<string, int>> fondos;
 		vector<vector<tuple<string, int>>> escenarios;
 		string configPath = "source/config/config.json";
 		vector<string> personajesJugador1;

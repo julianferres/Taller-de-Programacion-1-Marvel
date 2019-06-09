@@ -58,6 +58,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 
 
 void Cliente::cargarContenidos(){
+	int round = 3;
 	vector<string> personajes = controladorJson->getNombresPersonajes();
 	for(size_t i=0;i<personajes.size();i++){
 		const string &filePath = controladorJson->pathImagen(personajes[i]);
@@ -65,10 +66,10 @@ void Cliente::cargarContenidos(){
 		const string &buttonPath = controladorJson->pathBoton((personajes[i]));
 		personajesYfondos.push_back(make_tuple(personajes[i]+"Boton",buttonPath));
 	}
-	vector<int> fondos = controladorJson->getZindexes();
+	vector<int> fondos = controladorJson->getZindexes(round);
 	for(size_t i=0;i<fondos.size();i++){
 		//TODO Setear numero de round
-		const string &filePath = controladorJson->pathFondo(fondos[i],0);
+		const string &filePath = controladorJson->pathFondo(fondos[i],round);
 		personajesYfondos.push_back(make_tuple(to_string(fondos[i]),filePath));
 	}
 	personajesYfondos.push_back(make_tuple(string("Fondo"), string("contents/images/fondo.png")));
