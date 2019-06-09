@@ -67,7 +67,8 @@ void Cliente::cargarContenidos(){
 	}
 	vector<int> fondos = controladorJson->getZindexes();
 	for(size_t i=0;i<fondos.size();i++){
-		const string &filePath = controladorJson->pathFondo(fondos[i]);
+		//TODO Setear numero de round
+		const string &filePath = controladorJson->pathFondo(fondos[i],0);
 		personajesYfondos.push_back(make_tuple(to_string(fondos[i]),filePath));
 	}
 	personajesYfondos.push_back(make_tuple(string("Fondo"), string("contents/images/fondo.png")));

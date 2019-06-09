@@ -1,0 +1,71 @@
+#include <Temporizador.hpp>
+#include <GameMenu.hpp>
+#include <ControladorGrafico.hpp>
+#include <ControladorJson.hpp>
+#include <ControladorLogger.hpp>
+
+extern ControladorJson *controladorJson;
+extern ControladorLogger *controladorLogger;
+
+Temporizador* Temporizador::isInstance = 0;
+
+Temporizador* Temporizador::Instance(){
+
+	if(isInstance == 0){
+		isInstance = new Temporizador();
+	}
+	return isInstance;
+}
+
+void Temporizador::eliminar(){
+	delete isInstance;
+	isInstance = 0;
+}
+
+Temporizador::Temporizador(){
+	this->resetear();
+	this->roundFinalizado = false;
+	this->escalaDeTiempo = 1.0f;
+	this->alto_ventana = controladorJson->alturaVentana();
+	this->ancho_ventana = controladorJson->anchoVentana();
+
+}
+
+Temporizador::~Temporizador(){
+
+}
+
+void Temporizador::resetear(){
+	this->tiempoInicial = SDL_GetTicks();
+	this->tiempoTranscurrido = 0;
+}
+
+float Temporizador::getDeltaTiempo(){
+	return this->deltaTiempo;
+}
+
+void Temporizador::setEsacalDeTiempo(float escala){
+	this->escalaDeTiempo = escala;
+
+}
+
+float Temporizador::getEscalaDeTiempo(){
+	return this->escalaDeTiempo;
+}
+bool Temporizador::roundTerminado(){
+	return this->roundFinalizado;
+}
+void Temporizador::actualizar(){
+	this->tiempoTranscurrido = SDL_GetTicks() - this->tiempoInicial;
+	this->deltaTiempo = this->tiempoTranscurrido * 0.001f;
+	if (this->tiempoTranscurrido >= 99){
+		this->roundFinalizado = true;
+	}
+}
+
+std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Temporizador::getDibujable(){
+	SDL_Rect origen = {-1,-1,-1,-1};
+	SDL_Rect destino = { this->ancho_ventana /2, (270 * this->alto_ventana) / this->alto_maximo_ventana,0,0};
+	return make_tuple(std::string("Temporizador"),origen,destino,SDL_FLIP_NONE);
+
+}

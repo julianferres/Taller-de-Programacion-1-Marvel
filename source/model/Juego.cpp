@@ -19,7 +19,7 @@ extern ControladorLogger *controladorLogger;
 Juego::Juego(){
 
 	this->teclado = new ControladorTeclado();
-	this-> parallax = new Parallax();
+	this-> parallax = new Parallax(0);
 	controladorLogger->registrarEvento("INFO", "Juego::Se inicio el juego");
 
 }
