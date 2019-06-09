@@ -60,3 +60,11 @@ bool Equipo::TecladoHabilitado(){
 void Equipo::habilitarTeclado(){
 	this->tecladoHabilitado = true;
 }
+
+Jugador *Equipo::obtenerJugador1(){
+	return this->jugadores[0];
+}
+
+Jugador *Equipo::obtenerJugador2(){
+	return this->jugadores[1];
+}

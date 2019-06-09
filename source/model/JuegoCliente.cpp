@@ -12,6 +12,7 @@ JuegoCliente::JuegoCliente(){
 	SDL_Init(0);
 	SDL_VideoInit(NULL);
 	SDL_InitSubSystem(SDL_INIT_TIMER);
+	this->lifeBar = new LifeBar();
 }
 
 JuegoCliente::~JuegoCliente(){
@@ -71,23 +72,35 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 		this->grafico->dibujarImagen(getTextura(nombre),NULL, &destino, flip);
 	else{
 		this->grafico->dibujarImagen(getTextura(nombre),&origen, &destino, flip);
-		if(nombre.compare("Venom") == 0 || nombre.compare("Spiderman") == 0){
-			destino.w = this->anchoVentana / 4;
-			destino.h = 100;
-			destino.x = this->anchoVentana - destino.w - 10;
-			destino.y = 10;
-
-			this->grafico->dibujarImagen(getTextura(nombre + "-lb"), NULL,&destino, SDL_FLIP_NONE);
-		}
-		else{
-			destino.x = 10;
-			destino.y = 10;
-			destino.w = this->anchoVentana / 4;
-			destino.h = 100;
-			this->grafico->dibujarImagen(getTextura(nombre + "-lb"), NULL,&destino, SDL_FLIP_HORIZONTAL);
-		}
+		lifeBar->actualizarPersonajesActuales(nombre);
 	}
-
-
 }
+
+void JuegoCliente::dibujarBarrasVida(){
+	string nombre = "";
+	SDL_Rect fondoVida;
+	for(int i = 0; i < 4; i++){
+		if(i == 0) nombre = "CapitanAmerica";
+		else if(i == 1) nombre = "Hulk";
+		else if(i == 2) nombre = "Spiderman";
+		else nombre = "Venom";
+
+		destino.h = lifeBar->obtenerAnchoBarra(nombre);
+		destino.w = lifeBar->obtenerLargoBarra(nombre, this->anchoVentana);
+		destino.x = lifeBar->obtenerPosicionHorizontal(nombre, this->anchoVentana);
+		destino.y = lifeBar->obtenerPosicionVertical(nombre);
+
+		fondoVida.x = lifeBar->obtenerPosicionVerticalFondoVida(nombre);
+		fondoVida.y = lifeBar->obtenerPosicionHorizontalFondoVida(nombre, this->anchoVentana);
+		fondoVida.h = lifeBar->obtenerAnchoFondoVida(nombre);
+		fondoVida.w = lifeBar->obtenerLargoFondoVida(nombre);
+
+		this->grafico->dibujarImagen(getTextura(lifeBar->obtenerNombreBarra(nombre)), NULL,&destino, lifeBar->obtenerFlipBarra(nombre));
+		this->grafico->dibujarRectanguloDeColor(255,255,0,150, &fondoVida);
+	}
+}
+
+
+
+
 

@@ -23,6 +23,7 @@ class ControladorGrafico{
 		void limpiar();
 		void cambiarPantallaCompleta();
 		void maximizarVentana(int ancho, int alto);
+		void dibujarRectanguloDeColor(int red, int green, int blue, int alpha, SDL_Rect *rectangulo);
 
 	private:
 

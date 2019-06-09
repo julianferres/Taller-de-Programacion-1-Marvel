@@ -41,6 +41,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	args->cliente=this;
 	juegoCliente = new JuegoCliente();
 	juegoCliente->iniciarGraficos(idCliente);
+	this->lifeBar = new LifeBar();
 	this->cargarContenidos();
 	args->ssocket=numeroSocket;
 	juegoCliente->cargarTexturas(personajesYfondos);
@@ -64,7 +65,7 @@ void Cliente::cargarContenidos(){
 		personajesYfondos.push_back(make_tuple(personajes[i],filePath));
 		const string &buttonPath = controladorJson->pathBoton((personajes[i]));
 		personajesYfondos.push_back(make_tuple(personajes[i]+"Boton",buttonPath));
-		personajesYfondos.push_back(make_tuple(personajes[i]+"-lb", "contents/images/"+personajes[i]+"-lb.png"));
+		personajesYfondos.push_back(make_tuple(this->lifeBar->obtenerNombreBarra(personajes[i]), this->lifeBar->obtenerPath(personajes[i])));
 
 	}
 	vector<int> fondos = controladorJson->getZindexes();
@@ -135,6 +136,8 @@ void Cliente::recibirParaDibujar(){
 	SDL_RendererFlip flip;
 	int size;
 	int recibido;
+
+
 	while(running){
 		recibido = recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
 		if(recibido<0){
@@ -157,12 +160,14 @@ void Cliente::recibirParaDibujar(){
 			continue;
 		}
 		juegoCliente->graficos()->limpiar();
+
 		for(int i=0;i<size;i++){
 			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
 			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
 			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
+		if(!enMenu) juegoCliente->dibujarBarrasVida();
 		juegoCliente->graficos()->render();
 		send(numeroSocket,&evento,sizeof(evento),0);//heartbeat
 	}

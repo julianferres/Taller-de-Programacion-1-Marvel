@@ -8,6 +8,7 @@
 #include <ControladorTeclado.hpp>
 #include <Parallax.hpp>
 #include <Texturas.hpp>
+#include <LifeBar.hpp>
 
 
 class JuegoCliente{
@@ -21,7 +22,7 @@ public:
 	void cargarTexturas(vector<tuple<string, const string>> nombresYpaths);
 	void cargarTitulosMenu(vector<tuple<string,string,int,string,int ,int ,int >>titulos);
 	void dibujar(std::string nombre,int posiciones[8],SDL_RendererFlip flip);
-	void dibujarLifeBar();
+	void dibujarBarrasVida();
 
 private:
 	ControladorGrafico *grafico;
@@ -30,7 +31,7 @@ private:
 	SDL_Rect destino;
 	int anchoVentana;
 	int altoVentana;
-
+	LifeBar *lifeBar;
 };
 
 

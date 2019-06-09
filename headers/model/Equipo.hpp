@@ -21,6 +21,8 @@ public:
 	void actualizarConexion(int idCliente);
 	bool TecladoHabilitado();
 	void habilitarTeclado();
+	Jugador *obtenerJugador1();
+	Jugador *obtenerJugador2();
 private:
 	bool tecladoHabilitado = false;
 	vector<Jugador*> jugadores;
