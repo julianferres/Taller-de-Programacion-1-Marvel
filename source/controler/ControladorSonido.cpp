@@ -21,8 +21,8 @@ void ControladorSonido::correrSonido(const char* nombre){
 }
 
 void ControladorSonido::correrCancionFondo(const char* nombre,int repeticiones){
-	while(Mix_PlayingMusic())
-		continue;
+	if(Mix_PlayingMusic())
+		return;
 
 	Mix_Music *song = Mix_LoadMUS(nombre);
 	if(Mix_PlayMusic(song, repeticiones)==-1) cout<<Mix_GetError()<<endl;
