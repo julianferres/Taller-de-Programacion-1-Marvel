@@ -24,5 +24,9 @@ void Round::iniciarTiempo(){
 }
 
 bool Round::finalizado(){
-	return this->tiempo->getDeltaTiempo() >= 99;
+	return (this->tiempo->getDeltaTiempo() >= 10);
+}
+
+void Round::actualizarTiempo(){
+	this->tiempo->actualizar();
 }

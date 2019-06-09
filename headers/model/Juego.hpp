@@ -38,7 +38,12 @@ class Juego{
 		void actualizarConexion(int idCliente);
 		Equipo * getEquipo1();
 		Equipo * getEquipo2();
+		int numeroRound();
 		void nuevoRound();
+		void iniciarRound();
+		bool roundFinalizado();
+		bool running();
+		void actualizarTiempo();
 
 	private:
 

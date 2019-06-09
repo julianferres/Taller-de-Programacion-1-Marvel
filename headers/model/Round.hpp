@@ -17,6 +17,8 @@ public:
 	int getNumero();
 	void iniciarTiempo();
 	bool finalizado();
+	void actualizarTiempo();
+
 private:
 
 	int numero;

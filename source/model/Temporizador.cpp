@@ -36,6 +36,7 @@ Temporizador::~Temporizador(){
 void Temporizador::resetear(){
 	this->tiempoInicial = SDL_GetTicks();
 	this->tiempoTranscurrido = 0;
+	this->deltaTiempo = 0;
 }
 
 float Temporizador::getDeltaTiempo(){

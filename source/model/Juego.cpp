@@ -18,6 +18,7 @@ extern ControladorLogger *controladorLogger;
 
 Juego::Juego(){
 	//TODO Parallax parametro round
+	this->isRunning = true;
 	this->teclado = new ControladorTeclado();
 	this->roundActual = new Round(1);
 	this-> parallax = this->roundActual->getParallax();
@@ -35,9 +36,30 @@ Juego::~Juego(){
 
 void Juego::nuevoRound(){
 	int nuevoNum = this->roundActual->getNumero()+1;
+	if (nuevoNum == 4){
+		isRunning = false;
+		return;
+	}
 	this->roundActual = new Round(nuevoNum);
 }
+void Juego::iniciarRound(){
+	this->roundActual->iniciarTiempo();
+}
 
+bool Juego::roundFinalizado(){
+	return this->roundActual->finalizado();
+}
+void Juego::actualizarTiempo(){
+	this->roundActual->actualizarTiempo();
+}
+
+int Juego::numeroRound(){
+	return this->roundActual->getNumero();
+}
+
+bool Juego::running(){
+	return this->isRunning;
+}
 Equipo* Juego::getEquipo1(){
 	return this->equipo1;
 }
