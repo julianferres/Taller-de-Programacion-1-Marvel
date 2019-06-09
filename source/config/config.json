@@ -48,8 +48,8 @@
             },
         {"name":"MegaMan",
             "filepath":"contents/images/MegaMan.png",
-            "height":320,
-            "width":200,
+            "height":0.1,
+            "width":0.1,
             "zindex":99	,
 			"buttonpath": "contents/images/BotonMegaMan.png"     
                       

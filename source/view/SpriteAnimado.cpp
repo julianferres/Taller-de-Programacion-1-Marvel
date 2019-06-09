@@ -41,6 +41,20 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *patadaAS=new Animacion("patadaAS",4,0,1376,225,172,16);//patada agachado simple
 		Animacion *golpeSS=new Animacion("golpeSS",4,0,1892,225,172,10);//golpe saltando simple
 		Animacion *patadaSS=new Animacion("patadaSS",4,0,1720,225,172,10);//patada saltando simple
+		Animacion *golpeF=new Animacion("golpeF",3,0,1032,225,172,8);//golpe fuerte
+		Animacion *patadaF=new Animacion("patadaF",6,0,1204,225,172,6);//patada fuerte
+		Animacion *golpeAF=new Animacion("golpeAF",3,0,1548,225,172,8);//golpe agachado fuerte
+		Animacion *patadaAF=new Animacion("patadaAF",4,0,1376,225,172,16);//patada agachado fuerte
+		Animacion *golpeSF=new Animacion("golpeSF",4,0,1892,225,172,10);//golpe saltando fuerte
+		Animacion *patadaSF=new Animacion("patadaSF",4,0,1720,225,172,10);//patada saltando fuerte
+		Animacion *defensa=new Animacion("defensa",1,1,1,1,1,1);
+		animaciones.push_back(defensa);
+		animaciones.push_back(golpeF);
+		animaciones.push_back(patadaF);
+		animaciones.push_back(golpeAF);
+		animaciones.push_back(patadaAF);
+		animaciones.push_back(golpeSF);
+		animaciones.push_back(patadaSF);
 		animaciones.push_back(golpeS);
 		animaciones.push_back(patadaS);
 		animaciones.push_back(golpeAS);
@@ -56,18 +70,32 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animacionActual = quieto;
 	}
 	else if(nombre=="Spiderman"){
-		Animacion *quieto = new Animacion("quieto",10,1365,7,105,85,5);
-		Animacion *moverDerecha = new Animacion("movDerecha",12,0,120,100,99,2);
-		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,2);
-		Animacion *salto = new Animacion("salto",14,0,473,100,135,3);
-		Animacion *agacharse = new Animacion("agacharse",13,0,1180,110,90,4);
-		Animacion *cambioEntrada = new Animacion("cambioEntrada",14,0,227,110,133,2);
-		Animacion *golpeS=new Animacion("golpeS",13,0,1180,110,90,4);//golpe simple
-		Animacion *patadaS=new Animacion("patadaS",13,0,1180,110,90,4);//patada simple
-		Animacion *golpeAS=new Animacion("golpeAS",13,0,1180,110,90,4);//golpe agachado simple
-		Animacion *patadaAS=new Animacion("patadaAS",13,0,1180,110,90,4);//patada agachado simple
-		Animacion *golpeSS=new Animacion("golpeSS",13,0,1180,110,90,4);//golpe saltando simple
-		Animacion *patadaSS=new Animacion("patadaSS",13,0,1180,110,90,4);//patada saltando simple
+		Animacion *quieto = new Animacion("quieto",10,0,0,225,172,6);
+		Animacion *moverDerecha = new Animacion("movDerecha",12,0,172,225,172,2);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,172,225,172,2);
+		Animacion *salto = new Animacion("salto",13,0,344,225,172,3);
+		Animacion *agacharse = new Animacion("agacharse",13,0,516,225,172,4);
+		Animacion *cambioEntrada = new Animacion("cambioEntrada",14,0,1720,225,172,2);
+		Animacion *golpeS=new Animacion("golpeS",5,0,688,225,172,4);//golpe simple
+		Animacion *patadaS=new Animacion("patadaS",5,0,860,225,172,4);//patada simple
+		Animacion *golpeAS=new Animacion("golpeAS",5,0,1376,225,172,4);//golpe agachado simple
+		Animacion *patadaAS=new Animacion("patadaAS",5,0,1548,225,172,4);//patada agachado simple
+		Animacion *golpeSS=new Animacion("golpeSS",4,0,1032,225,172,4);//golpe saltando simple
+		Animacion *patadaSS=new Animacion("patadaSS",4,0,1204,225,172,4);//patada saltando simple
+		Animacion *golpeF=new Animacion("golpeF",7,0,1892,225,172,7);//golpe fuerte
+		Animacion *patadaF=new Animacion("patadaF",8,0,2064,225,172,6);//patada fuerte
+		Animacion *golpeAF=new Animacion("golpeAF",8,0,2408,225,172,8);//golpe agachado fuerte
+		Animacion *patadaAF=new Animacion("patadaAF",6,0,2236,225,172,16);//patada agachado fuerte
+		Animacion *golpeSF=new Animacion("golpeSF",7,0,2580,225,172,10);//golpe saltando fuerte
+		Animacion *patadaSF=new Animacion("patadaSF",6,0,2752,225,172,10);//patada saltando fuerte
+		Animacion *defensa=new Animacion("defensa",10,0,2924,225,172,4);
+		animaciones.push_back(defensa);	
+		animaciones.push_back(golpeF);
+		animaciones.push_back(patadaF);
+		animaciones.push_back(golpeAF);
+		animaciones.push_back(patadaAF);
+		animaciones.push_back(golpeSF);
+		animaciones.push_back(patadaSF);
 		animaciones.push_back(golpeS);
 		animaciones.push_back(patadaS);
 		animaciones.push_back(golpeAS);
@@ -96,6 +124,20 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *patadaAS=new Animacion("patadaAS",4,0,1548,225,172,8);//patada agachado simple
 		Animacion *golpeSS=new Animacion("golpeSS",9,0,1204,225,172,6);//golpe saltando simple
 		Animacion *patadaSS=new Animacion("patadaSS",9,0,1720,225,172,6);//patada saltando simple
+		Animacion *golpeF=new Animacion("golpeF",3,0,1032,225,172,8);//golpe fuerte
+		Animacion *patadaF=new Animacion("patadaF",6,0,1204,225,172,6);//patada fuerte
+		Animacion *golpeAF=new Animacion("golpeAF",3,0,1548,225,172,8);//golpe agachado fuerte
+		Animacion *patadaAF=new Animacion("patadaAF",4,0,1376,225,172,16);//patada agachado fuerte
+		Animacion *golpeSF=new Animacion("golpeSF",4,0,1892,225,172,10);//golpe saltando fuerte
+		Animacion *patadaSF=new Animacion("patadaSF",4,0,1720,225,172,10);//patada saltando fuerte
+		Animacion *defensa=new Animacion("defensa",1,1,1,1,1,1);
+		animaciones.push_back(defensa);		
+		animaciones.push_back(golpeF);
+		animaciones.push_back(patadaF);
+		animaciones.push_back(golpeAF);
+		animaciones.push_back(patadaAF);
+		animaciones.push_back(golpeSF);
+		animaciones.push_back(patadaSF);
 		animaciones.push_back(golpeS);
 		animaciones.push_back(patadaS);
 		animaciones.push_back(golpeAS);
@@ -117,13 +159,27 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *moverIzquierda = new Animacion("movIzquierda",12,0,344,225,172,4);
 		Animacion *salto = new Animacion("salto",13,0,516,225,172,4);
 		Animacion *agacharse = new Animacion("agacharse",10,0,688,225,172,2);
-		Animacion *cambioEntrada = new Animacion("cambioEntrada",13,0,1572,225,172,2);
+		Animacion *cambioEntrada = new Animacion("cambioEntrada",12,0,1892,225,172,2);
 		Animacion *golpeS=new Animacion("golpeS",4,0,860,225,172,6);//golpe simple
 		Animacion *patadaS=new Animacion("patadaS",4,0,1032,225,172,8);//patada simple
 		Animacion *golpeAS=new Animacion("golpeAS",4,0,1204,225,172,6);//golpe agachado simple
 		Animacion *patadaAS=new Animacion("patadaAS",5,0,1376,225,172,6);//patada agachado simple
 		Animacion *golpeSS=new Animacion("golpeSS",3,0,1548,225,172,8);//golpe saltando simple
 		Animacion *patadaSS=new Animacion("patadaSS",4,0,1720,225,172,8);//patada saltando simple
+		Animacion *golpeF=new Animacion("golpeF",3,0,1032,225,172,8);//golpe fuerte
+		Animacion *patadaF=new Animacion("patadaF",6,0,1204,225,172,6);//patada fuerte
+		Animacion *golpeAF=new Animacion("golpeAF",3,0,1548,225,172,8);//golpe agachado fuerte
+		Animacion *patadaAF=new Animacion("patadaAF",4,0,1376,225,172,16);//patada agachado fuerte
+		Animacion *golpeSF=new Animacion("golpeSF",4,0,1892,225,172,10);//golpe saltando fuerte
+		Animacion *patadaSF=new Animacion("patadaSF",4,0,1720,225,172,10);//patada saltando fuerte
+		Animacion *defensa=new Animacion("defensa",1,1,1,1,1,1);
+		animaciones.push_back(defensa);		
+		animaciones.push_back(golpeF);
+		animaciones.push_back(patadaF);
+		animaciones.push_back(golpeAF);
+		animaciones.push_back(patadaAF);
+		animaciones.push_back(golpeSF);
+		animaciones.push_back(patadaSF);
 		animaciones.push_back(golpeS);
 		animaciones.push_back(patadaS);
 		animaciones.push_back(golpeAS);
@@ -152,6 +208,20 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *patadaAS=new Animacion("patadaAS",5,0,450,170,123,4);//patada agachado simple
 		Animacion *golpeSS=new Animacion("golpeSS",5,0,450,170,123,4);//golpe saltando simple
 		Animacion *patadaSS=new Animacion("patadaSS",5,0,450,170,123,4);//patada saltando simple
+		Animacion *golpeF=new Animacion("golpeF",3,0,1032,225,172,8);//golpe fuerte
+		Animacion *patadaF=new Animacion("patadaF",6,0,1204,225,172,6);//patada fuerte
+		Animacion *golpeAF=new Animacion("golpeAF",3,0,1548,225,172,8);//golpe agachado fuerte
+		Animacion *patadaAF=new Animacion("patadaAF",4,0,1376,225,172,16);//patada agachado fuerte
+		Animacion *golpeSF=new Animacion("golpeSF",4,0,1892,225,172,10);//golpe saltando fuerte
+		Animacion *patadaSF=new Animacion("patadaSF",4,0,1720,225,172,10);//patada saltando fuerte
+		Animacion *defensa=new Animacion("defensa",1,1,1,1,1,1);
+		animaciones.push_back(defensa);		
+		animaciones.push_back(golpeF);
+		animaciones.push_back(patadaF);
+		animaciones.push_back(golpeAF);
+		animaciones.push_back(patadaAF);
+		animaciones.push_back(golpeSF);
+		animaciones.push_back(patadaSF);
 		animaciones.push_back(golpeS);
 		animaciones.push_back(patadaS);
 		animaciones.push_back(golpeAS);
@@ -180,6 +250,20 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *patadaAS=new Animacion("patadaAS",1,0,0,600,600,2);//patada agachado simple
 		Animacion *golpeSS=new Animacion("golpeSS",1,0,0,600,600,2);//golpe saltando simple
 		Animacion *patadaSS=new Animacion("patadaSS",1,0,0,600,600,2);//patada saltando simple
+		Animacion *golpeF=new Animacion("golpeF",1,0,0,600,600,10);//golpe fuerte
+		Animacion *patadaF=new Animacion("patadaF",1,0,0,600,600,10);//patada fuerte
+		Animacion *golpeAF=new Animacion("golpeAF",1,0,0,600,600,10);//golpe agachado fuerte
+		Animacion *patadaAF=new Animacion("patadaAF",1,0,0,600,600,10);//patada agachado fuerte
+		Animacion *golpeSF=new Animacion("golpeSF",1,0,0,600,600,10);//golpe saltando fuerte
+		Animacion *patadaSF=new Animacion("patadaSF",1,0,0,600,600,10);//patada saltando fuerte
+		Animacion *defensa=new Animacion("defensa",1,0,0,600,600,10);
+		animaciones.push_back(defensa);
+		animaciones.push_back(golpeF);
+		animaciones.push_back(patadaF);
+		animaciones.push_back(golpeAF);
+		animaciones.push_back(patadaAF);
+		animaciones.push_back(golpeSF);
+		animaciones.push_back(patadaSF);
 		animaciones.push_back(golpeS);
 		animaciones.push_back(patadaS);
 		animaciones.push_back(golpeAS);

@@ -113,9 +113,16 @@ void Personaje::golpe(string tipoDeGolpe){
 		if(tipoDeGolpe=="golpeS"){
 			this->spriteAnimado->iniciarAnimacion("golpeSS");
 		}
-		else{
+		if(tipoDeGolpe=="golpeF"){
+			this->spriteAnimado->iniciarAnimacion("golpeSF");
+		}
+		if(tipoDeGolpe=="patadaS"){
 			this->spriteAnimado->iniciarAnimacion("patadaSS");
 		}
+		if(tipoDeGolpe=="patadaF"){
+			this->spriteAnimado->iniciarAnimacion("patadaSF");
+		}
+
 	}
 	else{
 			this->spriteAnimado->iniciarAnimacion(tipoDeGolpe);
@@ -126,6 +133,10 @@ void Personaje::agacharse(){
 	if(saltando ) return;
 	agachado = true;
 	this->spriteAnimado->iniciarAnimacion("agacharse");
+}
+void Personaje::defenderse(){
+	if(saltando ) return;
+	this->spriteAnimado->iniciarAnimacion("defensa");
 }
 
 void Personaje::cambio(){
