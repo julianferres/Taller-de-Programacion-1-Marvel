@@ -6,30 +6,28 @@
 class Temporizador{
 //Singleton
 private:
-	static Temporizador* isInstance;
+	//static Temporizador* isInstance;
 
 	unsigned int tiempoInicial;
 	unsigned int tiempoTranscurrido;
 	float deltaTiempo;
 	float escalaDeTiempo;
-	bool roundFinalizado;
 	int ancho_ventana;
 	int alto_ventana;
 	int ancho_maximo_ventana = 1400;
 	int alto_maximo_ventana = 1000;
 
-	Temporizador();
-	~Temporizador();
 
 public:
-	static Temporizador* Instance();
-	static void eliminar();
+	//static Temporizador* Instance();
+	//static void eliminar();
 
+	Temporizador();
+	~Temporizador();
 	void resetear();
 	float getDeltaTiempo();
 	void setEsacalDeTiempo(float escala);
 	float getEscalaDeTiempo();
-	bool roundTerminado();
 	void actualizar();
 	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getDibujable();
 

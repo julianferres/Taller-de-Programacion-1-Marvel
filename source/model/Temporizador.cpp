@@ -6,7 +6,7 @@
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
-
+/*
 Temporizador* Temporizador::isInstance = 0;
 
 Temporizador* Temporizador::Instance(){
@@ -20,15 +20,13 @@ Temporizador* Temporizador::Instance(){
 void Temporizador::eliminar(){
 	delete isInstance;
 	isInstance = 0;
-}
+}*/
 
 Temporizador::Temporizador(){
-	this->resetear();
-	this->roundFinalizado = false;
 	this->escalaDeTiempo = 1.0f;
 	this->alto_ventana = controladorJson->alturaVentana();
 	this->ancho_ventana = controladorJson->anchoVentana();
-
+	this->resetear();
 }
 
 Temporizador::~Temporizador(){
@@ -52,15 +50,10 @@ void Temporizador::setEsacalDeTiempo(float escala){
 float Temporizador::getEscalaDeTiempo(){
 	return this->escalaDeTiempo;
 }
-bool Temporizador::roundTerminado(){
-	return this->roundFinalizado;
-}
+
 void Temporizador::actualizar(){
 	this->tiempoTranscurrido = SDL_GetTicks() - this->tiempoInicial;
 	this->deltaTiempo = this->tiempoTranscurrido * 0.001f;
-	if (this->tiempoTranscurrido >= 99){
-		this->roundFinalizado = true;
-	}
 }
 
 std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Temporizador::getDibujable(){

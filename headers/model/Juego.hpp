@@ -10,6 +10,7 @@
 #include <JuegoCliente.hpp>
 #include <Equipo.hpp>
 #include<vector>
+#include <Round.hpp>
 
 #define CANTIDAD_MAXIMA_JUGADORES 4
 extern ControladorJson *controladorJson;
@@ -37,6 +38,7 @@ class Juego{
 		void actualizarConexion(int idCliente);
 		Equipo * getEquipo1();
 		Equipo * getEquipo2();
+		void nuevoRound();
 
 	private:
 
@@ -44,6 +46,7 @@ class Juego{
 		Jugador *jugadorActualEquipo1;
 		Jugador *jugadorActualEquipo2;
 		Parallax *parallax;
+		Round *roundActual;
 		Uint32 startTime;
 		vector<Jugador*> jugadores={NULL,NULL,NULL,NULL};
 		Equipo *equipo1;
