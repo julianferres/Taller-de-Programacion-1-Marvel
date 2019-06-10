@@ -71,6 +71,7 @@ void Cliente::cargarContenidos(){
 		personajesYfondos.push_back(make_tuple(to_string(fondos[i]),filePath));
 	}
 	personajesYfondos.push_back(make_tuple(string("Fondo"), string("contents/images/fondo.png")));
+	personajesYfondos.push_back(make_tuple(string("ConnectionLost"), string("contents/images/connectionLost.png")));
 }
 
 void Cliente::iniciarConexion(char* direccionIP,int puerto){
@@ -135,10 +136,13 @@ void Cliente::recibirParaDibujar(){
 	int recibido;
 	while(running){
 		recibido = recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
+		juegoCliente->graficos()->limpiar();
 		if(recibido<0){
 			if(conectado)
 				cout<<"Conexion perdida con el servidor."<<endl;
 			cout<<"Intentando reconectar con el servidor..."<<endl;
+			juegoCliente->graficos()->dibujarImagen(juegoCliente->getTextura("ConnectionLost"), NULL, NULL, SDL_FLIP_NONE);
+			juegoCliente->graficos()->render();
 			conectado = false;
 			continue;
 		}
@@ -154,39 +158,19 @@ void Cliente::recibirParaDibujar(){
 			enMenu=false;
 			continue;
 		}
-		juegoCliente->graficos()->limpiar();
+
 		for(int i=0;i<size;i++){
-			recibido =recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
-			if(recibido<0){
-				if(conectado)
-					cout<<"Conexion perdida con el servidor."<<endl;
-				cout<<"Intentando reconectar con el servidor..."<<endl;
-				conectado = false;
-				break;
-			}
-			recibido = recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
-			if(recibido<0){
-						if(conectado)
-							cout<<"Conexion perdida con el servidor."<<endl;
-						cout<<"Intentando reconectar con el servidor..."<<endl;
-						conectado = false;
-						break;
-					}
-			recibido = recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
-			if(recibido<0){
-						if(conectado)
-							cout<<"Conexion perdida con el servidor."<<endl;
-						cout<<"Intentando reconectar con el servidor..."<<endl;
-						conectado = false;
-						break;
-					}
+			if(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)<0) break;
+			if(recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL)<0) break;
+			if(recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL)<0) break;
+
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
 		juegoCliente->graficos()->render();
 		send(numeroSocket,&evento,sizeof(evento),0);//heartbeat
 	}
-}
 
+}
 
 
 void *Cliente::enviarEventosWrapper(void* arg){
