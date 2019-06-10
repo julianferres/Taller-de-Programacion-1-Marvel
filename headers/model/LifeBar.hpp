@@ -15,10 +15,10 @@ class LifeBar{
 		int obtenerLado(string nombrePersonaje);
 		int obtenerAltura(string nombrePersonaje);
 
-		int obtenerAnchoBarra(string nombrePersonaje);
+		int obtenerAnchoBarra(string nombrePersonaje, int alturaVentana);
 		int obtenerLargoBarra(string nombrePersonaje, int anchoVentana);
 		int obtenerPosicionHorizontal(string nombrePersonaje, int anchoVentana);
-		int obtenerPosicionVertical(string nombrePersonaje);
+		int obtenerPosicionVertical(string nombrePersonaje, int alturaVentana);
 		SDL_RendererFlip obtenerFlipBarra(string nombrePersonaje);
 		void actualizarPersonajesActuales(string nombrePersonaje);
 
@@ -31,16 +31,13 @@ class LifeBar{
 		map<string, int> lados;
 		map<string, int> alturas;
 		map<string, string> companieros;
-		int posicionVerticalArriba = 10;
-		int posicionVerticalAbajo = 85;
-		int anchoBarraArriba = 70;
 		int posicionHorizontalIzquierda = 10;
 
-		int posicionHorizontalVidaIzq = 15;
-		int posicionVerticalVidaArriba = 72;
-		int posicionVerticalVidaAbajo = 150;
-		int anchoFondoVidaArriba = 32;
-		int largoFondoVida = 318;
+		int posicionHorizontalVidaArribaIzq = 75;
+		int posicionVerticalVidaArriba = 14;
+		int posicionVerticalVidaAbajo = 88;
+		int anchoFondoVidaArriba = 37;
+		int largoFondoVida = 320;
 
 };
 

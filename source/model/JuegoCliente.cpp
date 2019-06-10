@@ -78,25 +78,25 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 
 void JuegoCliente::dibujarBarrasVida(){
 	string nombre = "";
-	SDL_Rect fondoVida;
 	for(int i = 0; i < 4; i++){
 		if(i == 0) nombre = "CapitanAmerica";
 		else if(i == 1) nombre = "Hulk";
 		else if(i == 2) nombre = "Spiderman";
 		else nombre = "Venom";
-
-		destino.h = lifeBar->obtenerAnchoBarra(nombre);
+		destino.h = lifeBar->obtenerAnchoBarra(nombre, this->altoVentana);
 		destino.w = lifeBar->obtenerLargoBarra(nombre, this->anchoVentana);
 		destino.x = lifeBar->obtenerPosicionHorizontal(nombre, this->anchoVentana);
-		destino.y = lifeBar->obtenerPosicionVertical(nombre);
+		destino.y = lifeBar->obtenerPosicionVertical(nombre, this->altoVentana);
 
-		fondoVida.x = lifeBar->obtenerPosicionVerticalFondoVida(nombre);
-		fondoVida.y = lifeBar->obtenerPosicionHorizontalFondoVida(nombre, this->anchoVentana);
+		/*fondoVida.y = lifeBar->obtenerPosicionVerticalFondoVida(nombre);
+		fondoVida.x = lifeBar->obtenerPosicionHorizontalFondoVida(nombre, this->anchoVentana);
 		fondoVida.h = lifeBar->obtenerAnchoFondoVida(nombre);
-		fondoVida.w = lifeBar->obtenerLargoFondoVida(nombre);
+		fondoVida.w = lifeBar->obtenerLargoFondoVida(nombre);*/
 
+
+		//this->grafico->dibujarRectanguloDeColor(200,50,0,0, &fondoVida);
 		this->grafico->dibujarImagen(getTextura(lifeBar->obtenerNombreBarra(nombre)), NULL,&destino, lifeBar->obtenerFlipBarra(nombre));
-		this->grafico->dibujarRectanguloDeColor(255,255,0,150, &fondoVida);
+
 	}
 }
 
