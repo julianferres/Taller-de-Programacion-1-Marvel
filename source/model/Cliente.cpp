@@ -67,11 +67,14 @@ void Cliente::cargarContenidos(){
 		personajesYfondos.push_back(make_tuple(personajes[i]+"Boton",buttonPath));
 	}
 	vector<int> fondos = controladorJson->getZindexes(round);
-	for(size_t i=0;i<fondos.size();i++){
-		//TODO Setear numero de round
-		const string &filePath = controladorJson->pathFondo(fondos[i],round);
-		personajesYfondos.push_back(make_tuple(to_string(fondos[i]),filePath));
+	for (int r=1; r<4; r++){
+		for(size_t i=0;i<fondos.size();i++){
+			//TODO Setear numero de round
+			const string &filePath = controladorJson->pathFondo(fondos[i],r);
+			personajesYfondos.push_back(make_tuple(to_string(fondos[i])+ to_string(r),filePath));
+		}
 	}
+
 	personajesYfondos.push_back(make_tuple(string("Fondo"), string("contents/images/fondo.png")));
 }
 

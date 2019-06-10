@@ -1,0 +1,19 @@
+INFO ; Archivo de logging creado! ; Sun Jun  9 20:21:21 2019
+INFO ; main::Comienzo a leer el json ; Sun Jun  9 20:21:21 2019
+INFO ; ControladorJson::Log level = DEBUG ; Sun Jun  9 20:21:21 2019
+DEBUG ; ControladorJson::Altura ventana seteada: 700 ; Sun Jun  9 20:21:21 2019
+DEBUG ; ControladorJson::Ancho ventana seteada: 1200 ; Sun Jun  9 20:21:21 2019
+DEBUG ; ControladorJson::Fullscreen = 0 ; Sun Jun  9 20:21:21 2019
+DEBUG ; ControladorJson::FPS seteados = 60 ; Sun Jun  9 20:21:21 2019
+DEBUG ; ControladorJson::Personajes contados = 4 ; Sun Jun  9 20:21:21 2019
+DEBUG ; ControladorJson::Fondos contados = 3 ; Sun Jun  9 20:21:21 2019
+DEBUG ; ControladorJson::Personajes seteados ; Sun Jun  9 20:21:21 2019
+DEBUG ; ControladorJson::Fondos seteados ; Sun Jun  9 20:21:21 2019
+INFO ; ControladorJson::Archivo de configuracion JSON leido correctamente ; Sun Jun  9 20:21:21 2019
+INFO ; main::Json leido. Comienzo el juego ; Sun Jun  9 20:21:21 2019
+INFO ; Servidor::Socket creado. ; Sun Jun  9 20:21:21 2019
+DEBUG ; Parallax::Camara 1 inicializada ; Sun Jun  9 20:21:21 2019
+DEBUG ; Parallax::Camara 2 inicializada ; Sun Jun  9 20:21:21 2019
+DEBUG ; Parallax::Camara 3 inicializada ; Sun Jun  9 20:21:21 2019
+INFO ; Juego::Se inicio el juego ; Sun Jun  9 20:21:21 2019
+DEBUG ; GameMenu::Inicio menu ; Sun Jun  9 20:21:21 2019

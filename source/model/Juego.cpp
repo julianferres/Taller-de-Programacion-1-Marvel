@@ -166,17 +166,17 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 			if(fondos_dibujados == 0 ){
 				SDL_Rect* origen = parallax->camaraz1();
 				SDL_Rect* destinoz1 = parallax->getDestinoZ1();
-				dibujables.push_back(make_tuple(to_string(zindexes[2]),*origen,*destinoz1,flip));
+				dibujables.push_back(make_tuple(to_string(zindexes[2])+ to_string(this->roundActual->getNumero()),*origen,*destinoz1,flip));
 			}
 			else if(fondos_dibujados == 1 ){
 				SDL_Rect *origen = parallax->camaraz2();
 				SDL_Rect* destinoz2 = parallax->getDestinoZ2();
-				dibujables.push_back(make_tuple(to_string(zindexes[1]),*origen,*destinoz2,flip));
+				dibujables.push_back(make_tuple(to_string(zindexes[1]) + to_string(this->roundActual->getNumero()),*origen,*destinoz2,flip));
 			}
 			else if(fondos_dibujados == 2 ){
 				SDL_Rect *origen = parallax->camaraz3();
 				SDL_Rect* destinoz3 = parallax->getDestinoZ3();
-				dibujables.push_back(make_tuple(to_string(zindexes[0]),*origen,*destinoz3,flip));
+				dibujables.push_back(make_tuple(to_string(zindexes[0]) + to_string(this->roundActual->getNumero()),*origen,*destinoz3,flip));
 			}
 			fondos_dibujados++;
 		}
