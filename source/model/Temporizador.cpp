@@ -6,21 +6,6 @@
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
-/*
-Temporizador* Temporizador::isInstance = 0;
-
-Temporizador* Temporizador::Instance(){
-
-	if(isInstance == 0){
-		isInstance = new Temporizador();
-	}
-	return isInstance;
-}
-
-void Temporizador::eliminar(){
-	delete isInstance;
-	isInstance = 0;
-}*/
 
 Temporizador::Temporizador(){
 	this->escalaDeTiempo = 1.0f;
@@ -57,9 +42,9 @@ void Temporizador::actualizar(){
 	this->deltaTiempo = this->tiempoTranscurrido * 0.001f;
 }
 
-std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Temporizador::getDibujable(){
+std::tuple<std::string, SDL_Rect, SDL_Rect ,SDL_RendererFlip > Temporizador::getDibujable(){
 	SDL_Rect origen = {-1,-1,-1,-1};
-	SDL_Rect destino = { this->ancho_ventana /2, (270 * this->alto_ventana) / this->alto_maximo_ventana,0,0};
-	return make_tuple(std::string("Temporizador"),origen,destino,SDL_FLIP_NONE);
+	SDL_Rect destino = { this->ancho_ventana /2, (80 * this->alto_ventana) / this->alto_maximo_ventana,0,0};
+	return make_tuple(std::string("Temporizador/") + to_string(10-int(this->getDeltaTiempo())),origen,destino,SDL_FLIP_NONE);
 
 }

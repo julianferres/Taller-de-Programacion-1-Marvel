@@ -181,6 +181,7 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 			fondos_dibujados++;
 		}
 	}
+	dibujables.push_back(this->roundActual->getTiempoDibujable());
 	return dibujables;
 
 }

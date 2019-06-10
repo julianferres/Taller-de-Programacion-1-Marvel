@@ -31,4 +31,6 @@ void Round::actualizarTiempo(){
 	this->tiempo->actualizar();
 }
 
-
+std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Round::getTiempoDibujable(){
+	return this->tiempo->getDibujable();
+}

@@ -18,6 +18,7 @@ public:
 	void iniciarTiempo();
 	bool finalizado();
 	void actualizarTiempo();
+	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getTiempoDibujable();
 
 private:
 
