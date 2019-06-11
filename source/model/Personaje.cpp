@@ -9,6 +9,8 @@ extern ControladorLogger *controladorLogger;
 
 #define constanteDeAltura 20.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
 #define constanteTiempoCiclos 0.3
+#define constanteEstiramientoHorizontal 2.5
+#define anchoDefault 100
 
 using namespace std;
 
@@ -223,7 +225,10 @@ float Personaje::getPosY(){
 }
 
 SDL_Rect  Personaje::obtenerRectangulo(){
-	SDL_Rect rectangulo = { static_cast<int>(posx), static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), alto};
+	int posicionXdibujable = posx;
+	if(flip)
+		posicionXdibujable = posx+ 2.5*(-spriteAnimado->getAncho()+anchoDefault);
+	SDL_Rect rectangulo = { static_cast<int>(posicionXdibujable), static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), alto};
 	return rectangulo;
 }
 
