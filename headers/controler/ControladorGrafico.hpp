@@ -4,6 +4,8 @@
 #include <map>
 #include <string>
 #include <SDL2/SDL_image.h>
+#include <ControladorJson.hpp>
+#include <ControladorLogger.hpp>
 
 using namespace std;
 

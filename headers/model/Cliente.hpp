@@ -1,5 +1,6 @@
 #ifndef HEADERS_MODEL_CLIENTE_HPP_
 #define HEADERS_MODEL_CLIENTE_HPP_
+
 #include <GameMenu.hpp>
 #include <JuegoCliente.hpp>
 #include <ControladorLogger.hpp>
@@ -7,6 +8,14 @@
 #include <string>
 #include <tuple>
 #include <SDL2/SDL_image.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <netdb.h>
+#include <strings.h>
+#include <tuple>
 
 #define MAXDATOS 1000
 #define CANTIDAD_MAXIMA_JUGADORES 4
@@ -27,19 +36,20 @@ class Cliente{
 		void recibirFondos();
 		void recibirTitulos();
 		static void* enviarEventosWrapper(void* arg);
+		static void* sonidosWrapper(void* arg);
+		void manejarSonidos();
 		void partidallena();
-		int verificarConexion(int recibido);
 
 	private:
 		JuegoCliente *juegoCliente;
 		ControladorEnvio sistemaEnvio;
-		int idCliente;
-		int numeroSocket;
+		int idCliente,numeroSocket;
 		char buffer[MAXDATOS];
 		bool running = true;
 		bool enMenu = true;
+		bool conectado = true;
 		vector<tuple<string, const string>> personajesYfondos;
-		bool conectado=true;
+
 
 	};
 
