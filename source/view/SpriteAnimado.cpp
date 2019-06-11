@@ -90,8 +90,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *salto = new Animacion("salto",14,0,473,100,135,3);
 		Animacion *agacharse = new Animacion("agacharse",13,0,1180,110,90,4);
 		Animacion *cambioEntrada = new Animacion("cambioEntrada",14,0,227,110,133,2);
-		Animacion *golpeS=new Animacion("golpeS",5,0,688,225,172,4);//golpe simple
-		Animacion *patadaS=new Animacion("patadaS",5,0,860,225,172,4);//patada simple
+		Animacion *golpeS=new Animacion("golpeS",5,0,633,158,85,4);//golpe simple
+		Animacion *patadaS=new Animacion("patadaS",4,1000,774,153,102,4);//patada simple
 		Animacion *golpeAS=new Animacion("golpeAS",5,0,1376,225,172,4);//golpe agachado simple
 		Animacion *patadaAS=new Animacion("patadaAS",5,0,1548,225,172,4);//patada agachado simple
 		Animacion *golpeSS=new Animacion("golpeSS",4,0,1032,225,172,4);//golpe saltando simple

@@ -46,6 +46,13 @@
             "zindex":99,
 			"buttonpath": "contents/images/BotonSpiderman.png"          
             },
+        {"name":"MegaMan",
+	        "filepath":"contents/images/MegaMan.png",
+	        "height":395.6,
+	        "width":517.5,
+	        "zindex":99	,
+			"buttonpath": "contents/images/BotonMegaMan.png"                          
+		},
 	    {"name":"Hulk",
             "filepath":"contents/images/Hulk.png",
             "height":380,
