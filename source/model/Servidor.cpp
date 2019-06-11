@@ -113,25 +113,33 @@ void Servidor::gameLoop(){
 	Uint32 tiempoInicial,tiempoActual;
 	int FPS = controladorJson->cantidadFPS();
 	tuple<SDL_Event,int>tuplaEvento;
-	while(true){
+	while(this->juego->running()){
+		cout<< "Round " << this->juego->numeroRound()<< " iniciado" << endl;
+		this->juego->iniciarRound();
+		while(!this->juego->roundFinalizado()){
+			tiempoInicial= SDL_GetTicks();
+			this->juego->actualizarTiempo();
+			server_mutex.lock();
+			while(!colaEventos.empty()){
+				tuplaEvento = colaEventos.front();
+				colaEventos.pop();
+				juego->teclear(get<0>(tuplaEvento),get<1>(tuplaEvento));
+			}
+			this->dibujables = juego->dibujar();
+			server_mutex.unlock();
 
-		tiempoInicial= SDL_GetTicks();
+			tiempoActual = SDL_GetTicks();
+			this->juego->actualizarTiempo();
+			 if(tiempoActual - tiempoInicial < 1000/FPS)
+				SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
 
-		server_mutex.lock();
-		while(!colaEventos.empty()){
-			tuplaEvento = colaEventos.front();
-			colaEventos.pop();
-			juego->teclear(get<0>(tuplaEvento),get<1>(tuplaEvento));
-		}
-		this->dibujables = juego->dibujar();
-		server_mutex.unlock();
+			}
+		this->juego->nuevoRound();
+	}
+	cout<<"Juego Finalizado" <<endl;
 
-		tiempoActual = SDL_GetTicks();
 
-		 if(tiempoActual - tiempoInicial < 1000/FPS)
-			SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
 
-		}
 }
 
 void *Servidor::actualizarModelo(){

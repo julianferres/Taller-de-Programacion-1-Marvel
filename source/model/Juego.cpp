@@ -17,9 +17,11 @@ extern ControladorLogger *controladorLogger;
 
 
 Juego::Juego(){
-
+	//TODO Parallax parametro round
+	this->isRunning = true;
 	this->teclado = new ControladorTeclado();
-	this-> parallax = new Parallax();
+	this->roundActual = new Round(1);
+	this-> parallax = this->roundActual->getParallax();
 	controladorLogger->registrarEvento("INFO", "Juego::Se inicio el juego");
 
 }
@@ -32,6 +34,34 @@ Juego::~Juego(){
 
 }
 
+void Juego::nuevoRound(){
+	this->ganadores.push_back(this->getGanadorUltimoRound());
+	this->reiniciarPersonajes();
+	int nuevoNum = this->roundActual->getNumero()+1;
+	if (nuevoNum == 4){//TODO Cuando se sepa el ganador posta, esto cambia si un mimo equipo gana los dos primeros rounds
+		isRunning = false;
+		return;
+	}
+	this->roundActual = new Round(nuevoNum);
+}
+void Juego::iniciarRound(){
+	this->roundActual->iniciarTiempo();
+}
+
+bool Juego::roundFinalizado(){
+	return this->roundActual->finalizado();
+}
+void Juego::actualizarTiempo(){
+	this->roundActual->actualizarTiempo();
+}
+
+int Juego::numeroRound(){
+	return this->roundActual->getNumero();
+}
+
+bool Juego::running(){
+	return this->isRunning;
+}
 Equipo* Juego::getEquipo1(){
 	return this->equipo1;
 }
@@ -112,10 +142,11 @@ std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
 
 
 vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
+
 	SDL_RendererFlip flip ;
 	vector<tuple<string,SDL_Rect , SDL_Rect,SDL_RendererFlip >> dibujables;
 	vector<tuple<Jugador *, int>> zindexs_personajes = obtenerOrdenDibujo();
-	vector<int>zindexes = controladorJson->getZindexes();
+	vector<int>zindexes = controladorJson->getZindexes(this->roundActual->getNumero());
 	this->verificarCambioDeLado();
 	int fondos_dibujados = 0;
 	int personajes_dibujados = 0;
@@ -135,21 +166,22 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 			if(fondos_dibujados == 0 ){
 				SDL_Rect* origen = parallax->camaraz1();
 				SDL_Rect* destinoz1 = parallax->getDestinoZ1();
-				dibujables.push_back(make_tuple(to_string(zindexes[2]),*origen,*destinoz1,flip));
+				dibujables.push_back(make_tuple(to_string(zindexes[2])+ to_string(this->roundActual->getNumero()),*origen,*destinoz1,flip));
 			}
 			else if(fondos_dibujados == 1 ){
 				SDL_Rect *origen = parallax->camaraz2();
 				SDL_Rect* destinoz2 = parallax->getDestinoZ2();
-				dibujables.push_back(make_tuple(to_string(zindexes[1]),*origen,*destinoz2,flip));
+				dibujables.push_back(make_tuple(to_string(zindexes[1]) + to_string(this->roundActual->getNumero()),*origen,*destinoz2,flip));
 			}
 			else if(fondos_dibujados == 2 ){
 				SDL_Rect *origen = parallax->camaraz3();
 				SDL_Rect* destinoz3 = parallax->getDestinoZ3();
-				dibujables.push_back(make_tuple(to_string(zindexes[0]),*origen,*destinoz3,flip));
+				dibujables.push_back(make_tuple(to_string(zindexes[0]) + to_string(this->roundActual->getNumero()),*origen,*destinoz3,flip));
 			}
 			fondos_dibujados++;
 		}
 	}
+	dibujables.push_back(this->roundActual->getTiempoDibujable());
 	return dibujables;
 
 }
@@ -298,4 +330,15 @@ std::vector<std::string> Juego::gameMenu(){
 	nombres_jugadores.push_back("Venom");
 	nombres_jugadores.push_back("Hulk");
 	return nombres_jugadores;
+}
+
+Equipo * Juego::getGanadorUltimoRound(){
+	return this->equipo1;
+}
+
+void Juego::reiniciarPersonajes(){
+	//por ahora solo vuelven a la pocicion inicial
+	//TODO reiniciar vida y otras cossas
+	this->jugadorActualEquipo1->devolverPersonajeActual()->cambio();
+	this->jugadorActualEquipo2->devolverPersonajeActual()->cambio();
 }

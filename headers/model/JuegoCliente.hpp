@@ -16,6 +16,8 @@ public:
 	~JuegoCliente();
 	ControladorGrafico *graficos();
 	SDL_Texture * getTextura(string nombre);
+	SDL_Texture * getTimer(string tiempo);
+	void iniciarGraficos(int idCliente);
 	void cargarTexturas(vector<tuple<string, const string>> nombresYpaths);
 	void cargarTitulosMenu(vector<tuple<string,string,int,string,int ,int ,int >>titulos);
 	void dibujar(std::string nombre,int posiciones[8],SDL_RendererFlip flip);

@@ -12,7 +12,7 @@ class Parallax{
 	public:
 
 		~Parallax();
-		Parallax();
+		Parallax(int round);
 		void moverCamaraIzquierda();
 		void moverCamaraDerecha();
 		void iniciarCamaras();
@@ -32,6 +32,7 @@ class Parallax{
 		const int SPEED_z1 = 5;
 		const int SPEED_z2=  7.5;
 		const int SPEED_z3 = 10;
+		int round;
 		int fondo1_w;
 		int fondo2_w;
 		int fondo3_w;

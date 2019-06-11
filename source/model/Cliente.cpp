@@ -54,6 +54,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 
 void Cliente::cargarContenidos(){
 	juegoCliente->correrCancionFondo("contents/sounds/Menu/menu.mp3",-1);
+	int round = 3;
 	vector<string> personajes = controladorJson->getNombresPersonajes();
 	for(size_t i=0;i<personajes.size();i++){
 		const string &filePath = controladorJson->pathImagen(personajes[i]);
@@ -61,11 +62,15 @@ void Cliente::cargarContenidos(){
 		const string &buttonPath = controladorJson->pathBoton((personajes[i]));
 		personajesYfondos.push_back(make_tuple(personajes[i]+"Boton",buttonPath));
 	}
-	vector<int> fondos = controladorJson->getZindexes();
-	for(size_t i=0;i<fondos.size();i++){
-		const string &filePath = controladorJson->pathFondo(fondos[i]);
-		personajesYfondos.push_back(make_tuple(to_string(fondos[i]),filePath));
+	vector<int> fondos = controladorJson->getZindexes(round);
+	for (int r=1; r<4; r++){
+		for(size_t i=0;i<fondos.size();i++){
+			//TODO Setear numero de round
+			const string &filePath = controladorJson->pathFondo(fondos[i],r);
+			personajesYfondos.push_back(make_tuple(to_string(fondos[i])+ to_string(r),filePath));
+		}
 	}
+
 	personajesYfondos.push_back(make_tuple(string("Fondo"), string("contents/images/fondo.png")));
 	personajesYfondos.push_back(make_tuple(string("ConnectionLost"), string("contents/images/connectionLost.png")));
 }

@@ -1,7 +1,13 @@
 #include <JuegoCliente.hpp>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <ControladorGrafico.hpp>
+#include <ControladorJson.hpp>
 #include<iostream>
 
 using namespace std;
+//SDL_Color color ={0,0,0};
 
 JuegoCliente::JuegoCliente(int idCliente){
 	this->grafico = new ControladorGrafico(idCliente);
@@ -33,7 +39,22 @@ void JuegoCliente::cargarTitulosMenu(vector<tuple<string,string,int,string,int ,
 }
 
 SDL_Texture * JuegoCliente::getTextura(string nombre){
+	string key = nombre.substr(0, nombre.find("/"));
+	if (key == "Temporizador"){
+		string tiempo = nombre.substr(nombre.find("/")+1, nombre.length());
+		return this->getTimer(tiempo);
+	}
 	return this->texturas->getTextura(nombre);
+}
+
+SDL_Texture * JuegoCliente::getTimer(string tiempo){
+
+	SDL_Color color ={255,255, 255};
+	string path="contents/Fonts/Badaboom.TTF";
+	TTF_Font* font = TTF_OpenFont(path.c_str(),50);
+	SDL_Surface *surface = TTF_RenderText_Solid(font, tiempo.c_str(), color);
+	SDL_Texture * textura = SDL_CreateTextureFromSurface(this->grafico->getRenderer(), surface);
+	return textura;
 }
 
 void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip){
@@ -43,15 +64,16 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 	origen.y = posiciones[1];
 	origen.w = posiciones[2];
 	origen.h = posiciones[3];
-
-	if(nombre=="Titulo" ||nombre=="SubTitulo" || nombre=="Eleccion")
+	string key = nombre.substr(0, nombre.find("/"));
+	if(key=="Titulo" ||key=="SubTitulo" || key=="Eleccion" || key == "Temporizador"){
 		SDL_QueryTexture(getTextura(nombre), NULL, NULL,&w , &h);
-
+		//cout << "textura for " << key << "Queriada" << endl;
+	}
 	destino.x = posiciones[4]-(w/2);
 	destino.y = posiciones[5];
 	destino.w = posiciones[6]+w;
 	destino.h = posiciones[7]+h;
-
+	//cout << "rects for " << key << " listos" << endl;
 	if(posiciones[0]==-1)
 		this->grafico->dibujarImagen(getTextura(nombre),NULL, &destino, flip);
 	else

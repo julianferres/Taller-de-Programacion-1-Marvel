@@ -20,7 +20,7 @@ class ControladorJson{
 		int alturaPersonaje(std::string);
 		int anchoPersonaje(std::string);
 		int zindexPersonaje(std::string nombrePersonaje);
-		int cantidadFondos();
+		int cantidadFondos(int round);
 		int cantidadPersonajes();
 		int cantidadClientes();
 		int getPosicionXInicialEquipo1();
@@ -38,7 +38,7 @@ class ControladorJson{
 		void maximizarVentana(int ancho, int alto);
 		void setPersonajeJugador(int personaje, int jugador, string nombre);
 		string nivelDebug();
-		string pathFondo(int zindex);
+		string pathFondo(int zindex, int round);
 		string pathImagen(string nombrePersonaje);
 		string pathBoton(string nombrePersonaje);
 		string nombrePersonajeI(int i);
@@ -46,7 +46,7 @@ class ControladorJson{
 		string jugador1Personaje(int numero);
 		string jugador2Personaje(int numero);
 		vector <string> getNombresPersonajes();
-		vector<int>getZindexes();
+		vector<int>getZindexes(int round);
 
 
 	private:
@@ -54,7 +54,8 @@ class ControladorJson{
 		int altura_ventana;
 		int ancho_ventana;
 		int cantidad_personajes;
-		int cantidad_fondos;
+		int cantidad_rounds;
+		vector<int> cantidad_fondos;
 		int cantidad_clientes;
 		int FPS;
 		int cantidad_jugadores;
@@ -67,7 +68,8 @@ class ControladorJson{
 		vector<string> nombresPersonajes;
 		vector<int>zindexes;
 		vector<tuplaPersonaje> personajes;
-		vector<tuple<string, int>> fondos;
+		//vector<tuple<string, int>> fondos;
+		vector<vector<tuple<string, int>>> escenarios;
 		string configPath = "source/config/config.json";
 		vector<string> personajesJugador1;
 		vector<string> personajesJugador2;
@@ -97,7 +99,9 @@ class ControladorJson{
 		void setCantidadJugadores(json j)throw();
 		void setCantidadPersonajes(json j)throw();
 		void setCantidadFondos(json j)throw();
-		void setFondos(json j)throw();
+		void setCantidadRounds(json j)throw();
+		void setRounds(json j)throw();
+		vector<tuple<string, int>> setFondos(json j, int round)throw();
 		void setPersonajes(json j)throw();
 		void elegirPersonajes(json j) throw();
 		void fallaPersonajes();
