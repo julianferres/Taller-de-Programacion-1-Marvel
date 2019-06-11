@@ -14,6 +14,8 @@ class Animacion{
 		int getVelocidad();
 		std::string getNombre();
 		SDL_Rect getRectOrigen(int frameIndex);
+		int getAlto();
+		int getAncho();
 
 	private:
 
@@ -21,6 +23,8 @@ class Animacion{
 		std::vector<SDL_Rect> rectangulos;
 		int velocidad;
 		int frames;
+		int alto;
+		int ancho;
 
 };
 

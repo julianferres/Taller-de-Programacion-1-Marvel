@@ -223,7 +223,7 @@ float Personaje::getPosY(){
 }
 
 SDL_Rect  Personaje::obtenerRectangulo(){
-	SDL_Rect rectangulo = { static_cast<int>(posx), static_cast<int>(posy), ancho, alto};
+	SDL_Rect rectangulo = { static_cast<int>(posx), static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), alto};
 	return rectangulo;
 }
 

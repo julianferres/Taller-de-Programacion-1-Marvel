@@ -27,22 +27,30 @@ string SpriteAnimado::getNombre(){
 	return this->nombreSprite;
 }
 
+int SpriteAnimado::getAlto(){
+	return this->animacionActual->getAlto();
+}
+
+int SpriteAnimado::getAncho(){
+	return this->animacionActual->getAncho();
+}
+
 void SpriteAnimado::cargarAnimaciones(string nombre){
 	if(nombre == "CapitanAmerica" ){
-		Animacion *quieto = new Animacion("quieto",9,0,0,225,172,6);
-		Animacion *moverDerecha = new Animacion("movDerecha",6,0,172,225,172,4);
-		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,344,225,172,4);
-		Animacion *salto = new Animacion("salto",8,0,688,225,172,7);
-		Animacion *agacharse = new Animacion("agacharse",3,0,860,225,172,4);
-		Animacion *cambioEntrada = new Animacion("cambioEntrada",7,0,516,225,172,2);
-		Animacion *golpeS=new Animacion("golpeS",3,0,1032,225,172,8);//golpe simple
-		Animacion *patadaS=new Animacion("patadaS",3,0,1204,225,172,6);//patada simple
+		Animacion *quieto = new Animacion("quieto",9,11,16,100,120,6);
+		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,4);
+		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,4);
+		Animacion *salto = new Animacion("salto",8,0,590,125,140,7);
+		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,105,4);
+		Animacion *cambioEntrada = new Animacion("cambioEntrada",7,125,420,125,158,2);
+		Animacion *golpeS=new Animacion("golpeS",3,0,872,140,114,5);//golpe simple
+		Animacion *patadaS=new Animacion("patadaS",3,0,2079,123,120,6);//patada simple
 		Animacion *golpeAS=new Animacion("golpeAS",3,0,1548,225,172,8);//golpe agachado simple
 		Animacion *patadaAS=new Animacion("patadaAS",3,0,1376,225,172,16);//patada agachado simple
 		Animacion *golpeSS=new Animacion("golpeSS",4,0,1892,225,172,10);//golpe saltando simple
 		Animacion *patadaSS=new Animacion("patadaSS",5,0,1720,225,172,10);//patada saltando simple
 		Animacion *golpeF=new Animacion("golpeF",5,0,2064,225,172,8);//golpe fuerte
-		Animacion *patadaF=new Animacion("patadaF",6,0,2236,225,172,6);//patada fuerte
+		Animacion *patadaF=new Animacion("patadaF",4,400,2077,130,130,6);//patada fuerte
 		Animacion *golpeAF=new Animacion("golpeAF",4,0,2408,225,172,8);//golpe agachado fuerte
 		Animacion *patadaAF=new Animacion("patadaAF",4,0,2580,225,172,16);//patada agachado fuerte
 		Animacion *golpeSF=new Animacion("golpeSF",5,0,2752,225,172,10);//golpe saltando fuerte

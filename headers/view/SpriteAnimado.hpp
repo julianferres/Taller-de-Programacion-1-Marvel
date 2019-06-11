@@ -25,6 +25,8 @@ class SpriteAnimado{
 		string getAnimacionActual();
 		string getNombre();
 		SDL_Rect rectOrigen();
+		int getAlto();
+		int getAncho();
 
 
 	private:
