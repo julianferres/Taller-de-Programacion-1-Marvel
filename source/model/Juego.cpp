@@ -245,18 +245,6 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				personaje1->agacharse();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
 			}
-			if (teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)&&teclado->sePresionoUnaTecla(SDL_SCANCODE_J)){
-				personaje1->golpe("golpeAS");
-			}
-			if (teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)&&teclado->sePresionoUnaTecla(SDL_SCANCODE_K)){
-				personaje1->golpe("patadaAS");
-			}
-			if (teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)&&teclado->sePresionoUnaTecla(SDL_SCANCODE_U)){
-				personaje1->golpe("golpeAF");
-			}
-			if (teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)&&teclado->sePresionoUnaTecla(SDL_SCANCODE_I)){
-				personaje1->golpe("patadaAF");
-			}
 			if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A) ){
 					personaje1->cambiarAnimacion("quieto");
 			}
@@ -305,17 +293,20 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				if (teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_DOWN)&&teclado->sePresionoUnaTecla(SDL_SCANCODE_S)){
 					personaje2->golpe("patadaAS");
 				}
-				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_Z)){
+				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_V)){
 					personaje2->golpe("golpeS");
 				}
-				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_X)){
+				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_B)){
 					personaje2->golpe("patadaS");
 				}
-				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_C)){
-					//cout<<"golpe fuerte"<<endl;
+				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_F)){
+					personaje2->golpe("golpeF");
 				}
-				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_V)){
-					//cout<<"patada fuerte"<<endl;
+				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_G)){
+					personaje2->golpe("patadaF");
+				}
+				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_N)){
+					personaje2->defenderse();
 				}
 
 				if(teclado->seSoltoUnaTecla(SDL_SCANCODE_DOWN) || teclado->seSoltoUnaTecla(SDL_SCANCODE_LEFT) || teclado->seSoltoUnaTecla(SDL_SCANCODE_RIGHT)){

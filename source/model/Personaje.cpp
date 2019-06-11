@@ -49,6 +49,9 @@ void Personaje::actualizar(){
 }
 
 void Personaje::cambiarAnimacion(string nombre){
+	if (agachado){
+		agachado=false;
+	}
 	this->spriteAnimado->cambiarAnimacion(nombre);
 }
 
@@ -125,14 +128,32 @@ void Personaje::golpe(string tipoDeGolpe){
 
 	}
 	else{
+		if(agachado){
+			if(tipoDeGolpe=="golpeS"){
+				this->spriteAnimado->iniciarAnimacion("golpeAS");
+			}
+			if(tipoDeGolpe=="golpeF"){
+				this->spriteAnimado->iniciarAnimacion("golpeAF");
+			}
+			if(tipoDeGolpe=="patadaS"){
+				this->spriteAnimado->iniciarAnimacion("patadaAS");
+			}
+			if(tipoDeGolpe=="patadaF"){
+				this->spriteAnimado->iniciarAnimacion("patadaAF");
+			}
+		}
+		else{
 			this->spriteAnimado->iniciarAnimacion(tipoDeGolpe);
+		}
 	}
 }
 
 void Personaje::agacharse(){
 	if(saltando ) return;
-	agachado = true;
-	this->spriteAnimado->iniciarAnimacion("agacharse");
+	if(!agachado){
+		agachado = true;
+		this->spriteAnimado->iniciarAnimacion("agacharse");
+	}
 }
 void Personaje::defenderse(){
 	if(saltando ) return;
