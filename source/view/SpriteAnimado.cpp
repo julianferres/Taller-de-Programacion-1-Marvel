@@ -47,7 +47,13 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *patadaAF=new Animacion("patadaAF",4,0,2580,225,172,16);//patada agachado fuerte
 		Animacion *golpeSF=new Animacion("golpeSF",5,0,2752,225,172,10);//golpe saltando fuerte
 		Animacion *patadaSF=new Animacion("patadaSF",4,0,2924,225,172,10);//patada saltando fuerte
-		Animacion *defensa=new Animacion("defensa",5,0,3096,225,172,10);
+		Animacion *defensa=new Animacion("defensa",3,0,3096,225,172,10);
+		Animacion *disparo=new Animacion("disparar",8,0,3268,225,172,8);
+		Animacion *tiro=new Animacion("tirar",6,0,3440,225,172,8);
+		Animacion *rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
+		animaciones.push_back(disparo);
+		animaciones.push_back(tiro);
+		animaciones.push_back(rgolpe);
 		animaciones.push_back(defensa);
 		animaciones.push_back(golpeF);
 		animaciones.push_back(patadaF);
@@ -89,6 +95,12 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *golpeSF=new Animacion("golpeSF",7,0,2580,225,172,10);//golpe saltando fuerte
 		Animacion *patadaSF=new Animacion("patadaSF",6,0,2752,225,172,10);//patada saltando fuerte
 		Animacion *defensa=new Animacion("defensa",10,0,2924,225,172,4);
+		Animacion *disparo=new Animacion("disparar",8,0,3268,225,172,8);
+		Animacion *tiro=new Animacion("tirar",6,0,3440,225,172,8);
+		Animacion *rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
+		animaciones.push_back(disparo);
+		animaciones.push_back(tiro);
+		animaciones.push_back(rgolpe);
 		animaciones.push_back(defensa);	
 		animaciones.push_back(golpeF);
 		animaciones.push_back(patadaF);
@@ -131,6 +143,12 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *golpeSF=new Animacion("golpeSF",7,0,2580,225,172,10);//golpe saltando fuerte
 		Animacion *patadaSF=new Animacion("patadaSF",6,0,2752,225,172,10);//patada saltando fuerte
 		Animacion *defensa=new Animacion("defensa",10,0,2924,225,172,8);
+		Animacion *disparo=new Animacion("disparar",8,0,3268,225,172,8);
+		Animacion *tiro=new Animacion("tirar",6,0,3440,225,172,8);
+		Animacion *rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
+		animaciones.push_back(disparo);
+		animaciones.push_back(tiro);
+		animaciones.push_back(rgolpe);
 		animaciones.push_back(defensa);		
 		animaciones.push_back(golpeF);
 		animaciones.push_back(patadaF);
@@ -173,6 +191,12 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *golpeSF=new Animacion("golpeSF",8,0,2924,225,172,10);//golpe saltando fuerte
 		Animacion *patadaSF=new Animacion("patadaSF",11,0,3096,225,172,10);//patada saltando fuerte
 		Animacion *defensa=new Animacion("defensa",4,0,2064,225,172,8);
+		Animacion *disparo=new Animacion("disparar",8,0,3268,225,172,8);
+		Animacion *tiro=new Animacion("tirar",6,0,3440,225,172,8);
+		Animacion *rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
+		animaciones.push_back(disparo);
+		animaciones.push_back(tiro);
+		animaciones.push_back(rgolpe);
 		animaciones.push_back(defensa);		
 		animaciones.push_back(golpeF);
 		animaciones.push_back(patadaF);
@@ -215,6 +239,12 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *golpeSF=new Animacion("golpeSF",4,0,1892,225,172,10);//golpe saltando fuerte
 		Animacion *patadaSF=new Animacion("patadaSF",4,0,1720,225,172,10);//patada saltando fuerte
 		Animacion *defensa=new Animacion("defensa",1,1,1,1,1,1);
+		Animacion *disparo=new Animacion("disparar",8,0,3268,225,172,8);
+		Animacion *tiro=new Animacion("tirar",6,0,3440,225,172,8);
+		Animacion *rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
+		animaciones.push_back(disparo);
+		animaciones.push_back(tiro);
+		animaciones.push_back(rgolpe);
 		animaciones.push_back(defensa);		
 		animaciones.push_back(golpeF);
 		animaciones.push_back(patadaF);
@@ -257,6 +287,12 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *golpeSF=new Animacion("golpeSF",1,0,0,600,600,10);//golpe saltando fuerte
 		Animacion *patadaSF=new Animacion("patadaSF",1,0,0,600,600,10);//patada saltando fuerte
 		Animacion *defensa=new Animacion("defensa",1,0,0,600,600,10);
+		Animacion *disparo=new Animacion("disparar",1,0,0,600,600,10);
+		Animacion *tiro=new Animacion("tirar",1,0,0,600,600,10);
+		Animacion *rgolpe=new Animacion("recibirGolpe",1,0,0,600,600,10);
+		animaciones.push_back(disparo);
+		animaciones.push_back(tiro);
+		animaciones.push_back(rgolpe);
 		animaciones.push_back(defensa);
 		animaciones.push_back(golpeF);
 		animaciones.push_back(patadaF);

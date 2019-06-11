@@ -155,9 +155,20 @@ void Personaje::agacharse(){
 		this->spriteAnimado->iniciarAnimacion("agacharse");
 	}
 }
+void Personaje::disparar(){
+	if(saltando|| agachado) return;
+	this->spriteAnimado->iniciarAnimacion("disparar");
+}
 void Personaje::defenderse(){
-	if(saltando ) return;
+	if(saltando|| agachado) return;
 	this->spriteAnimado->iniciarAnimacion("defensa");
+}
+void Personaje::tirar(){
+	if(saltando|| agachado) return;
+	this->spriteAnimado->iniciarAnimacion("tirar");
+}
+void Personaje::recibirGolpe(){
+	this->spriteAnimado->iniciarAnimacion("recibirGolpe");
 }
 
 void Personaje::cambio(){

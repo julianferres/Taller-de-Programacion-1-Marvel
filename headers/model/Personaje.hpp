@@ -30,9 +30,12 @@ class Personaje{
 		void cambio();
 		void golpe(string tipoDeGolpe);
 		void agacharse();
+		void tirar();
 		void cambiarAnimacion(string nombre);
 		void Flip();
+		void recibirGolpe();
 		void defenderse();
+		void disparar();
 		SDL_RendererFlip getFlip();
 		void actualizarPiso();
 		float getPosX();

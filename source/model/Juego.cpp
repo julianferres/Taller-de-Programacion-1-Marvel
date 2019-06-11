@@ -241,6 +241,12 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_L)){
 				personaje1->defenderse();
 			}
+			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_O)){
+				personaje1->disparar();
+			}
+			if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_O)&&teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_L)){
+				personaje1->tirar();
+			}
 			if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)){
 				personaje1->agacharse();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
@@ -308,7 +314,9 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_N)){
 					personaje2->defenderse();
 				}
-
+				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_H)){
+					personaje2->disparar();
+				}
 				if(teclado->seSoltoUnaTecla(SDL_SCANCODE_DOWN) || teclado->seSoltoUnaTecla(SDL_SCANCODE_LEFT) || teclado->seSoltoUnaTecla(SDL_SCANCODE_RIGHT)){
 						personaje2->cambiarAnimacion("quieto");
 				}
