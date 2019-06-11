@@ -255,7 +255,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				personaje1->golpe("golpeAF");
 			}
 			if (teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)&&teclado->sePresionoUnaTecla(SDL_SCANCODE_I)){
-				personaje1->golpe("patadaAS");
+				personaje1->golpe("patadaAF");
 			}
 			if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A) ){
 					personaje1->cambiarAnimacion("quieto");
