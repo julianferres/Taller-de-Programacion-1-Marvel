@@ -45,7 +45,9 @@ class Cliente{
 		ControladorEnvio sistemaEnvio;
 		int idCliente,numeroSocket;
 		char buffer[MAXDATOS];
-		bool running,enMenu,conectado = true;
+		bool running = true;
+		bool enMenu = true;
+		bool conectado = true;
 		vector<tuple<string, const string>> personajesYfondos;
 
 
