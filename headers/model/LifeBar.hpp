@@ -14,30 +14,26 @@ class LifeBar{
 		string obtenerNombreBarra(string nombrePersonaje);
 		int obtenerLado(string nombrePersonaje);
 		int obtenerAltura(string nombrePersonaje);
-
-		int obtenerAnchoBarra(string nombrePersonaje, int alturaVentana);
-		int obtenerLargoBarra(string nombrePersonaje, int anchoVentana);
-		int obtenerPosicionHorizontal(string nombrePersonaje, int anchoVentana);
-		int obtenerPosicionVertical(string nombrePersonaje, int alturaVentana);
+		void setearAnchoyAltoPantalla(int altoVentana, int anchoVentana);
+		int obtenerAnchoBarra(string nombrePersonaje);
+		int obtenerLargoBarra(string nombrePersonaje);
+		int obtenerPosicionHorizontal(string nombrePersonaje);
+		int obtenerPosicionVertical(string nombrePersonaje);
 		SDL_RendererFlip obtenerFlipBarra(string nombrePersonaje);
 		void actualizarPersonajesActuales(string nombrePersonaje);
 
 		int obtenerAnchoFondoVida(string nombrePersonaje);
 		int obtenerLargoFondoVida(string nombrePersonaje);
-		int obtenerPosicionHorizontalFondoVida(string nombrePersonaje, int anchoVentana);
+		int obtenerPosicionHorizontalFondoVida(string nombrePersonaje);
 		int obtenerPosicionVerticalFondoVida(string nombrePersonaje);
+		int obtenerPosicionHorizontalVida(string nombrePersonaje, int vida);
 
 	private:
 		map<string, int> lados;
 		map<string, int> alturas;
 		map<string, string> companieros;
-		int posicionHorizontalIzquierda = 10;
-
-		int posicionHorizontalVidaArribaIzq = 75;
-		int posicionVerticalVidaArriba = 14;
-		int posicionVerticalVidaAbajo = 88;
-		int anchoFondoVidaArriba = 37;
-		int largoFondoVida = 320;
+		int alturaVentana;
+		int anchoVentana;
 
 };
 

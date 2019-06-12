@@ -46,6 +46,7 @@ void JuegoCliente::iniciarGraficos(int idCliente){
 	this->grafico = new ControladorGrafico(idCliente);
 	this->anchoVentana = controladorJson->anchoVentana();
 	this->altoVentana = controladorJson->alturaVentana();
+	this->lifeBar->setearAnchoyAltoPantalla(this->altoVentana, this->anchoVentana);
 }
 
 SDL_Texture * JuegoCliente::getTextura(string nombre){
@@ -83,18 +84,24 @@ void JuegoCliente::dibujarBarrasVida(){
 		else if(i == 1) nombre = "Hulk";
 		else if(i == 2) nombre = "Spiderman";
 		else nombre = "Venom";
-		destino.h = lifeBar->obtenerAnchoBarra(nombre, this->altoVentana);
-		destino.w = lifeBar->obtenerLargoBarra(nombre, this->anchoVentana);
-		destino.x = lifeBar->obtenerPosicionHorizontal(nombre, this->anchoVentana);
-		destino.y = lifeBar->obtenerPosicionVertical(nombre, this->altoVentana);
+		destino.h = lifeBar->obtenerAnchoBarra(nombre);
+		destino.w = lifeBar->obtenerLargoBarra(nombre);
+		destino.x = lifeBar->obtenerPosicionHorizontal(nombre);
+		destino.y = lifeBar->obtenerPosicionVertical(nombre);
 
-		/*fondoVida.y = lifeBar->obtenerPosicionVerticalFondoVida(nombre);
-		fondoVida.x = lifeBar->obtenerPosicionHorizontalFondoVida(nombre, this->anchoVentana);
+		fondoVida.y = lifeBar->obtenerPosicionVerticalFondoVida(nombre);
+		fondoVida.x = lifeBar->obtenerPosicionHorizontalFondoVida(nombre);
 		fondoVida.h = lifeBar->obtenerAnchoFondoVida(nombre);
-		fondoVida.w = lifeBar->obtenerLargoFondoVida(nombre);*/
+		fondoVida.w = lifeBar->obtenerLargoFondoVida(nombre);
+		this->grafico->dibujarRectanguloDeColor(200,50,0,0, &fondoVida);
 
+		int vidas[4] = {100, 50, 100, 90};
 
-		//this->grafico->dibujarRectanguloDeColor(200,50,0,0, &fondoVida);
+		vida.y = lifeBar->obtenerPosicionVerticalFondoVida(nombre);
+		vida.x = lifeBar->obtenerPosicionHorizontalVida(nombre, vidas[i]);
+		vida.h = lifeBar->obtenerAnchoFondoVida(nombre);
+		vida.w = (lifeBar->obtenerLargoFondoVida(nombre) * vidas[i]) / 100;
+		this->grafico->dibujarRectanguloDeColor(250, 250, 0, 0, &vida);
 		this->grafico->dibujarImagen(getTextura(lifeBar->obtenerNombreBarra(nombre)), NULL,&destino, lifeBar->obtenerFlipBarra(nombre));
 
 	}

@@ -167,7 +167,8 @@ void Cliente::recibirParaDibujar(){
 			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
-		if(!enMenu) juegoCliente->dibujarBarrasVida();
+		if(!enMenu)
+			juegoCliente->dibujarBarrasVida();
 		juegoCliente->graficos()->render();
 		send(numeroSocket,&evento,sizeof(evento),0);//heartbeat
 	}

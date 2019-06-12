@@ -33,6 +33,7 @@ private:
 	int altoVentana;
 	LifeBar *lifeBar;
 	SDL_Rect fondoVida;
+	SDL_Rect vida;
 };
 
 

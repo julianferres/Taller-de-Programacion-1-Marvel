@@ -1,4 +1,7 @@
 #include <LifeBar.hpp>
+#include <stdio.h>
+#include "iostream"
+using namespace std;
 
 LifeBar::LifeBar(){
 	lados.insert({"CapitanAmerica", 0});
@@ -17,6 +20,11 @@ LifeBar::LifeBar(){
 	companieros.insert({"Venom", "Spiderman"});
 }
 
+void LifeBar::setearAnchoyAltoPantalla(int altoVentana, int anchoVentana){
+	this->alturaVentana = altoVentana;
+	this->anchoVentana = anchoVentana;
+}
+
 string LifeBar::obtenerPath(string nombrePersonaje){
 	return ("contents/images/"+nombrePersonaje+"-lb.png");
 }
@@ -25,24 +33,24 @@ string LifeBar::obtenerNombreBarra(string nombrePersonaje){
 	return (nombrePersonaje+"-lb");
 }
 
-int LifeBar::obtenerAnchoBarra(string nombrePersonaje, int alturaVentana){
-	if(alturas[nombrePersonaje] == 0) return alturaVentana / 10;
-	return (alturaVentana * 4) / 60;
+int LifeBar::obtenerAnchoBarra(string nombrePersonaje){
+	if(alturas[nombrePersonaje] == 0) return this->alturaVentana / 10;
+	return (this->alturaVentana * 4) / 60;
 }
 
-int LifeBar::obtenerLargoBarra(string nombrePersonaje, int anchoVentana){
-	if(alturas[nombrePersonaje] == 0) return (anchoVentana / 3);
-	return (anchoVentana / 4);
+int LifeBar::obtenerLargoBarra(string nombrePersonaje){
+	if(alturas[nombrePersonaje] == 0) return (this->anchoVentana / 3);
+	return (this->anchoVentana / 4);
 }
 
-int LifeBar::obtenerPosicionHorizontal(string nombrePersonaje, int anchoVentana){
-	if(lados[nombrePersonaje] == 0) return (anchoVentana / 120);
-	return anchoVentana - obtenerLargoBarra(nombrePersonaje, anchoVentana) - anchoVentana / 120;
+int LifeBar::obtenerPosicionHorizontal(string nombrePersonaje){
+	if(lados[nombrePersonaje] == 0) return (this->anchoVentana / 120);
+	return this->anchoVentana - obtenerLargoBarra(nombrePersonaje) - this->anchoVentana / 120;
 }
 
-int LifeBar::obtenerPosicionVertical(string nombrePersonaje, int alturaVentana){
-	if(alturas[nombrePersonaje] == 0) return alturaVentana / 70;
-	return (alturaVentana * 9) / 70;
+int LifeBar::obtenerPosicionVertical(string nombrePersonaje){
+	if(alturas[nombrePersonaje] == 0) return this->alturaVentana / 70;
+	return (this->alturaVentana * 9) / 70;
 }
 
 SDL_RendererFlip LifeBar::obtenerFlipBarra(string nombrePersonaje){
@@ -53,27 +61,40 @@ SDL_RendererFlip LifeBar::obtenerFlipBarra(string nombrePersonaje){
 
 
 int LifeBar::obtenerAnchoFondoVida(string nombrePersonaje){
-	if(alturas[nombrePersonaje] == 0) return anchoFondoVidaArriba;
-	return anchoFondoVidaArriba * 4 / 6;
+	if(alturas[nombrePersonaje] == 0) return this->alturaVentana / 19;
+	return (this->alturaVentana * 4) / (6 * 19);
 }
 
 int LifeBar::obtenerLargoFondoVida(string nombrePersonaje){
-	if(alturas[nombrePersonaje] == 0) return largoFondoVida;
-	return (largoFondoVida * 3 / 4);
+	if(alturas[nombrePersonaje] == 0) return (16 * this->anchoVentana) / 60;
+	return (this->anchoVentana*48) / 240;
 }
 
-int LifeBar::obtenerPosicionHorizontalFondoVida(string nombrePersonaje, int anchoVentana){
+int LifeBar::obtenerPosicionHorizontalFondoVida(string nombrePersonaje){
 	if(lados[nombrePersonaje] == 0){
-		if(alturas[nombrePersonaje] == 0) return posicionHorizontalVidaArribaIzq;
-		return posicionHorizontalVidaArribaIzq * 3 / 4;
+		if(alturas[nombrePersonaje] == 0) return (this->anchoVentana * 15) / 240;
+		return (45*this->anchoVentana) /920;
 	}
-	if(alturas[nombrePersonaje] == 0) return anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - posicionHorizontalVidaArribaIzq;
-	return anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - (posicionHorizontalVidaArribaIzq * 3/4);
+	else{
+		if(alturas[nombrePersonaje] == 0) return this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - (this->anchoVentana * 15) / 240;
+		return this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - (45*this->anchoVentana) /920;
+	}
 }
 
 int LifeBar::obtenerPosicionVerticalFondoVida(string nombrePersonaje){
-	if(alturas[nombrePersonaje] == 0) return posicionVerticalVidaArriba;
-	return posicionVerticalVidaAbajo;
+	if(alturas[nombrePersonaje] == 0) return (5*this->alturaVentana / 240);
+	return (this->alturaVentana*9) / 70;
+}
+
+int LifeBar::obtenerPosicionHorizontalVida(string nombrePersonaje, int vida){
+	if(lados[nombrePersonaje] == 0){
+			if(alturas[nombrePersonaje] == 0) return (this->anchoVentana * 15) / 240;
+			return (45*this->anchoVentana) /920;
+		}
+	else{
+		if(alturas[nombrePersonaje] == 0) return (this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - (this->anchoVentana * 15) / 240) + ((obtenerLargoFondoVida(nombrePersonaje) * (100-vida)) / 100);
+		return this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - (45*anchoVentana) /920 + ((obtenerLargoFondoVida(nombrePersonaje) * (100 - vida)) / 100);
+	}
 }
 
 void LifeBar::actualizarPersonajesActuales(string nombrePersonaje){
