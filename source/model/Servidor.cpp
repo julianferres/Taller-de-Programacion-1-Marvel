@@ -115,6 +115,10 @@ void Servidor::gameLoop(){
 	tuple<SDL_Event,int>tuplaEvento;
 	while(this->juego->running()){
 		cout<< "Round " << this->juego->numeroRound()<< " iniciado" << endl;
+		server_mutex.lock();
+		this->dibujables = this->juego->dibujarBannerRound();
+		server_mutex.unlock();
+		SDL_Delay(3000);
 		this->juego->iniciarRound();
 		while(!this->juego->roundFinalizado()){
 			tiempoInicial= SDL_GetTicks();
@@ -135,6 +139,7 @@ void Servidor::gameLoop(){
 
 			}
 		this->juego->nuevoRound();
+
 	}
 	cout<<"Juego Finalizado" <<endl;
 

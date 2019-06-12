@@ -140,6 +140,11 @@ std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
 	return zindexs_personajes;
 }
 
+std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> Juego::dibujarBannerRound(){
+	vector<tuple<string,SDL_Rect , SDL_Rect,SDL_RendererFlip >> dibujables;
+	dibujables.push_back(this->roundActual->dibujarBanner());
+	return dibujables;
+}
 
 vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 

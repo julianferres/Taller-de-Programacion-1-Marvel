@@ -19,7 +19,7 @@ public:
 	bool finalizado();
 	void actualizarTiempo();
 	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getTiempoDibujable();
-
+	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > dibujarBanner();
 private:
 
 	int numero;

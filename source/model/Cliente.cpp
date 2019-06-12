@@ -69,6 +69,9 @@ void Cliente::cargarContenidos(){
 			const string &filePath = controladorJson->pathFondo(fondos[i],r);
 			personajesYfondos.push_back(make_tuple(to_string(fondos[i])+ to_string(r),filePath));
 		}
+		const string &filePath = "contents/images/banner" + to_string(r) + ".png";
+		personajesYfondos.push_back(make_tuple("Banner" + to_string(r),filePath));
+
 	}
 
 	personajesYfondos.push_back(make_tuple(string("Fondo"), string("contents/images/fondo.png")));

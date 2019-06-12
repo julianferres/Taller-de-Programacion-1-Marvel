@@ -34,3 +34,11 @@ void Round::actualizarTiempo(){
 std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Round::getTiempoDibujable(){
 	return this->tiempo->getDibujable();
 }
+
+std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Round::dibujarBanner(){
+	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > dibujable;
+	SDL_Rect source  = {-1,-1,-1,-1};
+	SDL_Rect dest = {0,0,1200, 700};
+	dibujable = std::make_tuple("Banner" + std::to_string(this->numero), source, dest, SDL_FLIP_NONE);
+	return dibujable;
+}

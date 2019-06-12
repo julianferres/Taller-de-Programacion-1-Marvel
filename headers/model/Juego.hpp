@@ -45,6 +45,7 @@ class Juego{
 		bool running();
 		void actualizarTiempo();
 		Equipo * getGanadorUltimoRound();
+		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujarBannerRound();
 		void reiniciarPersonajes();
 
 	private:
