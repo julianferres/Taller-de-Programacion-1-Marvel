@@ -311,13 +311,13 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_G)){
 					personaje2->golpe("patadaF");
 				}
-				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_N)){
+				if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_N)){
 					personaje2->defenderse();
 				}
 				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_H)){
 					personaje2->disparar();
 				}
-				if(teclado->seSoltoUnaTecla(SDL_SCANCODE_DOWN) || teclado->seSoltoUnaTecla(SDL_SCANCODE_LEFT) || teclado->seSoltoUnaTecla(SDL_SCANCODE_RIGHT)){
+				if(teclado->seSoltoUnaTecla(SDL_SCANCODE_DOWN) || teclado->seSoltoUnaTecla(SDL_SCANCODE_LEFT) || teclado->seSoltoUnaTecla(SDL_SCANCODE_RIGHT)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_N) || teclado->seSoltoUnaTecla(SDL_SCANCODE_L)){
 						personaje2->cambiarAnimacion("quieto");
 				}
 

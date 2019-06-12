@@ -51,9 +51,10 @@ void Personaje::actualizar(){
 }
 
 void Personaje::cambiarAnimacion(string nombre){
-	if (agachado){
+	if (agachado)
 		agachado=false;
-	}
+	if(defendiendo)
+		defendiendo = false;
 	this->spriteAnimado->cambiarAnimacion(nombre);
 }
 
@@ -162,8 +163,11 @@ void Personaje::disparar(){
 	this->spriteAnimado->iniciarAnimacion("disparar");
 }
 void Personaje::defenderse(){
-	if(saltando|| agachado) return;
-	this->spriteAnimado->iniciarAnimacion("defensa");
+	if(saltando) return;
+	if(!defendiendo){
+		defendiendo = true;
+		this->spriteAnimado->iniciarAnimacion("defensa");
+	}
 }
 void Personaje::tirar(){
 	if(saltando|| agachado) return;

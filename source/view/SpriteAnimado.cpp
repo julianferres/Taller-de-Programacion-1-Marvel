@@ -102,7 +102,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *patadaAF=new Animacion("patadaAF",6,0,2236,225,172,16);//patada agachado fuerte
 		Animacion *golpeSF=new Animacion("golpeSF",7,0,2580,225,172,10);//golpe saltando fuerte
 		Animacion *patadaSF=new Animacion("patadaSF",6,0,2752,225,172,10);//patada saltando fuerte
-		Animacion *defensa=new Animacion("defensa",10,0,2924,225,172,4);
+		Animacion *defensa=new Animacion("defensa",4,0,2377,110,110,6);
 		Animacion *disparo=new Animacion("disparar",8,0,3268,225,172,8);
 		Animacion *tiro=new Animacion("tirar",6,0,3440,225,172,8);
 		Animacion *rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
@@ -426,7 +426,7 @@ void SpriteAnimado::update(){
 	if (frameIndex < animacionActual->getFrames() - 1 )
 		frameIndex++;
 	else{
-		if(animacionActual->getNombre()=="agacharse")
+		if(animacionActual->getNombre()=="agacharse" || animacionActual->getNombre()=="defensa")
 			return;
 		frameIndex=0;
 		if(animacionActual->getNombre()!="movDerecha" && animacionActual->getNombre()!="movIzquierda")

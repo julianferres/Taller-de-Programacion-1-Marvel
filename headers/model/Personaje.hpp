@@ -57,6 +57,7 @@ class Personaje{
 		float tiempo = 0;
 		bool agachado = false;
 		bool saltando = false;
+		bool defendiendo = false;
 		SpriteAnimado *spriteAnimado;
 		SDL_RendererFlip flip;
 		std::string nombre;
