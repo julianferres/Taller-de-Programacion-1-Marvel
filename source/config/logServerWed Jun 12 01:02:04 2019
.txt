@@ -1,0 +1,56 @@
+INFO ; Archivo de logging creado! ; Wed Jun 12 01:02:04 2019
+INFO ; main::Comienzo a leer el json ; Wed Jun 12 01:02:04 2019
+INFO ; ControladorJson::Log level = DEBUG ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Altura ventana seteada: 700 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Ancho ventana seteada: 1200 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Fullscreen = 0 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::FPS seteados = 60 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Personajes contados = 4 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Cantidad Rounds seteados = 3 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson:: Por setear cantidad fondos por round ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Fondos contados para round 1 = 3 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Fondos contados para round 2 = 3 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Fondos contados para round 3 = 3 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Personajes seteados ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Seteando fondos para round 1 cantidad: 3 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Fondos round 1 seteados ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson:: Fondos para escenario 1 encontrado ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson:: Fondos para escenario 1 seteado ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Seteando fondos para round 2 cantidad: 3 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Fondos round 2 seteados ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson:: Fondos para escenario 2 encontrado ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson:: Fondos para escenario 2 seteado ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Seteando fondos para round 3 cantidad: 3 ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson::Fondos round 3 seteados ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson:: Fondos para escenario 3 encontrado ; Wed Jun 12 01:02:04 2019
+DEBUG ; ControladorJson:: Fondos para escenario 3 seteado ; Wed Jun 12 01:02:04 2019
+INFO ; ControladorJson::Archivo de configuracion JSON leido correctamente ; Wed Jun 12 01:02:04 2019
+INFO ; main::Json leido. Comienzo el juego ; Wed Jun 12 01:02:04 2019
+INFO ; Servidor::Socket creado. ; Wed Jun 12 01:02:04 2019
+DEBUG ; Parallax::Camara 1 inicializada ; Wed Jun 12 01:02:04 2019
+DEBUG ; Parallax::Camara 2 inicializada ; Wed Jun 12 01:02:04 2019
+DEBUG ; Parallax::Camara 3 inicializada ; Wed Jun 12 01:02:04 2019
+INFO ; Juego::Se inicio el juego ; Wed Jun 12 01:02:04 2019
+DEBUG ; GameMenu::Inicio menu ; Wed Jun 12 01:02:04 2019
+INFO ; Servidor::Se acepto la conexion correctamente. ; Wed Jun 12 01:02:09 2019
+DEBUG ; GameMenu::Personaje CapitanAmericaBoton Seteado ; Wed Jun 12 01:02:13 2019
+DEBUG ; GameMenu::Personaje VenomBoton Seteado ; Wed Jun 12 01:02:13 2019
+INFO ; Servidor::Se acepto la conexion correctamente. ; Wed Jun 12 01:02:19 2019
+DEBUG ; GameMenu::Personaje SpidermanBoton Seteado ; Wed Jun 12 01:02:32 2019
+DEBUG ; GameMenu::Personaje HulkBoton Seteado ; Wed Jun 12 01:02:33 2019
+INFO ; Juego::Jugador 1 al equipo 1 ; Wed Jun 12 01:02:33 2019
+INFO ; Personaje:: Personaje creado: CapitanAmerica ; Wed Jun 12 01:02:33 2019
+INFO ; Juego::Jugador 11 al equipo 1 ; Wed Jun 12 01:02:33 2019
+INFO ; Personaje:: Personaje creado: Venom ; Wed Jun 12 01:02:33 2019
+INFO ; Juego::Jugador 2 al equipo 2 ; Wed Jun 12 01:02:33 2019
+INFO ; Personaje:: Personaje creado: Spiderman ; Wed Jun 12 01:02:33 2019
+INFO ; Juego::Jugador 12 al equipo 2 ; Wed Jun 12 01:02:33 2019
+INFO ; Personaje:: Personaje creado: Hulk ; Wed Jun 12 01:02:33 2019
+DEBUG ; Parallax::Camara 1 inicializada ; Wed Jun 12 01:02:46 2019
+DEBUG ; Parallax::Camara 2 inicializada ; Wed Jun 12 01:02:46 2019
+DEBUG ; Parallax::Camara 3 inicializada ; Wed Jun 12 01:02:46 2019
+INFO ; Servidor::Se desconecto el cliente 2 ; Wed Jun 12 01:02:56 2019
+INFO ; Servidor::Se desconecto el cliente 1 ; Wed Jun 12 01:02:58 2019
+DEBUG ; Parallax::Camara 1 inicializada ; Wed Jun 12 01:02:59 2019
+DEBUG ; Parallax::Camara 2 inicializada ; Wed Jun 12 01:02:59 2019
+DEBUG ; Parallax::Camara 3 inicializada ; Wed Jun 12 01:02:59 2019
