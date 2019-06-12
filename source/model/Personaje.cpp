@@ -116,38 +116,26 @@ void Personaje::correrADerecha(){
 }
 void Personaje::golpe(string tipoDeGolpe){
 	if(saltando){
-		if(tipoDeGolpe=="golpeS"){
+		if(tipoDeGolpe=="golpeS")
 			this->spriteAnimado->iniciarAnimacion("golpeSS");
-		}
-		if(tipoDeGolpe=="golpeF"){
+		if(tipoDeGolpe=="golpeF")
 			this->spriteAnimado->iniciarAnimacion("golpeSF");
-		}
-		if(tipoDeGolpe=="patadaS"){
+		if(tipoDeGolpe=="patadaS")
 			this->spriteAnimado->iniciarAnimacion("patadaSS");
-		}
-		if(tipoDeGolpe=="patadaF"){
+		if(tipoDeGolpe=="patadaF")
 			this->spriteAnimado->iniciarAnimacion("patadaSF");
-		}
-
 	}
+
 	else{
 		if(agachado){
-			if(tipoDeGolpe=="golpeS"){
-				this->spriteAnimado->iniciarAnimacion("golpeAS");
-			}
-			if(tipoDeGolpe=="golpeF"){
-				this->spriteAnimado->iniciarAnimacion("golpeAF");
-			}
-			if(tipoDeGolpe=="patadaS"){
-				this->spriteAnimado->iniciarAnimacion("patadaAS");
-			}
-			if(tipoDeGolpe=="patadaF"){
-				this->spriteAnimado->iniciarAnimacion("patadaAF");
-			}
+			if(tipoDeGolpe=="golpeS" || tipoDeGolpe=="golpeF")
+				this->spriteAnimado->iniciarAnimacion("golpeA");
+			if(tipoDeGolpe=="patadaS" || tipoDeGolpe=="patadaF")
+				this->spriteAnimado->iniciarAnimacion("patadaA");
 		}
-		else{
+		else
 			this->spriteAnimado->iniciarAnimacion(tipoDeGolpe);
-		}
+
 	}
 }
 

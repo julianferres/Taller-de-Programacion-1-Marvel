@@ -229,11 +229,12 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				//controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 salta");
 				personaje1->golpe("golpeS");
 			}
-			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_K)){
-				personaje1->golpe("patadaS");
-			}
 			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_U)){
 				personaje1->golpe("golpeF");
+			}
+
+			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_K)){
+				personaje1->golpe("patadaS");
 			}
 			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_I)){
 				personaje1->golpe("patadaF");
@@ -251,6 +252,8 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				personaje1->agacharse();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
 			}
+
+
 			if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A)||teclado->seSoltoUnaTecla(SDL_SCANCODE_L)){
 					personaje1->cambiarAnimacion("quieto");
 			}
