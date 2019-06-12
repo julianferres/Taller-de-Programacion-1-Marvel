@@ -54,8 +54,10 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeSF=new Animacion("golpeSF",5,0,2752,225,172,10);//golpe saltando fuerte
 		patadaSF=new Animacion("patadaSF",4,0,2924,225,172,10);//patada saltando fuerte
 		defensa=new Animacion("defensa",2,385,742,103,110,7); //LISTO
-		disparo=new Animacion("disparar",8,0,3268,225,172,8);
-		tiro=new Animacion("tirar",6,0,3440,225,172,8);
+		tiro=new Animacion("tirar",8,0,3268,225,172,8);
+		disparo=new Animacion("disparar",3,0,1539,362,115,12); //WIP
+		Animacion *atraparEscudo = new Animacion("atraparEscudo",6,435,1668,145,124,4);
+		animaciones.push_back(atraparEscudo);
 		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
 		boton = false;
 	}
@@ -280,8 +282,13 @@ void SpriteAnimado::update(){
 		if(animacionActual->getNombre()=="agacharse" || animacionActual->getNombre()=="defensa")
 			return;
 		frameIndex=0;
-		if(animacionActual->getNombre()!="movDerecha" && animacionActual->getNombre()!="movIzquierda")
+		if(nombreSprite == "CapitanAmerica" && animacionActual->getNombre()=="disparar")
+			cambiarAnimacion("atraparEscudo");
+
+		else if(animacionActual->getNombre()!="movDerecha" && animacionActual->getNombre()!="movIzquierda")
 			cambiarAnimacion("quieto");
+
+
 	}
 	regulador = 0;
 }
