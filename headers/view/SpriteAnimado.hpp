@@ -32,10 +32,13 @@ class SpriteAnimado{
 	private:
 
 		Animacion *animacionActual;
+		Animacion * quieto,*moverDerecha,*moverIzquierda,*salto,*agacharse,*cambioEntrada,*golpeS,*patadaS,*golpeAS,*patadaAS,*golpeSS,*patadaSS,*golpeF,*patadaF,*golpeAF,*patadaAF,*golpeSF,*patadaSF,*defensa,*disparo,*tiro,*rgolpe;
+		Animacion * mouseOut,*mouseOver,*mouseDown,*mouseUp;
 		vector<Animacion*> animaciones;
 		int frameIndex = 0;
 		int regulador = 0;
 		string nombreSprite;
+		bool boton =true;
 
 };
 
