@@ -40,7 +40,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *quieto = new Animacion("quieto",9,11,16,100,120,6);
 		Animacion *moverDerecha = new Animacion("movDerecha",6,0,158,100,122,4);
 		Animacion *moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,4);
-		Animacion *salto = new Animacion("salto",8,0,590,125,140,7);
+		Animacion *salto = new Animacion("salto",9,0,590,125,160,6);
 		Animacion *agacharse = new Animacion("agacharse",3,0,740,100,105,4);
 		Animacion *cambioEntrada = new Animacion("cambioEntrada",7,125,420,125,158,2);
 		Animacion *golpeS=new Animacion("golpeS",3,0,872,140,114,5);//golpe simple LISTO
@@ -55,7 +55,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *patadaAF=new Animacion("patadaAF",4,0,2580,225,172,16);//patada agachado fuerte
 		Animacion *golpeSF=new Animacion("golpeSF",5,0,2752,225,172,10);//golpe saltando fuerte
 		Animacion *patadaSF=new Animacion("patadaSF",4,0,2924,225,172,10);//patada saltando fuerte
-		Animacion *defensa=new Animacion("defensa",3,0,3096,225,172,10);
+		Animacion *defensa=new Animacion("defensa",2,385,742,103,110,7); //LISTO
 		Animacion *disparo=new Animacion("disparar",8,0,3268,225,172,8);
 		Animacion *tiro=new Animacion("tirar",6,0,3440,225,172,8);
 		Animacion *rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
@@ -102,7 +102,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *patadaAF=new Animacion("patadaAF",6,0,2236,225,172,16);//patada agachado fuerte
 		Animacion *golpeSF=new Animacion("golpeSF",7,0,2580,225,172,10);//golpe saltando fuerte
 		Animacion *patadaSF=new Animacion("patadaSF",6,0,2752,225,172,10);//patada saltando fuerte
-		Animacion *defensa=new Animacion("defensa",4,0,2377,110,110,6);
+		Animacion *defensa=new Animacion("defensa",4,0,2377,110,110,6); //LISTO
 		Animacion *disparo=new Animacion("disparar",8,0,3268,225,172,8);
 		Animacion *tiro=new Animacion("tirar",6,0,3440,225,172,8);
 		Animacion *rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
