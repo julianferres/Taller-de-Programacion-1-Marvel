@@ -43,13 +43,13 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		salto = new Animacion("salto",9,0,590,125,160,6);
 		agacharse = new Animacion("agacharse",3,0,740,100,105,4);
 		cambioEntrada = new Animacion("cambioEntrada",7,125,420,125,158,2);
-		golpeS=new Animacion("golpeS",3,0,872,140,114,5);//golpe simple LISTO
+		golpeS=new Animacion("golpeS",3,0,872,140,114,10);//golpe simple LISTO
 		patadaS=new Animacion("patadaS",3,0,2079,123,120,6);//patada simple LISTO
 		golpeF=new Animacion("golpeF",7,0,1042,231,125,3);//golpe fuerte LISTO
 		patadaF=new Animacion("patadaF",4,400,2077,130,130,6);//patada fuerte LISTO
 		golpeA=new Animacion("golpeA",4,470,860,125,150,6);//golpe agachado fuerte LISTO
 		patadaA=new Animacion("patadaA",4,0,3993,120,82,4);//patada agachado LISTO
-		golpeSaltando=new Animacion("golpeS",4,0,1892,225,172,10);//golpe saltando simple
+		golpeSaltando=new Animacion("golpeSaltando",5,310,2943,155,163,5);//golpe saltando LISTO
 		patadaSS=new Animacion("patadaSS",5,0,1720,225,172,10);//patada saltando simple
 		patadaSF=new Animacion("patadaSF",4,0,2924,225,172,10);//patada saltando fuerte
 		defensa=new Animacion("defensa",2,385,742,103,110,7); //LISTO
@@ -69,7 +69,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		cambioEntrada = new Animacion("cambioEntrada",14,0,227,110,133,2);
 		golpeS=new Animacion("golpeS",5,0,633,158,85,4);//golpe simple LISTO
 		patadaS=new Animacion("patadaS",4,1000,774,153,102,4);//patada simple LISTO
-		golpeSaltando=new Animacion("golpeSS",4,0,1032,225,172,4);//golpe saltando simple
+		golpeSaltando=new Animacion("golpeSaltando",4,0,1032,225,172,4);//golpe saltando simple
 		patadaSS=new Animacion("patadaSS",4,0,1204,225,172,4);//patada saltando simple
 		golpeF=new Animacion("golpeF",8,900,608,151,145,4);//golpe fuerte LISTO
 		patadaF=new Animacion("patadaF",6,150,916,145,125,4);//patada fuerte LISTO
@@ -91,7 +91,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		cambioEntrada = new Animacion("cambioEntrada",11,0,860,225,172,2);
 		golpeS=new Animacion("golpeS",3,0,172,225,172,8);//golpe simple
 		patadaS=new Animacion("patadaS",3,0,1376,225,172,8);//patada simple
-		golpeSaltando=new Animacion("golpeSS",9,0,1204,225,172,6);//golpe saltando simple
+		golpeSaltando=new Animacion("golpeSaltando",9,0,1204,225,172,6);//golpe saltando simple
 		patadaSS=new Animacion("patadaSS",9,0,1720,225,172,6);//patada saltando simple
 		golpeF=new Animacion("golpeF",7,0,1892,225,172,8);//golpe fuerte
 		patadaF=new Animacion("patadaF",9,0,2064,225,172,6);//patada fuerte
@@ -113,7 +113,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		cambioEntrada = new Animacion("cambioEntrada",12,0,1892,225,172,2);
 		golpeS=new Animacion("golpeS",4,0,860,225,172,6);//golpe simple
 		patadaS=new Animacion("patadaS",4,0,1032,225,172,8);//patada simple
-		golpeSaltando=new Animacion("golpeSS",3,0,1548,225,172,8);//golpe saltando simple
+		golpeSaltando=new Animacion("golpeSaltando",3,0,1548,225,172,8);//golpe saltando simple
 		patadaSS=new Animacion("patadaSS",4,0,1720,225,172,8);//patada saltando simple
 		golpeF=new Animacion("golpeF",8,0,2236,225,172,8);//golpe fuerte
 		patadaF=new Animacion("patadaF",8,0,2408,225,172,6);//patada fuerte
@@ -135,7 +135,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		cambioEntrada = new Animacion("cambioEntrada",8,0,1119,170,248,3);
 		golpeS=new Animacion("golpeS",5,0,450,170,123,4);//golpe simple
 		patadaS=new Animacion("patadaS",5,0,450,170,123,4);//patada simple
-		golpeSaltando=new Animacion("golpeSS",5,0,450,170,123,4);//golpe saltando simple
+		golpeSaltando=new Animacion("golpeSaltando",5,0,450,170,123,4);//golpe saltando simple
 		patadaSS=new Animacion("patadaSS",5,0,450,170,123,4);//patada saltando simple
 		golpeF=new Animacion("golpeF",3,0,1032,225,172,8);//golpe fuerte
 		patadaF=new Animacion("patadaF",6,0,1204,225,172,6);//patada fuerte
@@ -158,7 +158,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		agacharse = new Animacion("agacharse",1,0,0,600,600,2);
 		golpeS=new Animacion("golpeS",1,0,0,600,600,2);//golpe simple
 		patadaS=new Animacion("patadaS",1,0,0,600,600,2);//patada simple
-		golpeSaltando=new Animacion("golpeSS",1,0,0,600,600,2);//golpe saltando simple
+		golpeSaltando=new Animacion("golpeSaltando",1,0,0,600,600,2);//golpe saltando simple
 		patadaSS=new Animacion("patadaSS",1,0,0,600,600,2);//patada saltando simple
 		golpeF=new Animacion("golpeF",1,0,0,600,600,10);//golpe fuerte
 		patadaF=new Animacion("patadaF",1,0,0,600,600,10);//patada fuerte
