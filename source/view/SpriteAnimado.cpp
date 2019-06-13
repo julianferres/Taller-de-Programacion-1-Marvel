@@ -84,7 +84,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		quieto = new Animacion("quieto",13,0,0,160,130,5);//LISTO
 		moverDerecha = new Animacion("movDerecha",10,0,260,155,122,4);//LISTO
 		moverIzquierda = new Animacion("movIzquierda",10,0,260,155,122,4);//LISTO
-		salto = new Animacion("salto",11,0,524,160,170,4);//LISTO
+		salto = new Animacion("salto",11,0,524,160,170,5);//LISTO
 		agacharse = new Animacion("agacharse",9,0,390,155,90,2);//LISTO
 		cambioEntrada = new Animacion("cambioEntrada",11,0,700,160,170,2);//LISTO
 		golpeS=new Animacion("golpeS",3,0,130,225,108,8);//golpe simple//LISTO
@@ -102,22 +102,22 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		boton = false;
 	}
 	else if(nombre=="MegaMan" ){
-		quieto = new Animacion("quieto",6,0,0,225,172,10);
-		moverDerecha = new Animacion("movDerecha",12,0,172,225,172,4);
-		moverIzquierda = new Animacion("movIzquierda",12,0,344,225,172,4);
-		salto = new Animacion("salto",13,0,516,225,172,4);
-		agacharse = new Animacion("agacharse",10,0,688,225,172,2);
-		cambioEntrada = new Animacion("cambioEntrada",12,0,1892,225,172,2);
-		golpeS=new Animacion("golpeS",4,0,860,225,172,6);//golpe simple
-		patadaS=new Animacion("patadaS",4,0,1032,225,172,8);//patada simple
-		golpeSaltando=new Animacion("golpeSaltando",3,0,1548,225,172,8);//golpe saltando
-		patadaSaltando=new Animacion("patadaSaltando",4,0,1720,225,172,8);//patada saltando
-		golpeF=new Animacion("golpeF",8,0,2236,225,172,8);//golpe fuerte
-		patadaF=new Animacion("patadaF",8,0,2408,225,172,6);//patada fuerte
-		golpeA=new Animacion("golpeA",8,0,2580,225,172,8);//golpe agachado
-		patadaA=new Animacion("patadaA",7,0,2752,225,172,8);//patada agachado
-		defensa=new Animacion("defensa",4,0,2064,225,172,8);
-		disparo=new Animacion("disparar",8,0,3268,225,172,8);
+		quieto = new Animacion("quieto",6,0,0,90,75,10);//LISTO
+		moverDerecha = new Animacion("movDerecha",12,0,75,90,75,4);//LISTO
+		moverIzquierda = new Animacion("movIzquierda",12,0,150,90,75,4);//LISTO
+		salto = new Animacion("salto",13,0,225,90,147,6);//LISTO
+		agacharse = new Animacion("agacharse",8,0,585,90,65,2);//LISTO
+		cambioEntrada = new Animacion("cambioEntrada",12,0,375,90,147,2);//LISTO
+		golpeS=new Animacion("golpeS",4,0,750,115,75,6);//golpe simple//LISTO
+		patadaS=new Animacion("patadaS",4,0,880,110,80,8);//patada simple//LISTO
+		golpeSaltando=new Animacion("golpeSaltando",9,0,1275,110,140,8);//golpe saltando//LISTO
+		patadaSaltando=new Animacion("patadaSaltando",9,0,1445,110,140,8);//patada saltando//LISTO
+		golpeF=new Animacion("golpeF",8,0,1680,100,140,8);//golpe fuerte//LISTO
+		patadaF=new Animacion("patadaF",8,0,1900,100,95,6);//patada fuerte//LISTO
+		golpeA=new Animacion("golpeA",4,0,1105,110,65,8);//golpe agachado//LISTO
+		patadaA=new Animacion("patadaA",5,0,1170,110,65,8);//patada agachado//LISTO
+		defensa=new Animacion("defensa",4,0,960,110,80,8);//LISTO
+		disparo=new Animacion("disparar",11,0,2160,275,80,6);
 		tiro=new Animacion("tirar",6,0,3440,225,172,8);
 		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
 		boton = false;
