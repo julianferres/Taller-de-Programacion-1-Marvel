@@ -270,11 +270,10 @@ void SpriteAnimado::update(){
 		frameIndex=0;
 		if(nombreSprite == "CapitanAmerica" && animacionActual->getNombre()=="disparar")
 			cambiarAnimacion("atraparEscudo");
-
+		else if(animacionActual->getNombre()=="golpeA" || animacionActual->getNombre()=="patadaA" )
+			cambiarAnimacion("agacharse");
 		else if(animacionActual->getNombre()!="movDerecha" && animacionActual->getNombre()!="movIzquierda")
 			cambiarAnimacion("quieto");
-
-
 	}
 	regulador = 0;
 }

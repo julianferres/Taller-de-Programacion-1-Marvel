@@ -119,8 +119,6 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 	this->verificarCambioDeLado();
 	int fondos_dibujados = 0;
 	int personajes_dibujados = 0;
-	get<0>(zindexs_personajes[0])->devolverPersonajeActual()->actualizar();
-	get<0>(zindexs_personajes[1])->devolverPersonajeActual()->actualizar();
 	while(fondos_dibujados + personajes_dibujados < 5){
 		if(fondos_dibujados == 3 || get<1>(zindexs_personajes[personajes_dibujados]) <= zindexes[fondos_dibujados]){
 			Jugador * jugador = get<0>(zindexs_personajes[personajes_dibujados]);
@@ -150,6 +148,8 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 			fondos_dibujados++;
 		}
 	}
+	get<0>(zindexs_personajes[0])->devolverPersonajeActual()->actualizar();
+	get<0>(zindexs_personajes[1])->devolverPersonajeActual()->actualizar();
 	return dibujables;
 
 }
@@ -220,13 +220,16 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 							}*/
 				 }
 			 }
+			if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)){
+				personaje1->agacharse();
+				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
+			}
 
 			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_W)){
 				personaje1->saltar();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 salta");
 			}
 			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_J)){
-				//controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 salta");
 				personaje1->golpe("golpeS");
 			}
 			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_U)){
@@ -248,10 +251,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 			if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_O)&&teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_L)){
 				personaje1->tirar();
 			}
-			if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)){
-				personaje1->agacharse();
-				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
-			}
+
 
 
 			if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A)||teclado->seSoltoUnaTecla(SDL_SCANCODE_L)){
