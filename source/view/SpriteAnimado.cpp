@@ -56,7 +56,9 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		Animacion *atraparEscudo = new Animacion("atraparEscudo",6,435,1668,145,124,6);//LISTO
 		animaciones.push_back(atraparEscudo);
 		tiro=new Animacion("tirar",8,0,3268,225,172,8);
-		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
+		rgolpe=new Animacion("recibirGolpe",3,850,5170,112,140,6);//LISTO
+		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,6);//LISTO
+		levantarse=new Animacion("levantarse",2,1150,5359,87,96,10);//LISTO
 		boton = false;
 	}
 	else if(nombre=="Spiderman"){
@@ -78,6 +80,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		disparo=new Animacion("disparar",7,0,2500,275,84,3); //LISTO
 		tiro=new Animacion("tirar",6,0,3440,225,172,8);
 		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
+		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,20);
+		levantarse=new Animacion("levantarse",3,850,5170,112,140,20);
 		boton = false;
 	}
 	else if(nombre=="Venom" ){
@@ -99,6 +103,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		disparo=new Animacion("disparar",12,0,3230,275,128,4);
 		tiro=new Animacion("tirar",6,0,3440,225,172,8);
 		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
+		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,20);
+		levantarse=new Animacion("levantarse",3,850,5170,112,140,20);
 		boton = false;
 	}
 	else if(nombre=="MegaMan" ){
@@ -120,6 +126,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		disparo=new Animacion("disparar",11,0,2160,275,80,6);
 		tiro=new Animacion("tirar",6,0,3440,225,172,8);
 		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
+		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,20);
+		levantarse=new Animacion("levantarse",3,850,5170,112,140,20);
 		boton = false;
 	}
 	else if(nombre=="Hulk" ){
@@ -141,6 +149,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		disparo=new Animacion("disparar",8,0,3268,225,172,8);
 		tiro=new Animacion("tirar",6,0,3440,225,172,8);
 		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
+		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,20);
+		levantarse=new Animacion("levantarse",3,850,5170,112,140,20);
 		boton = false;
 	}
 	else if(nombre=="SinSprite" ){
@@ -163,12 +173,16 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		disparo=new Animacion("disparar",1,0,0,600,600,10);
 		tiro=new Animacion("tirar",1,0,0,600,600,10);
 		rgolpe=new Animacion("recibirGolpe",1,0,0,600,600,10);
+		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,20);
+		levantarse=new Animacion("levantarse",3,850,5170,112,140,20);
 		boton = false;
 	}
 	if(!boton){
 		animaciones.push_back(disparo);
 		animaciones.push_back(tiro);
 		animaciones.push_back(rgolpe);
+		animaciones.push_back(rgolpeF);
+		animaciones.push_back(levantarse);
 		animaciones.push_back(defensa);
 
 		animaciones.push_back(golpeS);
@@ -272,6 +286,8 @@ void SpriteAnimado::update(){
 			cambiarAnimacion("atraparEscudo");
 		else if(animacionActual->getNombre()=="golpeA" || animacionActual->getNombre()=="patadaA" )
 			cambiarAnimacion("agacharse");
+		else if(animacionActual->getNombre()=="recibirGolpeF")
+			cambiarAnimacion("levantarse");
 		else if(animacionActual->getNombre()!="movDerecha" && animacionActual->getNombre()!="movIzquierda")
 			cambiarAnimacion("quieto");
 	}

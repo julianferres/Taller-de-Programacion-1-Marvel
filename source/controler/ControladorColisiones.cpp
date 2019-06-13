@@ -4,19 +4,19 @@
 using namespace std;
 
 ControladorColisiones::ControladorColisiones(){
-	animacion["disparar"]=1;
-	animacion["golpeS"]=1;
-	animacion["golpeF"]=1;
-	animacion["golpeSaltando"]=1;
-	animacion["golpeA"]=1;
-	animacion["patadaS"]=1;
-	animacion["patadaF"]=1;
-	animacion["patadaSaltando"]=1;
-	animacion["patadaA"]=1;
-	animacion["movDerecha"]=0;
-	animacion["movIzquierda"]=0;
-	animacion["salto"]=0;
-	animacion["agacharse"]=0;
+	golpesFuertes["disparar"]=1;
+	golpesSuaves["golpeS"]=1;
+	golpesFuertes["golpeF"]=1;
+	golpesSuaves["golpeSaltando"]=1;
+	golpesSuaves["golpeA"]=1;
+	golpesSuaves["patadaS"]=1;
+	golpesFuertes["patadaF"]=1;
+	golpesFuertes["patadaSaltando"]=1;
+	golpesSuaves["patadaA"]=1;
+	movimientos["movDerecha"]=1;
+	movimientos["movIzquierda"]=1;
+	movimientos["salto"]=1;
+	movimientos["agacharse"]=1;
 
 }
 
@@ -39,14 +39,22 @@ void ControladorColisiones::resolverColisiones(){
 	if(hayColision()){
 		string animacionPersonaje1 = personajeEquipo1->obtenerSprite()->getAnimacionActual();
 		string animacionPersonaje2 = personajeEquipo2->obtenerSprite()->getAnimacionActual();
-		if(animacion[animacionPersonaje1]==1){//personaje1 esta golpeando
+		if(golpesFuertes[animacionPersonaje1]){//personaje1 esta golpeando
 			//personajeEquipo2->cambiarAnimacion("recibirGolpe");
 			puts("golpea el jugador 1");
 		}
+		else if(golpesFuertes[animacionPersonaje1]){//personaje1 esta golpeando
+			//personajeEquipo2->cambiarAnimacion("recibirGolpeF");
+			puts("golpea el jugador 1");
+		}
 
-		if(animacion[animacionPersonaje2]==1){//personaje2 esta golpeando
-			//personajeEquipo1->cambiarAnimacion("recibirGolpe");
+		if(golpesSuaves[animacionPersonaje2]){//personaje2 esta golpeando
+			personajeEquipo1->cambiarAnimacion("recibirGolpe");
 			puts("golpea el jugador 2");
+		}
+		else if(golpesFuertes[animacionPersonaje2]){//personaje2 esta golpeando
+			personajeEquipo1->cambiarAnimacion("recibirGolpeF");
+			puts("golpea fuerte el jugador 2");
 		}
 
 

@@ -334,12 +334,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 
 
 	 }
-	 if(teclado->sePresionoUnaTecla(SDL_SCANCODE_F11)){
-		 //cliente->graficos()->cambiarPantallaCompleta();
-		 controladorLogger->registrarEvento("DEBUG", "Se cambia a pantalla completa");
-	 }
-
-	this->controladorColisiones->resolverColisiones();
+	 this->controladorColisiones->resolverColisiones();
 
 }
 

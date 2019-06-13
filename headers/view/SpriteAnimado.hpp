@@ -32,7 +32,7 @@ class SpriteAnimado{
 	private:
 
 		Animacion *animacionActual;
-		Animacion * quieto,*moverDerecha,*moverIzquierda,*salto,*agacharse,*cambioEntrada,*golpeS,*patadaS,*patadaA,*golpeSaltando,*patadaSaltando,*golpeF,*patadaF,*golpeA,*defensa,*disparo,*tiro,*rgolpe;
+		Animacion * quieto,*moverDerecha,*moverIzquierda,*salto,*agacharse,*cambioEntrada,*golpeS,*patadaS,*patadaA,*golpeSaltando,*patadaSaltando,*golpeF,*patadaF,*golpeA,*defensa,*disparo,*tiro,*rgolpe,*rgolpeF,*levantarse;
 		Animacion * mouseOut,*mouseOver,*mouseDown,*mouseUp;
 		vector<Animacion*> animaciones;
 		int frameIndex = 0;

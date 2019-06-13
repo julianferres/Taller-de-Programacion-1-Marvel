@@ -23,7 +23,10 @@ private:
 	Personaje* personajeEquipo2;
 	SDL_Rect recPersonaje1;
 	SDL_Rect recPersonaje2;
-	map<string,int> animacion; //0 si es movimiento,1 si es golpe
+	map<string,int> golpesSuaves;
+	map<string,int> golpesFuertes;
+	map<string,int> movimientos;
+
 };
 
 
