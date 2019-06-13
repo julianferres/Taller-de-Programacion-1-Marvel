@@ -51,6 +51,7 @@ class Personaje{
 		int ancho;
 		int alto;
 		int velocidad = 10;
+		int posicionYdefault ;
 		float posx, posy;
 		float velocidadInicial;
 		float alturaActualSalto = 0;

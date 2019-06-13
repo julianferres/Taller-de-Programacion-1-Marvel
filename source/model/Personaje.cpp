@@ -34,8 +34,9 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 		this->spriteAnimado=new SpriteAnimado(nombre);
 		this->zindex = controladorJson->zindexPersonaje(nombre);
 	}
+	this->posicionYdefault= controladorJson->alturaVentana() - controladorJson->getAlturaPiso();
 	this->nombre = nombre;
-	this->posy = controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
+	this->posy = posicionYdefault - 2*spriteAnimado->getAlto();
 	this->velocidadInicial = sqrt(constanteDeAltura * alto);
 	this->posx= posicionXinicial;
 	this->posicionXinicial = posicionXinicial;
@@ -47,6 +48,8 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 void Personaje::actualizar(){
 	if(saltando)
 		this->saltar();
+	else
+		posy = posicionYdefault - 2*spriteAnimado->getAlto();
 	this->spriteAnimado->update();
 }
 
@@ -181,7 +184,7 @@ void Personaje::saltar(){
 		if(alturaActualSalto <= 0 && tiempo != 0 ){
 			saltando = false;
 			tiempo = 0;
-			posy=controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto;
+			posy=posicionYdefault - 2*spriteAnimado->getAlto();
 		}
 		else{
 			tiempo += constanteTiempoCiclos;
@@ -216,7 +219,7 @@ SDL_Rect  Personaje::obtenerRectangulo(){
 	int posicionXdibujable = posx;
 	if(flip)
 		posicionXdibujable = posx+ 2.5*(-spriteAnimado->getAncho()+anchoDefault);
-	SDL_Rect rectangulo = { static_cast<int>(posicionXdibujable), static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), alto};
+	SDL_Rect rectangulo = { static_cast<int>(posicionXdibujable), static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), 2*spriteAnimado->getAlto()};
 	return rectangulo;
 }
 

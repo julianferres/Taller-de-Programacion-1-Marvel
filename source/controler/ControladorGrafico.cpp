@@ -39,7 +39,7 @@ SDL_Surface* ControladorGrafico::cargarImagen(const string &filePath){
 }
 
 void ControladorGrafico::dibujarImagen(SDL_Texture* textura, SDL_Rect* rectanguloOrigen, SDL_Rect* rectanguloDestino, SDL_RendererFlip flip){
-	SDL_RenderDrawRect(this->_renderer, rectanguloDestino);
+	//SDL_RenderDrawRect(this->_renderer, rectanguloDestino);
 	SDL_RenderCopyEx(this->_renderer, textura, rectanguloOrigen, rectanguloDestino,0,NULL, flip);
 }
 

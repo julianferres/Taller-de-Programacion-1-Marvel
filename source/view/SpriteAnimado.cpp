@@ -41,7 +41,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		moverDerecha = new Animacion("movDerecha",6,0,158,100,122,4);
 		moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,4);
 		salto = new Animacion("salto",9,0,590,125,160,6);
-		agacharse = new Animacion("agacharse",3,0,740,100,105,4);
+		agacharse = new Animacion("agacharse",3,0,748,100,93,4);
 		cambioEntrada = new Animacion("cambioEntrada",7,125,420,125,158,2);
 		golpeS=new Animacion("golpeS",3,0,872,140,114,10);//golpe simple LISTO
 		patadaS=new Animacion("patadaS",3,0,2079,123,120,6);//patada simple LISTO
@@ -64,7 +64,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		moverDerecha = new Animacion("movDerecha",12,0,120,100,99,2);
 		moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,2);
 		salto = new Animacion("salto",14,0,473,100,135,3);
-		agacharse = new Animacion("agacharse",13,0,1180,110,90,4);
+		agacharse = new Animacion("agacharse",13,0,1205,110,65,4);
 		cambioEntrada = new Animacion("cambioEntrada",14,0,227,110,133,2);
 		golpeS=new Animacion("golpeS",5,0,633,158,85,4);//golpe simple LISTO
 		patadaS=new Animacion("patadaS",4,1270,930,153,102,4);//patada simple LISTO
