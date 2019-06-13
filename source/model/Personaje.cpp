@@ -239,15 +239,15 @@ SpriteAnimado *Personaje::obtenerSprite(){
 	return this->spriteAnimado;
 }
 
-/*
+
 bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+15, static_cast<int>(posy), ancho, alto};
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+velocidad, static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
 
 bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-15, static_cast<int>(posy), ancho, alto};
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
-}*/
+}
 
 
