@@ -75,7 +75,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeA=new Animacion("golpeA",8,790,2748,155,150,5);//golpe agachado LISTO
 		patadaA=new Animacion("patadaA",5,1030,1405,140,70,5);//patada agachado LISTO
 		defensa=new Animacion("defensa",4,0,2377,110,110,6); //LISTO
-		disparo=new Animacion("disparar",8,0,3268,225,172,8);
+		disparo=new Animacion("disparar",7,0,2500,275,84,3); //LISTO
 		tiro=new Animacion("tirar",6,0,3440,225,172,8);
 		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
 		boton = false;
