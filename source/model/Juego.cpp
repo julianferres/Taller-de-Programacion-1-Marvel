@@ -20,6 +20,7 @@ Juego::Juego(){
 
 	this->teclado = new ControladorTeclado();
 	this-> parallax = new Parallax();
+	this->controladorColisiones = new ControladorColisiones();
 	controladorLogger->registrarEvento("INFO", "Juego::Se inicio el juego");
 
 }
@@ -177,6 +178,8 @@ void Juego::actualizarConexion(int idCliente){
 void Juego::teclear(SDL_Event evento, int idCliente){
 	Personaje* personaje1 = jugadorActualEquipo1->devolverPersonajeActual();
 	Personaje* personaje2 = jugadorActualEquipo2->devolverPersonajeActual();
+	this->controladorColisiones->setPersonaje1(personaje1);
+	this->controladorColisiones->setPersonaje2(personaje2);
 	bool finEscenarioDerecha = parallax->finDeEscenarioDerecha();
 	bool finEscenarioIzquierda = parallax->finDeEscenarioIzquierda();
 	teclado->reiniciar();
@@ -335,6 +338,8 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		 //cliente->graficos()->cambiarPantallaCompleta();
 		 controladorLogger->registrarEvento("DEBUG", "Se cambia a pantalla completa");
 	 }
+
+	this->controladorColisiones->resolverColisiones();
 
 }
 
