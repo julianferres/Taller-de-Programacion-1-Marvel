@@ -24,6 +24,7 @@ class Personaje{
 		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);
 		bool colisionaAlaIzquierda(SDL_Rect rectanguloOponente);
 		bool ladoDerecho();
+		bool estaSaltando();
 		void correrADerecha();
 		void correrAIzquierda();
 		void saltar();

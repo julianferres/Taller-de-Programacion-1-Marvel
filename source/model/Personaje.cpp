@@ -195,6 +195,11 @@ void Personaje::saltar(){
 	}
 }
 
+bool Personaje::estaSaltando(){
+	return saltando;
+}
+
+
 void Personaje::Flip(){
 	if (this->flip == 0)
 		this->flip = SDL_FLIP_HORIZONTAL;
