@@ -34,7 +34,19 @@ class LifeBar{
 		map<string, string> companieros;
 		int alturaVentana;
 		int anchoVentana;
+		int anchoBarraArriba, anchoBarraAbajo;
+		int largoBarraArriba, largoBarraAbajo;
+		int posicionHorizontalBarraIzq;
+		int posicionVerticalBarraArriba, posicionVerticalBarraAbajo;
 
+
+		int anchoFondoVidaArriba, anchoFondoVidaAbajo;
+		int largoFondoVidaArriba, largoFondoVidaAbajo;
+		int posicionVerticalFondoVidaArriba, posicionVerticalFondoVidaAbajo;
+		int posicionHorizontalFondoVidaArribaIzq, posicionHorizontalFondoVidaAbajoIzq;
+
+
+		int posicionHorizontalVidaArribaIzq, posicionHorizontalVidaAbajoIzq;
 };
 
 #endif /* HEADERS_MODEL_LIFEBAR_HPP_ */

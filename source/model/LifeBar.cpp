@@ -23,6 +23,26 @@ LifeBar::LifeBar(){
 void LifeBar::setearAnchoyAltoPantalla(int altoVentana, int anchoVentana){
 	this->alturaVentana = altoVentana;
 	this->anchoVentana = anchoVentana;
+	anchoBarraArriba = altoVentana/10;
+	anchoBarraAbajo = (altoVentana * 4) / 60;
+	largoBarraArriba = anchoVentana / 3;
+	largoBarraAbajo = anchoVentana / 4;
+	posicionHorizontalBarraIzq = (anchoVentana / 120);
+	posicionVerticalBarraArriba = (altoVentana / 70);
+	posicionVerticalBarraAbajo = (altoVentana * 9) / 70;
+
+	anchoFondoVidaArriba = altoVentana / 19;
+	anchoFondoVidaAbajo = (altoVentana * 4) / (6 * 19);
+	largoFondoVidaArriba = (16 * anchoVentana) / 60;
+	largoFondoVidaAbajo =  (anchoVentana * 48) / 240;
+	posicionVerticalFondoVidaArriba = (5 * altoVentana / 240);
+	posicionVerticalFondoVidaAbajo = (altoVentana * 9) / 70;
+	posicionHorizontalFondoVidaArribaIzq = (anchoVentana * 15) / 240;
+	posicionHorizontalFondoVidaAbajoIzq = (45 * anchoVentana) / 920;
+
+	posicionHorizontalVidaArribaIzq = (anchoVentana * 15) / 240;
+	posicionHorizontalVidaAbajoIzq = (45 * anchoVentana) /920;
+
 }
 
 string LifeBar::obtenerPath(string nombrePersonaje){
@@ -34,23 +54,23 @@ string LifeBar::obtenerNombreBarra(string nombrePersonaje){
 }
 
 int LifeBar::obtenerAnchoBarra(string nombrePersonaje){
-	if(alturas[nombrePersonaje] == 0) return this->alturaVentana / 10;
-	return (this->alturaVentana * 4) / 60;
+	if(alturas[nombrePersonaje] == 0) return anchoBarraArriba;
+	return anchoBarraAbajo;
 }
 
 int LifeBar::obtenerLargoBarra(string nombrePersonaje){
-	if(alturas[nombrePersonaje] == 0) return (this->anchoVentana / 3);
-	return (this->anchoVentana / 4);
+	if(alturas[nombrePersonaje] == 0) return largoBarraArriba;
+	return largoBarraAbajo;
 }
 
 int LifeBar::obtenerPosicionHorizontal(string nombrePersonaje){
-	if(lados[nombrePersonaje] == 0) return (this->anchoVentana / 120);
-	return this->anchoVentana - obtenerLargoBarra(nombrePersonaje) - this->anchoVentana / 120;
+	if(lados[nombrePersonaje] == 0) return posicionHorizontalBarraIzq;
+	return this->anchoVentana - obtenerLargoBarra(nombrePersonaje) - posicionHorizontalBarraIzq;
 }
 
 int LifeBar::obtenerPosicionVertical(string nombrePersonaje){
-	if(alturas[nombrePersonaje] == 0) return this->alturaVentana / 70;
-	return (this->alturaVentana * 9) / 70;
+	if(alturas[nombrePersonaje] == 0) return posicionVerticalBarraArriba;
+	return posicionVerticalBarraAbajo;
 }
 
 SDL_RendererFlip LifeBar::obtenerFlipBarra(string nombrePersonaje){
@@ -61,39 +81,39 @@ SDL_RendererFlip LifeBar::obtenerFlipBarra(string nombrePersonaje){
 
 
 int LifeBar::obtenerAnchoFondoVida(string nombrePersonaje){
-	if(alturas[nombrePersonaje] == 0) return this->alturaVentana / 19;
-	return (this->alturaVentana * 4) / (6 * 19);
+	if(alturas[nombrePersonaje] == 0) return anchoFondoVidaArriba;
+	return anchoFondoVidaAbajo;
 }
 
 int LifeBar::obtenerLargoFondoVida(string nombrePersonaje){
-	if(alturas[nombrePersonaje] == 0) return (16 * this->anchoVentana) / 60;
-	return (this->anchoVentana*48) / 240;
+	if(alturas[nombrePersonaje] == 0) return largoFondoVidaArriba;
+	return largoFondoVidaAbajo;
 }
 
 int LifeBar::obtenerPosicionHorizontalFondoVida(string nombrePersonaje){
 	if(lados[nombrePersonaje] == 0){
-		if(alturas[nombrePersonaje] == 0) return (this->anchoVentana * 15) / 240;
-		return (45*this->anchoVentana) /920;
+		if(alturas[nombrePersonaje] == 0) return posicionHorizontalFondoVidaArribaIzq;
+		return posicionHorizontalFondoVidaAbajoIzq;
 	}
 	else{
-		if(alturas[nombrePersonaje] == 0) return this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - (this->anchoVentana * 15) / 240;
-		return this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - (45*this->anchoVentana) /920;
+		if(alturas[nombrePersonaje] == 0) return this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - posicionHorizontalFondoVidaArribaIzq;
+		return this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - posicionHorizontalFondoVidaAbajoIzq;
 	}
 }
 
 int LifeBar::obtenerPosicionVerticalFondoVida(string nombrePersonaje){
-	if(alturas[nombrePersonaje] == 0) return (5*this->alturaVentana / 240);
-	return (this->alturaVentana*9) / 70;
+	if(alturas[nombrePersonaje] == 0) return posicionVerticalFondoVidaArriba;
+	return posicionVerticalFondoVidaAbajo;
 }
 
 int LifeBar::obtenerPosicionHorizontalVida(string nombrePersonaje, int vida){
 	if(lados[nombrePersonaje] == 0){
-			if(alturas[nombrePersonaje] == 0) return (this->anchoVentana * 15) / 240;
-			return (45*this->anchoVentana) /920;
+			if(alturas[nombrePersonaje] == 0) return posicionHorizontalVidaArribaIzq;
+			return posicionHorizontalVidaAbajoIzq;
 		}
 	else{
-		if(alturas[nombrePersonaje] == 0) return (this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - (this->anchoVentana * 15) / 240) + ((obtenerLargoFondoVida(nombrePersonaje) * (100-vida)) / 100);
-		return this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - (45*anchoVentana) /920 + ((obtenerLargoFondoVida(nombrePersonaje) * (100 - vida)) / 100);
+		if(alturas[nombrePersonaje] == 0) return (this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - posicionHorizontalVidaArribaIzq) + ((obtenerLargoFondoVida(nombrePersonaje) * (100-vida)) / 100);
+		return this->anchoVentana - obtenerLargoFondoVida(nombrePersonaje) - posicionHorizontalVidaAbajoIzq + ((obtenerLargoFondoVida(nombrePersonaje) * (100 - vida)) / 100);
 	}
 }
 
