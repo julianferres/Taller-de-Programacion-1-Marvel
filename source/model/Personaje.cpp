@@ -10,6 +10,7 @@ extern ControladorLogger *controladorLogger;
 #define constanteDeAltura 20.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
 #define constanteTiempoCiclos 0.3
 #define constanteEstiramientoHorizontal 2.5
+#define constanteEstiramientoVertical 2
 #define anchoDefault 100
 
 using namespace std;
@@ -20,21 +21,18 @@ Personaje::~Personaje(){
 
 Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip){
 	if(nombre == "sinSprite"){
-		this->alto = controladorJson->alturaPersonajeDefault();
-		this->ancho =controladorJson->anchoPersonajeDefault();
 		this->zindex = 99;
 		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se carga una imagen por defecto");
 	}
-	else{
-		this->alto = controladorJson->alturaPersonaje(nombre);
-		this->ancho = controladorJson->anchoPersonaje(nombre);
+	else
 		this->zindex = controladorJson->zindexPersonaje(nombre);
-	}
 	this->spriteAnimado=new SpriteAnimado(nombre);
+	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
+	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
 	this->posicionYdefault= controladorJson->alturaVentana() - controladorJson->getAlturaPiso();
 	this->nombre = nombre;
 	this->posy = posicionYdefault - 2*spriteAnimado->getAlto();
-	this->velocidadInicial = sqrt(constanteDeAltura * alto);
+	this->velocidadInicial = sqrt(constanteDeAltura * controladorJson->alturaPersonaje(nombre));
 	this->posx= posicionXinicial;
 	this->posicionXinicial = posicionXinicial;
 	this->flip = flip;
@@ -48,6 +46,8 @@ void Personaje::actualizar(){
 	else
 		posy = posicionYdefault - 2*spriteAnimado->getAlto();
 	this->spriteAnimado->update();
+	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
+	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
 }
 
 void Personaje::cambiarAnimacion(string nombre){
@@ -219,8 +219,8 @@ float Personaje::getPosY(){
 SDL_Rect  Personaje::obtenerRectangulo(){
 	int posicionXdibujable = posx;
 	if(flip)
-		posicionXdibujable = posx+ 2.5*(-spriteAnimado->getAncho()+anchoDefault);
-	SDL_Rect rectangulo = { static_cast<int>(posicionXdibujable), static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), 2*spriteAnimado->getAlto()};
+		posicionXdibujable = posx+ constanteEstiramientoHorizontal*(-spriteAnimado->getAncho()+anchoDefault);
+	SDL_Rect rectangulo = { static_cast<int>(posicionXdibujable), static_cast<int>(posy), ancho, alto};
 	return rectangulo;
 }
 
@@ -242,11 +242,11 @@ SpriteAnimado *Personaje::obtenerSprite(){
 
 
 bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+velocidad, static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), 2*spriteAnimado->getAlto()};
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+velocidad, static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
 
 bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), 2*spriteAnimado->getAlto()};
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
