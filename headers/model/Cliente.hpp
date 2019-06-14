@@ -16,6 +16,7 @@
 #include <netdb.h>
 #include <strings.h>
 #include <tuple>
+#include <LifeBar.hpp>
 
 #define MAXDATOS 1000
 #define CANTIDAD_MAXIMA_JUGADORES 4
@@ -49,8 +50,7 @@ class Cliente{
 		bool enMenu = true;
 		bool conectado = true;
 		vector<tuple<string, const string>> personajesYfondos;
-
-
+		LifeBar *lifeBar;
 	};
 
 #endif

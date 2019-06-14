@@ -61,3 +61,10 @@ SDL_Renderer* ControladorGrafico::getRenderer() const{
 void ControladorGrafico::maximizarVentana(int ancho, int alto){
 	controladorJson->maximizarVentana(ancho, alto);
 }
+
+void ControladorGrafico::dibujarRectanguloDeColor(int red, int green, int blue, int alpha, SDL_Rect *rectangulo){
+	SDL_SetRenderDrawColor(this->_renderer, red, green, blue, alpha);
+	SDL_RenderFillRect(this->_renderer, rectangulo);
+	SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 0);
+
+}

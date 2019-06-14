@@ -61,6 +61,8 @@ void Cliente::cargarContenidos(){
 		personajesYfondos.push_back(make_tuple(personajes[i],filePath));
 		const string &buttonPath = controladorJson->pathBoton((personajes[i]));
 		personajesYfondos.push_back(make_tuple(personajes[i]+"Boton",buttonPath));
+		personajesYfondos.push_back(make_tuple(this->lifeBar->obtenerNombreBarra(personajes[i]), this->lifeBar->obtenerPath(personajes[i])));
+
 	}
 	vector<int> fondos = controladorJson->getZindexes(round);
 	for (int r=1; r<4; r++){
@@ -139,6 +141,8 @@ void Cliente::recibirParaDibujar(){
 	SDL_RendererFlip flip;
 	int size;
 	int recibido;
+
+
 	while(running){
 		recibido = recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
 		juegoCliente->graficos()->limpiar();
@@ -171,6 +175,8 @@ void Cliente::recibirParaDibujar(){
 
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
+		if(!enMenu)
+			juegoCliente->dibujarBarrasVida();
 		juegoCliente->graficos()->render();
 		send(numeroSocket,&evento,sizeof(evento),0);//heartbeat
 	}
