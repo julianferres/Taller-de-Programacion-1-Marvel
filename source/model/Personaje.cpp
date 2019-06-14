@@ -19,21 +19,18 @@ Personaje::~Personaje(){
 }
 
 Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip){
-	std::string path = controladorJson->pathImagen(nombre);
 	if(nombre == "sinSprite"){
-		path = "contents/images/sinSprite.png";
 		this->alto = controladorJson->alturaPersonajeDefault();
 		this->ancho =controladorJson->anchoPersonajeDefault();
-		this->spriteAnimado=new SpriteAnimado(nombre);
 		this->zindex = 99;
 		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se carga una imagen por defecto");
 	}
 	else{
 		this->alto = controladorJson->alturaPersonaje(nombre);
 		this->ancho = controladorJson->anchoPersonaje(nombre);
-		this->spriteAnimado=new SpriteAnimado(nombre);
 		this->zindex = controladorJson->zindexPersonaje(nombre);
 	}
+	this->spriteAnimado=new SpriteAnimado(nombre);
 	this->posicionYdefault= controladorJson->alturaVentana() - controladorJson->getAlturaPiso();
 	this->nombre = nombre;
 	this->posy = posicionYdefault - 2*spriteAnimado->getAlto();
@@ -70,7 +67,7 @@ bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 			this->spriteAnimado->iniciarAnimacion("movIzquierda");
 	}
 
-	if(posx + ancho > (controladorJson-> getLimiteFondoDer())){
+	if(posx + 2*spriteAnimado->getAncho() > (controladorJson-> getLimiteFondoDer())){
 		if (rect_enemigo.x > (controladorJson->getLimiteFondoIzq()) && !finEscenarioDerecha){
 			enemigo->correrAIzquierda();
 			controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje en el limite derecho. Se corre el oponente a la izquierda");
@@ -113,7 +110,7 @@ void Personaje::correrAIzquierda(){
 }
 
 void Personaje::correrADerecha(){
-	if(posx + ancho > controladorJson->getLimiteFondoDer())
+	if(posx + 2*spriteAnimado->getAncho() > controladorJson->getLimiteFondoDer())
 			return;
 	this->posx=this->posx+velocidad;
 }
@@ -168,7 +165,7 @@ void Personaje::cambio(){
 	if(posicionXinicial < controladorJson->anchoVentana()/2)
 		this->posx = 0;
 	else
-		this->posx = controladorJson->anchoVentana()-ancho;
+		this->posx = controladorJson->anchoVentana()- 2*spriteAnimado->getAncho();
 
 	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
 }
@@ -245,11 +242,11 @@ SpriteAnimado *Personaje::obtenerSprite(){
 
 
 bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+velocidad, static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), alto};
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+velocidad, static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), 2*spriteAnimado->getAlto()};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
 
 bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), alto};
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(posy), 2.5*spriteAnimado->getAncho(), 2*spriteAnimado->getAlto()};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
