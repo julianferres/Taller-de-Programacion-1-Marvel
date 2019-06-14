@@ -100,11 +100,11 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeA=new Animacion("golpeA",3,0,875,220,90,8);//golpe agachado//LISTO
 		patadaA=new Animacion("patadaA",4,0,1570,215,109,8);//patada agachado//LISTO
 		defensa=new Animacion("defensa",10,0,2924,170,172,8);//LISTO
-		disparo=new Animacion("disparar",12,0,3230,275,128,4);
+		disparo=new Animacion("disparar",12,0,3230,275,128,2);//LISTO
 		tiro=new Animacion("tirar",6,0,3440,225,172,8);
-		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
-		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,20);
-		levantarse=new Animacion("levantarse",3,850,5170,112,140,20);
+		rgolpe=new Animacion("recibirGolpe",5,0,3500,170,140,2);//LISTO
+		rgolpeF=new Animacion("recibirGolpeF",3,0,3640,180,140,2);
+		levantarse=new Animacion("levantarse",6,0,3780,180,140,2);
 		boton = false;
 	}
 	else if(nombre=="MegaMan" ){
@@ -123,11 +123,11 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeA=new Animacion("golpeA",4,0,1105,110,65,8);//golpe agachado//LISTO
 		patadaA=new Animacion("patadaA",5,0,1170,110,65,8);//patada agachado//LISTO
 		defensa=new Animacion("defensa",4,0,960,110,80,8);//LISTO
-		disparo=new Animacion("disparar",11,0,2160,275,80,6);
+		disparo=new Animacion("disparar",11,0,2160,275,80,2);//LISTO
 		tiro=new Animacion("tirar",6,0,3440,225,172,8);
-		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
-		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,20);
-		levantarse=new Animacion("levantarse",3,850,5170,112,140,20);
+		rgolpe=new Animacion("recibirGolpe",4,0,2380,85,90,2);//LISTO
+		rgolpeF=new Animacion("recibirGolpeF",6,0,2465,105,85,2);//LISTO
+		levantarse=new Animacion("levantarse",7,0,2600,90,100,2);//LISTO
 		boton = false;
 	}
 	else if(nombre=="Hulk" ){
