@@ -76,7 +76,7 @@
             },
 	    {"name":"Venom",
             "filepath":"contents/images/Venom.png",
-            "height":340,
+            "height":320,
             "width":220,
             "zindex":99,
 			"buttonpath": "contents/images/BotonVenom.png"  
@@ -88,15 +88,13 @@
             "zindex":99,
 			"buttonpath": "contents/images/BotonSpiderman.png"          
             },
-	    {"name":"Hulk",
-            "filepath":"contents/images/Hulk.png",
-            "height":380,
-            "width":260,
-            "zindex":99	,
-			"buttonpath": "contents/images/BotonHulk.png"     
-                      
-            }       
-
+        {"name":"MegaMan",
+	        "filepath":"contents/images/MegaMan.png",
+	        "height":395.6,
+	        "width":517.5,
+	        "zindex":99	,
+			"buttonpath": "contents/images/BotonMegaMan.png"                          
+		}
         ],
 
     "window":{

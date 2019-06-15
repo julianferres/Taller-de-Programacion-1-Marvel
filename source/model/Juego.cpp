@@ -22,6 +22,7 @@ Juego::Juego(){
 	this->teclado = new ControladorTeclado();
 	this->roundActual = new Round(1);
 	this-> parallax = this->roundActual->getParallax();
+	this->controladorColisiones = new ControladorColisiones();
 	controladorLogger->registrarEvento("INFO", "Juego::Se inicio el juego");
 
 }
@@ -155,8 +156,6 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 	this->verificarCambioDeLado();
 	int fondos_dibujados = 0;
 	int personajes_dibujados = 0;
-	get<0>(zindexs_personajes[0])->devolverPersonajeActual()->actualizar();
-	get<0>(zindexs_personajes[1])->devolverPersonajeActual()->actualizar();
 	while(fondos_dibujados + personajes_dibujados < 5){
 		if(fondos_dibujados == 3 || get<1>(zindexs_personajes[personajes_dibujados]) <= zindexes[fondos_dibujados]){
 			Jugador * jugador = get<0>(zindexs_personajes[personajes_dibujados]);
@@ -186,6 +185,8 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 			fondos_dibujados++;
 		}
 	}
+	get<0>(zindexs_personajes[0])->devolverPersonajeActual()->actualizar();
+	get<0>(zindexs_personajes[1])->devolverPersonajeActual()->actualizar();
 	dibujables.push_back(this->roundActual->getTiempoDibujable());
 	return dibujables;
 
@@ -214,12 +215,14 @@ void Juego::actualizarConexion(int idCliente){
 void Juego::teclear(SDL_Event evento, int idCliente){
 	Personaje* personaje1 = jugadorActualEquipo1->devolverPersonajeActual();
 	Personaje* personaje2 = jugadorActualEquipo2->devolverPersonajeActual();
+	this->controladorColisiones->setPersonaje1(personaje1);
+	this->controladorColisiones->setPersonaje2(personaje2);
 	bool finEscenarioDerecha = parallax->finDeEscenarioDerecha();
 	bool finEscenarioIzquierda = parallax->finDeEscenarioIzquierda();
 	teclado->reiniciar();
 
 
-	if (evento.window.event == SDL_WINDOWEVENT_RESIZED){
+	if (evento.window.event == SDL_WINDOWEVENT_RESIZED){//no funciona
 		//cliente->graficos()->maximizarVentana(evento.window.data1, evento.window.data2);
 		this->equipo1->actualizarPiso();
 		this->equipo1->actualizarPiso();
@@ -238,93 +241,124 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 
 	 if(puedoMoverPersonaje1 || controladorJson->cantidadClientes() == 1){
 		 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_D)){
-				 if(personaje1->moverDerecha(personaje2,finEscenarioDerecha)){
-					 this->parallax->moverCamaraDerecha();
-							 /*if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() )  ){
-									if(personaje1->MoverDerecha(personaje2,finEscenarioDerecha))
-										this->parallax->MoverCamaraDerecha();
-									controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la derecha");
-								}*/
-				 }
-			 }
-			 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_A)){
-				 if (personaje1->moverIzquierda(personaje2,finEscenarioIzquierda)){
-					 this->parallax->moverCamaraIzquierda();
-						/*if(! personaje1->colisionaAlaIzquierda(personaje2->obtenerRectangulo() )  ){
-								if (personaje1->MoverIzquierda(personaje2,finEscenarioIzquierda))
-									this->parallax->MoverCamaraIzquierda();
-								controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la izquierda");
-							}*/
-				 }
-			 }
+			 if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() )  ){
+				if(personaje1->moverDerecha(personaje2,finEscenarioDerecha))
+					this->parallax->moverCamaraDerecha();
+				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la derecha");
+			}
+		 }
 
-			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_W)){
+		 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_A)){
+			if(! personaje1->colisionaAlaIzquierda(personaje2->obtenerRectangulo() )  ){
+				if (personaje1->moverIzquierda(personaje2,finEscenarioIzquierda))
+					this->parallax->moverCamaraIzquierda();
+				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la izquierda");
+			}
+		 }
+
+		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)){
+			personaje1->agacharse();
+			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
+		}
+
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_W)){
+			if(!personaje1->estaSaltando()){
 				personaje1->saltar();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 salta");
 			}
+		}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_J)){
+			personaje1->golpe("golpeS");
+		}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_U)){
+			personaje1->golpe("golpeF");
+		}
 
-			if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_S)){
-				personaje1->agacharse();
-				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 agachado");
-			}
-			if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A) ){
-					personaje1->cambiarAnimacion("quieto");
-			}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_K)){
+			personaje1->golpe("patadaS");
+		}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_I)){
+			personaje1->golpe("patadaF");
+		}
+		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_L)){
+			personaje1->defenderse();
+		}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_O)){
+			personaje1->disparar();
+		}
+		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_L)&&teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_K)){
+			personaje1->tirar();
+		}
+		if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A)||teclado->seSoltoUnaTecla(SDL_SCANCODE_L)){
+				personaje1->cambiarAnimacion("quieto");
+		}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_E) ){
+			this->equipo1->cambiarJugador();
+			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 1");
+		}
 
-			if(teclado->sePresionoUnaTecla(SDL_SCANCODE_E) ){
-				this->equipo1->cambiarJugador();
-				controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 1");
-			}
 	 }
+
 	 if(puedoMoverPersonaje2 || controladorJson->cantidadClientes() == 1){
-			 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_LEFT)){
-					if (personaje2->moverIzquierda(personaje1,finEscenarioIzquierda)){
-						this->parallax->moverCamaraIzquierda();
-						/*if(! personaje2->colisionaAlaIzquierda(personaje1->obtenerRectangulo()) ){
-							if (personaje2->MoverIzquierda(personaje1,finEscenarioIzquierda)){
-								this->parallax->MoverCamaraIzquierda();
-							}
-						controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la izquierda");
-						}*/
-					}
+		 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_LEFT)){
+			if(! personaje2->colisionaAlaIzquierda(personaje1->obtenerRectangulo()) ){
+				if (personaje2->moverIzquierda(personaje1,finEscenarioIzquierda)){
+					this->parallax->moverCamaraIzquierda();
 				}
+			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la izquierda");
+			}
+		}
 
-				if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_RIGHT)){
-				   if(personaje2->moverDerecha(personaje1, finEscenarioDerecha) ){
-					   this->parallax->moverCamaraDerecha();
-						  /* if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo()) ){
-								if(personaje2->MoverDerecha(personaje1, finEscenarioDerecha) )
-									this->parallax->MoverCamaraDerecha();
-								controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la derecha");
-						   }*/
-				   }
-				}
+		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_RIGHT)){
+		  if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo()) ){
+				if(personaje2->moverDerecha(personaje1, finEscenarioDerecha) )
+					this->parallax->moverCamaraDerecha();
+				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la derecha");
+		   }
 
-				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_UP)){
-					personaje2->saltar();
-					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 salta");
-				}
+		}
 
-				if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_DOWN)){
-					personaje2->agacharse();
-					controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 agachado");
-				}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_UP)){
+			if(!personaje2->estaSaltando()){
+				personaje2->saltar();
+				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 salta");
+			}
+		}
 
-				if(teclado->seSoltoUnaTecla(SDL_SCANCODE_DOWN) || teclado->seSoltoUnaTecla(SDL_SCANCODE_LEFT) || teclado->seSoltoUnaTecla(SDL_SCANCODE_RIGHT)){
-						personaje2->cambiarAnimacion("quieto");
-				}
+		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_DOWN)){
+			personaje2->agacharse();
+			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 agachado");
+		}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_V)){
+			personaje2->golpe("golpeS");
+		}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_B)){
+			personaje2->golpe("patadaS");
+		}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_F)){
+			personaje2->golpe("golpeF");
+		}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_G)){
+			personaje2->golpe("patadaF");
+		}
+		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_N)){
+			personaje2->defenderse();
+		}
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_H)){
+			personaje2->disparar();
+		}
+		if(teclado->seSoltoUnaTecla(SDL_SCANCODE_DOWN) || teclado->seSoltoUnaTecla(SDL_SCANCODE_LEFT) || teclado->seSoltoUnaTecla(SDL_SCANCODE_RIGHT)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_N)){
+				personaje2->cambiarAnimacion("quieto");
+		}
 
-				if(teclado->sePresionoUnaTecla(SDL_SCANCODE_M)  ){
-					this->equipo2->cambiarJugador();
-					controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 2");
-				}
-
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_M)  ){
+			this->equipo2->cambiarJugador();
+			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 2");
+		}
 
 	 }
-	 if(teclado->sePresionoUnaTecla(SDL_SCANCODE_F11)){
-		 //cliente->graficos()->cambiarPantallaCompleta();
-		 controladorLogger->registrarEvento("DEBUG", "Se cambia a pantalla completa");
-	 }
+
+	 this->controladorColisiones->resolverColisiones();
 
 }
 

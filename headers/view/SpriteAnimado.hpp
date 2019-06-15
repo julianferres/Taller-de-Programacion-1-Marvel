@@ -25,15 +25,20 @@ class SpriteAnimado{
 		string getAnimacionActual();
 		string getNombre();
 		SDL_Rect rectOrigen();
+		int getAlto();
+		int getAncho();
 
 
 	private:
 
 		Animacion *animacionActual;
+		Animacion * quieto,*moverDerecha,*moverIzquierda,*salto,*agacharse,*cambioEntrada,*golpeS,*patadaS,*patadaA,*golpeSaltando,*patadaSaltando,*golpeF,*patadaF,*golpeA,*defensa,*disparo,*tiro,*rgolpe,*rgolpeF,*levantarse;
+		Animacion * mouseOut,*mouseOver,*mouseDown,*mouseUp;
 		vector<Animacion*> animaciones;
 		int frameIndex = 0;
 		int regulador = 0;
 		string nombreSprite;
+		bool boton =true;
 
 };
 

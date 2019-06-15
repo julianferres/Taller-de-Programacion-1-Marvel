@@ -6,6 +6,7 @@
 #include <ControladorGrafico.hpp>
 #include <ControladorJson.hpp>
 #include <ControladorTeclado.hpp>
+#include <ControladorColisiones.hpp>
 #include <Parallax.hpp>
 #include <JuegoCliente.hpp>
 #include <Equipo.hpp>
@@ -18,6 +19,7 @@ extern ControladorJson *controladorJson;
 class Jugador;
 class JuegoCliente;
 class Equipo;
+class ControladorColisiones;
 using namespace std;
 
 class Juego{
@@ -38,6 +40,7 @@ class Juego{
 		void actualizarConexion(int idCliente);
 		Equipo * getEquipo1();
 		Equipo * getEquipo2();
+		ControladorColisiones* controladorColisiones;
 		int numeroRound();
 		void nuevoRound();
 		void iniciarRound();
@@ -47,6 +50,7 @@ class Juego{
 		Equipo * getGanadorUltimoRound();
 		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujarBannerRound();
 		void reiniciarPersonajes();
+
 
 	private:
 		vector<Equipo*> ganadores;

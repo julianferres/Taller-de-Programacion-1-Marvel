@@ -396,6 +396,7 @@ void ControladorJson::setPersonajes(json j)throw(){
 			vec.push_back("Hulk");
 			vec.push_back("Venom");
 			vec.push_back("Spiderman");
+			vec.push_back("MegaMan");
 
 			if ( std::find(vec.begin(), vec.end(), nombre_personaje) == vec.end() ){
 				controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de personaje" + nombre_personaje+" no encontrada. Se carga una por defecto");
@@ -442,7 +443,7 @@ void ControladorJson::setPersonajes(json j)throw(){
 }
 
 void ControladorJson::setPersonajeJugador(int personaje, int jugador, string nombre){
-	if(nombre!="CapitanAmerica" && nombre!="Venom" && nombre!="Spiderman" && nombre!="Hulk"){
+	if(nombre!="CapitanAmerica" && nombre!="Venom" && nombre!="Spiderman" && nombre!="Hulk"&& nombre!="MegaMan"){
 		controladorLogger->registrarEvento("ERROR","ControladroJson::No es un nombre valido: "+ nombre );
 		nombre = "sinSprite";
 	}
