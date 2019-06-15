@@ -262,7 +262,7 @@ void Servidor::enviarParaDibujar(int socket){
 
 		if(!enMenu && equiposArmados){
 			equipos[0] = obtenerEquipoPersonaje("CapitanAmerica");
-			equipos[1] = obtenerEquipoPersonaje("Hulk");
+			equipos[1] = obtenerEquipoPersonaje("MegaMan");
 			equipos[2] = obtenerEquipoPersonaje("Spiderman");
 			equipos[3] = obtenerEquipoPersonaje("Venom");
 

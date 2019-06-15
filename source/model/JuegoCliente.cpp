@@ -106,7 +106,7 @@ void JuegoCliente::dibujarBarrasVida(){
 	string nombre = "";
 	for(int i = 0; i < 4; i++){
 		if(i == 0) nombre = "CapitanAmerica";
-		else if(i == 1) nombre = "Hulk";
+		else if(i == 1) nombre = "MegaMan";
 		else if(i == 2) nombre = "Spiderman";
 		else nombre = "Venom";
 		destino.h = lifeBar->obtenerAnchoBarra(nombre);

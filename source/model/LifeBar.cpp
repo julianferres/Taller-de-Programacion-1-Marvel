@@ -8,17 +8,17 @@ LifeBar::LifeBar(){
 
 void LifeBar::setearLados(int *ladosPersonajes){
 	lados.insert({"CapitanAmerica", ladosPersonajes[0]});
-	lados.insert({"Hulk", ladosPersonajes[1]});
+	lados.insert({"MegaMan", ladosPersonajes[1]});
 	lados.insert({"Spiderman", ladosPersonajes[2]});
 	lados.insert({"Venom", ladosPersonajes[3]});
 
-	if(lados["CapitanAmerica"] == lados["Hulk"]){
-		companieros.insert({"CapitanAmerica", "Hulk"});
-		companieros.insert({"Hulk", "CapitanAmerica"});
+	if(lados["CapitanAmerica"] == lados["MegaMan"]){
+		companieros.insert({"CapitanAmerica", "MegaMan"});
+		companieros.insert({"MegaMan", "CapitanAmerica"});
 		companieros.insert({"Spiderman", "Venom"});
 		companieros.insert({"Venom", "Spiderman"});
 		alturas.insert({"CapitanAmerica", 0});
-		alturas.insert({"Hulk", 1});
+		alturas.insert({"MegaMan", 1});
 		alturas.insert({"Spiderman", 0});
 		alturas.insert({"Venom", 1});
 	}
@@ -26,10 +26,10 @@ void LifeBar::setearLados(int *ladosPersonajes){
 	else if(lados["CapitanAmerica"] == lados["Spiderman"]){
 		companieros.insert({"CapitanAmerica", "Spiderman"});
 		companieros.insert({"Spiderman", "CapitanAmerica"});
-		companieros.insert({"Hulk", "Venom"});
-		companieros.insert({"Venom", "Hulk"});
+		companieros.insert({"MegaMan", "Venom"});
+		companieros.insert({"Venom", "MegaMan"});
 		alturas.insert({"CapitanAmerica", 0});
-		alturas.insert({"Hulk", 0});
+		alturas.insert({"MegaMan", 0});
 		alturas.insert({"Spiderman", 1});
 		alturas.insert({"Venom", 1});
 	}
@@ -37,10 +37,10 @@ void LifeBar::setearLados(int *ladosPersonajes){
 	else {
 		companieros.insert({"CapitanAmerica", "Venom"});
 		companieros.insert({"Venom", "CapitanAmerica"});
-		companieros.insert({"Hulk", "Spiderman"});
-		companieros.insert({"Spiderman", "Hulk"});
+		companieros.insert({"MegaMan", "Spiderman"});
+		companieros.insert({"Spiderman", "MegaMan"});
 		alturas.insert({"CapitanAmerica", 0});
-		alturas.insert({"Hulk", 1});
+		alturas.insert({"MegaMan", 1});
 		alturas.insert({"Spiderman", 0});
 		alturas.insert({"Venom", 1});
 	}
