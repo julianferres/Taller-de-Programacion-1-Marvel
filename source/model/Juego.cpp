@@ -249,7 +249,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_O)){
 			personaje1->disparar();
 		}
-		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_O)&&teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_L)){
+		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_L)&&teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_K)){
 			personaje1->tirar();
 		}
 		if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A)||teclado->seSoltoUnaTecla(SDL_SCANCODE_L)){
@@ -291,12 +291,6 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_DOWN)){
 			personaje2->agacharse();
 			controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 agachado");
-		}
-		if (teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_DOWN)&&teclado->sePresionoUnaTecla(SDL_SCANCODE_A)){
-			personaje2->golpe("golpeAS");
-		}
-		if (teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_DOWN)&&teclado->sePresionoUnaTecla(SDL_SCANCODE_S)){
-			personaje2->golpe("patadaAS");
 		}
 		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_V)){
 			personaje2->golpe("golpeS");
