@@ -28,7 +28,7 @@ public:
 	void detenerCancion();
 	void finalizarCancion();
 	void dibujarBarrasVida();
-
+	void setearLados(int *lados);
 private:
 	ControladorGrafico *grafico;
 	ControladorSonido *sonido;

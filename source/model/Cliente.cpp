@@ -141,9 +141,17 @@ void Cliente::recibirParaDibujar(){
 	SDL_RendererFlip flip;
 	int size;
 	int recibido;
-
+	int equipos[4] = { 0, 1, 0, 1};
+	bool equiposArmados = true;
 
 	while(running){
+
+		if(!enMenu && equiposArmados){
+			equiposArmados = false;
+			recv(numeroSocket, equipos, sizeof(equipos), MSG_WAITALL);
+			juegoCliente->setearLados(equipos);
+		}
+
 		recibido = recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
 		juegoCliente->graficos()->limpiar();
 		if(recibido<0){
@@ -172,11 +180,15 @@ void Cliente::recibirParaDibujar(){
 			if(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)<0) break;
 			if(recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL)<0) break;
 			if(recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL)<0) break;
-
+			//Personajes por arriba de las barras
+			if(!enMenu && i == 3)
+					juegoCliente->dibujarBarrasVida();
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
-		if(!enMenu)
-			juegoCliente->dibujarBarrasVida();
+		//Personajes por debajo de las barras
+		/*if(!enMenu)
+							juegoCliente->dibujarBarrasVida();*/
+
 		juegoCliente->graficos()->render();
 		send(numeroSocket,&evento,sizeof(evento),0);//heartbeat
 	}

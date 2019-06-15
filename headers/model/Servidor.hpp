@@ -37,6 +37,7 @@ class Servidor{
 		void correrMenu();
 		void crearEquipos();
 		void gameLoop();
+		int obtenerEquipoPersonaje(string nombre);
 
 	private:
 		mutex mutex_conecciones;
@@ -55,6 +56,7 @@ class Servidor{
 		vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujables;
 		bool enMenu = true;
 		queue<tuple<SDL_Event,int>>colaEventos;
+
 
 };
 
