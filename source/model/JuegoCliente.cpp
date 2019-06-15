@@ -97,6 +97,11 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 void JuegoCliente::correrSonido(const char* nombre){
 	this->sonido->correrSonido(nombre);
 }
+
+void JuegoCliente::setearLados(int *lados){
+	this->lifeBar->setearLados(lados);
+}
+
 void JuegoCliente::dibujarBarrasVida(){
 	string nombre = "";
 	for(int i = 0; i < 4; i++){

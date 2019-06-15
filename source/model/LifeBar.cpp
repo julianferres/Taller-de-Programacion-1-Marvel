@@ -4,20 +4,46 @@
 using namespace std;
 
 LifeBar::LifeBar(){
-	lados.insert({"CapitanAmerica", 0});
-	lados.insert({"Hulk", 0});
-	lados.insert({"Spiderman", 1});
-	lados.insert({"Venom", 1});
+}
 
-	alturas.insert({"CapitanAmerica", 0});
-	alturas.insert({"Hulk", 1});
-	alturas.insert({"Spiderman", 0});
-	alturas.insert({"Venom", 1});
+void LifeBar::setearLados(int *ladosPersonajes){
+	lados.insert({"CapitanAmerica", ladosPersonajes[0]});
+	lados.insert({"Hulk", ladosPersonajes[1]});
+	lados.insert({"Spiderman", ladosPersonajes[2]});
+	lados.insert({"Venom", ladosPersonajes[3]});
 
-	companieros.insert({"CapitanAmerica", "Hulk"});
-	companieros.insert({"Hulk", "CapitanAmerica"});
-	companieros.insert({"Spiderman", "Venom"});
-	companieros.insert({"Venom", "Spiderman"});
+	if(lados["CapitanAmerica"] == lados["Hulk"]){
+		companieros.insert({"CapitanAmerica", "Hulk"});
+		companieros.insert({"Hulk", "CapitanAmerica"});
+		companieros.insert({"Spiderman", "Venom"});
+		companieros.insert({"Venom", "Spiderman"});
+		alturas.insert({"CapitanAmerica", 0});
+		alturas.insert({"Hulk", 1});
+		alturas.insert({"Spiderman", 0});
+		alturas.insert({"Venom", 1});
+	}
+
+	else if(lados["CapitanAmerica"] == lados["Spiderman"]){
+		companieros.insert({"CapitanAmerica", "Spiderman"});
+		companieros.insert({"Spiderman", "CapitanAmerica"});
+		companieros.insert({"Hulk", "Venom"});
+		companieros.insert({"Venom", "Hulk"});
+		alturas.insert({"CapitanAmerica", 0});
+		alturas.insert({"Hulk", 0});
+		alturas.insert({"Spiderman", 1});
+		alturas.insert({"Venom", 1});
+	}
+
+	else {
+		companieros.insert({"CapitanAmerica", "Venom"});
+		companieros.insert({"Venom", "CapitanAmerica"});
+		companieros.insert({"Hulk", "Spiderman"});
+		companieros.insert({"Spiderman", "Hulk"});
+		alturas.insert({"CapitanAmerica", 0});
+		alturas.insert({"Hulk", 1});
+		alturas.insert({"Spiderman", 0});
+		alturas.insert({"Venom", 1});
+	}
 }
 
 void LifeBar::setearAnchoyAltoPantalla(int altoVentana, int anchoVentana){

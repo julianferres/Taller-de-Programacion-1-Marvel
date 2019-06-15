@@ -27,6 +27,7 @@ class LifeBar{
 		int obtenerPosicionHorizontalFondoVida(string nombrePersonaje);
 		int obtenerPosicionVerticalFondoVida(string nombrePersonaje);
 		int obtenerPosicionHorizontalVida(string nombrePersonaje, int vida);
+		void setearLados(int *ladosPersonajes);
 
 	private:
 		map<string, int> lados;

@@ -141,8 +141,17 @@ void Cliente::recibirParaDibujar(){
 	SDL_RendererFlip flip;
 	int size;
 	int recibido;
+	int equipos[4] = { 0, 1, 0, 1};
+	bool equiposArmados = true;
 
 	while(running){
+
+		if(!enMenu && equiposArmados){
+			equiposArmados = false;
+			recv(numeroSocket, equipos, sizeof(equipos), MSG_WAITALL);
+			juegoCliente->setearLados(equipos);
+		}
+
 		recibido = recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
 		juegoCliente->graficos()->limpiar();
 		if(recibido<0){
