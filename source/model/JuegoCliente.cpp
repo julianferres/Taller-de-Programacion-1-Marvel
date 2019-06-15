@@ -141,7 +141,6 @@ void JuegoCliente::finalizarCancion(){
 }
 
 
-
 void JuegoCliente::handleEvents(SDL_Event evento){
 	if(evento.type == SDL_KEYDOWN && evento.key.keysym.sym == SDLK_p)
 			this->sonido->detenerCancion();

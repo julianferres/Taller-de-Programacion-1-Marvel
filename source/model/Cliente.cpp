@@ -142,7 +142,6 @@ void Cliente::recibirParaDibujar(){
 	int size;
 	int recibido;
 
-
 	while(running){
 		recibido = recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
 		juegoCliente->graficos()->limpiar();
@@ -172,11 +171,15 @@ void Cliente::recibirParaDibujar(){
 			if(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)<0) break;
 			if(recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL)<0) break;
 			if(recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL)<0) break;
-
+			//Personajes por arriba de las barras
+			if(!enMenu && i == 3)
+					juegoCliente->dibujarBarrasVida();
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
-		if(!enMenu)
-			juegoCliente->dibujarBarrasVida();
+		//Personajes por debajo de las barras
+		/*if(!enMenu)
+							juegoCliente->dibujarBarrasVida();*/
+
 		juegoCliente->graficos()->render();
 		send(numeroSocket,&evento,sizeof(evento),0);//heartbeat
 	}
