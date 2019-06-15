@@ -79,9 +79,9 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		defensa=new Animacion("defensa",4,0,2377,110,110,6); //LISTO
 		disparo=new Animacion("disparar",7,0,2500,275,84,3); //LISTO
 		tiro=new Animacion("tirar",6,0,3440,225,172,8);
-		rgolpe=new Animacion("recibirGolpe",3,0,4128,225,172,8);
-		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,20);
-		levantarse=new Animacion("levantarse",3,850,5170,112,140,20);
+		rgolpe=new Animacion("recibirGolpe",3,0,3477,160,113,4); //LISTO
+		rgolpeF=new Animacion("recibirGolpeF",7,0,3721,157,93,3);//LISTO
+		levantarse=new Animacion("levantarse",5,1099,3721,157,93,5);//LISTO
 		boton = false;
 	}
 	else if(nombre=="Venom" ){
