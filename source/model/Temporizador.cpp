@@ -45,6 +45,6 @@ void Temporizador::actualizar(){
 std::tuple<std::string, SDL_Rect, SDL_Rect ,SDL_RendererFlip > Temporizador::getDibujable(){
 	SDL_Rect origen = {-1,-1,-1,-1};
 	SDL_Rect destino = { this->ancho_ventana /2, (80 * this->alto_ventana) / this->alto_maximo_ventana,0,0};
-	return make_tuple(std::string("Temporizador/") + to_string(10-int(this->getDeltaTiempo())),origen,destino,SDL_FLIP_NONE);
+	return make_tuple(std::string("Temporizador/") + to_string(99-int(this->getDeltaTiempo())),origen,destino,SDL_FLIP_NONE);
 
 }

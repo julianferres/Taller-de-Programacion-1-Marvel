@@ -6,6 +6,7 @@
 #include <ControladorGrafico.hpp>
 #include <string>
 #include <ControladorJson.hpp>
+#include <ControladorSonido.hpp>
 
 using namespace std;
 
@@ -63,7 +64,6 @@ class Personaje{
 		SpriteAnimado *spriteAnimado;
 		SDL_RendererFlip flip;
 		std::string nombre;
-
 };
 
 #endif

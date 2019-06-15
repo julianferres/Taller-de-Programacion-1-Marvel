@@ -13,9 +13,10 @@ ControladorSonido::~ControladorSonido(){
 }
 
 
-void ControladorSonido::correrSonido(const char* nombre){
+void ControladorSonido::correrSonido(const char* nombre,bool esperar){
 	Mix_Chunk *junk = Mix_LoadWAV(nombre);
-	while(Mix_Playing(-1)){}
+	if(esperar)
+		while(Mix_Playing(-1)){}
 	Mix_PlayChannel(-1,junk,0);
 
 }
@@ -37,4 +38,22 @@ void ControladorSonido::detenerCancion(){
 
 void ControladorSonido::finalizarCancion(){
 	Mix_HaltMusic();
+}
+
+
+
+void ControladorSonido::cargarGolpes(string personaje){
+	sonidos[make_tuple(personaje,"golpeF")]=string("contents/sounds/") + personaje + string("/golpeF.wav");
+	sonidos[make_tuple(personaje,"golpeS")]=string("contents/sounds/")+personaje+ string("/golpeS.wav");
+	sonidos[make_tuple(personaje,"patadaF")]=string("contents/sounds/") + personaje + string("/golpeF.wav");
+	sonidos[make_tuple(personaje,"patadaS")]=string("contents/sounds/")+personaje+ string("/golpeS.wav");
+	sonidos[make_tuple(personaje,"recibirDanio")] =string("contents/sounds/")+personaje+ string("/recibirDanio.wav");
+	sonidos[make_tuple(personaje,"cambioEntrada")] = string("contents/sounds/")+personaje+ string("/cambio.wav");
+	sonidos[make_tuple(personaje,"disparar")] = string("contents/sounds/")+personaje+ string("/disparo.wav");
+	sonidos[make_tuple(personaje,"muerte")] = string("contents/sounds/")+personaje+ string("/muerte.wav");
+
+}
+
+void ControladorSonido::correrSonidoAnimacion(string personaje,string golpe){
+	this->correrSonido(sonidos[make_tuple(personaje,golpe)].c_str(),false);
 }

@@ -1,11 +1,14 @@
 #include <string>
 #include <ControladorJson.hpp>
 #include <ControladorLogger.hpp>
+#include <ControladorSonido.hpp>
 #include <Cliente.hpp>
 #include <Servidor.hpp>
 
+
 ControladorJson *controladorJson = new ControladorJson();
 ControladorLogger *controladorLogger = new ControladorLogger();
+ControladorSonido * controladorSonido = new ControladorSonido();
 
 int main(int argc, char **argv){
 	std::string argumentoConsola = argv[1];

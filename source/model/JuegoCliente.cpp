@@ -9,10 +9,10 @@
 using namespace std;
 //SDL_Color color ={0,0,0};
 extern ControladorJson *controladorJson;
+extern ControladorSonido *controladorSonido;
 
 JuegoCliente::JuegoCliente(int idCliente){
 	this->grafico = new ControladorGrafico(idCliente);
-	this->sonido = new ControladorSonido();
 	this->lifeBar = new LifeBar();
 	this->anchoVentana = controladorJson->anchoVentana();
 	this->altoVentana = controladorJson->alturaVentana();
@@ -20,7 +20,6 @@ JuegoCliente::JuegoCliente(int idCliente){
 }
 
 JuegoCliente::~JuegoCliente(){
-	delete sonido;
 	delete texturas;
 	delete grafico;
 }
@@ -94,9 +93,6 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 	}
 }
 
-void JuegoCliente::correrSonido(const char* nombre){
-	this->sonido->correrSonido(nombre);
-}
 
 void JuegoCliente::setearLados(int *lados){
 	this->lifeBar->setearLados(lados);
@@ -133,23 +129,8 @@ void JuegoCliente::dibujarBarrasVida(){
 	}
 }
 
-void JuegoCliente::correrCancionFondo(const char* nombre,int repeticiones){
-	this->sonido->correrCancionFondo(nombre,repeticiones);
-}
-
-void JuegoCliente::detenerCancion(){
-	this->sonido->detenerCancion();
-}
-
-void JuegoCliente::finalizarCancion(){
-	this->sonido->finalizarCancion();
-}
-
-
 void JuegoCliente::handleEvents(SDL_Event evento){
 	if(evento.type == SDL_KEYDOWN && evento.key.keysym.sym == SDLK_p)
-			this->sonido->detenerCancion();
+		controladorSonido->detenerCancion();
 
-	else if(evento.key.keysym.sym == SDLK_F11)
-		grafico->cambiarPantallaCompleta();
 }

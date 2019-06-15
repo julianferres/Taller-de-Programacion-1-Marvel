@@ -6,6 +6,7 @@
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
+extern ControladorSonido *controladorSonido;
 
 #define constanteDeAltura 20.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
 #define constanteTiempoCiclos 0.3
@@ -36,7 +37,9 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->posx= posicionXinicial;
 	this->posicionXinicial = posicionXinicial;
 	this->flip = flip;
+	controladorSonido->cargarGolpes(nombre);
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
+
 
 }
 
@@ -115,6 +118,7 @@ void Personaje::correrADerecha(){
 	this->posx=this->posx+velocidad;
 }
 void Personaje::golpe(string tipoDeGolpe){
+	controladorSonido->correrSonidoAnimacion(nombre,tipoDeGolpe);
 	if(saltando){
 		if(tipoDeGolpe=="golpeS" || tipoDeGolpe=="golpeF")
 			this->spriteAnimado->iniciarAnimacion("golpeSaltando");
@@ -168,6 +172,7 @@ void Personaje::cambio(){
 		this->posx = controladorJson->anchoVentana()- 2*spriteAnimado->getAncho();
 
 	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
+	controladorSonido->correrSonidoAnimacion(nombre,"cambioEntrada");
 }
 
 void Personaje::saltar(){
