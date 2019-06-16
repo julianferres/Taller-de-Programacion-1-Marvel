@@ -110,6 +110,10 @@ void Servidor::crearEquipos(){
 }
 
 void Servidor::gameLoop(){
+	vidas[0] = 100;
+	vidas[1] = 100;
+	vidas[2] = 100;
+	vidas[3] = 100;
 	Uint32 tiempoInicial,tiempoActual;
 	int FPS = controladorJson->cantidadFPS();
 	tuple<SDL_Event,int>tuplaEvento;
@@ -130,6 +134,7 @@ void Servidor::gameLoop(){
 				juego->teclear(get<0>(tuplaEvento),get<1>(tuplaEvento));
 			}
 			this->dibujables = juego->dibujar();
+			this->juego->obtenerVidas(vidas);
 			server_mutex.unlock();
 
 			tiempoActual = SDL_GetTicks();
@@ -253,7 +258,6 @@ void Servidor::enviarParaDibujar(int socket){
 	// y es mas facil de enviar por el socket
 
 	int equipos[4] = {1, 1, 1, 1};
-
 	bool equiposArmados = true;
 
 	while(true){
@@ -268,6 +272,12 @@ void Servidor::enviarParaDibujar(int socket){
 
 			equiposArmados = false;
 			send(socket, equipos, sizeof(equipos), 0);
+		}
+		if(!enMenu){
+			server_mutex.lock();
+			send(socket, vidas, sizeof(vidas), 0);
+
+			server_mutex.unlock();
 		}
 
 		char textura[1000];

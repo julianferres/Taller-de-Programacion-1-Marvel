@@ -3,6 +3,7 @@
 #include <string>
 #include <math.h>
 #include <ControladorLogger.hpp>
+#include <iostream>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -20,6 +21,7 @@ Personaje::~Personaje(){
 }
 
 Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip){
+	this->vida = 100;
 	if(nombre == "sinSprite"){
 		this->zindex = 99;
 		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se carga una imagen por defecto");
@@ -249,4 +251,12 @@ bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
 bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
 	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
+}
+
+void Personaje::restarVida(int cantidad){
+	if(this->vida >= cantidad) this->vida -= cantidad;
+}
+
+int Personaje::obtenerVida(){
+	return this->vida;
 }
