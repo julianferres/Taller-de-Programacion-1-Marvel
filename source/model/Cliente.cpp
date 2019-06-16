@@ -190,7 +190,7 @@ void Cliente::recibirParaDibujar(){
 		if(!enMenu){
 			for(int i=0;i<2;i++){
 				recv(numeroSocket,sonido,MAXDATOS,MSG_WAITALL);
-				if(sonido!="")
+				if(!string(sonido).empty())
 					controladorSonido->correrSonido(sonido, false);
 			}
 		}

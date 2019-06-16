@@ -376,8 +376,8 @@ Equipo * Juego::getGanadorUltimoRound(){
 }
 
 vector<string>Juego::getSonidos(){
-	sonidos[0]=jugadorActualEquipo1->devolverPersonajeActual()->getSonido();
-	sonidos[1] = jugadorActualEquipo2->devolverPersonajeActual()->getSonido();
+	sonidos[0]=equipo1->JugadorActual()->devolverPersonajeActual()->getSonido();
+	sonidos[1] = equipo2->JugadorActual()->devolverPersonajeActual()->getSonido();
 	return sonidos;
 }
 

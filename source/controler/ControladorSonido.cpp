@@ -51,7 +51,8 @@ void ControladorSonido::cargarGolpes(string personaje){
 	sonidos[make_tuple(personaje,"golpeS")]=string("contents/sounds/")+personaje+ string("/golpeS.wav");
 	sonidos[make_tuple(personaje,"patadaF")]=string("contents/sounds/") + personaje + string("/golpeF.wav");
 	sonidos[make_tuple(personaje,"patadaS")]=string("contents/sounds/")+personaje+ string("/golpeS.wav");
-	sonidos[make_tuple(personaje,"recibirDanio")] =string("contents/sounds/")+personaje+ string("/recibirDanio.wav");
+	sonidos[make_tuple(personaje,"recibirGolpe")] =string("contents/sounds/")+personaje+ string("/recibirGolpe.wav");
+	sonidos[make_tuple(personaje,"recibirGolpeF")] =string("contents/sounds/")+personaje+ string("/recibirGolpeF.wav");
 	sonidos[make_tuple(personaje,"cambioEntrada")] = string("contents/sounds/")+personaje+ string("/cambio.wav");
 	sonidos[make_tuple(personaje,"disparar")] = string("contents/sounds/")+personaje+ string("/disparo.wav");
 	sonidos[make_tuple(personaje,"muerte")] = string("contents/sounds/")+personaje+ string("/muerte.wav");

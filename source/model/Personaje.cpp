@@ -149,6 +149,7 @@ void Personaje::agacharse(){
 void Personaje::disparar(){
 	if(saltando|| agachado) return;
 	this->spriteAnimado->iniciarAnimacion("disparar");
+	sonidoAnimacion= controladorSonido->getSonidoAnimacion(nombre,"disparar");
 }
 void Personaje::defenderse(){
 	if(saltando) return;
@@ -166,13 +167,14 @@ void Personaje::recibirGolpe(){
 }
 
 void Personaje::cambio(){
+	sonidoAnimacion= controladorSonido->getSonidoAnimacion(nombre,"cambioEntrada");
+	puts(sonidoAnimacion.c_str());
 	if(posicionXinicial < controladorJson->anchoVentana()/2)
 		this->posx = 0;
 	else
 		this->posx = controladorJson->anchoVentana()- 2*spriteAnimado->getAncho();
 
 	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
-	controladorSonido->getSonidoAnimacion(nombre,"cambioEntrada");
 }
 
 void Personaje::saltar(){
@@ -258,4 +260,8 @@ bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
 
 string Personaje::getSonido(){
 	return sonidoAnimacion;
+}
+
+void Personaje::setSonido(string animacion){
+	sonidoAnimacion = controladorSonido->getSonidoAnimacion(nombre, animacion);
 }

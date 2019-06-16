@@ -46,6 +46,7 @@ class Personaje{
 		std::string getNombre();
 		string getSonido();
 		SpriteAnimado *obtenerSprite();
+		void setSonido(string animacion);
 
 	private:
 
