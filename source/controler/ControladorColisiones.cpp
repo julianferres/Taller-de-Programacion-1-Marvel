@@ -52,12 +52,12 @@ void ControladorColisiones::resolverColisiones(){
 
 		if(golpesSuaves[animacionPersonaje2]&& animacionPersonaje1!="defensa"){//personaje2 esta golpeando
 			personajeEquipo1->cambiarAnimacion("recibirGolpe");
-			personajeEquipo1->restarVida(2);
+			personajeEquipo1->restarVida(1);
 			puts("golpea suave el jugador 2");
 		}
 		else if(golpesFuertes[animacionPersonaje2]&& animacionPersonaje1!="defensa"){//personaje2 esta golpeando fuerte
 			personajeEquipo1->cambiarAnimacion("recibirGolpeF");
-			personajeEquipo1->restarVida(5);
+			personajeEquipo1->restarVida(3);
 			puts("golpea fuerte el jugador 2");
 		}
 
