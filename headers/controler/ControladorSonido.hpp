@@ -19,7 +19,7 @@ public:
 	void detenerCancion();
 	void finalizarCancion();
 	void cargarGolpes(string personaje);
-	void correrSonidoAnimacion(string personaje,string golpe);
+	string getSonidoAnimacion(string personaje,string golpe);
 
 private:
 	map<tuple<string,string>,string>sonidos;

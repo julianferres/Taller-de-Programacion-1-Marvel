@@ -375,6 +375,12 @@ Equipo * Juego::getGanadorUltimoRound(){
 	return this->equipo1;
 }
 
+vector<string>Juego::getSonidos(){
+	sonidos[0]=jugadorActualEquipo1->devolverPersonajeActual()->getSonido();
+	sonidos[1] = jugadorActualEquipo2->devolverPersonajeActual()->getSonido();
+	return sonidos;
+}
+
 void Juego::reiniciarPersonajes(){
 	//por ahora solo vuelven a la pocicion inicial
 	//TODO reiniciar vida y otras cossas

@@ -129,6 +129,7 @@ void Servidor::gameLoop(){
 				colaEventos.pop();
 				juego->teclear(get<0>(tuplaEvento),get<1>(tuplaEvento));
 			}
+			this->sonidos=juego->getSonidos();
 			this->dibujables = juego->dibujar();
 			server_mutex.unlock();
 
@@ -247,11 +248,12 @@ int Servidor::obtenerEquipoPersonaje(string nombre){
 void Servidor::enviarParaDibujar(int socket){
 	Uint32 tiempoInicial,tiempoActual;
 	vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread;
+	vector<string>sonidosThread;
 	int FPS = controladorJson->cantidadFPS();
 	// Equipos va a tener el equipo, en orden, de CapitanAmerica, Hulk, Spiderman y Venom
 	// Un array de ints es una solucion muy fea para este problema, pero luego puede utilizarse para enviar las vidas, y tenemos poco tiempo
 	// y es mas facil de enviar por el socket
-
+	char sonido[1000];
 	int equipos[4] = {1, 1, 1, 1};
 
 	bool equiposArmados = true;
@@ -279,6 +281,7 @@ void Servidor::enviarParaDibujar(int socket){
 
 		server_mutex.lock();
 		dibujablesThread=this->dibujables;
+		sonidosThread = this->sonidos;
 		server_mutex.unlock();
 
 		int size = dibujablesThread.size();
@@ -294,6 +297,12 @@ void Servidor::enviarParaDibujar(int socket){
 				send(socket,textura,1000,0);
 				send(socket,posiciones,sizeof(posiciones),0);
 				send(socket,&flip,sizeof(flip),0);
+		}
+		if(!enMenu){
+			for(int i=0;i<2;i++){
+				strcpy(sonido,sonidosThread[i].c_str());
+				send(socket,sonido,sizeof(sonido),0);
+			}
 		}
 
 

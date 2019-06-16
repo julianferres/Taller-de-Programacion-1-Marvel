@@ -50,6 +50,7 @@ class Juego{
 		Equipo * getGanadorUltimoRound();
 		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujarBannerRound();
 		void reiniciarPersonajes();
+		vector<string>getSonidos();
 
 
 	private:
@@ -63,6 +64,7 @@ class Juego{
 		vector<Jugador*> jugadores={NULL,NULL,NULL,NULL};
 		Equipo *equipo1;
 		Equipo *equipo2 ;
+		vector<string>sonidos={"",""};
 		bool isRunning;
 		int FPS = controladorJson->cantidadFPS();
 		unsigned MAX_FRAME_TIME = 1000 / FPS;

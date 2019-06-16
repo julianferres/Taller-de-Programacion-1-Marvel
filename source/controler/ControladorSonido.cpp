@@ -54,6 +54,6 @@ void ControladorSonido::cargarGolpes(string personaje){
 
 }
 
-void ControladorSonido::correrSonidoAnimacion(string personaje,string golpe){
-	this->correrSonido(sonidos[make_tuple(personaje,golpe)].c_str(),false);
+string ControladorSonido::getSonidoAnimacion(string personaje,string golpe){
+	return sonidos[make_tuple(personaje,golpe)];
 }

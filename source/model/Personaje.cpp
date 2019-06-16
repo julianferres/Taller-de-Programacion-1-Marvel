@@ -51,6 +51,7 @@ void Personaje::actualizar(){
 	this->spriteAnimado->update();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
+	sonidoAnimacion.clear();
 }
 
 void Personaje::cambiarAnimacion(string nombre){
@@ -118,7 +119,7 @@ void Personaje::correrADerecha(){
 	this->posx=this->posx+velocidad;
 }
 void Personaje::golpe(string tipoDeGolpe){
-	controladorSonido->correrSonidoAnimacion(nombre,tipoDeGolpe);
+	sonidoAnimacion=controladorSonido->getSonidoAnimacion(nombre,tipoDeGolpe);
 	if(saltando){
 		if(tipoDeGolpe=="golpeS" || tipoDeGolpe=="golpeF")
 			this->spriteAnimado->iniciarAnimacion("golpeSaltando");
@@ -172,7 +173,7 @@ void Personaje::cambio(){
 		this->posx = controladorJson->anchoVentana()- 2*spriteAnimado->getAncho();
 
 	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
-	controladorSonido->correrSonidoAnimacion(nombre,"cambioEntrada");
+	controladorSonido->getSonidoAnimacion(nombre,"cambioEntrada");
 }
 
 void Personaje::saltar(){
@@ -254,4 +255,8 @@ bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
 bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
 	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
+}
+
+string Personaje::getSonido(){
+	return sonidoAnimacion;
 }

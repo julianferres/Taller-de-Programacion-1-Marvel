@@ -44,6 +44,7 @@ class Personaje{
 		float getPosY();
 		SDL_Rect  obtenerRectangulo();
 		std::string getNombre();
+		string getSonido();
 		SpriteAnimado *obtenerSprite();
 
 	private:
@@ -64,6 +65,7 @@ class Personaje{
 		SpriteAnimado *spriteAnimado;
 		SDL_RendererFlip flip;
 		std::string nombre;
+		string sonidoAnimacion="";
 };
 
 #endif

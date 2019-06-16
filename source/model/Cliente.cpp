@@ -138,6 +138,7 @@ void Cliente::recibirParaDibujar(){
 	SDL_Event evento;
 	evento.type = SDL_MOUSEWHEEL;
 	char textura[MAXDATOS];
+	char sonido[MAXDATOS];
 	int posiciones[8];
 	SDL_RendererFlip flip;
 	int size;
@@ -186,6 +187,14 @@ void Cliente::recibirParaDibujar(){
 					juegoCliente->dibujarBarrasVida();
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
+		if(!enMenu){
+			for(int i=0;i<2;i++){
+				recv(numeroSocket,sonido,MAXDATOS,MSG_WAITALL);
+				if(sonido!="")
+					controladorSonido->correrSonido(sonido, false);
+			}
+		}
+
 		//Personajes por debajo de las barras
 		/*if(!enMenu)
 							juegoCliente->dibujarBarrasVida();*/
