@@ -1,7 +1,7 @@
 {
     "logLevel": "DEBUG",
     "FPS": 60,
-    "cantidadClientes" : 2,
+    "cantidadClientes" : 1,
     "round1":
         [
             {"background":
