@@ -102,7 +102,7 @@ void JuegoCliente::setearLados(int *lados){
 	this->lifeBar->setearLados(lados);
 }
 
-void JuegoCliente::dibujarBarrasVida(){
+void JuegoCliente::dibujarBarrasVida(int *vidas){
 	string nombre = "";
 	for(int i = 0; i < 4; i++){
 		if(i == 0) nombre = "CapitanAmerica";
@@ -120,9 +120,6 @@ void JuegoCliente::dibujarBarrasVida(){
 		fondoVida.h = lifeBar->obtenerAnchoFondoVida(nombre);
 		fondoVida.w = lifeBar->obtenerLargoFondoVida(nombre);
 		this->grafico->dibujarRectanguloDeColor(200,50,0,0, &fondoVida);
-
-		int vidas[4] = {100, 50, 100, 90};
-
 		vida.y = lifeBar->obtenerPosicionVerticalFondoVida(nombre);
 		vida.x = lifeBar->obtenerPosicionHorizontalVida(nombre, vidas[i]);
 		vida.h = lifeBar->obtenerAnchoFondoVida(nombre);

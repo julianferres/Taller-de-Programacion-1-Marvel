@@ -50,6 +50,7 @@ class Juego{
 		Equipo * getGanadorUltimoRound();
 		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujarBannerRound();
 		void reiniciarPersonajes();
+		void obtenerVidas(int *vidas);
 
 
 	private:

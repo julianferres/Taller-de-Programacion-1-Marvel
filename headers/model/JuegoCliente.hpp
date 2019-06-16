@@ -27,8 +27,9 @@ public:
 	void correrCancionFondo(const char* nombre,int repeticiones);
 	void detenerCancion();
 	void finalizarCancion();
-	void dibujarBarrasVida();
+	void dibujarBarrasVida(int *vidas);
 	void setearLados(int *lados);
+
 private:
 	ControladorGrafico *grafico;
 	ControladorSonido *sonido;

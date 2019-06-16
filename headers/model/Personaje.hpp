@@ -44,6 +44,8 @@ class Personaje{
 		SDL_Rect  obtenerRectangulo();
 		std::string getNombre();
 		SpriteAnimado *obtenerSprite();
+		void restarVida(int cantidad);
+		int obtenerVida();
 
 	private:
 
@@ -63,6 +65,7 @@ class Personaje{
 		SpriteAnimado *spriteAnimado;
 		SDL_RendererFlip flip;
 		std::string nombre;
+		int vida;
 
 };
 

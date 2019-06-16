@@ -142,6 +142,7 @@ void Cliente::recibirParaDibujar(){
 	int size;
 	int recibido;
 	int equipos[4] = { 0, 1, 0, 1};
+	int vidas[4] = {100, 100, 100, 100};
 	bool equiposArmados = true;
 
 	while(running){
@@ -150,6 +151,10 @@ void Cliente::recibirParaDibujar(){
 			equiposArmados = false;
 			recv(numeroSocket, equipos, sizeof(equipos), MSG_WAITALL);
 			juegoCliente->setearLados(equipos);
+		}
+
+		if(!enMenu){
+			recv(numeroSocket, vidas, sizeof(vidas), MSG_WAITALL);
 		}
 
 		recibido = recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
@@ -182,7 +187,7 @@ void Cliente::recibirParaDibujar(){
 			if(recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL)<0) break;
 			//Personajes por arriba de las barras
 			if(!enMenu && i == 3)
-					juegoCliente->dibujarBarrasVida();
+					juegoCliente->dibujarBarrasVida(vidas);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
 		//Personajes por debajo de las barras
