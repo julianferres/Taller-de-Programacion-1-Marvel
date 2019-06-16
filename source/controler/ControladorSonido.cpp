@@ -6,6 +6,10 @@ using namespace std;
 ControladorSonido::ControladorSonido(){
 	SDL_Init( SDL_INIT_AUDIO);
 	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048);
+	cargarGolpes("CapitanAmerica");
+	cargarGolpes("Spiderman");
+	cargarGolpes("MegaMan");
+	cargarGolpes("Venom");
 }
 
 ControladorSonido::~ControladorSonido(){

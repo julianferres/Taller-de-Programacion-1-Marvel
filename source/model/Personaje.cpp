@@ -37,7 +37,6 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->posx= posicionXinicial;
 	this->posicionXinicial = posicionXinicial;
 	this->flip = flip;
-	controladorSonido->cargarGolpes(nombre);
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
 
 
