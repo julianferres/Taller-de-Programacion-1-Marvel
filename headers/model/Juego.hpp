@@ -51,10 +51,12 @@ class Juego{
 		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujarBannerRound();
 		void reiniciarPersonajes();
 		void obtenerVidas(int *vidas);
+		void cambiarEstadoTiempo();
 
 
 	private:
 		vector<Equipo*> ganadores;
+		bool tiempoCorriendo = true;
 		ControladorTeclado *teclado;
 		Jugador *jugadorActualEquipo1;
 		Jugador *jugadorActualEquipo2;

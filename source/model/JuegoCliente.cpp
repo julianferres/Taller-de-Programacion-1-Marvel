@@ -61,7 +61,7 @@ SDL_Texture * JuegoCliente::getTextura(string nombre){
 
 SDL_Texture * JuegoCliente::getTimer(string tiempo){
 
-	SDL_Color color ={255,255, 255};
+	SDL_Color color ={0,0,0};
 	string path="contents/Fonts/Badaboom.TTF";
 	TTF_Font* font = TTF_OpenFont(path.c_str(),50);
 	SDL_Surface *surface = TTF_RenderText_Solid(font, tiempo.c_str(), color);

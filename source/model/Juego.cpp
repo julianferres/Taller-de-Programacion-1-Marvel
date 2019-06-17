@@ -47,6 +47,7 @@ void Juego::nuevoRound(){
 }
 void Juego::iniciarRound(){
 	this->roundActual->iniciarTiempo();
+	this->tiempoCorriendo = true;
 }
 
 bool Juego::roundFinalizado(){
@@ -187,6 +188,7 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 	}
 	get<0>(zindexs_personajes[0])->devolverPersonajeActual()->actualizar();
 	get<0>(zindexs_personajes[1])->devolverPersonajeActual()->actualizar();
+	dibujables.push_back(this->roundActual->getMundoDibujable());
 	dibujables.push_back(this->roundActual->getTiempoDibujable());
 	return dibujables;
 
@@ -210,6 +212,16 @@ void Juego::verificarCambioDeLado(){
 void Juego::actualizarConexion(int idCliente){
 	this->equipo1->actualizarConexion(idCliente);
 	this->equipo2->actualizarConexion(idCliente);
+}
+
+void Juego::cambiarEstadoTiempo(){
+	if (this->tiempoCorriendo){
+		this->roundActual->frenarTiempo();
+		this->tiempoCorriendo = false;
+	}else{
+		this->roundActual->reiniciarTiempo();
+		this->tiempoCorriendo = true;
+	}
 }
 
 void Juego::teclear(SDL_Event evento, int idCliente){
@@ -238,7 +250,9 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 	 }
 	 bool puedoMoverPersonaje1 = jugadorActualEquipo1->obtenerId() == idCliente || (equipo1->TecladoHabilitado() && (equipo1->obtenerIdJugadorActual() == idCliente || equipo1->obtenerIdCompaniero() == idCliente));
 	 bool puedoMoverPersonaje2 = jugadorActualEquipo2->obtenerId() == idCliente || (equipo2->TecladoHabilitado() && (equipo2->obtenerIdJugadorActual() == idCliente || equipo2->obtenerIdCompaniero() == idCliente));
-
+	 if(teclado->sePresionoUnaTecla(SDL_SCANCODE_T)){
+		 this->cambiarEstadoTiempo();
+	 }
 	 if(puedoMoverPersonaje1 || controladorJson->cantidadClientes() == 1){
 		 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_D)){
 			 if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() )  ){

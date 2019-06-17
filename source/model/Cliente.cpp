@@ -78,6 +78,7 @@ void Cliente::cargarContenidos(){
 
 	personajesYfondos.push_back(make_tuple(string("Fondo"), string("contents/images/fondo.png")));
 	personajesYfondos.push_back(make_tuple(string("ConnectionLost"), string("contents/images/connectionLost.png")));
+	personajesYfondos.push_back(make_tuple(string("Mundo"), string("contents/images/globo_timer.png")));
 }
 
 void Cliente::iniciarConexion(char* direccionIP,int puerto){

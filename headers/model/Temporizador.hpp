@@ -10,6 +10,7 @@ private:
 
 	unsigned int tiempoInicial;
 	unsigned int tiempoTranscurrido;
+	unsigned int tiempoBackup;
 	float deltaTiempo;
 	float escalaDeTiempo;
 	int ancho_ventana;
@@ -29,7 +30,11 @@ public:
 	void setEsacalDeTiempo(float escala);
 	float getEscalaDeTiempo();
 	void actualizar();
+	void frenar();
+	void recuperar();
+	bool corriendo;
 	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getDibujable();
+	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getDibujableMundo();
 
 
 

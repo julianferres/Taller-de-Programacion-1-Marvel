@@ -31,8 +31,19 @@ void Round::actualizarTiempo(){
 	this->tiempo->actualizar();
 }
 
+void Round::frenarTiempo(){
+	this->tiempo->frenar();
+}
+
+void Round::reiniciarTiempo(){
+	this->tiempo->recuperar();
+}
+
 std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Round::getTiempoDibujable(){
 	return this->tiempo->getDibujable();
+}
+std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Round::getMundoDibujable(){
+	return this->tiempo->getDibujableMundo();
 }
 
 std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Round::dibujarBanner(){

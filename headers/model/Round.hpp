@@ -18,7 +18,10 @@ public:
 	void iniciarTiempo();
 	bool finalizado();
 	void actualizarTiempo();
+	void frenarTiempo();
+	void reiniciarTiempo();
 	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getTiempoDibujable();
+	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getMundoDibujable();
 	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > dibujarBanner();
 private:
 
