@@ -19,10 +19,12 @@ class Personaje{
 		~Personaje();
 		int zindexPersonaje();
 		void actualizar();
-		bool moverDerecha(Personaje *enemigo, bool finEscenarioDerecha);
-		bool moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda);
+		bool moverDerecha(Personaje *enemigo, bool finEscenarioDerecha); //devuelve true o false si hay que mover o no le parallax
+		bool moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda); //devuelve true o false si hay que mover o no le parallax
 		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);
 		bool colisionaAlaIzquierda(SDL_Rect rectanguloOponente);
+		bool colisionaAbajoIzquierda(SDL_Rect rectanguloOponente);
+		bool colisionaAbajoDerecha(SDL_Rect rectanguloOponente);
 		bool ladoDerecho();
 		bool estaSaltando();
 		void correrADerecha();

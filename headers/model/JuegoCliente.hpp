@@ -21,6 +21,7 @@ public:
 	void cargarTexturas(vector<tuple<string, const string>> nombresYpaths);
 	void cargarTitulosMenu(vector<tuple<string,string,int,string,int ,int ,int >>titulos);
 	void dibujar(std::string nombre,int posiciones[8],SDL_RendererFlip flip);
+	void dibujarRectanguloFuturo(SDL_Rect rectFuturo);
 
 private:
 	ControladorGrafico *grafico;

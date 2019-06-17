@@ -48,6 +48,10 @@ SDL_Texture * JuegoCliente::getTextura(string nombre){
 	return this->texturas->getTextura(nombre);
 }
 
+void JuegoCliente::dibujarRectanguloFuturo(SDL_Rect rectFuturo){
+	SDL_RenderDrawRect(this->grafico->getRenderer(),&rectFuturo);
+}
+
 void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip){
 	int w=0;
 	int h=0;

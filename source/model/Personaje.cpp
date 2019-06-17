@@ -76,6 +76,12 @@ bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 		controladorLogger->registrarEvento("DEBUG", "Personaje::Ambos jugadores en el borde de la pantalla.");
 		return false;
 	}
+
+	if(saltando && colisionaAbajoDerecha(rect_enemigo) && !flip){
+				this->posx=enemigo->posx+enemigo->ancho;
+				enemigo->correrAIzquierda();
+				return false;
+		}
 	this->posx=this->posx+velocidad;
 	controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje se mueve a la derecha");
 	return false;
@@ -88,7 +94,8 @@ bool Personaje::moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 				this->spriteAnimado->iniciarAnimacion("movIzquierda");
 			else
 				this->spriteAnimado->iniciarAnimacion("movDerecha");
-		}
+	}
+
 	if(posx  < controladorJson->getLimiteFondoIzq()){
 		if (rect_enemigo.x + rect_enemigo.w < controladorJson->getLimiteFondoDer() && !finEscenarioIzquierda){
 			enemigo->correrADerecha();
@@ -98,7 +105,14 @@ bool Personaje::moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 		controladorLogger->registrarEvento("DEBUG", "Personaje::Ambos jugadores en el borde de la pantalla.");
 		return false;
 	}
+
+	if(saltando && colisionaAbajoIzquierda(rect_enemigo) && flip){
+			this->posx=enemigo->posx-enemigo->ancho;
+			enemigo->correrADerecha();
+			return false;
+	}
 	this->posx=this->posx-velocidad;
+
 	controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje se mueve a la izquierda");
 	return false;
 }
@@ -178,6 +192,7 @@ void Personaje::saltar(){
 		else saltando = false;
 	}
 	else{
+
 		if(alturaActualSalto <= 0 && tiempo != 0 ){
 			saltando = false;
 			tiempo = 0;
@@ -249,4 +264,14 @@ bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
 bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
 	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
+}
+
+bool Personaje::colisionaAbajoIzquierda(SDL_Rect rectanguloOponente){
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto), ancho,alto*alto};
+	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente);
+}
+
+bool Personaje::colisionaAbajoDerecha(SDL_Rect rectanguloOponente){
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+velocidad, static_cast<int>(controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto), ancho,alto*alto};
+		return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
