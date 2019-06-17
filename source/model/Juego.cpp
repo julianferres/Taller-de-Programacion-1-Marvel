@@ -372,7 +372,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 
 	 }
 
-	 this->controladorColisiones->resolverColisiones();
+	 this->controladorColisiones->resolverColisiones(this->tiempoCorriendo);
 
 }
 

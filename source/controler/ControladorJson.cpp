@@ -2,6 +2,7 @@
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
 #include <string>
+#include<stdio.h>
 
 extern ControladorLogger *controladorLogger;
 using namespace std;
@@ -44,6 +45,19 @@ void ControladorJson::leerArchivoDefault(){
 	std::ifstream ifs (configPathDefault, std::ifstream::in);
 	json j = json::parse(ifs);
 	nivel_debug = j["logLevel"];
+	this -> setAlturaVentana(j);
+	this -> setAnchoVentana(j);
+	this -> setPantallaCompleta(j);
+	this -> setFPS(j);
+	this -> setCantidadClientes(j);
+	this -> setCantidadPersonajes(j);
+	this -> setCantidadRounds(j);
+	this -> setCantidadFondos(j);
+	//this -> setCantidadJugadores(j);
+	this -> setPersonajes(j);
+	this -> setRounds(j);
+	/*
+	nivel_debug = j["logLevel"];
 	controladorLogger->setNivelDebug(nivel_debug);
 	altura_ventana = j["window"]["height"];
 	ancho_ventana = j["window"]["width"];
@@ -68,6 +82,7 @@ void ControladorJson::leerArchivoDefault(){
 	personajesJugador1.push_back(j["jugadores"][0]["jugador"]["personaje2"]);
 	personajesJugador2.push_back(j["jugadores"][1]["jugador"]["personaje1"]);
 	personajesJugador2.push_back(j["jugadores"][1]["jugador"]["personaje2"]);
+	*/
 	controladorLogger->registrarEvento("INFO","ControladorJson::Archivo default de configuracion JSON leido correctamente");
 
 }
