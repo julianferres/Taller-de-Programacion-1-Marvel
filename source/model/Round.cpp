@@ -1,5 +1,7 @@
 #include <Round.hpp>
 
+extern ControladorJson *controladorJson;
+
 Round::Round(int num){
 	this->numero = num;
 	this->parallax = new Parallax(this->numero);
@@ -24,7 +26,7 @@ void Round::iniciarTiempo(){
 }
 
 bool Round::finalizado(){
-	return (this->tiempo->getDeltaTiempo() >= 10);
+	return (this->tiempo->getDeltaTiempo() >= controladorJson->TIEMPO_ROUND);
 }
 
 void Round::actualizarTiempo(){
