@@ -7,6 +7,7 @@
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
+extern ControladorSonido *controladorSonido;
 
 #define constanteDeAltura 20.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
 #define constanteTiempoCiclos 0.3
@@ -40,6 +41,7 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->flip = flip;
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
 
+
 }
 
 void Personaje::actualizar(){
@@ -50,6 +52,7 @@ void Personaje::actualizar(){
 	this->spriteAnimado->update();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
+	sonidoAnimacion.clear();
 }
 
 void Personaje::cambiarAnimacion(string nombre){
@@ -117,6 +120,7 @@ void Personaje::correrADerecha(){
 	this->posx=this->posx+velocidad;
 }
 void Personaje::golpe(string tipoDeGolpe){
+	sonidoAnimacion=controladorSonido->getSonidoAnimacion(nombre,tipoDeGolpe);
 	if(saltando){
 		if(tipoDeGolpe=="golpeS" || tipoDeGolpe=="golpeF")
 			this->spriteAnimado->iniciarAnimacion("golpeSaltando");
@@ -147,6 +151,7 @@ void Personaje::agacharse(){
 void Personaje::disparar(){
 	if(saltando|| agachado) return;
 	this->spriteAnimado->iniciarAnimacion("disparar");
+	sonidoAnimacion= controladorSonido->getSonidoAnimacion(nombre,"disparar");
 }
 void Personaje::defenderse(){
 	if(saltando) return;
@@ -164,6 +169,8 @@ void Personaje::recibirGolpe(){
 }
 
 void Personaje::cambio(){
+	sonidoAnimacion= controladorSonido->getSonidoAnimacion(nombre,"cambioEntrada");
+	puts(sonidoAnimacion.c_str());
 	if(posicionXinicial < controladorJson->anchoVentana()/2)
 		this->posx = 0;
 	else
@@ -259,4 +266,12 @@ void Personaje::restarVida(int cantidad){
 
 int Personaje::obtenerVida(){
 	return this->vida;
+}
+
+string Personaje::getSonido(){
+	return sonidoAnimacion;
+}
+
+void Personaje::setSonido(string animacion){
+	sonidoAnimacion = controladorSonido->getSonidoAnimacion(nombre, animacion);
 }

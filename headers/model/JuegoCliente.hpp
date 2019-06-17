@@ -23,10 +23,6 @@ public:
 	void cargarTitulosMenu(vector<tuple<string,string,int,string,int ,int ,int >>titulos);
 	void dibujar(std::string nombre,int posiciones[8],SDL_RendererFlip flip);
 	void handleEvents(SDL_Event evento);
-	void correrSonido(const char* nombre);
-	void correrCancionFondo(const char* nombre,int repeticiones);
-	void detenerCancion();
-	void finalizarCancion();
 	void dibujarBarrasVida(int *vidas);
 	void setearLados(int *lados);
 

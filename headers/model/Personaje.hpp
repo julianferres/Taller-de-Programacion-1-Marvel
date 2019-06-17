@@ -6,6 +6,7 @@
 #include <ControladorGrafico.hpp>
 #include <string>
 #include <ControladorJson.hpp>
+#include <ControladorSonido.hpp>
 
 using namespace std;
 
@@ -43,9 +44,11 @@ class Personaje{
 		float getPosY();
 		SDL_Rect  obtenerRectangulo();
 		std::string getNombre();
+		string getSonido();
 		SpriteAnimado *obtenerSprite();
 		void restarVida(int cantidad);
 		int obtenerVida();
+		void setSonido(string animacion);
 
 	private:
 
@@ -66,7 +69,7 @@ class Personaje{
 		SDL_RendererFlip flip;
 		std::string nombre;
 		int vida;
-
+		string sonidoAnimacion="";
 };
 
 #endif

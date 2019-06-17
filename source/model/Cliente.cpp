@@ -4,6 +4,7 @@ using namespace std;
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
+extern ControladorSonido *controladorSonido;
 
 struct infoCliente {
 		Cliente *cliente;
@@ -53,7 +54,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 
 
 void Cliente::cargarContenidos(){
-	juegoCliente->correrCancionFondo("contents/sounds/Menu/menu.mp3",-1);
+	controladorSonido->correrCancionFondo("contents/sounds/Menu/menu.mp3",-1);
 	int round = 3;
 	vector<string> personajes = controladorJson->getNombresPersonajes();
 	for(size_t i=0;i<personajes.size();i++){
@@ -138,6 +139,7 @@ void Cliente::recibirParaDibujar(){
 	SDL_Event evento;
 	evento.type = SDL_MOUSEWHEEL;
 	char textura[MAXDATOS];
+	char sonido[MAXDATOS];
 	int posiciones[8];
 	SDL_RendererFlip flip;
 	int size;
@@ -191,6 +193,14 @@ void Cliente::recibirParaDibujar(){
 					juegoCliente->dibujarBarrasVida(vidas);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
+		if(!enMenu){
+			for(int i=0;i<2;i++){
+				recv(numeroSocket,sonido,MAXDATOS,MSG_WAITALL);
+				if(!string(sonido).empty())
+					controladorSonido->correrSonido(sonido, false);
+			}
+		}
+
 		//Personajes por debajo de las barras
 		/*if(!enMenu)
 							juegoCliente->dibujarBarrasVida();*/
@@ -223,13 +233,14 @@ void Cliente::manejarSonidos(){
 	songs.push_back("contents/sounds/Battle/Spider Mans Theme.mp3");
 	songs.push_back("contents/sounds/Battle/Mega mans Theme.mp3");
 	songs.push_back("contents/sounds/Battle/War machines Theme.mp3");
-	juegoCliente->correrSonido(songs[0]);
+	controladorSonido->correrSonido(songs[0],false);
 	while(enMenu){}
-	juegoCliente->finalizarCancion();
-	juegoCliente->correrSonido(songs[1]);
-	juegoCliente->correrSonido(songs[2]);
-	int random = rand()%(songs.size()-3) +3;
-	juegoCliente->correrCancionFondo(songs[random], 1);
+	controladorSonido->finalizarCancion();
+	controladorSonido->correrSonido(songs[1],true);
+	controladorSonido->correrSonido(songs[2],true);
+	srand(time(NULL));
+	int random = (rand()%(songs.size()-1-3)) +3;
+	controladorSonido->correrCancionFondo(songs[random], -1);
 	while(running){}
 
 }

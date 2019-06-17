@@ -57,6 +57,7 @@ class Servidor{
 		bool enMenu = true;
 		queue<tuple<SDL_Event,int>>colaEventos;
 		int vidas[4];
+		vector<string>sonidos={"",""};
 
 
 };
