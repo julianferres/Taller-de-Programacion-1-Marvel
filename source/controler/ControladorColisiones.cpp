@@ -44,16 +44,12 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 			if (tiempoCorriendo){
 				personajeEquipo2->restarVida(2);
 			}
-			personajeEquipo2->setSonido("recibirGolpe");
-			puts("golpea suave el jugador 1");
 		}
 		else if(golpesFuertes[animacionPersonaje1] && animacionPersonaje2!="defensa"){//personaje1 esta golpeando fuerte
 			personajeEquipo2->cambiarAnimacion("recibirGolpeF");
 			if (tiempoCorriendo) {
 				personajeEquipo2->restarVida(4);
 			}
-			personajeEquipo2->setSonido("recibirGolpeF");
-			puts("golpea fuerte el jugador 1");
 		}
 
 		if(golpesSuaves[animacionPersonaje2]&& animacionPersonaje1!="defensa"){//personaje2 esta golpeando
@@ -61,16 +57,12 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 			if (tiempoCorriendo) {
 				personajeEquipo1->restarVida(2);
 			}
-			personajeEquipo1->setSonido("recibirGolpe");
-			puts("golpea suave el jugador 2");
 		}
 		else if(golpesFuertes[animacionPersonaje2]&& animacionPersonaje1!="defensa"){//personaje2 esta golpeando fuerte
 			personajeEquipo1->cambiarAnimacion("recibirGolpeF");
 			if (tiempoCorriendo){
 				personajeEquipo1->restarVida(4);
 			}
-			personajeEquipo1->setSonido("recibirGolpeF");
-			puts("golpea fuerte el jugador 2");
 		}
 	}
 }

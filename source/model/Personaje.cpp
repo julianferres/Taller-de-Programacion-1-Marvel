@@ -7,7 +7,6 @@
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
-extern ControladorSonido *controladorSonido;
 
 #define constanteDeAltura 20.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
 #define constanteTiempoCiclos 0.3
@@ -42,18 +41,15 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->flip = flip;
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
 
-
 }
 
 void Personaje::actualizar(){
 	if(saltando)
 		this->saltar();
-	else
-		posy = posicionYdefault - 2*spriteAnimado->getAlto();
 	this->spriteAnimado->update();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
-	sonidoAnimacion.clear();
+	if(!saltando) posy = posicionYdefault-alto;
 }
 
 void Personaje::cambiarAnimacion(string nombre){
@@ -121,7 +117,6 @@ void Personaje::correrADerecha(){
 	this->posx=this->posx+velocidad;
 }
 void Personaje::golpe(string tipoDeGolpe){
-	sonidoAnimacion=controladorSonido->getSonidoAnimacion(nombre,tipoDeGolpe);
 	if(saltando){
 		if(tipoDeGolpe=="golpeS" || tipoDeGolpe=="golpeF")
 			this->spriteAnimado->iniciarAnimacion("golpeSaltando");
@@ -152,7 +147,6 @@ void Personaje::agacharse(){
 void Personaje::disparar(){
 	if(saltando|| agachado) return;
 	this->spriteAnimado->iniciarAnimacion("disparar");
-	sonidoAnimacion= controladorSonido->getSonidoAnimacion(nombre,"disparar");
 }
 void Personaje::defenderse(){
 	if(saltando) return;
@@ -170,8 +164,6 @@ void Personaje::recibirGolpe(){
 }
 
 void Personaje::cambio(){
-	sonidoAnimacion= controladorSonido->getSonidoAnimacion(nombre,"cambioEntrada");
-	puts(sonidoAnimacion.c_str());
 	if(posicionXinicial < controladorJson->anchoVentana()/2)
 		this->posx = 0;
 	else
@@ -267,7 +259,7 @@ bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
 }
 
 void Personaje::restarVida(int cantidad){
-	if(this->vida >= cantidad) this->vida -= cantidad;
+	this->vida -= cantidad;
 }
 
 int Personaje::obtenerVida(){
@@ -279,11 +271,7 @@ void Personaje::reiniciarVida(){
 }
 
 string Personaje::getSonido(){
-	return sonidoAnimacion;
-}
-
-void Personaje::setSonido(string animacion){
-	sonidoAnimacion = controladorSonido->getSonidoAnimacion(nombre, animacion);
+	return spriteAnimado->getSonido();
 }
 
 void Personaje::bloquear(){

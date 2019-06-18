@@ -5,6 +5,7 @@
 #include <ControladorJson.hpp>
 
 using namespace std;
+extern ControladorSonido *controladorSonido;
 
 SpriteAnimado::~SpriteAnimado(){
 
@@ -264,6 +265,7 @@ bool SpriteAnimado::iniciarAnimacion(string nombre){
 }
 
 void SpriteAnimado::cambiarAnimacion(string nombre){
+	sonidoEnviado = false;
 	for(Uint8 i=0; i<animaciones.size();i++){
 		if(animaciones[i]->getNombre() == nombre )
 			animacionActual = animaciones[i];
@@ -300,4 +302,12 @@ int SpriteAnimado::getFrameIndex(){
 
 SDL_Rect SpriteAnimado::rectOrigen(){
 	return animacionActual->getRectOrigen(this->frameIndex);
+}
+
+string SpriteAnimado::getSonido(){
+	if(!sonidoEnviado){
+		sonidoEnviado=true;
+		return controladorSonido->getSonidoAnimacion(nombreSprite, animacionActual->getNombre());
+	}
+	return "";
 }

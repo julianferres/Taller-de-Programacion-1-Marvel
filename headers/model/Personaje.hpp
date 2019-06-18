@@ -49,7 +49,6 @@ class Personaje{
 		void restarVida(int cantidad);
 		int obtenerVida();
 		void reiniciarVida();
-		void setSonido(string animacion);
 		void bloquear();
 		void habilitar();
 		bool bloqueado();
@@ -74,7 +73,7 @@ class Personaje{
 		SDL_RendererFlip flip;
 		std::string nombre;
 		int vida;
-		string sonidoAnimacion="";
+
 };
 
 #endif
