@@ -30,6 +30,7 @@ class Juego{
 		~Juego();
 		std::vector<std::string> gameMenu();
 		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujar();
+		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujarPantallaFinal();
 		void teclear(SDL_Event evento,int tipoTeclado);
 		void verificarCambioDeLado();
 		void crearEquipos();

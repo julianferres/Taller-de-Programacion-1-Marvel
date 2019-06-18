@@ -53,6 +53,7 @@ class Personaje{
 		void bloquear();
 		void habilitar();
 		bool bloqueado();
+		void forzarPosicion(float x, float y);
 
 	private:
 		bool habilitado;

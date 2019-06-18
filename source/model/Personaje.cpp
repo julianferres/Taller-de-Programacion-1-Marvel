@@ -226,6 +226,11 @@ float Personaje::getPosY(){
 	return this->posy;
 }
 
+void Personaje::forzarPosicion(float x, float y){
+	this->posx = x;
+	this->posy = y;
+}
+
 SDL_Rect  Personaje::obtenerRectangulo(){
 	int posicionXdibujable = posx;
 	if(flip)
