@@ -18,6 +18,7 @@ public:
 	ControladorGrafico *graficos();
 	SDL_Texture * getTextura(string nombre);
 	SDL_Texture * getTimer(string tiempo);
+	SDL_Texture * getResultado(string resultado);
 	void iniciarGraficos(int idCliente);
 	void cargarTexturas(vector<tuple<string, const string>> nombresYpaths);
 	void cargarTitulosMenu(vector<tuple<string,string,int,string,int ,int ,int >>titulos);

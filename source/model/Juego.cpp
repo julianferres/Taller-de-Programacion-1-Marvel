@@ -24,6 +24,10 @@ Juego::Juego(){
 	this-> parallax = this->roundActual->getParallax();
 	this->controladorColisiones = new ControladorColisiones();
 	controladorLogger->registrarEvento("INFO", "Juego::Se inicio el juego");
+	this->alto_ventana = controladorJson->alturaVentana();
+	this->ancho_ventana = controladorJson->anchoVentana();
+	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
+	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
 
 }
 
@@ -46,16 +50,34 @@ void Juego::nuevoRound(){
 }
 
 bool Juego::hayGanador(){
+	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
+	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
+	return this->getTotalEquipo1() == 2 || this->getTotalEquipo2() == 2;
+}
+
+int Juego::getTotalEquipo1(){
 	int totalEquipo1 = 0;
+	for (int i=0; i<=this->resultados.size();i++){
+		if (this->resultados[i] == 1){
+			totalEquipo1 += 1;
+		}
+	}
+	return totalEquipo1;
+}
+
+int Juego::getTotalEquipo2(){
 	int totalEquipo2 = 0;
 	for (int i=0; i<=this->resultados.size();i++){
-		totalEquipo1 += get<0>(this->resultados[i]);
-		totalEquipo2 += get<1>(this->resultados[i]);
+		if (this->resultados[i] == 2){
+			totalEquipo2 += 1;
+		}
 	}
-	return totalEquipo1 == 2 || totalEquipo2 == 2;
+	return totalEquipo2;
 }
 
 void Juego::iniciarRound(){
+	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
+	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
 	this->roundActual->iniciarTiempo();
 	this->tiempoCorriendo = true;
 }
@@ -79,6 +101,8 @@ void Juego::reiniciarVidas(){
 
 bool Juego::roundFinalizado(){
 	return this->roundActual->finalizado();
+	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
+	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
 }
 void Juego::actualizarTiempo(){
 	this->roundActual->actualizarTiempo();
@@ -88,9 +112,9 @@ int Juego::numeroRound(){
 	return this->roundActual->getNumero();
 }
 
-void Juego::finalizarRound(std::tuple<int,int> resultadosParciales){
+void Juego::finalizarRound(int equipoGanador){
 	this->roundActual->finalizar();
-	this->resultados.push_back(resultadosParciales);
+	this->resultados[this->roundActual->getNumero()-1] = equipoGanador;
 	cout<< "equipo ganador" <<endl;
 }
 
@@ -190,6 +214,7 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 	this->verificarCambioDeLado();
 	int fondos_dibujados = 0;
 	int personajes_dibujados = 0;
+	//fondos y personajes
 	while(fondos_dibujados + personajes_dibujados < 5){
 		if(fondos_dibujados == 3 || get<1>(zindexs_personajes[personajes_dibujados]) <= zindexes[fondos_dibujados]){
 			Jugador * jugador = get<0>(zindexs_personajes[personajes_dibujados]);
@@ -221,11 +246,31 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 	}
 	get<0>(zindexs_personajes[0])->devolverPersonajeActual()->actualizar();
 	get<0>(zindexs_personajes[1])->devolverPersonajeActual()->actualizar();
+	//reloj
 	dibujables.push_back(this->roundActual->getMundoDibujable());
 	dibujables.push_back(this->roundActual->getTiempoDibujable());
+
+	//resultados parciales
+	dibujables.push_back(this->obtenerResultadosParciales1Dibujables());
+	dibujables.push_back(this->obtenerResultadosParciales2Dibujables());
 	return dibujables;
 
 }
+
+std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip> Juego::obtenerResultadosParciales2Dibujables(){
+	SDL_Rect origen = {-1,-1,-1,-1};
+	SDL_Rect destino = { (this->ancho_ventana /2) + 100, ((80 * this->alto_ventana) / this->alto_maximo_ventana)-40,0,0};
+	return make_tuple(std::string("Resultados/") + to_string(this->getTotalEquipo2()) ,origen,destino,SDL_FLIP_NONE);
+}
+
+
+std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip> Juego::obtenerResultadosParciales1Dibujables(){
+
+	SDL_Rect origen = {-1,-1,-1,-1};
+	SDL_Rect destino = { (this->ancho_ventana /2) - 100 , ((80 * this->alto_ventana) / this->alto_maximo_ventana)-40,0,0};
+	return make_tuple(std::string("Resultados/") + to_string(this->getTotalEquipo1()),origen,destino,SDL_FLIP_NONE);
+}
+
 
 void Juego::verificarCambioDeLado(){
 	if (this->jugadorActualEquipo1->estaDelladoDerecho()){
@@ -407,7 +452,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 	 if (personaje1->obtenerVida()<= 0 ){
 		personaje1->bloquear();
 		if (this->equipo1->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
-			this->finalizarRound(make_tuple(0,1));
+			this->finalizarRound(2);
 		}else{
 			this->equipo1->cambiarJugador();
 		}
@@ -416,7 +461,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 	 if (personaje2->obtenerVida()<= 0 ){
 		personaje2->bloquear();
 		if (this->equipo2->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
-			this->finalizarRound(make_tuple(1,0));
+			this->finalizarRound(1);
 		}else{
 			this->equipo2->cambiarJugador();
 		}

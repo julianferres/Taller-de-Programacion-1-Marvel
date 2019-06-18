@@ -48,17 +48,20 @@ class Juego{
 		bool running();
 		void actualizarTiempo();
 		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujarBannerRound();
+		std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip> obtenerResultadosParciales1Dibujables();
+		std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip> obtenerResultadosParciales2Dibujables();
 		void reiniciarPersonajes();
 		void obtenerVidas(int *vidas);
 		void reiniciarVidas();
 		void cambiarEstadoTiempo();
 		vector<string>getSonidos();
-		void finalizarRound(std::tuple<int,int> resultadosParciales);
+		void finalizarRound(int equipoGanador);
 		bool hayGanador();
-
+		int getTotalEquipo1();
+		int getTotalEquipo2();
 
 	private:
-		std::vector<std::tuple<int,int>>resultados;
+		std::vector<int>resultados = {0,0,0};
 		//vector<Equipo*> ganadores;
 		bool tiempoCorriendo = true;
 		ControladorTeclado *teclado;
@@ -74,6 +77,10 @@ class Juego{
 		bool isRunning;
 		int FPS = controladorJson->cantidadFPS();
 		unsigned MAX_FRAME_TIME = 1000 / FPS;
+		int ancho_ventana;
+		int alto_ventana;
+		int ancho_maximo_ventana = 1400;
+		int alto_maximo_ventana = 1000;
 
 };
 
