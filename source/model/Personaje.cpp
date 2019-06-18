@@ -113,7 +113,7 @@ bool Personaje::moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 
 	if(saltando && colisionaAbajoIzquierda(rect_enemigo) && flip){
 			//this->posx=enemigo->posx-enemigo->ancho;
-			anchoEnemigo=rect_enemigo.w * 2;
+			anchoEnemigo=rect_enemigo.w ;
 			moviendoIzq=true;
 			enemigo->correrADerecha();
 			return false;
@@ -313,11 +313,11 @@ bool Personaje::colisionaAbajoIzquierda(SDL_Rect rectanguloOponente){
 
 bool Personaje::colisionaAbajoDerecha(SDL_Rect rectanguloOponente){
 	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+velocidad, static_cast<int>(controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto), ancho,alto*alto};
-		return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
+	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
 
 void Personaje::saltarEnemigoAIzq(){
 	this->correrAIzquierda();
-	anchoEnemigo-=velocidad*2;
+	anchoEnemigo-=velocidad*10;
 	if (anchoEnemigo <= 0) moviendoIzq=false;
 }
