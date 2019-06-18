@@ -43,6 +43,7 @@ class Personaje{
 		void actualizarPiso();
 		float getPosX();
 		float getPosY();
+		void saltarEnemigoAIzq(int anchoRival);
 		SDL_Rect  obtenerRectangulo();
 		std::string getNombre();
 		SpriteAnimado *obtenerSprite();
@@ -62,9 +63,12 @@ class Personaje{
 		bool agachado = false;
 		bool saltando = false;
 		bool defendiendo = false;
+		bool moviendoIzq=false;
 		SpriteAnimado *spriteAnimado;
 		SDL_RendererFlip flip;
 		std::string nombre;
+		int anchoEnemigo;
+
 
 };
 

@@ -107,7 +107,9 @@ bool Personaje::moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 	}
 
 	if(saltando && colisionaAbajoIzquierda(rect_enemigo) && flip){
-			this->posx=enemigo->posx-enemigo->ancho;
+			//this->posx=enemigo->posx-enemigo->ancho;
+			anchoEnemigo=rect_enemigo.w;
+			moviendoIzq=true;
 			enemigo->correrADerecha();
 			return false;
 	}
