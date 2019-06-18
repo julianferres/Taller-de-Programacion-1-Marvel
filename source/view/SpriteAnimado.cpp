@@ -38,7 +38,7 @@ int SpriteAnimado::getAncho(){
 
 void SpriteAnimado::cargarAnimaciones(string nombre){
 	if(nombre == "CapitanAmerica" ){
-		quieto = new Animacion("quieto",9,11,16,100,120,6);
+		quieto = new Animacion("quieto",9,0,18,95,115,6);
 		moverDerecha = new Animacion("movDerecha",6,0,158,100,122,4);
 		moverIzquierda = new Animacion("movIzquierda",6,0,288,100,122,4);
 		salto = new Animacion("salto",9,0,590,125,160,6);
@@ -69,8 +69,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		salto = new Animacion("salto",14,0,473,100,135,3);
 		agacharse = new Animacion("agacharse",13,0,1205,110,65,4);
 		cambioEntrada = new Animacion("cambioEntrada",14,0,227,110,133,2);
-		golpeS=new Animacion("golpeS",5,0,633,158,85,4);//golpe simple LISTO
-		patadaS=new Animacion("patadaS",4,1270,930,153,102,4);//patada simple LISTO
+		golpeS=new Animacion("golpeS",5,0,633,155,85,4);//golpe simple LISTO
+		patadaS=new Animacion("patadaS",4,1270,930,149,102,4);//patada simple LISTO
 		golpeSaltando=new Animacion("golpeSaltando",10,0,766,138,120,4);//golpe saltando LISTO
 		patadaSaltando=new Animacion("patadaSaltando",10,0,1900,152,125,4);//patada saltando LISTO
 		golpeF=new Animacion("golpeF",8,900,608,151,145,4);//golpe fuerte LISTO
@@ -86,11 +86,11 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		boton = false;
 	}
 	else if(nombre=="Venom" ){
-		quieto = new Animacion("quieto",13,0,0,160,130,5);//LISTO
+		quieto = new Animacion("quieto",13,0,10,160,120,5);//LISTO
 		moverDerecha = new Animacion("movDerecha",10,0,260,155,122,4);//LISTO
 		moverIzquierda = new Animacion("movIzquierda",10,0,260,155,122,4);//LISTO
 		salto = new Animacion("salto",11,0,524,160,170,5);//LISTO
-		agacharse = new Animacion("agacharse",9,0,390,155,90,2);//LISTO
+		agacharse = new Animacion("agacharse",9,0,390,117,90,2);//LISTO
 		cambioEntrada = new Animacion("cambioEntrada",11,0,700,160,170,2);//LISTO
 		golpeS=new Animacion("golpeS",3,0,130,225,108,8);//golpe simple//LISTO
 		patadaS=new Animacion("patadaS",3,0,1050,220,119,8);//patada simple//LISTO
