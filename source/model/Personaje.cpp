@@ -43,11 +43,8 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 
 }
 
-void Personaje::actualizar(){
-	if(moviendoIzq){
-			this->saltarEnemigoAIzq();
-		}
-	else if(saltando) this->saltar();
+void Personaje::actualizar(Personaje *enemigo){
+	if(saltando) this->saltar(enemigo);
 	this->spriteAnimado->update();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
@@ -81,12 +78,6 @@ bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 		controladorLogger->registrarEvento("DEBUG", "Personaje::Ambos jugadores en el borde de la pantalla.");
 		return false;
 	}
-
-	if(saltando && colisionaAbajoDerecha(rect_enemigo) && !flip){
-				this->posx=enemigo->posx+enemigo->ancho;
-				enemigo->correrAIzquierda();
-				return false;
-		}
 	this->posx=this->posx+velocidad;
 	controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje se mueve a la derecha");
 	return false;
@@ -111,13 +102,6 @@ bool Personaje::moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 		return false;
 	}
 
-	if(saltando && colisionaAbajoIzquierda(rect_enemigo) && flip){
-			//this->posx=enemigo->posx-enemigo->ancho;
-			anchoEnemigo=rect_enemigo.w ;
-			moviendoIzq=true;
-			enemigo->correrADerecha();
-			return false;
-	}
 	this->posx=this->posx-velocidad;
 
 	controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje se mueve a la izquierda");
@@ -191,9 +175,35 @@ void Personaje::cambio(){
 	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
 }
 
-void Personaje::saltar(){
+void Personaje::saltar(Personaje *enemigo){
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx), static_cast<int>(posy), ancho,alto*alto};
+	SDL_Rect rect_enemigo=enemigo->obtenerRectangulo();
+	SDL_Rect rect_mio=obtenerRectangulo();
 	bool saltarPermitido = true;
-	if( ! saltando){
+
+	if(!moviendoDer && !moviendoIzq){
+		if(enemigo->posx<posx){moviendoIzq=true;}
+		else if (enemigo->posx>posx){moviendoDer=true;}
+	}
+if(SDL_HasIntersection(&rectanguloFuturo, &rect_enemigo) && posy + alto < enemigo->posy){
+
+		posy-=velocidad/5;
+		if (moviendoIzq){
+			posx-=30;
+			enemigo->correrADerecha();
+
+		}
+		if (moviendoDer && posx<controladorJson->anchoVentana()){
+			posx+=30;
+			enemigo->correrAIzquierda();
+
+		}
+		this->spriteAnimado->cambiarAnimacion("salto");
+		return;
+	}
+
+
+	if(!saltando){
 		saltarPermitido = this->spriteAnimado->iniciarAnimacion("salto");
 		if(saltarPermitido) saltando = true;
 		else saltando = false;
@@ -202,6 +212,8 @@ void Personaje::saltar(){
 
 		if(alturaActualSalto <= 0 && tiempo != 0 ){
 			saltando = false;
+			moviendoIzq=false;
+			moviendoDer=false;
 			tiempo = 0;
 			posy=posicionYdefault - 2*spriteAnimado->getAlto();
 		}
@@ -306,18 +318,3 @@ void Personaje::habilitar(){
 	this->habilitado = true;
 }
 
-bool Personaje::colisionaAbajoIzquierda(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto), ancho,alto*alto};
-	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente);
-}
-
-bool Personaje::colisionaAbajoDerecha(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+velocidad, static_cast<int>(controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto), ancho,alto*alto};
-	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
-}
-
-void Personaje::saltarEnemigoAIzq(){
-	this->correrAIzquierda();
-	anchoEnemigo-=velocidad*10;
-	if (anchoEnemigo <= 0) moviendoIzq=false;
-}
