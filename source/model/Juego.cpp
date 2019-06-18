@@ -266,8 +266,11 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 			fondos_dibujados++;
 		}
 	}
-	get<0>(zindexs_personajes[0])->devolverPersonajeActual()->actualizar();
-	get<0>(zindexs_personajes[1])->devolverPersonajeActual()->actualizar();
+	Personaje *p1 = get<0>(zindexs_personajes[0])->devolverPersonajeActual();
+	Personaje *p2=get<0>(zindexs_personajes[1])->devolverPersonajeActual();
+	p1->actualizar(p2);
+	p2->actualizar(p1);
+
 	//reloj
 	dibujables.push_back(this->roundActual->getMundoDibujable());
 	dibujables.push_back(this->roundActual->getTiempoDibujable());
@@ -377,7 +380,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 
 		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_W)){
 			if(!personaje1->estaSaltando()){
-				personaje1->saltar();
+				personaje1->saltar(personaje2);
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 salta");
 			}
 		}
@@ -434,7 +437,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 
 		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_UP)){
 			if(!personaje2->estaSaltando()){
-				personaje2->saltar();
+				personaje2->saltar(personaje1);
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 salta");
 			}
 		}

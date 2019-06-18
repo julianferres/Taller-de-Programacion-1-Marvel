@@ -19,16 +19,18 @@ class Personaje{
 		Personaje( std::string nombre, int posicionXinicial, SDL_RendererFlip flip);
 		~Personaje();
 		int zindexPersonaje();
-		void actualizar();
-		bool moverDerecha(Personaje *enemigo, bool finEscenarioDerecha);
-		bool moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda);
+		void actualizar(Personaje *enemigo);
+		bool moverDerecha(Personaje *enemigo, bool finEscenarioDerecha); //devuelve true o false si hay que mover o no le parallax
+		bool moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda); //devuelve true o false si hay que mover o no le parallax
 		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);
 		bool colisionaAlaIzquierda(SDL_Rect rectanguloOponente);
+		bool colisionaAbajoIzquierda(SDL_Rect rectanguloOponente);
+		bool colisionaAbajoDerecha(SDL_Rect rectanguloOponente);
 		bool ladoDerecho();
 		bool estaSaltando();
 		void correrADerecha();
 		void correrAIzquierda();
-		void saltar();
+		void saltar(Personaje *enemigo);
 		void cambio();
 		void golpe(string tipoDeGolpe);
 		void agacharse();
@@ -42,6 +44,7 @@ class Personaje{
 		void actualizarPiso();
 		float getPosX();
 		float getPosY();
+		void saltarEnemigoAIzq();
 		SDL_Rect  obtenerRectangulo();
 		std::string getNombre();
 		string getSonido();
@@ -69,10 +72,15 @@ class Personaje{
 		bool agachado = false;
 		bool saltando = false;
 		bool defendiendo = false;
+		bool moviendoIzq=false;
+		bool moviendoDer=false;
 		SpriteAnimado *spriteAnimado;
 		SDL_RendererFlip flip;
 		std::string nombre;
 		int vida;
+		int anchoEnemigo;
+		int offsetX=0;
+
 
 };
 
