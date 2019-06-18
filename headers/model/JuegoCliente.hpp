@@ -38,6 +38,9 @@ private:
 	LifeBar *lifeBar;
 	SDL_Rect fondoVida;
 	SDL_Rect vida;
+	SDL_Texture **timer;
+	SDL_Surface *texto;
+	bool borrar=false;
 };
 
 

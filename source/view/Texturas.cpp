@@ -48,3 +48,7 @@ void Texturas::cargarTitulos(ControladorGrafico &graficos,vector<tuple<string,st
 void Texturas::agregarTextura(string nombre, SDL_Texture* textura){
 	texturas[nombre] = textura;
 }
+
+bool Texturas::existeTextura(string textura){
+	return texturas.count(textura)>0;
+}
