@@ -55,8 +55,16 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 		else if(movimientosEspeciales[animacionPersonaje1]){
 			int ancho1=personajeEquipo1->obtenerSprite()->getAncho();
 			int ancho2=personajeEquipo2->obtenerSprite()->getAncho();
-			int anchoTotal=ancho1+ancho2;
-			personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())-anchoTotal,personajeEquipo2->getPosY());
+			int anchoTotal=2.5*(ancho1+ancho2);
+			if(personajeEquipo1->getFlip()==SDL_FLIP_NONE){
+				personajeEquipo2->cambiarAnimacion("recibirGolpe");
+				personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())-anchoTotal,personajeEquipo2->getPosY());
+			}
+			else{
+				personajeEquipo2->cambiarAnimacion("recibirGolpe");
+				personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())+anchoTotal,personajeEquipo2->getPosY());
+			}
+			personajeEquipo2->cambiarAnimacion("levantarse");
 			if(tiempoCorriendo){
 				personajeEquipo2->restarVida(6);
 			}
