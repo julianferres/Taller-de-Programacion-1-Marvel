@@ -44,7 +44,7 @@ class Personaje{
 		void actualizarPiso();
 		float getPosX();
 		float getPosY();
-		void saltarEnemigoAIzq(int anchoRival);
+		void saltarEnemigoAIzq();
 		SDL_Rect  obtenerRectangulo();
 		std::string getNombre();
 		string getSonido();

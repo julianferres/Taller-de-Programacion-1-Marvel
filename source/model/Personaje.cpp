@@ -44,12 +44,15 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 }
 
 void Personaje::actualizar(){
-	if(saltando)
-		this->saltar();
+	if(moviendoIzq){
+			this->saltarEnemigoAIzq();
+		}
+	else if(saltando) this->saltar();
 	this->spriteAnimado->update();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
 	if(!saltando) posy = posicionYdefault-alto;
+
 }
 
 void Personaje::cambiarAnimacion(string nombre){
@@ -110,7 +113,7 @@ bool Personaje::moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda){
 
 	if(saltando && colisionaAbajoIzquierda(rect_enemigo) && flip){
 			//this->posx=enemigo->posx-enemigo->ancho;
-			anchoEnemigo=rect_enemigo.w;
+			anchoEnemigo=rect_enemigo.w * 2;
 			moviendoIzq=true;
 			enemigo->correrADerecha();
 			return false;
@@ -311,4 +314,10 @@ bool Personaje::colisionaAbajoIzquierda(SDL_Rect rectanguloOponente){
 bool Personaje::colisionaAbajoDerecha(SDL_Rect rectanguloOponente){
 	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+velocidad, static_cast<int>(controladorJson->alturaVentana() - controladorJson->getAlturaPiso() - alto), ancho,alto*alto};
 		return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
+}
+
+void Personaje::saltarEnemigoAIzq(){
+	this->correrAIzquierda();
+	anchoEnemigo-=velocidad*2;
+	if (anchoEnemigo <= 0) moviendoIzq=false;
 }
