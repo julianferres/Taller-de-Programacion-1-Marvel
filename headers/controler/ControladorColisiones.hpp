@@ -26,6 +26,7 @@ private:
 	map<string,int> golpesSuaves;
 	map<string,int> golpesFuertes;
 	map<string,int> movimientos;
+	map<string,int> movimientosEspeciales;
 
 };
 

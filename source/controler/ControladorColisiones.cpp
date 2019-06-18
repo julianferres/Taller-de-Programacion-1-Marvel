@@ -17,6 +17,7 @@ ControladorColisiones::ControladorColisiones(){
 	movimientos["movIzquierda"]=1;
 	movimientos["salto"]=1;
 	movimientos["agacharse"]=1;
+	movimientosEspeciales["tirar"]=1;
 
 }
 
@@ -49,6 +50,15 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 			personajeEquipo2->cambiarAnimacion("recibirGolpeF");
 			if (tiempoCorriendo) {
 				personajeEquipo2->restarVida(4);
+			}
+		}
+		else if(movimientosEspeciales[animacionPersonaje1]){
+			int ancho1=personajeEquipo1->obtenerSprite()->getAncho();
+			int ancho2=personajeEquipo2->obtenerSprite()->getAncho();
+			int anchoTotal=ancho1+ancho2;
+			personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())-anchoTotal,personajeEquipo2->getPosY());
+			if(tiempoCorriendo){
+				personajeEquipo2->restarVida(6);
 			}
 		}
 

@@ -400,7 +400,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_O)){
 			personaje1->disparar();
 		}
-		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_L)&&teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_K)){
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_Y)){
 			personaje1->tirar();
 		}
 		if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A)||teclado->seSoltoUnaTecla(SDL_SCANCODE_L)){
@@ -461,7 +461,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_H)){
 			personaje2->disparar();
 		}
-		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_N)&&teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_B)){
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_C)){
 			personaje2->tirar();
 		}
 		if(teclado->seSoltoUnaTecla(SDL_SCANCODE_DOWN) || teclado->seSoltoUnaTecla(SDL_SCANCODE_LEFT) || teclado->seSoltoUnaTecla(SDL_SCANCODE_RIGHT)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_N)){
