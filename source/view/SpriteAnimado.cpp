@@ -92,7 +92,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		salto = new Animacion("salto",11,0,524,160,170,5);//LISTO
 		agacharse = new Animacion("agacharse",9,0,390,117,90,2);//LISTO
 		cambioEntrada = new Animacion("cambioEntrada",11,0,700,160,170,2);//LISTO
-		golpeS=new Animacion("golpeS",3,0,130,225,108,8);//golpe simple//LISTO
+		golpeS=new Animacion("golpeS",3,0,130,219,108,8);//golpe simple//LISTO
 		patadaS=new Animacion("patadaS",3,0,1050,220,119,8);//patada simple//LISTO
 		golpeSaltando=new Animacion("golpeSaltando",9,0,1226,215,160,6);//golpe saltando//LISTO
 		patadaSaltando=new Animacion("patadaSaltando",9,0,1400,215,170,6);//patada saltando//LISTO
@@ -100,7 +100,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		patadaF=new Animacion("patadaF",9,0,1980,210,124,6);//patada fuerte//LISTO
 		golpeA=new Animacion("golpeA",3,0,875,220,90,8);//golpe agachado//LISTO
 		patadaA=new Animacion("patadaA",4,0,1570,215,109,8);//patada agachado//LISTO
-		defensa=new Animacion("defensa",10,0,2924,170,172,8);//LISTO
+		defensa=new Animacion("defensa",8,0,2924,170,172,8);//LISTO
 		disparo=new Animacion("disparar",12,0,3230,275,128,2);//LISTO
 		tiro=new Animacion("tirar",11,0,4160,250,160,6);
 		rgolpe=new Animacion("recibirGolpe",5,0,3500,170,140,4);//LISTO
