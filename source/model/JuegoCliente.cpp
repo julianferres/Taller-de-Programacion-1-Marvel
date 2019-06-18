@@ -5,6 +5,7 @@
 #include <ControladorGrafico.hpp>
 #include <ControladorJson.hpp>
 #include<iostream>
+#include <map>
 
 using namespace std;
 //SDL_Color color ={0,0,0};
@@ -63,23 +64,30 @@ SDL_Texture * JuegoCliente::getTextura(string nombre){
 }
 
 SDL_Texture * JuegoCliente::getTimer(string tiempo){
+	tiempo=tiempo.append(" ");
+	if(!texturas->existeTextura(tiempo)){
+		SDL_Color color ={0,0,0};
+		string path="contents/Fonts/Badaboom.TTF";
+		TTF_Font* font = TTF_OpenFont(path.c_str(),50);
+		SDL_Surface *surface = TTF_RenderText_Solid(font, tiempo.c_str(), color);
+		SDL_Texture* textura= SDL_CreateTextureFromSurface(this->grafico->getRenderer(), surface);
+		texturas->agregarTextura(tiempo, textura);
+	}
+	return texturas->getTextura(tiempo);
 
-	SDL_Color color ={0,0,0};
-	string path="contents/Fonts/Badaboom.TTF";
-	TTF_Font* font = TTF_OpenFont(path.c_str(),50);
-	SDL_Surface *surface = TTF_RenderText_Solid(font, tiempo.c_str(), color);
-	SDL_Texture * textura = SDL_CreateTextureFromSurface(this->grafico->getRenderer(), surface);
-	return textura;
+
 }
 
 SDL_Texture * JuegoCliente::getResultado(string resultado){
-
-	SDL_Color color ={255,255,255};
-	string path="contents/Fonts/Badaboom.TTF";
-	TTF_Font* font = TTF_OpenFont(path.c_str(),90);
-	SDL_Surface *surface = TTF_RenderText_Solid(font, resultado.c_str(), color);
-	SDL_Texture * textura = SDL_CreateTextureFromSurface(this->grafico->getRenderer(), surface);
-	return textura;
+	if(!texturas->existeTextura(resultado)){
+		SDL_Color color ={255,255,255};
+		string path="contents/Fonts/Badaboom.TTF";
+		TTF_Font* font = TTF_OpenFont(path.c_str(),90);
+		SDL_Surface *surface = TTF_RenderText_Solid(font, resultado.c_str(), color);
+		SDL_Texture * textura = SDL_CreateTextureFromSurface(this->grafico->getRenderer(), surface);
+		texturas->agregarTextura(resultado, textura);
+	}
+	return texturas->getTextura(resultado);
 }
 
 void JuegoCliente::dibujarRectanguloFuturo(SDL_Rect rectFuturo){

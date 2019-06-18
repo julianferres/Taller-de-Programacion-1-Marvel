@@ -17,6 +17,7 @@ class Texturas {
 		SDL_Texture * getTextura(string nombre);
 		void cargarTitulos(ControladorGrafico &graficos,vector<tuple<string,string,int,string,int ,int ,int >>titulos);
 		void agregarTextura(string nombre, SDL_Texture* textura);
+		bool existeTextura(string nombre);
 	private:
 		std::map<string, SDL_Texture*> texturas;
 };
