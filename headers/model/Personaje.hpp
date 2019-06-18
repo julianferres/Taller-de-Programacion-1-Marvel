@@ -48,10 +48,14 @@ class Personaje{
 		SpriteAnimado *obtenerSprite();
 		void restarVida(int cantidad);
 		int obtenerVida();
+		void reiniciarVida();
 		void setSonido(string animacion);
+		void bloquear();
+		void habilitar();
+		bool bloqueado();
 
 	private:
-
+		bool habilitado;
 		int posicionXinicial;
 		int zindex;
 		int ancho;

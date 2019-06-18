@@ -24,7 +24,14 @@ void Equipo::cambiarJugador(){
 Jugador *Equipo::JugadorActual(){
 	return this->jugadorActual;
 }
-
+Jugador *Equipo::JugadorCompaniero(){
+	if(jugadorActual==jugadores[0]){
+		return jugadores[1];
+	}
+	else{
+		return jugadores[0];
+		}
+}
 void Equipo::cambiarDeLado(){
 	jugadores[0]->cambiarDeLado();
 	jugadores[1]->cambiarDeLado();
@@ -68,3 +75,9 @@ Jugador *Equipo::obtenerJugador1(){
 Jugador *Equipo::obtenerJugador2(){
 	return this->jugadores[1];
 }
+/*
+void Equipo::bloquearPersonajeActual(){
+	this->jugadorActual->devolverPersonajeActual()->bloquear();
+}
+
+void */

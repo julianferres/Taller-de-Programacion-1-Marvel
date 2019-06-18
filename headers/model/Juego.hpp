@@ -47,16 +47,19 @@ class Juego{
 		bool roundFinalizado();
 		bool running();
 		void actualizarTiempo();
-		Equipo * getGanadorUltimoRound();
 		std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> dibujarBannerRound();
 		void reiniciarPersonajes();
 		void obtenerVidas(int *vidas);
+		void reiniciarVidas();
 		void cambiarEstadoTiempo();
 		vector<string>getSonidos();
+		void finalizarRound(std::tuple<int,int> resultadosParciales);
+		bool hayGanador();
 
 
 	private:
-		vector<Equipo*> ganadores;
+		std::vector<std::tuple<int,int>>resultados;
+		//vector<Equipo*> ganadores;
 		bool tiempoCorriendo = true;
 		ControladorTeclado *teclado;
 		Jugador *jugadorActualEquipo1;

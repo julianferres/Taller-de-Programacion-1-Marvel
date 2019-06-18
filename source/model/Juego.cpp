@@ -36,18 +36,45 @@ Juego::~Juego(){
 }
 
 void Juego::nuevoRound(){
-	this->ganadores.push_back(this->getGanadorUltimoRound());
 	this->reiniciarPersonajes();
 	int nuevoNum = this->roundActual->getNumero()+1;
-	if (nuevoNum == 4){//TODO Cuando se sepa el ganador posta, esto cambia si un mimo equipo gana los dos primeros rounds
+	if (nuevoNum == 4 || this->hayGanador()){//TODO Cuando se sepa el ganador posta, esto cambia si un mimo equipo gana los dos primeros rounds
 		isRunning = false;
 		return;
 	}
 	this->roundActual = new Round(nuevoNum);
 }
+
+bool Juego::hayGanador(){
+	int totalEquipo1 = 0;
+	int totalEquipo2 = 0;
+	for (int i=0; i<=this->resultados.size();i++){
+		totalEquipo1 += get<0>(this->resultados[i]);
+		totalEquipo2 += get<1>(this->resultados[i]);
+	}
+	return totalEquipo1 == 2 || totalEquipo2 == 2;
+}
+
 void Juego::iniciarRound(){
 	this->roundActual->iniciarTiempo();
 	this->tiempoCorriendo = true;
+}
+
+void Juego::reiniciarVidas(){
+	Personaje *personaje1 = this->equipo1->obtenerJugador1()->devolverPersonajeActual();
+	Personaje *personaje2 = this->equipo1->obtenerJugador2()->devolverPersonajeActual();
+	Personaje *personaje3 = this->equipo2->obtenerJugador1()->devolverPersonajeActual();
+	Personaje *personaje4 = this->equipo2->obtenerJugador2()->devolverPersonajeActual();
+
+	personaje1->reiniciarVida();
+	personaje2->reiniciarVida();
+	personaje3->reiniciarVida();
+	personaje4->reiniciarVida();
+
+	personaje1->habilitar();
+	personaje2->habilitar();
+	personaje3->habilitar();
+	personaje4->habilitar();
 }
 
 bool Juego::roundFinalizado(){
@@ -59,6 +86,12 @@ void Juego::actualizarTiempo(){
 
 int Juego::numeroRound(){
 	return this->roundActual->getNumero();
+}
+
+void Juego::finalizarRound(std::tuple<int,int> resultadosParciales){
+	this->roundActual->finalizar();
+	this->resultados.push_back(resultadosParciales);
+	cout<< "equipo ganador" <<endl;
 }
 
 bool Juego::running(){
@@ -306,7 +339,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A)||teclado->seSoltoUnaTecla(SDL_SCANCODE_L)){
 				personaje1->cambiarAnimacion("quieto");
 		}
-		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_E) ){
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_E) && !this->equipo1->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
 			this->equipo1->cambiarJugador();
 			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 1");
 		}
@@ -365,13 +398,29 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				personaje2->cambiarAnimacion("quieto");
 		}
 
-		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_M)  ){
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_M)  && !this->equipo2->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
 			this->equipo2->cambiarJugador();
 			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 2");
 		}
 
 	 }
+	 if (personaje1->obtenerVida()<= 0 ){
+		personaje1->bloquear();
+		if (this->equipo1->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
+			this->finalizarRound(make_tuple(0,1));
+		}else{
+			this->equipo1->cambiarJugador();
+		}
+	 }
 
+	 if (personaje2->obtenerVida()<= 0 ){
+		personaje2->bloquear();
+		if (this->equipo2->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
+			this->finalizarRound(make_tuple(1,0));
+		}else{
+			this->equipo2->cambiarJugador();
+		}
+	 }
 	 this->controladorColisiones->resolverColisiones(this->tiempoCorriendo);
 
 }
@@ -385,9 +434,6 @@ std::vector<std::string> Juego::gameMenu(){
 	return nombres_jugadores;
 }
 
-Equipo * Juego::getGanadorUltimoRound(){
-	return this->equipo1;
-}
 
 vector<string>Juego::getSonidos(){
 	sonidos[0]=equipo1->JugadorActual()->devolverPersonajeActual()->getSonido();
@@ -396,10 +442,11 @@ vector<string>Juego::getSonidos(){
 }
 
 void Juego::reiniciarPersonajes(){
-	//por ahora solo vuelven a la pocicion inicial
-	//TODO reiniciar vida y otras cossas
+
 	this->jugadorActualEquipo1->devolverPersonajeActual()->cambio();
 	this->jugadorActualEquipo2->devolverPersonajeActual()->cambio();
+
+	this->reiniciarVidas();
 }
 
 void Juego::obtenerVidas(int *vidas){

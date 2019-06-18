@@ -23,6 +23,7 @@ Personaje::~Personaje(){
 
 Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip){
 	this->vida = 100;
+	this->habilitado = true;
 	if(nombre == "sinSprite"){
 		this->zindex = 99;
 		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se carga una imagen por defecto");
@@ -268,10 +269,26 @@ int Personaje::obtenerVida(){
 	return this->vida;
 }
 
+void Personaje::reiniciarVida(){
+	this->vida = 100;
+}
+
 string Personaje::getSonido(){
 	return sonidoAnimacion;
 }
 
 void Personaje::setSonido(string animacion){
 	sonidoAnimacion = controladorSonido->getSonidoAnimacion(nombre, animacion);
+}
+
+void Personaje::bloquear(){
+	this->habilitado = false;
+}
+
+bool Personaje::bloqueado(){
+	return !this->habilitado;
+}
+
+void Personaje::habilitar(){
+	this->habilitado = true;
 }

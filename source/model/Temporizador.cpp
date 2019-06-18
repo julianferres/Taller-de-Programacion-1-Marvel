@@ -69,3 +69,9 @@ std::tuple<std::string, SDL_Rect, SDL_Rect ,SDL_RendererFlip > Temporizador::get
 	return make_tuple(std::string("Mundo"),origen,destino,SDL_FLIP_NONE);
 
 }
+
+void Temporizador::finalizar(){
+	this->corriendo = false;
+	this->tiempoTranscurrido = controladorJson->TIEMPO_ROUND / 0.001f;
+	this->deltaTiempo = controladorJson->TIEMPO_ROUND;
+}

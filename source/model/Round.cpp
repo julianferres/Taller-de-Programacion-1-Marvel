@@ -6,6 +6,7 @@ Round::Round(int num){
 	this->numero = num;
 	this->parallax = new Parallax(this->numero);
 	this->tiempo = new Temporizador();
+	this->terminado = false;
 }
 
 Round::~Round(){
@@ -26,7 +27,7 @@ void Round::iniciarTiempo(){
 }
 
 bool Round::finalizado(){
-	return (this->tiempo->getDeltaTiempo() >= controladorJson->TIEMPO_ROUND);
+	return (this->tiempo->getDeltaTiempo() >= controladorJson->TIEMPO_ROUND || this->terminado);
 }
 
 void Round::actualizarTiempo(){
@@ -54,4 +55,8 @@ std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > Round::dibujarBann
 	SDL_Rect dest = {0,0,1200, 700};
 	dibujable = std::make_tuple("Banner" + std::to_string(this->numero), source, dest, SDL_FLIP_NONE);
 	return dibujable;
+}
+
+void Round::finalizar(){
+	this->terminado = true;
 }

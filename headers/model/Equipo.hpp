@@ -14,6 +14,7 @@ public:
 	Equipo(Jugador *jugador1, Jugador *jugador2);
 	void cambiarJugador();
 	Jugador *JugadorActual();
+	Jugador *JugadorCompaniero();
 	void cambiarDeLado();
 	void actualizarPiso();
 	int obtenerIdJugadorActual();
@@ -23,6 +24,8 @@ public:
 	void habilitarTeclado();
 	Jugador *obtenerJugador1();
 	Jugador *obtenerJugador2();
+//	void bloquearPersonajeActual();
+//	void habilitarPersonajeActual();
 private:
 	bool tecladoHabilitado = false;
 	vector<Jugador*> jugadores;

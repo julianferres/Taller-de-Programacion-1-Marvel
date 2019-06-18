@@ -32,6 +32,7 @@ public:
 	void actualizar();
 	void frenar();
 	void recuperar();
+	void finalizar();
 	bool corriendo;
 	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getDibujable();
 	std::tuple<std::string,SDL_Rect, SDL_Rect ,SDL_RendererFlip > getDibujableMundo();
