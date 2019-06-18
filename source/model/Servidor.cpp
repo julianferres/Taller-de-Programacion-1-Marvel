@@ -110,28 +110,51 @@ void Servidor::crearEquipos(){
 }
 
 void Servidor::gameLoop(){
+	vidas[0] = 100;
+	vidas[1] = 100;
+	vidas[2] = 100;
+	vidas[3] = 100;
 	Uint32 tiempoInicial,tiempoActual;
 	int FPS = controladorJson->cantidadFPS();
 	tuple<SDL_Event,int>tuplaEvento;
-	while(true){
-
-		tiempoInicial= SDL_GetTicks();
-
+	while(this->juego->running()){
+		cout<< "Round " << this->juego->numeroRound()<< " iniciado" << endl;
 		server_mutex.lock();
-		while(!colaEventos.empty()){
-			tuplaEvento = colaEventos.front();
-			colaEventos.pop();
-			juego->teclear(get<0>(tuplaEvento),get<1>(tuplaEvento));
-		}
-		this->dibujables = juego->dibujar();
+		this->dibujables = this->juego->dibujarBannerRound();
 		server_mutex.unlock();
+		SDL_Delay(3000);
+		this->juego->iniciarRound();
+		while(!this->juego->roundFinalizado()){
+			tiempoInicial= SDL_GetTicks();
+			this->juego->actualizarTiempo();
+			server_mutex.lock();
+			while(!colaEventos.empty()){
+				tuplaEvento = colaEventos.front();
+				colaEventos.pop();
+				juego->teclear(get<0>(tuplaEvento),get<1>(tuplaEvento));
+			}
+			this->sonidos=juego->getSonidos();
+			this->dibujables = juego->dibujar();
+			this->juego->obtenerVidas(vidas);
+			server_mutex.unlock();
 
-		tiempoActual = SDL_GetTicks();
+			tiempoActual = SDL_GetTicks();
+			this->juego->actualizarTiempo();
+			 if(tiempoActual - tiempoInicial < 1000/FPS)
+				SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
 
-		 if(tiempoActual - tiempoInicial < 1000/FPS)
-			SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
+			}
+		this->juego->nuevoRound();
 
-		}
+	}
+	server_mutex.lock();
+	this->dibujables = juego->dibujarPantallaFinal();
+	server_mutex.unlock();
+	SDL_Delay(3000);
+	cout<<"Juego Finalizado" <<endl;
+
+
+
 }
 
 void *Servidor::actualizarModelo(){
@@ -224,13 +247,44 @@ void *Servidor::enviarWrapper(void *args){
 	return NULL;
 }
 
+int Servidor::obtenerEquipoPersonaje(string nombre){
+	string nombreJugador1 = this->juego->getEquipo1()->obtenerJugador1()->nombreJugador();
+	string nombreJugador2 = this->juego->getEquipo1()->obtenerJugador2()->nombreJugador();
+	if(nombreJugador1 == nombre || nombreJugador2 == nombre) return 0;
+	return 1;
+}
+
 void Servidor::enviarParaDibujar(int socket){
 	Uint32 tiempoInicial,tiempoActual;
 	vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread;
+	vector<string>sonidosThread;
 	int FPS = controladorJson->cantidadFPS();
+	// Equipos va a tener el equipo, en orden, de CapitanAmerica, Hulk, Spiderman y Venom
+	// Un array de ints es una solucion muy fea para este problema, pero luego puede utilizarse para enviar las vidas, y tenemos poco tiempo
+	// y es mas facil de enviar por el socket
+	char sonido[1000];
+	int equipos[4] = {1, 1, 1, 1};
+	bool equiposArmados = true;
+
 	while(true){
 		if(!conectados[socket])
 			continue;
+
+		if(!enMenu && equiposArmados){
+			equipos[0] = obtenerEquipoPersonaje("CapitanAmerica");
+			equipos[1] = obtenerEquipoPersonaje("MegaMan");
+			equipos[2] = obtenerEquipoPersonaje("Spiderman");
+			equipos[3] = obtenerEquipoPersonaje("Venom");
+
+			equiposArmados = false;
+			send(socket, equipos, sizeof(equipos), 0);
+		}
+		if(!enMenu){
+			server_mutex.lock();
+			send(socket, vidas, sizeof(vidas), 0);
+
+			server_mutex.unlock();
+		}
 
 		char textura[1000];
 		SDL_Rect rectOrigen;
@@ -241,6 +295,7 @@ void Servidor::enviarParaDibujar(int socket){
 
 		server_mutex.lock();
 		dibujablesThread=this->dibujables;
+		sonidosThread = this->sonidos;
 		server_mutex.unlock();
 
 		int size = dibujablesThread.size();
@@ -256,6 +311,12 @@ void Servidor::enviarParaDibujar(int socket){
 				send(socket,textura,1000,0);
 				send(socket,posiciones,sizeof(posiciones),0);
 				send(socket,&flip,sizeof(flip),0);
+		}
+		if(!enMenu){
+			for(int i=0;i<2;i++){
+				strcpy(sonido,sonidosThread[i].c_str());
+				send(socket,sonido,sizeof(sonido),0);
+			}
 		}
 
 
@@ -331,7 +392,6 @@ void Servidor::recibirTeclas(int csocket){
 		server_mutex.unlock();
 	}
 }
-
 
 
 

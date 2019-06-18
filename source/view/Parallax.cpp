@@ -8,10 +8,11 @@ extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
 
-Parallax::Parallax(){
+Parallax::Parallax(int round){
+	this->round = round;
 	std::vector<std::string > fondos;
 	for(int i=0; i<99; i++){
-		std::string fondo = controladorJson->pathFondo(i);
+		std::string fondo = controladorJson->pathFondo(i, this->round);
 		if(!fondo.empty() ){
 			fondos.push_back(fondo);
 		}
@@ -81,9 +82,9 @@ void Parallax::moverCamaraIzquierda(){
 bool Parallax::finDeEscenarioIzquierda(){
 	bool finEscenario = false;
 
-	finEscenario = finEscenario || camera_z1.x <= 0;
-	finEscenario = finEscenario || camera_z2.x <= 0;
-	finEscenario = finEscenario || camera_z3.x <= 0;
+	finEscenario = finEscenario || camera_z1.x <= 10;
+	finEscenario = finEscenario || camera_z2.x <= 10;
+	finEscenario = finEscenario || camera_z3.x <= 10;
 
 	return finEscenario;
 }

@@ -6,6 +6,7 @@
 #include <ControladorGrafico.hpp>
 #include <string>
 #include <ControladorJson.hpp>
+#include <ControladorSonido.hpp>
 
 using namespace std;
 
@@ -46,10 +47,18 @@ class Personaje{
 		void saltarEnemigoAIzq(int anchoRival);
 		SDL_Rect  obtenerRectangulo();
 		std::string getNombre();
+		string getSonido();
 		SpriteAnimado *obtenerSprite();
+		void restarVida(int cantidad);
+		int obtenerVida();
+		void reiniciarVida();
+		void bloquear();
+		void habilitar();
+		bool bloqueado();
+		void forzarPosicion(float x, float y);
 
 	private:
-
+		bool habilitado;
 		int posicionXinicial;
 		int zindex;
 		int ancho;
@@ -67,6 +76,7 @@ class Personaje{
 		SpriteAnimado *spriteAnimado;
 		SDL_RendererFlip flip;
 		std::string nombre;
+		int vida;
 		int anchoEnemigo;
 
 

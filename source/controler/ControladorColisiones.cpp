@@ -35,45 +35,34 @@ bool ControladorColisiones::hayColision(){
 }
 
 
-void ControladorColisiones::resolverColisiones(){
+void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 	if(hayColision()){
 		string animacionPersonaje1 = personajeEquipo1->obtenerSprite()->getAnimacionActual();
 		string animacionPersonaje2 = personajeEquipo2->obtenerSprite()->getAnimacionActual();
 		if(golpesSuaves[animacionPersonaje1] && animacionPersonaje2!="defensa"){//personaje1 esta golpeando
 			personajeEquipo2->cambiarAnimacion("recibirGolpe");
-			puts("golpea suave el jugador 1");
+			if (tiempoCorriendo){
+				personajeEquipo2->restarVida(2);
+			}
 		}
 		else if(golpesFuertes[animacionPersonaje1] && animacionPersonaje2!="defensa"){//personaje1 esta golpeando fuerte
 			personajeEquipo2->cambiarAnimacion("recibirGolpeF");
-			puts("golpea fuerte el jugador 1");
+			if (tiempoCorriendo) {
+				personajeEquipo2->restarVida(4);
+			}
 		}
 
 		if(golpesSuaves[animacionPersonaje2]&& animacionPersonaje1!="defensa"){//personaje2 esta golpeando
 			personajeEquipo1->cambiarAnimacion("recibirGolpe");
-			puts("golpea suave el jugador 2");
+			if (tiempoCorriendo) {
+				personajeEquipo1->restarVida(2);
+			}
 		}
 		else if(golpesFuertes[animacionPersonaje2]&& animacionPersonaje1!="defensa"){//personaje2 esta golpeando fuerte
 			personajeEquipo1->cambiarAnimacion("recibirGolpeF");
-			puts("golpea fuerte el jugador 2");
+			if (tiempoCorriendo){
+				personajeEquipo1->restarVida(4);
+			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 }

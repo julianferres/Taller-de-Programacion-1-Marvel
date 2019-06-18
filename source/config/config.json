@@ -2,23 +2,65 @@
     "logLevel": "DEBUG",
     "FPS": 60,
     "cantidadClientes" : 1,
-    "battlefield":
+    "round1":
         [
             {"background":
                 {
-                    "filepath":"contents/images/capa3.png",
+                    "filepath":"contents/images/round1capa3.png",
                     "zindex":3
                 }
             },
             {"background":
                 {
-                    "filepath":"contents/images/capa2.png",
+                    "filepath":"contents/images/round1capa2.png",
                     "zindex":2
                 }
             },
             {"background":
                 {
-                    "filepath":"contents/images/capa1.png",
+                    "filepath":"contents/images/round1capa1.png",
+                    "zindex":1
+                }
+            }
+		],
+	"round2":
+        [
+			{"background":
+                {
+                    "filepath":"contents/images/round1capa3.png",
+                    "zindex":3
+                }
+            },
+            {"background":
+                {
+                    "filepath":"contents/images/round1capa2.png",
+                    "zindex":2
+                }
+            },
+            {"background":
+                {
+                    "filepath":"contents/images/desertSunset.png",
+                    "zindex":1
+                }
+            }
+		],
+	"round3":
+        [
+			{"background":
+                {
+                    "filepath":"contents/images/round1capa3.png",
+                    "zindex":3
+                }
+            },
+            {"background":
+                {
+                    "filepath":"contents/images/round1capa2.png",
+                    "zindex":2
+                }
+            },
+            {"background":
+                {
+                    "filepath":"contents/images/desertNight.png",
                     "zindex":1
                 }
             }

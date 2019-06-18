@@ -24,7 +24,14 @@ void Equipo::cambiarJugador(){
 Jugador *Equipo::JugadorActual(){
 	return this->jugadorActual;
 }
-
+Jugador *Equipo::JugadorCompaniero(){
+	if(jugadorActual==jugadores[0]){
+		return jugadores[1];
+	}
+	else{
+		return jugadores[0];
+		}
+}
 void Equipo::cambiarDeLado(){
 	jugadores[0]->cambiarDeLado();
 	jugadores[1]->cambiarDeLado();
@@ -60,3 +67,17 @@ bool Equipo::TecladoHabilitado(){
 void Equipo::habilitarTeclado(){
 	this->tecladoHabilitado = true;
 }
+
+Jugador *Equipo::obtenerJugador1(){
+	return this->jugadores[0];
+}
+
+Jugador *Equipo::obtenerJugador2(){
+	return this->jugadores[1];
+}
+/*
+void Equipo::bloquearPersonajeActual(){
+	this->jugadorActual->devolverPersonajeActual()->bloquear();
+}
+
+void */

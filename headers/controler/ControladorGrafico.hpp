@@ -4,6 +4,8 @@
 #include <map>
 #include <string>
 #include <SDL2/SDL_image.h>
+#include <ControladorJson.hpp>
+#include <ControladorLogger.hpp>
 
 using namespace std;
 
@@ -23,6 +25,7 @@ class ControladorGrafico{
 		void limpiar();
 		void cambiarPantallaCompleta();
 		void maximizarVentana(int ancho, int alto);
+		void dibujarRectanguloDeColor(int red, int green, int blue, int alpha, SDL_Rect *rectangulo);
 
 	private:
 

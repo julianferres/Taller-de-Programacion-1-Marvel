@@ -16,7 +16,7 @@ public:
 	bool hayColision();
 	void setPersonaje1(Personaje* personaje);
 	void setPersonaje2(Personaje* personaje);
-	void resolverColisiones();
+	void resolverColisiones(bool tiempoCorriendo);
 
 private:
 	Personaje* personajeEquipo1;

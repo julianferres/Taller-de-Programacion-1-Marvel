@@ -2,6 +2,7 @@
 #include <controler/ControladorLogger.hpp>
 #include <fstream>
 #include <string>
+#include<stdio.h>
 
 extern ControladorLogger *controladorLogger;
 using namespace std;
@@ -19,12 +20,13 @@ void ControladorJson::leerArchivo(std::string argumentoConsola){
 		this -> setAnchoVentana(j);
 		this -> setPantallaCompleta(j);
 		this -> setFPS(j);
-		this-> setCantidadClientes(j);
+		this -> setCantidadClientes(j);
 		this -> setCantidadPersonajes(j);
+		this -> setCantidadRounds(j);
 		this -> setCantidadFondos(j);
 		//this -> setCantidadJugadores(j);
 		this -> setPersonajes(j);
-		this -> setFondos(j);
+		this -> setRounds(j);
 
 		controladorLogger->registrarEvento("INFO","ControladorJson::Archivo de configuracion JSON leido correctamente");
 	}
@@ -37,11 +39,24 @@ void ControladorJson::leerArchivo(std::string argumentoConsola){
 }
 
 void ControladorJson::leerArchivoDefault(){
-
+	//TODO ARREGLAR ARCHIVO DEFAULT
 	using json = nlohmann::json;
-
+	vector<tuple<string, int>> fondos;
 	std::ifstream ifs (configPathDefault, std::ifstream::in);
 	json j = json::parse(ifs);
+	nivel_debug = j["logLevel"];
+	this -> setAlturaVentana(j);
+	this -> setAnchoVentana(j);
+	this -> setPantallaCompleta(j);
+	this -> setFPS(j);
+	this -> setCantidadClientes(j);
+	this -> setCantidadPersonajes(j);
+	this -> setCantidadRounds(j);
+	this -> setCantidadFondos(j);
+	//this -> setCantidadJugadores(j);
+	this -> setPersonajes(j);
+	this -> setRounds(j);
+	/*
 	nivel_debug = j["logLevel"];
 	controladorLogger->setNivelDebug(nivel_debug);
 	altura_ventana = j["window"]["height"];
@@ -50,14 +65,15 @@ void ControladorJson::leerArchivoDefault(){
 	FPS = j["FPS"];
 	cantidad_jugadores = j["jugadores"].size();
 	cantidad_personajes = j["characters"].size();
-	cantidad_fondos = j["battlefield"].size();
+	cantidad_fondos[0] = 3;
 
 	for (int i = 0; i < cantidad_personajes; i++){
 		tuplaPersonaje personaje = tuplaPersonaje(j["characters"][i]["name"],j["characters"][i]["filepath"],j["characters"][i]["height"],j["characters"][i]["width"],j["characters"][i]["zindex"], j["characters"][i]["buttonpath"]);
 		personajes.push_back(personaje);
 	}
 
-	for (int i = 0; i < cantidad_fondos; i++){
+	for (int i = 0; i < cantidad_fondos[0]; i++){
+		//TODO ARREGLAR ARCHIVO DEFAULT
 		std::tuple<std::string, int> fondo(j["battlefield"][i]["background"]["filepath"] , j["battlefield"][i]["background"]["zindex"] );
 		fondos.push_back(fondo);
 	}
@@ -66,6 +82,7 @@ void ControladorJson::leerArchivoDefault(){
 	personajesJugador1.push_back(j["jugadores"][0]["jugador"]["personaje2"]);
 	personajesJugador2.push_back(j["jugadores"][1]["jugador"]["personaje1"]);
 	personajesJugador2.push_back(j["jugadores"][1]["jugador"]["personaje2"]);
+	*/
 	controladorLogger->registrarEvento("INFO","ControladorJson::Archivo default de configuracion JSON leido correctamente");
 
 }
@@ -83,8 +100,8 @@ int ControladorJson::cantidadFPS(){
 	return FPS;
 }
 
-int ControladorJson::cantidadFondos(){
-	return cantidad_fondos;
+int ControladorJson::cantidadFondos(int round){
+	return cantidad_fondos[round];
 }
 
 bool ControladorJson::esfullscreen(){
@@ -95,9 +112,9 @@ string ControladorJson::nivelDebug(){
 	return nivel_debug;
 }
 
-vector<int>ControladorJson::getZindexes(){
-	for(int i=0;i<fondos.size();i++){
-		zindexes.push_back(std::get<1>(fondos[i]));
+vector<int>ControladorJson::getZindexes(int round){
+	for(int i=0;i<escenarios[round-1].size();i++){
+		zindexes.push_back(std::get<1>(escenarios[round-1][i]));
 	}
 	return zindexes;
 }
@@ -106,10 +123,10 @@ vector<string>ControladorJson::getNombresPersonajes(){
 	return nombresPersonajes;
 }
 
-string ControladorJson::pathFondo(int zindex){
-    for (int i = 0; i < cantidad_fondos; i++){
-            if(std::get<1>(fondos[i]) == zindex)
-                return std::get<0>(fondos[i]);
+string ControladorJson::pathFondo(int zindex, int round){
+    for (int i = 0; i < cantidad_fondos[round-1]; i++){
+		if(std::get<1>(escenarios[round-1][i]) == zindex)
+			return std::get<0>(escenarios[round-1][i]);
         }
     return "";
 }
@@ -222,7 +239,7 @@ void ControladorJson::setCantidadClientes(json j){
 		return;
 	}
 	if (cantidad_clientes > 4){
-		controladorLogger->registrarEvento("ERROR", "El servidor no soporta m[as de 4 jugadores, seteado a 4 por default.");
+		controladorLogger->registrarEvento("ERROR", "El servidor no soporta mas de 4 jugadores, seteado a 4 por default.");
 		cantidad_clientes = 4;
 		return;
 	}
@@ -308,24 +325,51 @@ void ControladorJson::setCantidadPersonajes(json j)throw(){
 	controladorLogger->registrarEvento("DEBUG","ControladorJson::Personajes contados = " + std::to_string(cantidad_personajes));
 
 }
-
-void ControladorJson::setCantidadFondos(json j)throw(){
-	try{
-		cantidad_fondos = j["battlefield"].size();
-	}
-	catch(json::type_error &e){
-		cantidad_fondos = cantidad_fondos_default;
-		controladorLogger->registrarEvento("ERROR","ControladorJson::Cantidad de fondos invalida. Se setea en: " + std::to_string(cantidad_fondos_default));
-	}
-	controladorLogger->registrarEvento("DEBUG","ControladorJson::Fondos contados = " + std::to_string(cantidad_fondos));
-
+void ControladorJson::setCantidadRounds(json j)throw(){
+	cantidad_rounds = 3;
+	controladorLogger->registrarEvento("DEBUG","ControladorJson::Cantidad Rounds seteados = " + std::to_string(cantidad_rounds));
 }
+void ControladorJson::setCantidadFondos(json j)throw(){
+	controladorLogger->registrarEvento("DEBUG", "ControladorJson:: Por setear cantidad fondos por round");
+	/*cantidad_fondos.push_back(j["round1"].size());
+	cantidad_fondos.push_back(j["round2"].size());
+	cantidad_fondos.push_back(j["round3"].size());
+	//cantidad_fondos[1] = j["round2"].size();
+	//cantidad_fondos[2] = j["round3"].size();
+	controladorLogger->registrarEvento("DEBUG", "ControladorJson:: Cantidad fondos por round seteado");
+	/*/
+	for (int i=1; i<cantidad_rounds+1; i++){
+		try{
+			cantidad_fondos.push_back(j["round" + std::to_string(i)].size());
+		}
+		catch(json::type_error &e){
+			cantidad_fondos[i] = cantidad_fondos_default;
+			controladorLogger->registrarEvento("ERROR","ControladorJson::Cantidad de fondos para round " + std::to_string(i) + " invalida. Se setea en: " + std::to_string(j["round" + std::to_string(i)].size()));
+		}
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Fondos contados para round " + std::to_string(i) + " = " + std::to_string(cantidad_fondos[i-1]));
 
-void ControladorJson::setFondos(json j)throw(){
+	}
+}
+void ControladorJson::setRounds(json j)throw(){
 	try{
-		for (int i = 0; i < cantidad_fondos; i++){
-			string filepath_fondo = j["battlefield"][i]["background"]["filepath"];
-			int zindex_fondo = j["battlefield"][i]["background"]["zindex"];
+		for (int i=0; i<cantidad_rounds; i++){
+			vector<tuple<string, int>> fondosi = (this->setFondos(j, i+1));
+			controladorLogger->registrarEvento("DEBUG", "ControladorJson:: Fondos para escenario " + to_string(i+1) + " encontrado");
+			escenarios.push_back(fondosi);
+			controladorLogger->registrarEvento("DEBUG", "ControladorJson:: Fondos para escenario " + to_string(i+1) + " seteado");
+		}
+	}catch(json::type_error &e){
+		//TODO cachear error
+		controladorLogger->registrarEvento("ERROR", "ControladorJson:: Fondos para escenario no se pudo setear");
+	}
+}
+vector<tuple<string, int>> ControladorJson::setFondos(json j, int round)throw(){
+	vector<tuple<string, int>> fondos;
+	try{
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Seteando fondos para round " + std::to_string(round) + " cantidad: " + std::to_string(cantidad_fondos[round-1]));
+		for (int i = 0; i < cantidad_fondos[round-1]; i++){
+			string filepath_fondo = j["round"+ std::to_string(round)][i]["background"]["filepath"];
+			int zindex_fondo = j["round"+ std::to_string(round)][i]["background"]["zindex"];
 
 			std::ifstream file(filepath_fondo.c_str());
 			if (file.good() == false){
@@ -334,17 +378,18 @@ void ControladorJson::setFondos(json j)throw(){
 			}
 			fondos.push_back(std::make_tuple(filepath_fondo , zindex_fondo));
 		}
-		controladorLogger->registrarEvento("DEBUG","ControladorJson::Fondos seteados");
+		controladorLogger->registrarEvento("DEBUG","ControladorJson::Fondos round " + std::to_string(round) + " seteados");
 	}
 	catch(json::type_error &e){
 		fondos.clear();
-		for (int i = 0; i < cantidad_fondos; i++){
+		for (int i = 0; i < cantidad_fondos[round]; i++){
 			int zindex_fondo = 3 - i;
 			string filepath_fondo = "contents/auxiliar/capa" + std::to_string(zindex_fondo) + "aux.png";
 			controladorLogger->registrarEvento("ERROR","ControladorJson::Imagen de fondo no encontrada. Se carga una por defecto");
 			fondos.push_back(std::make_tuple(filepath_fondo , zindex_fondo));
 		}
 	}
+	return fondos;
 }
 
 int ControladorJson::cantidadPersonajes(){

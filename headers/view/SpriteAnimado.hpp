@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <Animacion.hpp>
+#include <ControladorSonido.hpp>
 
 using namespace std;
 
@@ -27,6 +28,7 @@ class SpriteAnimado{
 		SDL_Rect rectOrigen();
 		int getAlto();
 		int getAncho();
+		string getSonido();
 
 
 	private:
@@ -38,6 +40,7 @@ class SpriteAnimado{
 		int frameIndex = 0;
 		int regulador = 0;
 		string nombreSprite;
+		bool sonidoEnviado=false;
 		bool boton =true;
 
 };

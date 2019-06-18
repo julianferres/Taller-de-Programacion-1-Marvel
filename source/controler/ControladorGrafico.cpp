@@ -1,12 +1,12 @@
 #include <ControladorGrafico.hpp>
-#include <ControladorJson.hpp>
-#include <ControladorLogger.hpp>
 
 using namespace std;
 
 extern ControladorJson *controladorJson;
 
 ControladorGrafico::ControladorGrafico(int idCliente){
+	SDL_Init(SDL_INIT_VIDEO );
+	SDL_InitSubSystem(SDL_INIT_TIMER);
 	if(controladorJson->esfullscreen())
 		this->sizePantalla = SDL_WINDOW_FULLSCREEN;
 	SDL_CreateWindowAndRenderer(controladorJson->anchoVentana(),controladorJson->alturaVentana(), sizePantalla, &this->_window, &this->_renderer);
@@ -18,6 +18,10 @@ ControladorGrafico::~ControladorGrafico(){
 	_spriteSheets.clear();
 	SDL_DestroyRenderer(this->_renderer);
 	SDL_DestroyWindow(this->_window);
+	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	SDL_VideoQuit();
+	SDL_QuitSubSystem(SDL_INIT_TIMER);
+	SDL_Quit();
 }
 
 void ControladorGrafico::cambiarPantallaCompleta(){
@@ -57,4 +61,11 @@ SDL_Renderer* ControladorGrafico::getRenderer() const{
 
 void ControladorGrafico::maximizarVentana(int ancho, int alto){
 	controladorJson->maximizarVentana(ancho, alto);
+}
+
+void ControladorGrafico::dibujarRectanguloDeColor(int red, int green, int blue, int alpha, SDL_Rect *rectangulo){
+	SDL_SetRenderDrawColor(this->_renderer, red, green, blue, alpha);
+	SDL_RenderFillRect(this->_renderer, rectangulo);
+	SDL_SetRenderDrawColor(this->_renderer, 0, 0, 0, 0);
+
 }

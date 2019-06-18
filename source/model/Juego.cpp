@@ -17,11 +17,17 @@ extern ControladorLogger *controladorLogger;
 
 
 Juego::Juego(){
-
+	//TODO Parallax parametro round
+	this->isRunning = true;
 	this->teclado = new ControladorTeclado();
-	this-> parallax = new Parallax();
+	this->roundActual = new Round(1);
+	this-> parallax = this->roundActual->getParallax();
 	this->controladorColisiones = new ControladorColisiones();
 	controladorLogger->registrarEvento("INFO", "Juego::Se inicio el juego");
+	this->alto_ventana = controladorJson->alturaVentana();
+	this->ancho_ventana = controladorJson->anchoVentana();
+	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
+	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
 
 }
 
@@ -33,6 +39,88 @@ Juego::~Juego(){
 
 }
 
+void Juego::nuevoRound(){
+	this->reiniciarPersonajes();
+	int nuevoNum = this->roundActual->getNumero()+1;
+	if (nuevoNum == 4 || this->hayGanador()){//TODO Cuando se sepa el ganador posta, esto cambia si un mimo equipo gana los dos primeros rounds
+		isRunning = false;
+		return;
+	}
+	this->roundActual = new Round(nuevoNum);
+}
+
+bool Juego::hayGanador(){
+	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
+	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
+	return this->getTotalEquipo1() == 2 || this->getTotalEquipo2() == 2;
+}
+
+int Juego::getTotalEquipo1(){
+	int totalEquipo1 = 0;
+	for (int i=0; i<=this->resultados.size();i++){
+		if (this->resultados[i] == 1){
+			totalEquipo1 += 1;
+		}
+	}
+	return totalEquipo1;
+}
+
+int Juego::getTotalEquipo2(){
+	int totalEquipo2 = 0;
+	for (int i=0; i<=this->resultados.size();i++){
+		if (this->resultados[i] == 2){
+			totalEquipo2 += 1;
+		}
+	}
+	return totalEquipo2;
+}
+
+void Juego::iniciarRound(){
+	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
+	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
+	this->roundActual->iniciarTiempo();
+	this->tiempoCorriendo = true;
+}
+
+void Juego::reiniciarVidas(){
+	Personaje *personaje1 = this->equipo1->obtenerJugador1()->devolverPersonajeActual();
+	Personaje *personaje2 = this->equipo1->obtenerJugador2()->devolverPersonajeActual();
+	Personaje *personaje3 = this->equipo2->obtenerJugador1()->devolverPersonajeActual();
+	Personaje *personaje4 = this->equipo2->obtenerJugador2()->devolverPersonajeActual();
+
+	personaje1->reiniciarVida();
+	personaje2->reiniciarVida();
+	personaje3->reiniciarVida();
+	personaje4->reiniciarVida();
+
+	personaje1->habilitar();
+	personaje2->habilitar();
+	personaje3->habilitar();
+	personaje4->habilitar();
+}
+
+bool Juego::roundFinalizado(){
+	return this->roundActual->finalizado();
+	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
+	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
+}
+void Juego::actualizarTiempo(){
+	this->roundActual->actualizarTiempo();
+}
+
+int Juego::numeroRound(){
+	return this->roundActual->getNumero();
+}
+
+void Juego::finalizarRound(int equipoGanador){
+	this->roundActual->finalizar();
+	this->resultados[this->roundActual->getNumero()-1] = equipoGanador;
+	cout<< "equipo ganador" <<endl;
+}
+
+bool Juego::running(){
+	return this->isRunning;
+}
 Equipo* Juego::getEquipo1(){
 	return this->equipo1;
 }
@@ -111,15 +199,44 @@ std::vector<std::tuple<Jugador *, int>> Juego::obtenerOrdenDibujo(){
 	return zindexs_personajes;
 }
 
+std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> Juego::dibujarBannerRound(){
+	vector<tuple<string,SDL_Rect , SDL_Rect,SDL_RendererFlip >> dibujables;
+	dibujables.push_back(this->roundActual->dibujarBanner());
+	return dibujables;
+}
+vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujarPantallaFinal(){
+	Equipo* equipoGanador;
+	vector<tuple<string,SDL_Rect , SDL_Rect,SDL_RendererFlip >> dibujables;
+	if (this->getTotalEquipo1() > this->getTotalEquipo2()){
+		equipoGanador = this->equipo1;
+	}
+	if (this->getTotalEquipo2() > this->getTotalEquipo1()){
+		equipoGanador = this->equipo2;
+	}
+	equipoGanador->JugadorActual()->devolverPersonajeActual()->forzarPosicion(100,this->alto_ventana -400);
+	equipoGanador->JugadorActual()->devolverPersonajeActual()->cambiarAnimacion("quieto");
+	SDL_Rect origen = equipoGanador->JugadorActual()->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
+	SDL_Rect destino = equipoGanador->JugadorActual()->devolverPersonajeActual()->obtenerRectangulo();
+	dibujables.push_back(make_tuple(equipoGanador->JugadorActual()->nombreJugador(),origen,destino,SDL_FLIP_NONE));
 
+	equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->forzarPosicion(800,this->alto_ventana-400);
+	equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->cambiarAnimacion("quieto");
+	SDL_Rect origen2 = equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
+	SDL_Rect destino2 = equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->obtenerRectangulo();
+	dibujables.push_back(make_tuple(equipoGanador->JugadorCompaniero()->nombreJugador(),origen2,destino2,SDL_FLIP_HORIZONTAL));
+
+	return dibujables;
+}
 vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
+
 	SDL_RendererFlip flip ;
 	vector<tuple<string,SDL_Rect , SDL_Rect,SDL_RendererFlip >> dibujables;
 	vector<tuple<Jugador *, int>> zindexs_personajes = obtenerOrdenDibujo();
-	vector<int>zindexes = controladorJson->getZindexes();
+	vector<int>zindexes = controladorJson->getZindexes(this->roundActual->getNumero());
 	this->verificarCambioDeLado();
 	int fondos_dibujados = 0;
 	int personajes_dibujados = 0;
+	//fondos y personajes
 	while(fondos_dibujados + personajes_dibujados < 5){
 		if(fondos_dibujados == 3 || get<1>(zindexs_personajes[personajes_dibujados]) <= zindexes[fondos_dibujados]){
 			Jugador * jugador = get<0>(zindexs_personajes[personajes_dibujados]);
@@ -134,26 +251,48 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 			if(fondos_dibujados == 0 ){
 				SDL_Rect* origen = parallax->camaraz1();
 				SDL_Rect* destinoz1 = parallax->getDestinoZ1();
-				dibujables.push_back(make_tuple(to_string(zindexes[2]),*origen,*destinoz1,flip));
+				dibujables.push_back(make_tuple(to_string(zindexes[2])+ to_string(this->roundActual->getNumero()),*origen,*destinoz1,flip));
 			}
 			else if(fondos_dibujados == 1 ){
 				SDL_Rect *origen = parallax->camaraz2();
 				SDL_Rect* destinoz2 = parallax->getDestinoZ2();
-				dibujables.push_back(make_tuple(to_string(zindexes[1]),*origen,*destinoz2,flip));
+				dibujables.push_back(make_tuple(to_string(zindexes[1]) + to_string(this->roundActual->getNumero()),*origen,*destinoz2,flip));
 			}
 			else if(fondos_dibujados == 2 ){
 				SDL_Rect *origen = parallax->camaraz3();
 				SDL_Rect* destinoz3 = parallax->getDestinoZ3();
-				dibujables.push_back(make_tuple(to_string(zindexes[0]),*origen,*destinoz3,flip));
+				dibujables.push_back(make_tuple(to_string(zindexes[0]) + to_string(this->roundActual->getNumero()),*origen,*destinoz3,flip));
 			}
 			fondos_dibujados++;
 		}
 	}
 	get<0>(zindexs_personajes[0])->devolverPersonajeActual()->actualizar();
 	get<0>(zindexs_personajes[1])->devolverPersonajeActual()->actualizar();
+	//reloj
+	dibujables.push_back(this->roundActual->getMundoDibujable());
+	dibujables.push_back(this->roundActual->getTiempoDibujable());
+
+	//resultados parciales
+	dibujables.push_back(this->obtenerResultadosParciales1Dibujables());
+	dibujables.push_back(this->obtenerResultadosParciales2Dibujables());
 	return dibujables;
 
 }
+
+std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip> Juego::obtenerResultadosParciales2Dibujables(){
+	SDL_Rect origen = {-1,-1,-1,-1};
+	SDL_Rect destino = { (this->ancho_ventana /2) + 100, ((80 * this->alto_ventana) / this->alto_maximo_ventana)-40,0,0};
+	return make_tuple(std::string("Resultados/") + to_string(this->getTotalEquipo2()) ,origen,destino,SDL_FLIP_NONE);
+}
+
+
+std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip> Juego::obtenerResultadosParciales1Dibujables(){
+
+	SDL_Rect origen = {-1,-1,-1,-1};
+	SDL_Rect destino = { (this->ancho_ventana /2) - 100 , ((80 * this->alto_ventana) / this->alto_maximo_ventana)-40,0,0};
+	return make_tuple(std::string("Resultados/") + to_string(this->getTotalEquipo1()),origen,destino,SDL_FLIP_NONE);
+}
+
 
 void Juego::verificarCambioDeLado(){
 	if (this->jugadorActualEquipo1->estaDelladoDerecho()){
@@ -173,6 +312,16 @@ void Juego::verificarCambioDeLado(){
 void Juego::actualizarConexion(int idCliente){
 	this->equipo1->actualizarConexion(idCliente);
 	this->equipo2->actualizarConexion(idCliente);
+}
+
+void Juego::cambiarEstadoTiempo(){
+	if (this->tiempoCorriendo){
+		this->roundActual->frenarTiempo();
+		this->tiempoCorriendo = false;
+	}else{
+		this->roundActual->reiniciarTiempo();
+		this->tiempoCorriendo = true;
+	}
 }
 
 void Juego::teclear(SDL_Event evento, int idCliente){
@@ -201,7 +350,9 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 	 }
 	 bool puedoMoverPersonaje1 = jugadorActualEquipo1->obtenerId() == idCliente || (equipo1->TecladoHabilitado() && (equipo1->obtenerIdJugadorActual() == idCliente || equipo1->obtenerIdCompaniero() == idCliente));
 	 bool puedoMoverPersonaje2 = jugadorActualEquipo2->obtenerId() == idCliente || (equipo2->TecladoHabilitado() && (equipo2->obtenerIdJugadorActual() == idCliente || equipo2->obtenerIdCompaniero() == idCliente));
-
+	 if(teclado->sePresionoUnaTecla(SDL_SCANCODE_T)){
+		 this->cambiarEstadoTiempo();
+	 }
 	 if(puedoMoverPersonaje1 || controladorJson->cantidadClientes() == 1){
 		 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_D)){
 			 if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() )  ){
@@ -255,7 +406,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		if(teclado->seSoltoUnaTecla(SDL_SCANCODE_S) ||teclado->seSoltoUnaTecla(SDL_SCANCODE_D)|| teclado->seSoltoUnaTecla(SDL_SCANCODE_A)||teclado->seSoltoUnaTecla(SDL_SCANCODE_L)){
 				personaje1->cambiarAnimacion("quieto");
 		}
-		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_E) ){
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_E) && !this->equipo1->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
 			this->equipo1->cambiarJugador();
 			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 1");
 		}
@@ -314,14 +465,30 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 				personaje2->cambiarAnimacion("quieto");
 		}
 
-		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_M)  ){
+		if(teclado->sePresionoUnaTecla(SDL_SCANCODE_M)  && !this->equipo2->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
 			this->equipo2->cambiarJugador();
 			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 2");
 		}
 
 	 }
+	 if (personaje1->obtenerVida()<= 0 ){
+		personaje1->bloquear();
+		if (this->equipo1->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
+			this->finalizarRound(2);
+		}else{
+			this->equipo1->cambiarJugador();
+		}
+	 }
 
-	 this->controladorColisiones->resolverColisiones();
+	 if (personaje2->obtenerVida()<= 0 ){
+		personaje2->bloquear();
+		if (this->equipo2->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
+			this->finalizarRound(1);
+		}else{
+			this->equipo2->cambiarJugador();
+		}
+	 }
+	 this->controladorColisiones->resolverColisiones(this->tiempoCorriendo);
 
 }
 
@@ -332,4 +499,41 @@ std::vector<std::string> Juego::gameMenu(){
 	nombres_jugadores.push_back("Venom");
 	nombres_jugadores.push_back("Hulk");
 	return nombres_jugadores;
+}
+
+
+vector<string>Juego::getSonidos(){
+	sonidos[0]=equipo1->JugadorActual()->devolverPersonajeActual()->getSonido();
+	sonidos[1] = equipo2->JugadorActual()->devolverPersonajeActual()->getSonido();
+	return sonidos;
+}
+
+void Juego::reiniciarPersonajes(){
+
+	this->jugadorActualEquipo1->devolverPersonajeActual()->cambio();
+	this->jugadorActualEquipo2->devolverPersonajeActual()->cambio();
+
+	this->reiniciarVidas();
+}
+
+void Juego::obtenerVidas(int *vidas){
+	Personaje *personaje1 = this->equipo1->obtenerJugador1()->devolverPersonajeActual();
+	Personaje *personaje2 = this->equipo1->obtenerJugador2()->devolverPersonajeActual();
+	Personaje *personaje3 = this->equipo2->obtenerJugador1()->devolverPersonajeActual();
+	Personaje *personaje4 = this->equipo2->obtenerJugador2()->devolverPersonajeActual();
+
+	string nombre = "";
+	for (int i = 0; i < 4; i++){
+		if (i == 0) nombre = "CapitanAmerica";
+		else if (i == 1) nombre = "MegaMan";
+		else if (i == 2) nombre = "Spiderman";
+		else nombre = "Venom";
+
+		if(personaje1->getNombre() == nombre) vidas[i] = personaje1->obtenerVida();
+		else if(personaje2->getNombre() == nombre) vidas[i] = personaje2->obtenerVida();
+		else if(personaje3->getNombre() == nombre) vidas[i] = personaje3->obtenerVida();
+		else vidas[i] = personaje4->obtenerVida();
+	}
+
+
 }

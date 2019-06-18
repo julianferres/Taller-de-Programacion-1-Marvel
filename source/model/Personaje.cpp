@@ -3,6 +3,7 @@
 #include <string>
 #include <math.h>
 #include <ControladorLogger.hpp>
+#include <iostream>
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
@@ -20,6 +21,8 @@ Personaje::~Personaje(){
 }
 
 Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip){
+	this->vida = 100;
+	this->habilitado = true;
 	if(nombre == "sinSprite"){
 		this->zindex = 99;
 		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se carga una imagen por defecto");
@@ -43,11 +46,10 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 void Personaje::actualizar(){
 	if(saltando)
 		this->saltar();
-	else
-		posy = posicionYdefault - 2*spriteAnimado->getAlto();
 	this->spriteAnimado->update();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
+	if(!saltando) posy = posicionYdefault-alto;
 }
 
 void Personaje::cambiarAnimacion(string nombre){
@@ -233,6 +235,11 @@ float Personaje::getPosY(){
 	return this->posy;
 }
 
+void Personaje::forzarPosicion(float x, float y){
+	this->posx = x;
+	this->posy = y;
+}
+
 SDL_Rect  Personaje::obtenerRectangulo(){
 	int posicionXdibujable = posx;
 	if(flip)
@@ -266,6 +273,34 @@ bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
 bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
 	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
+}
+
+void Personaje::restarVida(int cantidad){
+	this->vida -= cantidad;
+}
+
+int Personaje::obtenerVida(){
+	return this->vida;
+}
+
+void Personaje::reiniciarVida(){
+	this->vida = 100;
+}
+
+string Personaje::getSonido(){
+	return spriteAnimado->getSonido();
+}
+
+void Personaje::bloquear(){
+	this->habilitado = false;
+}
+
+bool Personaje::bloqueado(){
+	return !this->habilitado;
+}
+
+void Personaje::habilitar(){
+	this->habilitado = true;
 }
 
 bool Personaje::colisionaAbajoIzquierda(SDL_Rect rectanguloOponente){

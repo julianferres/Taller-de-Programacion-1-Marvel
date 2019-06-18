@@ -1,18 +1,10 @@
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <netdb.h>
-#include <strings.h>
 #include <Cliente.hpp>
-#include <string>
-#include <tuple>
 
 using namespace std;
 
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
+extern ControladorSonido *controladorSonido;
 
 struct infoCliente {
 		Cliente *cliente;
@@ -29,7 +21,7 @@ Cliente::Cliente( char * direccionIP,int puerto){
 		close(numeroSocket);
 		return;
 	}
-	if(idCliente==0){
+	if(idCliente==0){//el server nunca se levanto
 		cout<<"Servidor no encontrado."<<endl;
 		close(numeroSocket);
 		return;
@@ -39,38 +31,55 @@ Cliente::Cliente( char * direccionIP,int puerto){
 	setsockopt(numeroSocket, SOL_SOCKET, SO_RCVTIMEO, (struct timeval *)&tv, sizeof(struct timeval));
 	iCliente* args = (iCliente*) malloc(sizeof(infoCliente));
 	args->cliente=this;
-	juegoCliente = new JuegoCliente();
-	juegoCliente->iniciarGraficos(idCliente);
+	juegoCliente = new JuegoCliente(idCliente);
 	this->cargarContenidos();
 	args->ssocket=numeroSocket;
 	juegoCliente->cargarTexturas(personajesYfondos);
 	this->recibirTitulos();
 
-	pthread_t thread_id;
-	pthread_create( &thread_id , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
+	pthread_t thread_enviar,thread_sonidos;
+	pthread_create( &thread_enviar , NULL , &Cliente::enviarEventosWrapper ,(void*)args);
+	pthread_create( &thread_sonidos , NULL , &Cliente::sonidosWrapper ,(void*)args);
+
 	recibirParaDibujar();
-	pthread_join(thread_id, NULL);
+
+	pthread_join(thread_enviar, NULL);
+	pthread_join(thread_sonidos, NULL);
 	cout<<"Conexion finalizada."<<endl;
 	controladorLogger->registrarEvento("INFO", "Cliente::Conexion finalizada.");
+	free(args);
 	delete juegoCliente;
 	close(numeroSocket);
 }
 
 
 void Cliente::cargarContenidos(){
+	controladorSonido->correrCancionFondo("contents/sounds/Menu/menu.mp3",-1);
+	int round = 3;
 	vector<string> personajes = controladorJson->getNombresPersonajes();
 	for(size_t i=0;i<personajes.size();i++){
 		const string &filePath = controladorJson->pathImagen(personajes[i]);
 		personajesYfondos.push_back(make_tuple(personajes[i],filePath));
 		const string &buttonPath = controladorJson->pathBoton((personajes[i]));
 		personajesYfondos.push_back(make_tuple(personajes[i]+"Boton",buttonPath));
+		personajesYfondos.push_back(make_tuple(this->lifeBar->obtenerNombreBarra(personajes[i]), this->lifeBar->obtenerPath(personajes[i])));
+
 	}
-	vector<int> fondos = controladorJson->getZindexes();
-	for(size_t i=0;i<fondos.size();i++){
-		const string &filePath = controladorJson->pathFondo(fondos[i]);
-		personajesYfondos.push_back(make_tuple(to_string(fondos[i]),filePath));
+	vector<int> fondos = controladorJson->getZindexes(round);
+	for (int r=1; r<4; r++){
+		for(size_t i=0;i<fondos.size();i++){
+			//TODO Setear numero de round
+			const string &filePath = controladorJson->pathFondo(fondos[i],r);
+			personajesYfondos.push_back(make_tuple(to_string(fondos[i])+ to_string(r),filePath));
+		}
+		const string &filePath = "contents/images/banner" + to_string(r) + ".png";
+		personajesYfondos.push_back(make_tuple("Banner" + to_string(r),filePath));
+
 	}
+
 	personajesYfondos.push_back(make_tuple(string("Fondo"), string("contents/images/fondo.png")));
+	personajesYfondos.push_back(make_tuple(string("ConnectionLost"), string("contents/images/connectionLost.png")));
+	personajesYfondos.push_back(make_tuple(string("Mundo"), string("contents/images/globo_timer.png")));
 }
 
 void Cliente::iniciarConexion(char* direccionIP,int puerto){
@@ -101,7 +110,7 @@ void Cliente::iniciarConexion(char* direccionIP,int puerto){
 void Cliente::partidallena(){
 	bool close=false;
 	SDL_Event eventoLLeno;
-	SDL_Init( SDL_INIT_VIDEO );
+	SDL_Init( SDL_INIT_VIDEO | SDL_INIT_AUDIO );
 	SDL_Window* ventana;
 	SDL_Renderer* rendererizar;
 	SDL_CreateWindowAndRenderer(800,600, false, &ventana, &rendererizar);
@@ -110,35 +119,55 @@ void Cliente::partidallena(){
 	SDL_Texture * texture = SDL_CreateTextureFromSurface(rendererizar, fondo);
 	while (!close){
 		SDL_WaitEvent(&eventoLLeno);
-		switch (eventoLLeno.type)
-		{
-		case SDL_QUIT:
+		switch (eventoLLeno.type){
+			case SDL_QUIT:
 			close = true;
 			break;
 		}
 		SDL_RenderCopy(rendererizar, texture, NULL, NULL);
 		SDL_RenderPresent(rendererizar);
-		}
+	}
 	SDL_DestroyTexture(texture);
 	SDL_FreeSurface(fondo);
 	SDL_DestroyRenderer(rendererizar);
 	SDL_DestroyWindow(ventana);
+	SDL_VideoQuit();
+	SDL_Quit();
 }
 
 void Cliente::recibirParaDibujar(){
 	SDL_Event evento;
 	evento.type = SDL_MOUSEWHEEL;
 	char textura[MAXDATOS];
+	char sonido[MAXDATOS];
 	int posiciones[8];
 	SDL_RendererFlip flip;
 	int size;
 	int recibido;
+	int equipos[4] = { 0, 1, 0, 1};
+	int vidas[4] = {100, 100, 100, 100};
+	bool equiposArmados = true;
+
 	while(running){
+
+		if(!enMenu && equiposArmados){
+			equiposArmados = false;
+			recv(numeroSocket, equipos, sizeof(equipos), MSG_WAITALL);
+			juegoCliente->setearLados(equipos);
+		}
+
+		if(!enMenu){
+			recv(numeroSocket, vidas, sizeof(vidas), MSG_WAITALL);
+		}
+
 		recibido = recv(numeroSocket,&size,sizeof(size),MSG_WAITALL);
+		juegoCliente->graficos()->limpiar();
 		if(recibido<0){
 			if(conectado)
 				cout<<"Conexion perdida con el servidor."<<endl;
 			cout<<"Intentando reconectar con el servidor..."<<endl;
+			juegoCliente->graficos()->dibujarImagen(juegoCliente->getTextura("ConnectionLost"), NULL, NULL, SDL_FLIP_NONE);
+			juegoCliente->graficos()->render();
 			conectado = false;
 			continue;
 		}
@@ -154,24 +183,66 @@ void Cliente::recibirParaDibujar(){
 			enMenu=false;
 			continue;
 		}
-		juegoCliente->graficos()->limpiar();
+
 		for(int i=0;i<size;i++){
-			recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL);
-			recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL);
-			recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL);
+			if(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)<0) break;
+			if(recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL)<0) break;
+			if(recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL)<0) break;
+			//Personajes por arriba de las barras
+			if(!enMenu && i == 3)
+					juegoCliente->dibujarBarrasVida(vidas);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
+		if(!enMenu){
+			for(int i=0;i<2;i++){
+				recv(numeroSocket,sonido,MAXDATOS,MSG_WAITALL);
+				if(!string(sonido).empty())
+					controladorSonido->correrSonido(sonido, false);
+			}
+		}
+
+		//Personajes por debajo de las barras
+		/*if(!enMenu)
+							juegoCliente->dibujarBarrasVida();*/
+
 		juegoCliente->graficos()->render();
 		send(numeroSocket,&evento,sizeof(evento),0);//heartbeat
 	}
+
 }
-
-
 
 void *Cliente::enviarEventosWrapper(void* arg){
 	iCliente* argumentos = (iCliente*) arg;
 	((Cliente *)argumentos->cliente)->enviarEventos(argumentos->ssocket);
 	return NULL;
+}
+
+void *Cliente::sonidosWrapper(void* arg){
+	iCliente* argumentos = (iCliente*) arg;
+	((Cliente *)argumentos->cliente)->manejarSonidos();
+	return NULL;
+}
+
+void Cliente::manejarSonidos(){
+	vector<const char* > songs;
+	songs.push_back("contents/sounds/Announcer voice/seleheroes.wav");
+	songs.push_back("contents/sounds/Announcer voice/ready1.wav");
+	songs.push_back("contents/sounds/Announcer voice/engage.wav");
+	songs.push_back("contents/sounds/Battle/Captain America Theme.mp3");
+	songs.push_back("contents/sounds/Battle/Hulk Theme.mp3");
+	songs.push_back("contents/sounds/Battle/Spider Mans Theme.mp3");
+	songs.push_back("contents/sounds/Battle/Mega mans Theme.mp3");
+	songs.push_back("contents/sounds/Battle/War machines Theme.mp3");
+	controladorSonido->correrSonido(songs[0],false);
+	while(enMenu){}
+	controladorSonido->finalizarCancion();
+	controladorSonido->correrSonido(songs[1],true);
+	controladorSonido->correrSonido(songs[2],true);
+	srand(time(NULL));
+	int random = (rand()%(songs.size()-1-3)) +3;
+	controladorSonido->correrCancionFondo(songs[random], -1);
+	while(running){}
+
 }
 
 void Cliente::enviarEventos(int socket){
@@ -185,14 +256,14 @@ void Cliente::enviarEventos(int socket){
 			}
 			if(enMenu){
 				if(evento.type==SDL_MOUSEBUTTONDOWN||evento.type==SDL_MOUSEBUTTONUP
-					||evento.type== SDL_MOUSEMOTION)
+					||evento.type== SDL_MOUSEMOTION )
 					send(socket,&evento,sizeof(evento),0);
 			}
 			else{
 				if(evento.type==SDL_KEYDOWN || evento.type==SDL_KEYUP )
 					send(socket,&evento,sizeof(evento),0);
 			}
-
+			juegoCliente->handleEvents(evento);
 		}
 	}
 }
