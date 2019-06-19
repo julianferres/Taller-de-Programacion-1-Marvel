@@ -26,6 +26,7 @@ public:
 	void handleEvents(SDL_Event evento);
 	void dibujarBarrasVida(int *vidas);
 	void setearLados(int *lados);
+	void dibujarRectanguloFuturo(SDL_Rect rectFuturo);
 
 private:
 	ControladorGrafico *grafico;
