@@ -39,8 +39,8 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 	if(hayColision()){
 		string animacionPersonaje1 = personajeEquipo1->obtenerSprite()->getAnimacionActual();
 		string animacionPersonaje2 = personajeEquipo2->obtenerSprite()->getAnimacionActual();
-		if(golpesSuaves[animacionPersonaje1] ){//personaje1 esta golpeando
-			if(animacionPersonaje2=="defensa")
+		if(golpesSuaves[animacionPersonaje1]&& animacionPersonaje2!="recibirGolpe" ){//personaje1 esta golpeando
+			if(animacionPersonaje2=="defensa" && tiempoCorriendo)
 				personajeEquipo2->restarVida(1);
 			else{
 				personajeEquipo2->cambiarAnimacion("recibirGolpe");
@@ -48,8 +48,8 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 					personajeEquipo2->restarVida(2);
 			}
 		}
-		else if(golpesFuertes[animacionPersonaje1] ){//personaje1 esta golpeando fuerte
-			if(animacionPersonaje2=="defensa")
+		else if(golpesFuertes[animacionPersonaje1] && animacionPersonaje2!="recibirGolpeF"){//personaje1 esta golpeando fuerte
+			if(animacionPersonaje2=="defensa" && tiempoCorriendo)
 				personajeEquipo2->restarVida(1);
 			else{
 				personajeEquipo2->cambiarAnimacion("recibirGolpeF");
@@ -58,8 +58,8 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 			}
 		}
 
-		if(golpesSuaves[animacionPersonaje2]){//personaje2 esta golpeando
-			if(animacionPersonaje1=="defensa")
+		if(golpesSuaves[animacionPersonaje2]&& animacionPersonaje1!="recibirGolpe"){//personaje2 esta golpeando
+			if(animacionPersonaje1=="defensa" && tiempoCorriendo )
 				personajeEquipo1->restarVida(1);
 			else{
 				personajeEquipo1->cambiarAnimacion("recibirGolpe");
@@ -67,8 +67,8 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 					personajeEquipo1->restarVida(2);
 			}
 		}
-		else if(golpesFuertes[animacionPersonaje2]&& animacionPersonaje1!="defensa"){//personaje2 esta golpeando fuerte
-			if(animacionPersonaje1=="defensa")
+		else if(golpesFuertes[animacionPersonaje2]&& animacionPersonaje1!="defensa" && animacionPersonaje1!="recibirGolpeF"){//personaje2 esta golpeando fuerte
+			if(animacionPersonaje1=="defensa" && tiempoCorriendo)
 				personajeEquipo1->restarVida(1);
 			else{
 				personajeEquipo1->cambiarAnimacion("recibirGolpeF");
