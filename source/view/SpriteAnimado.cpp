@@ -56,7 +56,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		disparo=new Animacion("disparar",7,0,1539,275,115,4); //LISTO
 		Animacion *atraparEscudo = new Animacion("atraparEscudo",6,435,1668,145,124,6);//LISTO
 		animaciones.push_back(atraparEscudo);
-		tiro=new Animacion("tirar",7,0,6630,120,130,6);//LISTO
+		tiro=new Animacion("tirar",7,0,6630,120,130,10);//LISTO
 		rgolpe=new Animacion("recibirGolpe",3,850,5170,112,140,6);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,6);//LISTO
 		levantarse=new Animacion("levantarse",2,1150,5359,87,96,10);//LISTO
