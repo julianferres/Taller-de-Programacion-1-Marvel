@@ -64,11 +64,18 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 		}
 		else if(movimientosEspeciales[animacionPersonaje1]){
 			int ancho1=personajeEquipo1->obtenerSprite()->getAncho();
+			if (ancho1>220){
+				ancho1=120;
+			}else if(ancho1<=100){
+				ancho1=200;
+			}
+			int ancho2=personajeEquipo1->obtenerSprite()->getAncho();
+			int anchoTotal=2.5*(ancho1+ancho2);
 			if(personajeEquipo1->getFlip()==SDL_FLIP_NONE){
-				personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())+ancho1,personajeEquipo2->getPosY());
+				personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())-anchoTotal,personajeEquipo2->getPosY());
 			}
 			else{
-				personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())-ancho1,personajeEquipo2->getPosY());
+				personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())+anchoTotal,personajeEquipo2->getPosY());
 			}
 			personajeEquipo2->cambiarAnimacion("levantarse");
 			if(tiempoCorriendo){
@@ -95,6 +102,25 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 				personajeEquipo1->cambiarAnimacion("recibirGolpeF");
 				if (tiempoCorriendo)
 					personajeEquipo1->restarVida(4);
+			}
+		}else if(movimientosEspeciales[animacionPersonaje2]){
+			int ancho1=personajeEquipo2->obtenerSprite()->getAncho();
+			if (ancho1>220){
+				ancho1=120;
+			}else if(ancho1<=100){
+				ancho1=200;
+			}
+			int ancho2=personajeEquipo1->obtenerSprite()->getAncho();
+			int anchoTotal=2.5*(ancho1+ancho2);
+			if(personajeEquipo2->getFlip()==SDL_FLIP_NONE){
+				personajeEquipo1->forzarPosicion((personajeEquipo1->getPosX())-anchoTotal,personajeEquipo1->getPosY());
+			}
+			else{
+				personajeEquipo1->forzarPosicion((personajeEquipo1->getPosX())+anchoTotal,personajeEquipo1->getPosY());
+			}
+			personajeEquipo1->cambiarAnimacion("levantarse");
+			if(tiempoCorriendo){
+				personajeEquipo1->restarVida(6);
 			}
 		}
 	}
