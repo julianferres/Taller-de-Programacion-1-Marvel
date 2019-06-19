@@ -40,8 +40,10 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 		string animacionPersonaje1 = personajeEquipo1->obtenerSprite()->getAnimacionActual();
 		string animacionPersonaje2 = personajeEquipo2->obtenerSprite()->getAnimacionActual();
 		if(golpesSuaves[animacionPersonaje1]&& animacionPersonaje2!="recibirGolpe" ){//personaje1 esta golpeando
-			if(animacionPersonaje2=="defensa")
-				if(tiempoCorriendo)personajeEquipo2->restarVida(1);
+			if(animacionPersonaje2=="defensa"){
+				if(tiempoCorriendo)
+					personajeEquipo2->restarVida(1);
+			}
 			else{
 				personajeEquipo2->cambiarAnimacion("recibirGolpe");
 				if (tiempoCorriendo)
@@ -49,8 +51,10 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 			}
 		}
 		else if(golpesFuertes[animacionPersonaje1] && animacionPersonaje2!="recibirGolpeF"){//personaje1 esta golpeando fuerte
-			if(animacionPersonaje2=="defensa")
+			if(animacionPersonaje2=="defensa"){
 				if(tiempoCorriendo) personajeEquipo2->restarVida(1);
+			}
+
 			else{
 				personajeEquipo2->cambiarAnimacion("recibirGolpeF");
 				if (tiempoCorriendo)
@@ -59,8 +63,10 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 		}
 
 		if(golpesSuaves[animacionPersonaje2]&& animacionPersonaje1!="recibirGolpe"){//personaje2 esta golpeando
-			if(animacionPersonaje1=="defensa"  )
+			if(animacionPersonaje1=="defensa"  ){
 				if(tiempoCorriendo) personajeEquipo1->restarVida(1);
+			}
+
 			else{
 				personajeEquipo1->cambiarAnimacion("recibirGolpe");
 				if (tiempoCorriendo)
@@ -68,8 +74,9 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 			}
 		}
 		else if(golpesFuertes[animacionPersonaje2]&& animacionPersonaje1!="recibirGolpeF"){//personaje2 esta golpeando fuerte
-			if(animacionPersonaje1=="defensa" )
+			if(animacionPersonaje1=="defensa" ){
 				if(tiempoCorriendo) personajeEquipo1->restarVida(1);
+			}
 			else{
 				personajeEquipo1->cambiarAnimacion("recibirGolpeF");
 				if (tiempoCorriendo)
