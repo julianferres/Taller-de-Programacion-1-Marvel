@@ -72,10 +72,14 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 			int ancho2=personajeEquipo1->obtenerSprite()->getAncho();
 			int anchoTotal=2.5*(ancho1+ancho2);
 			if(personajeEquipo1->getFlip()==SDL_FLIP_NONE){
-				personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())-anchoTotal,personajeEquipo2->getPosY());
+				personajeEquipo2->serLanzado();
+				SDL_Delay(10);
+				//personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())-anchoTotal,personajeEquipo2->getPosY());
 			}
 			else{
-				personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())+anchoTotal,personajeEquipo2->getPosY());
+				personajeEquipo1->serLanzado();
+				SDL_Delay(10);
+				//personajeEquipo2->forzarPosicion((personajeEquipo2->getPosX())+anchoTotal,personajeEquipo2->getPosY());
 			}
 			personajeEquipo2->cambiarAnimacion("levantarse");
 			if(tiempoCorriendo){
@@ -113,10 +117,14 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 			int ancho2=personajeEquipo1->obtenerSprite()->getAncho();
 			int anchoTotal=2.5*(ancho1+ancho2);
 			if(personajeEquipo2->getFlip()==SDL_FLIP_NONE){
-				personajeEquipo1->forzarPosicion((personajeEquipo1->getPosX())-anchoTotal,personajeEquipo1->getPosY());
+				personajeEquipo1->serLanzado();
+				SDL_Delay(10);
+				//personajeEquipo1->forzarPosicion((personajeEquipo1->getPosX())-anchoTotal,personajeEquipo1->getPosY());
 			}
 			else{
-				personajeEquipo1->forzarPosicion((personajeEquipo1->getPosX())+anchoTotal,personajeEquipo1->getPosY());
+				personajeEquipo1->serLanzado();
+				SDL_Delay(10);
+				//personajeEquipo1->forzarPosicion((personajeEquipo1->getPosX())+anchoTotal,personajeEquipo1->getPosY());
 			}
 			personajeEquipo1->cambiarAnimacion("levantarse");
 			if(tiempoCorriendo){

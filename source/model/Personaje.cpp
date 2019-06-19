@@ -61,6 +61,10 @@ void Personaje::cambiarAnimacion(string nombre){
 	this->spriteAnimado->cambiarAnimacion(nombre);
 }
 
+void Personaje::serLanzado(){
+	this->spriteAnimado->iniciarAnimacion("serLanzado");
+}
+
 bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 	SDL_Rect rect_enemigo = enemigo->obtenerRectangulo();
 	if(!saltando){

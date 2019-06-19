@@ -56,6 +56,7 @@ class Personaje{
 		void habilitar();
 		bool bloqueado();
 		void forzarPosicion(float x, float y);
+		void serLanzado();
 
 	private:
 		bool habilitado;
