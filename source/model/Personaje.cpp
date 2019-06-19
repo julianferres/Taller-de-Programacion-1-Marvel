@@ -12,7 +12,7 @@ extern ControladorLogger *controladorLogger;
 #define constanteTiempoCiclos 0.3
 #define constanteEstiramientoHorizontal 2.5
 #define constanteEstiramientoVertical 2
-#define anchoDefault 100
+//#define anchoDefault 100
 
 using namespace std;
 
@@ -39,6 +39,7 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->posx= posicionXinicial;
 	this->posicionXinicial = posicionXinicial;
 	this->flip = flip;
+	anchoDefault=spriteAnimado->getAncho();
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
 
 }
@@ -69,7 +70,7 @@ bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
 			this->spriteAnimado->iniciarAnimacion("movIzquierda");
 	}
 
-	if(posx + 2*spriteAnimado->getAncho() > (controladorJson-> getLimiteFondoDer())){
+	if(posx + ancho > (controladorJson-> getLimiteFondoDer())){
 		if (rect_enemigo.x > (controladorJson->getLimiteFondoIzq()) && !finEscenarioDerecha){
 			enemigo->correrAIzquierda();
 			controladorLogger->registrarEvento("DEBUG", "Personaje::Personaje en el limite derecho. Se corre el oponente a la izquierda");
@@ -115,7 +116,7 @@ void Personaje::correrAIzquierda(){
 }
 
 void Personaje::correrADerecha(){
-	if(posx + 2*spriteAnimado->getAncho() > controladorJson->getLimiteFondoDer())
+	if(posx + ancho > controladorJson->getLimiteFondoDer())
 			return;
 	this->posx=this->posx+velocidad;
 }

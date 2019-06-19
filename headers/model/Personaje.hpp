@@ -80,6 +80,7 @@ class Personaje{
 		int vida;
 		int anchoEnemigo;
 		int offsetX=0;
+		int anchoDefault;
 
 
 };
