@@ -81,6 +81,8 @@ class Personaje{
 		int anchoEnemigo;
 		int offsetX=0;
 		int anchoDefault;
+		int constanteEstiramientoHorizontal;
+		int constanteEstiramientoVertical;
 
 
 };

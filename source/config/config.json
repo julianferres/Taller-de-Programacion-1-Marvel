@@ -69,29 +69,29 @@
         [
             {"name":"CapitanAmerica",
             "filepath":"contents/images/CaptainAmericaSprites.png",
-            "height":320,
-            "width":200,
+            "height":230,
+            "width":237,
             "zindex":99,
 			"buttonpath": "contents/images/BotonCapitanAmerica.png"
             },
 	    {"name":"Venom",
             "filepath":"contents/images/Venom.png",
-            "height":320,
-            "width":220,
+            "height":240,
+            "width":400,
             "zindex":99,
 			"buttonpath": "contents/images/BotonVenom.png"  
             },
         {"name":"Spiderman",
             "filepath":"contents/images/SpidermanSprites.png",
-            "height":320,
-            "width":200,
+            "height":170,
+            "width":262,
             "zindex":99,
 			"buttonpath": "contents/images/BotonSpiderman.png"          
             },
         {"name":"MegaMan",
 	        "filepath":"contents/images/MegaMan.png",
-	        "height":395.6,
-	        "width":517.5,
+	        "height":150,
+	        "width":225,
 	        "zindex":99	,
 			"buttonpath": "contents/images/BotonMegaMan.png"                          
 		}

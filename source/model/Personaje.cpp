@@ -8,11 +8,8 @@
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
-#define constanteDeAltura 20.2f //Viene de despejar la velocidad en funcion a una h_max = 2*alto
+#define constanteDeAltura 7500 //sale de querer saltar 375 unidades
 #define constanteTiempoCiclos 0.3
-#define constanteEstiramientoHorizontal 2.5
-#define constanteEstiramientoVertical 2
-//#define anchoDefault 100
 
 using namespace std;
 
@@ -30,12 +27,14 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	else
 		this->zindex = controladorJson->zindexPersonaje(nombre);
 	this->spriteAnimado=new SpriteAnimado(nombre);
+	constanteEstiramientoHorizontal=controladorJson->anchoPersonaje(nombre)/spriteAnimado->getAncho();
+	constanteEstiramientoVertical=controladorJson->alturaPersonaje(nombre)/spriteAnimado->getAlto();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
 	this->posicionYdefault= controladorJson->alturaVentana() - controladorJson->getAlturaPiso();
 	this->nombre = nombre;
 	this->posy = posicionYdefault - 2*spriteAnimado->getAlto();
-	this->velocidadInicial = sqrt(constanteDeAltura * controladorJson->alturaPersonaje(nombre));
+	this->velocidadInicial = sqrt(constanteDeAltura);
 	this->posx= posicionXinicial;
 	this->posicionXinicial = posicionXinicial;
 	this->flip = flip;
