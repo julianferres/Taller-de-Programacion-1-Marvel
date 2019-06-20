@@ -296,7 +296,8 @@ bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
 }
 
 void Personaje::restarVida(int cantidad){
-	this->vida -= cantidad;
+	if (!(this->spriteAnimado->getAnimacionActual() == "serLanzado" || this->spriteAnimado->getAnimacionActual() == "levantarse"))
+		this->vida -= cantidad;
 }
 
 int Personaje::obtenerVida(){
@@ -323,3 +324,6 @@ void Personaje::habilitar(){
 	this->habilitado = true;
 }
 
+void Personaje::levantarse(){
+	this->spriteAnimado->cambiarAnimacion("levantarse");
+}

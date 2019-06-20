@@ -265,6 +265,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 
 bool SpriteAnimado::iniciarAnimacion(string nombre){
 	if(animacionActual->getNombre()=="cambioEntrada" || animacionActual->getNombre()=="disparar" ) return false;
+	if(animacionActual->getNombre()=="serLanzado" || animacionActual->getNombre() == "tirar") return false;
 	if( animacionActual->getNombre() != nombre || nombre=="quieto")
 		cambiarAnimacion(nombre);
 
