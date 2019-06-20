@@ -38,7 +38,9 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->posx= posicionXinicial;
 	this->posicionXinicial = posicionXinicial;
 	this->flip = flip;
-	anchoDefault=spriteAnimado->getAncho();
+	this->anchoDefault=spriteAnimado->getAncho();
+	this->arrojable = new SpriteAnimado(nombre+"Arrojable");
+	this->setArrojable();
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
 
 }
@@ -46,6 +48,11 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 void Personaje::actualizar(Personaje *enemigo){
 	if(saltando) this->saltar(enemigo);
 	this->spriteAnimado->update();
+	if(arrojable->finalizado) {
+		distanciaArrojable=0;
+		Arrojando=false;
+	}
+	if(Arrojando) arrojable->update();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
 	if(!saltando) posy = posicionYdefault-alto;
@@ -150,6 +157,8 @@ void Personaje::agacharse(){
 void Personaje::disparar(){
 	if(saltando|| agachado) return;
 	this->spriteAnimado->iniciarAnimacion("disparar");
+	this->arrojable->cambiarAnimacion("arrojar");
+	Arrojando = true;
 }
 void Personaje::defenderse(){
 	if(saltando) return;
@@ -318,3 +327,41 @@ void Personaje::habilitar(){
 	this->habilitado = true;
 }
 
+bool Personaje::arrojando(){
+	return Arrojando;
+}
+
+void  Personaje::setArrojable(){
+	if(nombre=="CapitanAmerica"){
+		anchoArrojable=170;
+		altoArrojable=30;
+	}
+	else if(nombre=="Spiderman"){
+			anchoArrojable=95;
+			altoArrojable=33;
+		}
+	else if(nombre=="Venom"){
+		anchoArrojable=40;
+		altoArrojable = 20;
+	}
+	else if(nombre=="MegaMan"){
+		anchoArrojable = 	125;
+		altoArrojable = 85;
+	}
+}
+
+SDL_Rect Personaje::getRectDestinoArrojable(){
+	SDL_Rect rectangulo ;
+	if(flip)
+		rectangulo = {posx-distanciaArrojable,posy,anchoArrojable,altoArrojable};
+	else
+		rectangulo = {posx+distanciaArrojable,posy,anchoArrojable,altoArrojable};
+	distanciaArrojable +=velocidadArrojable;
+	return rectangulo;
+
+	}
+
+SDL_Rect Personaje::getRectOrigenArrojable(){
+return arrojable->rectOrigen();
+
+	}

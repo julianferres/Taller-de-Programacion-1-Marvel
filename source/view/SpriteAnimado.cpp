@@ -124,7 +124,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeA=new Animacion("golpeA",4,0,1105,110,65,8);//golpe agachado//LISTO
 		patadaA=new Animacion("patadaA",5,0,1170,110,65,8);//patada agachado//LISTO
 		defensa=new Animacion("defensa",4,0,960,110,80,8);//LISTO
-		disparo=new Animacion("disparar",11,0,2160,275,80,2);//LISTO
+		disparo=new Animacion("disparar",11,0,2160,105,80,2);//LISTO
 		tiro=new Animacion("tirar",10,0,2775,100,75,6);
 		rgolpe=new Animacion("recibirGolpe",4,0,2380,85,90,4);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",6,0,2465,105,85,4);//LISTO
@@ -205,9 +205,29 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animacionActual = quieto;
 		return;
 	}
+	if(nombre=="CapitanAmericaArrojable"){
+		arrojable = new Animacion("arrojar",1,1,1,170,30,5);
+		animaciones.push_back(arrojable);
+		return;
+	}
+	else if(nombre=="SpidermanArrojable"){
+			arrojable = new Animacion("arrojar",1,1,1,95,33,5);
+			animaciones.push_back(arrojable);
+			return;
+		}
+	else if(nombre=="VenomArrojable"){
+			arrojable = new Animacion("arrojar",1,1,1,40,20,5);
+			animaciones.push_back(arrojable);
+			return;
+		}
+	else if(nombre=="MegaManArrojable"){
+			arrojable = new Animacion("arrojar",9,250,2271,125,85,5);
+			animaciones.push_back(arrojable);
+			return;
+		}
 
 	//std::string Nombre, int Frames,int x,int y, int ancho, int alto,int Velocidad
-	if(nombre=="CapitanAmericaBoton"){
+	else if(nombre=="CapitanAmericaBoton"){
 		mouseOut = new Animacion("mouseOut",1,0,0,159,129,10);
 		mouseOver = new Animacion("mouseOver",1,160,0,159,129,10);
 		mouseDown = new Animacion("mouseDown",1,319,0,159,129,10);
@@ -265,6 +285,7 @@ bool SpriteAnimado::iniciarAnimacion(string nombre){
 }
 
 void SpriteAnimado::cambiarAnimacion(string nombre){
+	if(nombre=="arrojar") finalizado=false;
 	sonidoEnviado = false;
 	for(Uint8 i=0; i<animaciones.size();i++){
 		if(animaciones[i]->getNombre() == nombre )
@@ -281,7 +302,9 @@ void SpriteAnimado::update(){
 	if (frameIndex < animacionActual->getFrames() - 1 )
 		frameIndex++;
 	else{
-		if(animacionActual->getNombre()=="agacharse" || animacionActual->getNombre()=="defensa")
+		if(animacionActual->getNombre()=="arrojar")
+			finalizado = true;
+		else if(animacionActual->getNombre()=="agacharse" || animacionActual->getNombre()=="defensa")
 			return;
 		frameIndex=0;
 		if(nombreSprite == "CapitanAmerica" && animacionActual->getNombre()=="disparar")

@@ -46,6 +46,8 @@ class Personaje{
 		float getPosY();
 		void saltarEnemigoAIzq();
 		SDL_Rect  obtenerRectangulo();
+		SDL_Rect getRectDestinoArrojable();
+		SDL_Rect getRectOrigenArrojable();
 		std::string getNombre();
 		string getSonido();
 		SpriteAnimado *obtenerSprite();
@@ -56,6 +58,8 @@ class Personaje{
 		void habilitar();
 		bool bloqueado();
 		void forzarPosicion(float x, float y);
+		bool arrojando();
+		void setArrojable();
 
 	private:
 		bool habilitado;
@@ -75,6 +79,7 @@ class Personaje{
 		bool moviendoIzq=false;
 		bool moviendoDer=false;
 		SpriteAnimado *spriteAnimado;
+		SpriteAnimado *arrojable;
 		SDL_RendererFlip flip;
 		std::string nombre;
 		int vida;
@@ -83,6 +88,10 @@ class Personaje{
 		int anchoDefault;
 		int constanteEstiramientoHorizontal;
 		int constanteEstiramientoVertical;
+		int velocidadArrojable=10;
+		int anchoArrojable,altoArrojable;
+		int distanciaArrojable = 0;
+		bool Arrojando = false;
 
 
 };
