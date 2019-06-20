@@ -72,8 +72,8 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 				}
 				int ancho2=personajeEquipo1->obtenerSprite()->getAncho();
 				int anchoTotal=2.5*(ancho1+ancho2);
-
-				personajeEquipo2->restarVida(6);
+				if(tiempoCorriendo)
+					personajeEquipo2->restarVida(6);
 				if(personajeEquipo1->getFlip()==SDL_FLIP_NONE){
 					personajeEquipo2->serLanzado();
 					SDL_Delay(10);
@@ -119,7 +119,8 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 				int ancho2=personajeEquipo1->obtenerSprite()->getAncho();
 				int anchoTotal=2.5*(ancho1+ancho2);
 
-				personajeEquipo1->restarVida(6);
+				if(tiempoCorriendo)
+					personajeEquipo2->restarVida(6);
 				if(personajeEquipo2->getFlip()==SDL_FLIP_NONE){
 					personajeEquipo1->serLanzado();
 					SDL_Delay(10);
