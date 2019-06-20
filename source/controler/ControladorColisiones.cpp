@@ -120,7 +120,7 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 				int anchoTotal=2.5*(ancho1+ancho2);
 
 				if(tiempoCorriendo)
-					personajeEquipo2->restarVida(6);
+					personajeEquipo1->restarVida(6);
 				if(personajeEquipo2->getFlip()==SDL_FLIP_NONE){
 					personajeEquipo1->serLanzado();
 					SDL_Delay(10);

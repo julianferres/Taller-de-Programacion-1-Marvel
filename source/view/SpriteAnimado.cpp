@@ -60,7 +60,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		rgolpe=new Animacion("recibirGolpe",3,850,5170,112,140,6);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,6);//LISTO
 		levantarse=new Animacion("levantarse",2,1150,5359,87,96,10);//LISTO
-		serLanzado=new Animacion("serLanzado",7,0,3480,175,172,3);
+		serLanzado=new Animacion("serLanzado",7,0,6798,179,133,9);//LISTO
 		boton = false;
 	}
 	else if(nombre=="Spiderman"){

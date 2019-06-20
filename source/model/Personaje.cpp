@@ -62,6 +62,7 @@ void Personaje::cambiarAnimacion(string nombre){
 }
 
 void Personaje::serLanzado(){
+	cout<< this->nombre << " esta siendo lanzado"<<endl;
 	this->spriteAnimado->iniciarAnimacion("serLanzado");
 }
 
