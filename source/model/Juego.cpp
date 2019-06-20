@@ -26,9 +26,6 @@ Juego::Juego(){
 	controladorLogger->registrarEvento("INFO", "Juego::Se inicio el juego");
 	this->alto_ventana = controladorJson->alturaVentana();
 	this->ancho_ventana = controladorJson->anchoVentana();
-	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
-	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
-
 }
 
 Juego::~Juego(){
@@ -40,6 +37,7 @@ Juego::~Juego(){
 }
 
 void Juego::nuevoRound(){
+	this->decidirGanadorRoundAnterior();
 	this->reiniciarPersonajes();
 	int nuevoNum = this->roundActual->getNumero()+1;
 	if (nuevoNum == 4 || this->hayGanador()){//TODO Cuando se sepa el ganador posta, esto cambia si un mimo equipo gana los dos primeros rounds
@@ -49,9 +47,25 @@ void Juego::nuevoRound(){
 	this->roundActual = new Round(nuevoNum);
 }
 
+void Juego::decidirGanadorRoundAnterior(){
+	Personaje *personaje1 = this->equipo1->obtenerJugador1()->devolverPersonajeActual();
+	Personaje *personaje2 = this->equipo1->obtenerJugador2()->devolverPersonajeActual();
+	Personaje *personaje3 = this->equipo2->obtenerJugador1()->devolverPersonajeActual();
+	Personaje *personaje4 = this->equipo2->obtenerJugador2()->devolverPersonajeActual();
+
+	int vidaEquipo1 = personaje1->obtenerVida() + personaje2->obtenerVida();
+	int vidaEquipo2 = personaje3->obtenerVida() + personaje4->obtenerVida();
+
+	if (vidaEquipo1 > vidaEquipo2){
+		this->resultados[this->roundActual->getNumero()-1] = 1;
+	}else if (vidaEquipo2 > vidaEquipo1){
+		this->resultados[this->roundActual->getNumero()-1] = 2;
+	}else{
+		this->resultados[this->roundActual->getNumero()-1] = 0;//empate
+	}
+}
+
 bool Juego::hayGanador(){
-	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
-	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
 	return this->getTotalEquipo1() == 2 || this->getTotalEquipo2() == 2;
 }
 
@@ -76,8 +90,6 @@ int Juego::getTotalEquipo2(){
 }
 
 void Juego::iniciarRound(){
-	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
-	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
 	this->roundActual->iniciarTiempo();
 	this->tiempoCorriendo = true;
 }
@@ -101,8 +113,6 @@ void Juego::reiniciarVidas(){
 
 bool Juego::roundFinalizado(){
 	return this->roundActual->finalizado();
-	cout << "Equipo1 = " << this->getTotalEquipo1() << endl;
-	cout << "Equipo2 = " << this->getTotalEquipo2() << endl;
 }
 void Juego::actualizarTiempo(){
 	this->roundActual->actualizarTiempo();
@@ -114,8 +124,7 @@ int Juego::numeroRound(){
 
 void Juego::finalizarRound(int equipoGanador){
 	this->roundActual->finalizar();
-	this->resultados[this->roundActual->getNumero()-1] = equipoGanador;
-	cout<< "equipo ganador" <<endl;
+	//this->resultados[this->roundActual->getNumero()-1] = equipoGanador;
 }
 
 bool Juego::running(){

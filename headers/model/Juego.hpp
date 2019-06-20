@@ -44,6 +44,7 @@ class Juego{
 		ControladorColisiones* controladorColisiones;
 		int numeroRound();
 		void nuevoRound();
+		void decidirGanadorRoundAnterior();
 		void iniciarRound();
 		bool roundFinalizado();
 		bool running();
