@@ -84,7 +84,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		rgolpe=new Animacion("recibirGolpe",3,0,3477,160,113,4); //LISTO
 		rgolpeF=new Animacion("recibirGolpeF",7,0,3721,157,93,3);//LISTO
 		levantarse=new Animacion("levantarse",5,1099,3721,157,93,5);//LISTO
-		serLanzado=new Animacion("serLanzado",7,1494,1752,126,252,3);
+		serLanzado=new Animacion("serLanzado",8,814,3606,147,114,4);
 		boton = false;
 	}
 	else if(nombre=="Venom" ){
@@ -106,9 +106,9 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		disparo=new Animacion("disparar",12,0,3230,275,128,2);//LISTO
 		tiro=new Animacion("tirar",11,0,4160,250,160,6);
 		rgolpe=new Animacion("recibirGolpe",5,0,3500,170,140,4);//LISTO
-		rgolpeF=new Animacion("recibirGolpeF",3,0,3640,180,140,4);//LISTO
+		rgolpeF=new Animacion("recibirGolpeF",11,0,4495,165,160,4);//LISTO
 		levantarse=new Animacion("levantarse",6,0,3780,180,140,4);//LISTO
-		serLanzado=new Animacion("serLanzado",7,1494,1752,126,252,3);
+		serLanzado=new Animacion("serLanzado",3,0,3640,180,140,4);
 		boton = false;
 	}
 	else if(nombre=="MegaMan" ){
