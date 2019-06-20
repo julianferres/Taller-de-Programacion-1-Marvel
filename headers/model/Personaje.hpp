@@ -79,7 +79,7 @@ class Personaje{
 		bool moviendoIzq=false;
 		bool moviendoDer=false;
 		SpriteAnimado *spriteAnimado;
-		SpriteAnimado *arrojable;
+		SpriteAnimado *disparable;
 		SDL_RendererFlip flip;
 		std::string nombre;
 		int vida;
@@ -89,9 +89,10 @@ class Personaje{
 		int constanteEstiramientoHorizontal;
 		int constanteEstiramientoVertical;
 		int velocidadArrojable=10;
-		int anchoArrojable,altoArrojable;
-		int distanciaArrojable = 0;
-		bool Arrojando = false;
+		int anchoArrojable,altoArrojable,posyArrojable;
+		int distanciaDisparada = 0;
+		int distanciaMaximaDisparo = 300;
+		bool disparando = false;
 
 
 };

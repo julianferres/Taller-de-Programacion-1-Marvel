@@ -29,7 +29,6 @@ class SpriteAnimado{
 		int getAlto();
 		int getAncho();
 		string getSonido();
-		bool finalizado = false;
 
 
 	private:

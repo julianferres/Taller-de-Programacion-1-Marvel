@@ -78,7 +78,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeA=new Animacion("golpeA",8,790,2748,155,150,5);//golpe agachado LISTO
 		patadaA=new Animacion("patadaA",5,1030,1405,140,70,5);//patada agachado LISTO
 		defensa=new Animacion("defensa",4,0,2377,110,110,6); //LISTO
-		disparo=new Animacion("disparar",7,0,2500,275,84,3); //LISTO
+		disparo=new Animacion("disparar",7,0,2500,125,84,3); //LISTO
 		tiro=new Animacion("tirar",10,0,4800,145,120,6);//LISTO
 		rgolpe=new Animacion("recibirGolpe",3,0,3477,160,113,4); //LISTO
 		rgolpeF=new Animacion("recibirGolpeF",7,0,3721,157,93,3);//LISTO
@@ -101,7 +101,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeA=new Animacion("golpeA",3,0,875,220,90,8);//golpe agachado//LISTO
 		patadaA=new Animacion("patadaA",4,0,1570,215,109,8);//patada agachado//LISTO
 		defensa=new Animacion("defensa",8,0,2924,170,172,8);//LISTO
-		disparo=new Animacion("disparar",12,0,3230,275,128,2);//LISTO
+		disparo=new Animacion("disparar",12,0,3230,145,128,2);//LISTO
 		tiro=new Animacion("tirar",11,0,4160,250,160,6);
 		rgolpe=new Animacion("recibirGolpe",5,0,3500,170,140,4);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",3,0,3640,180,140,4);//LISTO
@@ -211,17 +211,17 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		return;
 	}
 	else if(nombre=="SpidermanArrojable"){
-			arrojable = new Animacion("arrojar",1,1,1,95,33,5);
+			arrojable = new Animacion("arrojar",7,1080,2510,90,40,5);
 			animaciones.push_back(arrojable);
 			return;
 		}
 	else if(nombre=="VenomArrojable"){
-			arrojable = new Animacion("arrojar",1,1,1,40,20,5);
+			arrojable = new Animacion("arrojar",7,250,3415,50,35,5);
 			animaciones.push_back(arrojable);
 			return;
 		}
 	else if(nombre=="MegaManArrojable"){
-			arrojable = new Animacion("arrojar",9,250,2271,125,85,5);
+			arrojable = new Animacion("arrojar",7,500,2271,125,85,5);
 			animaciones.push_back(arrojable);
 			return;
 		}
@@ -285,7 +285,6 @@ bool SpriteAnimado::iniciarAnimacion(string nombre){
 }
 
 void SpriteAnimado::cambiarAnimacion(string nombre){
-	if(nombre=="arrojar") finalizado=false;
 	sonidoEnviado = false;
 	for(Uint8 i=0; i<animaciones.size();i++){
 		if(animaciones[i]->getNombre() == nombre )
@@ -302,8 +301,7 @@ void SpriteAnimado::update(){
 	if (frameIndex < animacionActual->getFrames() - 1 )
 		frameIndex++;
 	else{
-		if(animacionActual->getNombre()=="arrojar")
-			finalizado = true;
+		if(animacionActual->getNombre()=="arrojar") return;
 		else if(animacionActual->getNombre()=="agacharse" || animacionActual->getNombre()=="defensa")
 			return;
 		frameIndex=0;

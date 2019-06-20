@@ -39,7 +39,7 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->posicionXinicial = posicionXinicial;
 	this->flip = flip;
 	this->anchoDefault=spriteAnimado->getAncho();
-	this->arrojable = new SpriteAnimado(nombre+"Arrojable");
+	this->disparable = new SpriteAnimado(nombre+"Arrojable");
 	this->setArrojable();
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
 
@@ -48,11 +48,11 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 void Personaje::actualizar(Personaje *enemigo){
 	if(saltando) this->saltar(enemigo);
 	this->spriteAnimado->update();
-	if(arrojable->finalizado) {
-		distanciaArrojable=0;
-		Arrojando=false;
+	if(distanciaDisparada>distanciaMaximaDisparo) {
+		distanciaDisparada=0;
+		disparando=false;
 	}
-	if(Arrojando) arrojable->update();
+	if(disparando) disparable->update();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
 	if(!saltando) posy = posicionYdefault-alto;
@@ -155,10 +155,10 @@ void Personaje::agacharse(){
 	}
 }
 void Personaje::disparar(){
-	if(saltando|| agachado) return;
+	if(saltando|| agachado || disparando) return;
 	this->spriteAnimado->iniciarAnimacion("disparar");
-	this->arrojable->cambiarAnimacion("arrojar");
-	Arrojando = true;
+	this->disparable->cambiarAnimacion("arrojar");
+	disparando = true;
 }
 void Personaje::defenderse(){
 	if(saltando) return;
@@ -328,40 +328,44 @@ void Personaje::habilitar(){
 }
 
 bool Personaje::arrojando(){
-	return Arrojando;
+	return disparando;
 }
 
 void  Personaje::setArrojable(){
 	if(nombre=="CapitanAmerica"){
 		anchoArrojable=170;
 		altoArrojable=30;
+		posyArrojable=0;
 	}
 	else if(nombre=="Spiderman"){
-			anchoArrojable=95;
-			altoArrojable=33;
+			anchoArrojable=125;
+			altoArrojable=80;
+			posyArrojable=40;
 		}
 	else if(nombre=="Venom"){
-		anchoArrojable=40;
-		altoArrojable = 20;
+		anchoArrojable=125;
+		altoArrojable = 80;
+		posyArrojable=20;
 	}
 	else if(nombre=="MegaMan"){
 		anchoArrojable = 	125;
 		altoArrojable = 85;
+		posyArrojable=0;
 	}
 }
 
 SDL_Rect Personaje::getRectDestinoArrojable(){
 	SDL_Rect rectangulo ;
 	if(flip)
-		rectangulo = {posx-distanciaArrojable,posy,anchoArrojable,altoArrojable};
+		rectangulo = {posx-distanciaDisparada-anchoArrojable,posy+posyArrojable,anchoArrojable,altoArrojable};
 	else
-		rectangulo = {posx+distanciaArrojable,posy,anchoArrojable,altoArrojable};
-	distanciaArrojable +=velocidadArrojable;
+		rectangulo = {posx+distanciaDisparada+ancho,posy+posyArrojable,anchoArrojable,altoArrojable};
+	distanciaDisparada +=velocidadArrojable;
 	return rectangulo;
 
 	}
 
 SDL_Rect Personaje::getRectOrigenArrojable(){
-return arrojable->rectOrigen();
+return disparable->rectOrigen();
 
 	}
