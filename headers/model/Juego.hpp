@@ -55,7 +55,7 @@ class Juego{
 		void obtenerVidas(int *vidas);
 		void reiniciarVidas();
 		void cambiarEstadoTiempo();
-		vector<string>getSonidos();
+		vector<string>getSonidos(vector<string>sonidos);
 		void finalizarRound(int equipoGanador);
 		bool hayGanador();
 		int getTotalEquipo1();
@@ -74,7 +74,6 @@ class Juego{
 		vector<Jugador*> jugadores={NULL,NULL,NULL,NULL};
 		Equipo *equipo1;
 		Equipo *equipo2 ;
-		vector<string>sonidos={"",""};
 		bool isRunning;
 		int FPS = controladorJson->cantidadFPS();
 		unsigned MAX_FRAME_TIME = 1000 / FPS;

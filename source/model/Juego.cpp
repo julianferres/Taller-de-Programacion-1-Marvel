@@ -508,9 +508,11 @@ std::vector<std::string> Juego::gameMenu(){
 }
 
 
-vector<string>Juego::getSonidos(){
-	sonidos[0]=equipo1->JugadorActual()->devolverPersonajeActual()->getSonido();
-	sonidos[1] = equipo2->JugadorActual()->devolverPersonajeActual()->getSonido();
+vector<string>Juego::getSonidos(vector<string> sonidos){
+	sonidos.pop_back();
+	sonidos.pop_back();
+	sonidos.push_back(equipo1->JugadorActual()->devolverPersonajeActual()->getSonido());
+	sonidos.push_back(equipo2->JugadorActual()->devolverPersonajeActual()->getSonido());
 	return sonidos;
 }
 

@@ -133,7 +133,7 @@ void Servidor::gameLoop(){
 				colaEventos.pop();
 				juego->teclear(get<0>(tuplaEvento),get<1>(tuplaEvento));
 			}
-			this->sonidos=juego->getSonidos();
+			this->sonidos=juego->getSonidos(sonidos);
 			this->dibujables = juego->dibujar();
 			this->juego->obtenerVidas(vidas);
 			server_mutex.unlock();
