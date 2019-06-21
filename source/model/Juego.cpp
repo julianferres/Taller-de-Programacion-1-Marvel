@@ -525,23 +525,8 @@ void Juego::reiniciarPersonajes(){
 }
 
 void Juego::obtenerVidas(int *vidas){
-	Personaje *personaje1 = this->equipo1->obtenerJugador1()->devolverPersonajeActual();
-	Personaje *personaje2 = this->equipo1->obtenerJugador2()->devolverPersonajeActual();
-	Personaje *personaje3 = this->equipo2->obtenerJugador1()->devolverPersonajeActual();
-	Personaje *personaje4 = this->equipo2->obtenerJugador2()->devolverPersonajeActual();
-
-	string nombre = "";
-	for (int i = 0; i < 4; i++){
-		if (i == 0) nombre = "CapitanAmerica";
-		else if (i == 1) nombre = "MegaMan";
-		else if (i == 2) nombre = "Spiderman";
-		else nombre = "Venom";
-
-		if(personaje1->getNombre() == nombre) vidas[i] = personaje1->obtenerVida();
-		else if(personaje2->getNombre() == nombre) vidas[i] = personaje2->obtenerVida();
-		else if(personaje3->getNombre() == nombre) vidas[i] = personaje3->obtenerVida();
-		else vidas[i] = personaje4->obtenerVida();
-	}
-
-
+	vidas[0] = this->equipo1->obtenerJugador1()->devolverPersonajeActual()->obtenerVida();
+	vidas[1] = this->equipo1->obtenerJugador2()->devolverPersonajeActual()->obtenerVida();
+	vidas[2] = this->equipo2->obtenerJugador1()->devolverPersonajeActual()->obtenerVida();
+	vidas[3] = this->equipo2->obtenerJugador2()->devolverPersonajeActual()->obtenerVida();
 }

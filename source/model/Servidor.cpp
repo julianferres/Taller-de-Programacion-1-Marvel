@@ -254,16 +254,21 @@ int Servidor::obtenerEquipoPersonaje(string nombre){
 	return 1;
 }
 
+void Servidor::obtenerLados(string *lados){
+	lados[0] = this->juego->getEquipo1()->obtenerJugador1()->nombreJugador();
+	lados[1] = this->juego->getEquipo1()->obtenerJugador2()->nombreJugador();
+	lados[2] = this->juego->getEquipo2()->obtenerJugador1()->nombreJugador();
+	lados[3] = this->juego->getEquipo2()->obtenerJugador2()->nombreJugador();
+}
+
 void Servidor::enviarParaDibujar(int socket){
 	Uint32 tiempoInicial,tiempoActual;
 	vector<tuple<string,SDL_Rect , SDL_Rect ,SDL_RendererFlip>> dibujablesThread;
 	vector<string>sonidosThread;
 	int FPS = controladorJson->cantidadFPS();
-	// Equipos va a tener el equipo, en orden, de CapitanAmerica, Hulk, Spiderman y Venom
-	// Un array de ints es una solucion muy fea para este problema, pero luego puede utilizarse para enviar las vidas, y tenemos poco tiempo
-	// y es mas facil de enviar por el socket
 	char sonido[1000];
-	int equipos[4] = {1, 1, 1, 1};
+	char personaje[1000];
+	string lados[4] = {"", "", "", ""};
 	bool equiposArmados = true;
 
 	while(true){
@@ -271,13 +276,12 @@ void Servidor::enviarParaDibujar(int socket){
 			continue;
 
 		if(!enMenu && equiposArmados){
-			equipos[0] = obtenerEquipoPersonaje("CapitanAmerica");
-			equipos[1] = obtenerEquipoPersonaje("MegaMan");
-			equipos[2] = obtenerEquipoPersonaje("Spiderman");
-			equipos[3] = obtenerEquipoPersonaje("Venom");
-
+			obtenerLados(lados);
 			equiposArmados = false;
-			send(socket, equipos, sizeof(equipos), 0);
+			for(int i = 0; i < 4; i++){
+				strcpy(personaje, lados[i].c_str());
+				send(socket, personaje, sizeof(personaje), 0);
+			}
 		}
 		if(!enMenu){
 			server_mutex.lock();
