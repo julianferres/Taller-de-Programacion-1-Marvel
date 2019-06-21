@@ -58,8 +58,10 @@ class Personaje{
 		void habilitar();
 		bool bloqueado();
 		void forzarPosicion(float x, float y);
-		bool arrojando();
-		void setArrojable();
+		bool estaDisparando();
+		void setDisparo();
+		void actualizarDisparo();
+
 
 	private:
 		bool habilitado;
@@ -89,7 +91,7 @@ class Personaje{
 		int constanteEstiramientoHorizontal;
 		int constanteEstiramientoVertical;
 		int velocidadArrojable=10;
-		int anchoArrojable,altoArrojable,posyArrojable;
+		int anchoDisparo,altoDisparo,posyDisparo;
 		int distanciaDisparada = 0;
 		int distanciaMaximaDisparo = 300;
 		bool disparando = false;

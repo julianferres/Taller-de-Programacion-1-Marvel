@@ -40,7 +40,7 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->flip = flip;
 	this->anchoDefault=spriteAnimado->getAncho();
 	this->disparable = new SpriteAnimado(nombre+"Arrojable");
-	this->setArrojable();
+	this->setDisparo();
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
 
 }
@@ -52,7 +52,10 @@ void Personaje::actualizar(Personaje *enemigo){
 		distanciaDisparada=0;
 		disparando=false;
 	}
-	if(disparando) disparable->update();
+	if(disparando){
+		actualizarDisparo();
+		disparable->update();
+	}
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
 	if(!saltando) posy = posicionYdefault-alto;
@@ -327,41 +330,34 @@ void Personaje::habilitar(){
 	this->habilitado = true;
 }
 
-bool Personaje::arrojando(){
+bool Personaje::estaDisparando(){
 	return disparando;
 }
 
-void  Personaje::setArrojable(){
+void  Personaje::setDisparo(){
 	if(nombre=="CapitanAmerica"){
-		anchoArrojable=175;
-		altoArrojable=80;
-		posyArrojable=30;
+		anchoDisparo=175;
+		altoDisparo=80;
+		posyDisparo=30;
 	}
 	else if(nombre=="Spiderman"){
-			anchoArrojable=125;
-			altoArrojable=80;
-			posyArrojable=40;
+			anchoDisparo=125;
+			altoDisparo=80;
+			posyDisparo=40;
 		}
 	else if(nombre=="Venom"){
-		anchoArrojable=125;
-		altoArrojable = 80;
-		posyArrojable=20;
+		anchoDisparo=125;
+		altoDisparo = 80;
+		posyDisparo=20;
 	}
 	else if(nombre=="MegaMan"){
-		anchoArrojable = 	125;
-		altoArrojable = 85;
-		posyArrojable=0;
+		anchoDisparo = 	125;
+		altoDisparo = 85;
+		posyDisparo=0;
 	}
 }
 
-SDL_Rect Personaje::getRectDestinoArrojable(){
-	SDL_Rect rectangulo ;
-	if(flip)
-		rectangulo = {posx-distanciaDisparada-anchoArrojable,posy+posyArrojable,anchoArrojable,altoArrojable};
-	else
-		rectangulo = {posx+distanciaDisparada+ancho,posy+posyArrojable,anchoArrojable,altoArrojable};
-
-
+void Personaje::actualizarDisparo(){
 	if(nombre=="CapitanAmerica" &&distanciaDisparada>distanciaMaximaDisparo-velocidadArrojable){
 		disparable->cambiarAnimacion("regresoEscudo");
 	}
@@ -369,8 +365,14 @@ SDL_Rect Personaje::getRectDestinoArrojable(){
 			distanciaDisparada -=2*velocidadArrojable;
 	else
 		distanciaDisparada +=velocidadArrojable;
+}
 
-	return rectangulo;
+
+SDL_Rect Personaje::getRectDestinoArrojable(){
+	if(flip)
+		return  {posx-distanciaDisparada-anchoDisparo,posy+posyDisparo,anchoDisparo,altoDisparo};
+	else
+		return {posx+distanciaDisparada+ancho,posy+posyDisparo,anchoDisparo,altoDisparo};
 
 	}
 
