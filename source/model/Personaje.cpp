@@ -62,7 +62,7 @@ void Personaje::cambiarAnimacion(string nombre){
 	this->spriteAnimado->cambiarAnimacion(nombre);
 }
 void Personaje::serLanzado(Personaje* enemigo){
-	int posInicial=0;
+	int posInicial=enemigo->getPosX();
 	int ancho1=enemigo->obtenerSprite()->getAncho();
 	if (ancho1>220){
 		ancho1=120;
@@ -73,7 +73,6 @@ void Personaje::serLanzado(Personaje* enemigo){
 	int anchoTotal=2.5*(ancho1+ancho2);
 	bool lanzadoPermitido;
 		if(!lanzado){
-			posInicial=this->getPosX();
 			lanzadoPermitido = this->spriteAnimado->iniciarAnimacion("serLanzado");
 			if(lanzadoPermitido) lanzado = true;
 			else lanzado = false;
@@ -83,11 +82,9 @@ void Personaje::serLanzado(Personaje* enemigo){
 				lanzado=false;
 			}
 			else{
-				this->posx=this->posx-velocidad;
+					this->posx=this->posx-velocidad;
 			}
 		}
-		cout<< this->nombre << " esta siendo lanzado"<<endl;
-		//this->spriteAnimado->cambiarAnimacion("serLanzado");
 }
 
 bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
