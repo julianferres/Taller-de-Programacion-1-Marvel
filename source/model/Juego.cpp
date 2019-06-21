@@ -238,7 +238,6 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujarPantall
 		equipoGanador->JugadorActual()->devolverPersonajeActual()->cambiarAnimacion("quieto");
 		equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->forzarPosicion(800,this->alto_ventana-400);
 		equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->cambiarAnimacion("quieto");
-		cout<<"animation"<<endl;
 		animation = true;
 	}
 
