@@ -114,6 +114,7 @@ void Juego::reiniciarVidas(){
 bool Juego::roundFinalizado(){
 	return this->roundActual->finalizado();
 }
+
 void Juego::actualizarTiempo(){
 	this->roundActual->actualizarTiempo();
 }
@@ -130,6 +131,7 @@ void Juego::finalizarRound(int equipoGanador){
 bool Juego::running(){
 	return this->isRunning;
 }
+
 Equipo* Juego::getEquipo1(){
 	return this->equipo1;
 }
@@ -213,29 +215,49 @@ std::vector<std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip>> Juego:
 	dibujables.push_back(this->roundActual->dibujarBanner());
 	return dibujables;
 }
+bool animation = false;
 vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujarPantallaFinal(){
 	Equipo* equipoGanador;
+	Equipo* equipoPerdedor;
 	vector<tuple<string,SDL_Rect , SDL_Rect,SDL_RendererFlip >> dibujables;
+	//Fondo
+	SDL_Rect source  = {-1,-1,-1,-1};
+	SDL_Rect dest = {0,0,1200, 700};
+	dibujables.push_back(std::make_tuple("FondoWinners", source, dest, SDL_FLIP_NONE));
+
 	if (this->getTotalEquipo1() > this->getTotalEquipo2()){
 		equipoGanador = this->equipo1;
+		equipoPerdedor = this->equipo2;
 	}
 	if (this->getTotalEquipo2() > this->getTotalEquipo1()){
 		equipoGanador = this->equipo2;
+		equipoPerdedor = this->equipo1;
 	}
-	equipoGanador->JugadorActual()->devolverPersonajeActual()->forzarPosicion(100,this->alto_ventana -400);
-	equipoGanador->JugadorActual()->devolverPersonajeActual()->cambiarAnimacion("quieto");
+	if (not animation){
+		equipoGanador->JugadorActual()->devolverPersonajeActual()->forzarPosicion(100,this->alto_ventana -400);
+		equipoGanador->JugadorActual()->devolverPersonajeActual()->cambiarAnimacion("salto");
+		equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->forzarPosicion(800,this->alto_ventana-400);
+		equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->cambiarAnimacion("salto");
+		cout<<"animation"<<endl;
+		animation = true;
+	}
+
+	equipoGanador->JugadorActual()->devolverPersonajeActual()->actualizar(equipoPerdedor->JugadorActual()->devolverPersonajeActual());
+	equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->actualizar(equipoPerdedor->JugadorActual()->devolverPersonajeActual());
+
 	SDL_Rect origen = equipoGanador->JugadorActual()->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
 	SDL_Rect destino = equipoGanador->JugadorActual()->devolverPersonajeActual()->obtenerRectangulo();
 	dibujables.push_back(make_tuple(equipoGanador->JugadorActual()->nombreJugador(),origen,destino,SDL_FLIP_NONE));
 
-	equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->forzarPosicion(800,this->alto_ventana-400);
-	equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->cambiarAnimacion("quieto");
+
+
 	SDL_Rect origen2 = equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
 	SDL_Rect destino2 = equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->obtenerRectangulo();
 	dibujables.push_back(make_tuple(equipoGanador->JugadorCompaniero()->nombreJugador(),origen2,destino2,SDL_FLIP_HORIZONTAL));
 
 	return dibujables;
 }
+
 vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 
 	SDL_RendererFlip flip ;
@@ -296,7 +318,6 @@ std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip> Juego::obtenerResul
 	SDL_Rect destino = { (this->ancho_ventana /2) + 100, ((80 * this->alto_ventana) / this->alto_maximo_ventana)-40,0,0};
 	return make_tuple(std::string("Resultados/") + to_string(this->getTotalEquipo2()) ,origen,destino,SDL_FLIP_NONE);
 }
-
 
 std::tuple<std::string,SDL_Rect , SDL_Rect,SDL_RendererFlip> Juego::obtenerResultadosParciales1Dibujables(){
 
@@ -532,6 +553,7 @@ void Juego::reiniciarPersonajes(){
 
 	this->reiniciarVidas();
 }
+
 
 void Juego::obtenerVidas(int *vidas){
 	Personaje *personaje1 = this->equipo1->obtenerJugador1()->devolverPersonajeActual();

@@ -47,7 +47,7 @@ class ControladorJson{
 		string jugador2Personaje(int numero);
 		vector <string> getNombresPersonajes();
 		vector<int>getZindexes(int round);
-		int  TIEMPO_ROUND = 15;
+		int  TIEMPO_ROUND = 5;
 
 	private:
 

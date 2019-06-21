@@ -147,11 +147,15 @@ void Servidor::gameLoop(){
 		this->juego->nuevoRound();
 
 	}
-	server_mutex.lock();
-	this->dibujables = juego->dibujarPantallaFinal();
-	server_mutex.unlock();
-	SDL_Delay(3000);
-	cout<<"Juego Finalizado" <<endl;
+//	Temporizador *tiempo;
+	//cout << "Tiempo creado" << endl;
+	//tiempo->resetear();
+	//cout << "Tiempo reseteado" << endl;
+	while(true){
+		server_mutex.lock();
+		this->dibujables = juego->dibujarPantallaFinal();
+		server_mutex.unlock();
+	}
 
 
 
