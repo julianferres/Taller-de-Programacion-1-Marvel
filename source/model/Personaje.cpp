@@ -48,7 +48,7 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 void Personaje::actualizar(Personaje *enemigo){
 	if(saltando) this->saltar(enemigo);
 	this->spriteAnimado->update();
-	if(distanciaDisparada>distanciaMaximaDisparo) {
+	if(distanciaDisparada>distanciaMaximaDisparo || distanciaDisparada<0) {
 		distanciaDisparada=0;
 		disparando=false;
 	}
@@ -333,9 +333,9 @@ bool Personaje::arrojando(){
 
 void  Personaje::setArrojable(){
 	if(nombre=="CapitanAmerica"){
-		anchoArrojable=170;
-		altoArrojable=30;
-		posyArrojable=0;
+		anchoArrojable=175;
+		altoArrojable=80;
+		posyArrojable=30;
 	}
 	else if(nombre=="Spiderman"){
 			anchoArrojable=125;
@@ -360,7 +360,16 @@ SDL_Rect Personaje::getRectDestinoArrojable(){
 		rectangulo = {posx-distanciaDisparada-anchoArrojable,posy+posyArrojable,anchoArrojable,altoArrojable};
 	else
 		rectangulo = {posx+distanciaDisparada+ancho,posy+posyArrojable,anchoArrojable,altoArrojable};
-	distanciaDisparada +=velocidadArrojable;
+
+
+	if(nombre=="CapitanAmerica" &&distanciaDisparada>distanciaMaximaDisparo-velocidadArrojable){
+		disparable->cambiarAnimacion("regresoEscudo");
+	}
+	if(disparable->getAnimacionActual()=="regresoEscudo")
+			distanciaDisparada -=2*velocidadArrojable;
+	else
+		distanciaDisparada +=velocidadArrojable;
+
 	return rectangulo;
 
 	}

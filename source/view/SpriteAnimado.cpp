@@ -53,7 +53,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeSaltando=new Animacion("golpeSaltando",5,310,2943,155,163,5);//golpe saltando LISTO
 		patadaSaltando=new Animacion("patadaSaltando",7,0,3513,172,163,5);//patada saltando LISTO
 		defensa=new Animacion("defensa",2,385,742,103,110,7); //LISTO
-		disparo=new Animacion("disparar",7,0,1539,275,115,4); //LISTO
+		disparo=new Animacion("disparar",7,0,1539,125,115,6); //LISTO
 		Animacion *atraparEscudo = new Animacion("atraparEscudo",6,435,1668,145,124,6);//LISTO
 		animaciones.push_back(atraparEscudo);
 		tiro=new Animacion("tirar",7,0,6630,120,130,6);//LISTO
@@ -206,8 +206,10 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		return;
 	}
 	if(nombre=="CapitanAmericaArrojable"){
-		arrojable = new Animacion("arrojar",1,1,1,170,30,5);
+		arrojable = new Animacion("arrojar",3,950,1560,175,30,5);
+		Animacion* escudo = new Animacion("regresoEscudo",4,1550,1550,50,45,5);
 		animaciones.push_back(arrojable);
+		animaciones.push_back(escudo);
 		return;
 	}
 	else if(nombre=="SpidermanArrojable"){
@@ -301,8 +303,8 @@ void SpriteAnimado::update(){
 	if (frameIndex < animacionActual->getFrames() - 1 )
 		frameIndex++;
 	else{
-		if(animacionActual->getNombre()=="arrojar") return;
-		else if(animacionActual->getNombre()=="agacharse" || animacionActual->getNombre()=="defensa")
+		string Nombre = animacionActual->getNombre();
+		if(Nombre=="agacharse" || Nombre=="defensa"||Nombre=="arrojar"||Nombre=="regresoEscudo")
 			return;
 		frameIndex=0;
 		if(nombreSprite == "CapitanAmerica" && animacionActual->getNombre()=="disparar")
