@@ -56,7 +56,7 @@ class Personaje{
 		void habilitar();
 		bool bloqueado();
 		void forzarPosicion(float x, float y);
-		void serLanzado();
+		void serLanzado(Personaje * enemigo);
 		void levantarse();
 
 	private:
@@ -76,6 +76,7 @@ class Personaje{
 		bool defendiendo = false;
 		bool moviendoIzq=false;
 		bool moviendoDer=false;
+		bool lanzado=false;
 		SpriteAnimado *spriteAnimado;
 		SDL_RendererFlip flip;
 		std::string nombre;

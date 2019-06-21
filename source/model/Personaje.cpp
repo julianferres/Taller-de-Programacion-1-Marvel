@@ -46,6 +46,7 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 
 void Personaje::actualizar(Personaje *enemigo){
 	if(saltando) this->saltar(enemigo);
+	if(lanzado) this->serLanzado(enemigo);
 	this->spriteAnimado->update();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
@@ -60,10 +61,33 @@ void Personaje::cambiarAnimacion(string nombre){
 		defendiendo = false;
 	this->spriteAnimado->cambiarAnimacion(nombre);
 }
-
-void Personaje::serLanzado(){
-	cout<< this->nombre << " esta siendo lanzado"<<endl;
-	this->spriteAnimado->iniciarAnimacion("serLanzado");
+void Personaje::serLanzado(Personaje* enemigo){
+	int posInicial=0;
+	int ancho1=enemigo->obtenerSprite()->getAncho();
+	if (ancho1>220){
+		ancho1=120;
+	}else if(ancho1<=100){
+		ancho1=200;
+	}
+	int ancho2=this->obtenerSprite()->getAncho();
+	int anchoTotal=2.5*(ancho1+ancho2);
+	bool lanzadoPermitido;
+		if(!lanzado){
+			posInicial=this->getPosX();
+			lanzadoPermitido = this->spriteAnimado->iniciarAnimacion("serLanzado");
+			if(lanzadoPermitido) lanzado = true;
+			else lanzado = false;
+		}
+		else{
+			if(this->posx<=posInicial-anchoTotal){
+				lanzado=false;
+			}
+			else{
+				this->posx=this->posx-velocidad;
+			}
+		}
+		cout<< this->nombre << " esta siendo lanzado"<<endl;
+		//this->spriteAnimado->cambiarAnimacion("serLanzado");
 }
 
 bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
@@ -166,10 +190,10 @@ void Personaje::defenderse(){
 }
 void Personaje::tirar(){
 	if(saltando|| agachado) return;
-	this->spriteAnimado->iniciarAnimacion("tirar");
+	this->spriteAnimado->cambiarAnimacion("tirar");
 }
 void Personaje::recibirGolpe(){
-	this->spriteAnimado->iniciarAnimacion("recibirGolpe");
+	this->spriteAnimado->cambiarAnimacion("recibirGolpe");
 }
 
 void Personaje::cambio(){
