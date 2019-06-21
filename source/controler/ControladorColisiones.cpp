@@ -34,6 +34,32 @@ bool ControladorColisiones::hayColision(){
 	return SDL_HasIntersection( &recPersonaje1, &recPersonaje2 );
 }
 
+void ControladorColisiones::resolverDisparos(Personaje* personaje1,Personaje* personaje2,bool tiempoCorriendo){
+	if(!personaje1->estaDisparando() && !personaje2->estaDisparando()){
+		 disparoAcertado1=false;
+		 disparoAcertado2=false;
+		 return;
+	}
+	setPersonaje1(personaje1);
+	setPersonaje2(personaje2);
+	if(personaje1->estaDisparando() &&!disparoAcertado1){
+		recPersonaje1=personaje1->getRectDestinoArrojable();
+		recPersonaje2=personaje2->obtenerRectangulo();
+		resolverColisiones(tiempoCorriendo);
+		if(hayColision()) disparoAcertado1=true;
+	}
+
+	if(personaje2->estaDisparando() &&!disparoAcertado2){
+		recPersonaje1=personaje1->obtenerRectangulo();
+		recPersonaje2=personaje2->getRectDestinoArrojable();
+		resolverColisiones(tiempoCorriendo);
+		if(hayColision()) disparoAcertado2=true;
+	}
+
+
+
+}
+
 
 void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 	if(hayColision()){
@@ -50,7 +76,7 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 					personajeEquipo2->restarVida(2);
 			}
 		}
-		else if(golpesFuertes[animacionPersonaje1] && animacionPersonaje2!="recibirGolpeF"){//personaje1 esta golpeando fuerte
+		else if(golpesFuertes[animacionPersonaje1] && animacionPersonaje2!="recibirGolpeF" ){//personaje1 esta golpeando fuerte
 			if(animacionPersonaje2=="defensa"){
 				if(tiempoCorriendo) personajeEquipo2->restarVida(1);
 			}

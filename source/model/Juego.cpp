@@ -299,8 +299,12 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujar(){
 	}
 	Personaje *p1 = get<0>(zindexs_personajes[0])->devolverPersonajeActual();
 	Personaje *p2=get<0>(zindexs_personajes[1])->devolverPersonajeActual();
+	if(p1->estaDisparando()) dibujables.push_back(make_tuple(p1->getNombre(),p1->getRectOrigenArrojable(),p1->getRectDestinoArrojable(),p1->getFlip()));
+	if(p2->estaDisparando()) dibujables.push_back(make_tuple(p2->getNombre(),p2->getRectOrigenArrojable(),p2->getRectDestinoArrojable(),p2->getFlip()));
+	controladorColisiones->resolverDisparos(jugadorActualEquipo1->devolverPersonajeActual(),jugadorActualEquipo2->devolverPersonajeActual(),tiempoCorriendo);
 	p1->actualizar(p2);
 	p2->actualizar(p1);
+
 
 	//reloj
 	dibujables.push_back(this->roundActual->getMundoDibujable());
