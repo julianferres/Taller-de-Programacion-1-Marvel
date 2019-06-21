@@ -106,9 +106,9 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		disparo=new Animacion("disparar",12,0,3230,275,128,2);//LISTO
 		tiro=new Animacion("tirar",11,0,4160,250,160,6);
 		rgolpe=new Animacion("recibirGolpe",5,0,3500,170,140,4);//LISTO
-		rgolpeF=new Animacion("recibirGolpeF",11,0,4495,165,160,4);//LISTO
+		rgolpeF=new Animacion("recibirGolpeF",3,0,3640,180,140,4);//LISTO
 		levantarse=new Animacion("levantarse",6,0,3780,180,140,4);//LISTO
-		serLanzado=new Animacion("serLanzado",3,0,3640,180,140,4);
+		serLanzado=new Animacion("serLanzado",11,0,4495,165,160,4); //LISTO
 		boton = false;
 	}
 	else if(nombre=="MegaMan" ){
@@ -132,7 +132,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		rgolpe=new Animacion("recibirGolpe",4,0,2380,85,90,4);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",6,0,2465,105,85,4);//LISTO
 		levantarse=new Animacion("levantarse",7,0,2600,90,100,4);//LISTO
-		serLanzado=new Animacion("serLanzado",7,1494,1752,126,252,3);
+		serLanzado=new Animacion("serLanzado",10,0,2888,116,90,3);
 		boton = false;
 	}
 	else if(nombre=="Hulk" ){
