@@ -108,7 +108,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		rgolpe=new Animacion("recibirGolpe",5,0,3500,170,140,4);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",3,0,3640,180,140,4);//LISTO
 		levantarse=new Animacion("levantarse",6,0,3780,180,140,4);//LISTO
-		serLanzado=new Animacion("serLanzado",11,0,4495,165,160,4); //LISTO
+		serLanzado=new Animacion("serLanzado",8,0,4683,185,134,4); //LISTO
 		boton = false;
 	}
 	else if(nombre=="MegaMan" ){
