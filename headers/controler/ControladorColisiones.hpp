@@ -27,6 +27,7 @@ private:
 	map<string,int> golpesSuaves;
 	map<string,int> golpesFuertes;
 	map<string,int> movimientos;
+	map<string,int> movimientosEspeciales;
 	bool disparoAcertado1=false;
 	bool disparoAcertado2=false;
 

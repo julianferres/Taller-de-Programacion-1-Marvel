@@ -61,6 +61,8 @@ class Personaje{
 		bool estaDisparando();
 		void setDisparo();
 		void actualizarDisparo();
+		void serLanzado(Personaje * enemigo);
+		void levantarse();
 
 
 	private:
@@ -80,6 +82,7 @@ class Personaje{
 		bool defendiendo = false;
 		bool moviendoIzq=false;
 		bool moviendoDer=false;
+		bool lanzado=false;
 		SpriteAnimado *spriteAnimado;
 		SpriteAnimado *disparable;
 		SDL_RendererFlip flip;
@@ -95,6 +98,10 @@ class Personaje{
 		int distanciaDisparada = 0;
 		int distanciaMaximaDisparo = 300;
 		bool disparando = false;
+		bool lanzadoAderecha=false;
+		bool lanzadoAizquierda=false;
+		int distanciaRecorrida=0;
+		int maximaDistanciaArrojable = 500;
 
 
 };

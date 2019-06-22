@@ -55,7 +55,11 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 
 void Personaje::actualizar(Personaje *enemigo){
 	if(saltando) this->saltar(enemigo);
+	if(lanzado) this->serLanzado(enemigo);
 	this->spriteAnimado->update();
+	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
+	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
+	if(!saltando &&!lanzado) posy = posicionYdefault-alto;
 	if(distanciaDisparada>distanciaMaximaDisparo || distanciaDisparada<0) {
 		distanciaDisparada=0;
 		disparando=false;
@@ -78,6 +82,34 @@ void Personaje::cambiarAnimacion(string nombre){
 	if(defendiendo)
 		defendiendo = false;
 	this->spriteAnimado->cambiarAnimacion(nombre);
+}
+void Personaje::serLanzado(Personaje* enemigo){
+	if(!lanzado){
+		lanzado=true;
+		spriteAnimado->iniciarAnimacion("serLanzado");
+		if(enemigo->posx>posx)
+			lanzadoAderecha=true;
+	}
+	else{
+		distanciaRecorrida+=2*velocidad;
+		if(spriteAnimado->getAnimacionActual()!="serLanzado" || distanciaRecorrida>maximaDistanciaArrojable){
+			lanzado=false;
+			lanzadoAderecha=false;
+			distanciaRecorrida=0;
+		}
+		else if(lanzadoAderecha ){
+			if(posx+2*velocidad+ancho<controladorJson->anchoVentana()) posx+=2*velocidad;
+			else enemigo->posx-=2*velocidad;
+		}
+		else {
+			if(posx-2*velocidad>0)	posx-=2*velocidad;
+			else enemigo->posx+=2*velocidad;
+		}
+		if(distanciaRecorrida<maximaDistanciaArrojable/2) posy-=2*velocidad;
+		else posy+=2*velocidad;
+
+	}
+
 }
 
 bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
@@ -185,7 +217,7 @@ void Personaje::tirar(){
 	this->spriteAnimado->iniciarAnimacion("tirar");
 }
 void Personaje::recibirGolpe(){
-	this->spriteAnimado->iniciarAnimacion("recibirGolpe");
+	this->spriteAnimado->cambiarAnimacion("recibirGolpe");
 }
 
 void Personaje::cambio(){
@@ -313,7 +345,8 @@ bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
 }
 
 void Personaje::restarVida(int cantidad){
-	this->vida -= cantidad;
+	if (!(this->spriteAnimado->getAnimacionActual() == "serLanzado" || this->spriteAnimado->getAnimacionActual() == "levantarse"))
+		this->vida -= cantidad;
 }
 
 int Personaje::obtenerVida(){
@@ -342,6 +375,10 @@ void Personaje::habilitar(){
 
 bool Personaje::estaDisparando(){
 	return disparando;
+}
+
+void Personaje::levantarse(){
+	this->spriteAnimado->cambiarAnimacion("levantarse");
 }
 
 void  Personaje::setDisparo(){
