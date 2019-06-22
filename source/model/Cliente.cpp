@@ -144,16 +144,20 @@ void Cliente::recibirParaDibujar(){
 	SDL_RendererFlip flip;
 	int size;
 	int recibido;
-	int equipos[4] = { 0, 1, 0, 1};
+	string lados[4] = {"", "", "", ""};
 	int vidas[4] = {100, 100, 100, 100};
 	bool equiposArmados = true;
+	char personaje[1000];
 
 	while(running){
 
 		if(!enMenu && equiposArmados){
 			equiposArmados = false;
-			recv(numeroSocket, equipos, sizeof(equipos), MSG_WAITALL);
-			juegoCliente->setearLados(equipos);
+			for(int i = 0; i < 4; i++){
+				recv(numeroSocket, personaje, sizeof(personaje), MSG_WAITALL);
+				lados[i] = string(personaje);
+			}
+			juegoCliente->setearLados(lados);
 		}
 
 		if(!enMenu){
@@ -188,7 +192,6 @@ void Cliente::recibirParaDibujar(){
 			if(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)<0) break;
 			if(recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL)<0) break;
 			if(recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL)<0) break;
-			//Personajes por arriba de las barras
 			if(!enMenu && i == 3)
 					juegoCliente->dibujarBarrasVida(vidas);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
@@ -200,11 +203,6 @@ void Cliente::recibirParaDibujar(){
 					controladorSonido->correrSonido(sonido, false);
 			}
 		}
-
-		//Personajes por debajo de las barras
-		/*if(!enMenu)
-							juegoCliente->dibujarBarrasVida();*/
-
 		juegoCliente->graficos()->render();
 		send(numeroSocket,&evento,sizeof(evento),0);//heartbeat
 	}

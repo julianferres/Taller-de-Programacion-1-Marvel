@@ -1,49 +1,32 @@
 #include <LifeBar.hpp>
 #include <stdio.h>
 #include "iostream"
+#include <vector>
 using namespace std;
 
 LifeBar::LifeBar(){
 }
 
-void LifeBar::setearLados(int *ladosPersonajes){
-	lados.insert({"CapitanAmerica", ladosPersonajes[0]});
-	lados.insert({"MegaMan", ladosPersonajes[1]});
-	lados.insert({"Spiderman", ladosPersonajes[2]});
-	lados.insert({"Venom", ladosPersonajes[3]});
+void LifeBar::setearLados(string *ladosPersonajes){
+	personajes[0] = ladosPersonajes[0];
+	personajes[1] = ladosPersonajes[1];
+	personajes[2] = ladosPersonajes[2];
+	personajes[3] = ladosPersonajes[3];
 
-	if(lados["CapitanAmerica"] == lados["MegaMan"]){
-		companieros.insert({"CapitanAmerica", "MegaMan"});
-		companieros.insert({"MegaMan", "CapitanAmerica"});
-		companieros.insert({"Spiderman", "Venom"});
-		companieros.insert({"Venom", "Spiderman"});
-		alturas.insert({"CapitanAmerica", 0});
-		alturas.insert({"MegaMan", 1});
-		alturas.insert({"Spiderman", 0});
-		alturas.insert({"Venom", 1});
-	}
+	lados.insert({ladosPersonajes[0], 0});
+	lados.insert({ladosPersonajes[1], 0});
+	lados.insert({ladosPersonajes[2], 1});
+	lados.insert({ladosPersonajes[3], 1});
 
-	else if(lados["CapitanAmerica"] == lados["Spiderman"]){
-		companieros.insert({"CapitanAmerica", "Spiderman"});
-		companieros.insert({"Spiderman", "CapitanAmerica"});
-		companieros.insert({"MegaMan", "Venom"});
-		companieros.insert({"Venom", "MegaMan"});
-		alturas.insert({"CapitanAmerica", 0});
-		alturas.insert({"MegaMan", 0});
-		alturas.insert({"Spiderman", 1});
-		alturas.insert({"Venom", 1});
-	}
+	companieros.insert({ladosPersonajes[0], ladosPersonajes[1]});
+	companieros.insert({ladosPersonajes[1], ladosPersonajes[0]});
+	companieros.insert({ladosPersonajes[2], ladosPersonajes[3]});
+	companieros.insert({ladosPersonajes[3], ladosPersonajes[2]});
 
-	else {
-		companieros.insert({"CapitanAmerica", "Venom"});
-		companieros.insert({"Venom", "CapitanAmerica"});
-		companieros.insert({"MegaMan", "Spiderman"});
-		companieros.insert({"Spiderman", "MegaMan"});
-		alturas.insert({"CapitanAmerica", 0});
-		alturas.insert({"MegaMan", 1});
-		alturas.insert({"Spiderman", 0});
-		alturas.insert({"Venom", 1});
-	}
+	alturas.insert({ladosPersonajes[0], 0});
+	alturas.insert({ladosPersonajes[1], 1});
+	alturas.insert({ladosPersonajes[2], 0});
+	alturas.insert({ladosPersonajes[3], 1});
 }
 
 void LifeBar::setearAnchoyAltoPantalla(int altoVentana, int anchoVentana){
@@ -104,8 +87,6 @@ SDL_RendererFlip LifeBar::obtenerFlipBarra(string nombrePersonaje){
 	return SDL_FLIP_NONE;
 }
 
-
-
 int LifeBar::obtenerAnchoFondoVida(string nombrePersonaje){
 	if(alturas[nombrePersonaje] == 0) return anchoFondoVidaArriba;
 	return anchoFondoVidaAbajo;
@@ -148,5 +129,8 @@ void LifeBar::actualizarPersonajesActuales(string nombrePersonaje){
 		alturas[nombrePersonaje] = 0;
 		alturas[companieros[nombrePersonaje]] = 1;
 	}
+}
 
+string LifeBar::obtenerNombre(int indice){
+	return personajes[indice];
 }

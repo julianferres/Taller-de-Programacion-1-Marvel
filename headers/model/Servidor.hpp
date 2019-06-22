@@ -38,6 +38,7 @@ class Servidor{
 		void crearEquipos();
 		void gameLoop();
 		int obtenerEquipoPersonaje(string nombre);
+		void obtenerLados(string *lados);
 
 	private:
 		mutex mutex_conecciones;

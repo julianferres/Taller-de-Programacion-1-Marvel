@@ -25,7 +25,7 @@ public:
 	void dibujar(std::string nombre,int posiciones[8],SDL_RendererFlip flip);
 	void handleEvents(SDL_Event evento);
 	void dibujarBarrasVida(int *vidas);
-	void setearLados(int *lados);
+	void setearLados(string *lados);
 	void dibujarRectanguloFuturo(SDL_Rect rectFuturo);
 
 private:

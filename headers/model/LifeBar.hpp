@@ -5,6 +5,7 @@
 #include <map>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <vector>
 using namespace std;
 
 class LifeBar{
@@ -27,12 +28,14 @@ class LifeBar{
 		int obtenerPosicionHorizontalFondoVida(string nombrePersonaje);
 		int obtenerPosicionVerticalFondoVida(string nombrePersonaje);
 		int obtenerPosicionHorizontalVida(string nombrePersonaje, int vida);
-		void setearLados(int *ladosPersonajes);
+		void setearLados(string *ladosPersonajes);
+		string obtenerNombre(int indice);
 
 	private:
 		map<string, int> lados;
 		map<string, int> alturas;
 		map<string, string> companieros;
+		string personajes[4];
 		int alturaVentana;
 		int anchoVentana;
 		int anchoBarraArriba, anchoBarraAbajo;

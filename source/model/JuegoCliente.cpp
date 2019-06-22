@@ -120,17 +120,14 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 }
 
 
-void JuegoCliente::setearLados(int *lados){
+void JuegoCliente::setearLados(string *lados){
 	this->lifeBar->setearLados(lados);
 }
 
 void JuegoCliente::dibujarBarrasVida(int *vidas){
 	string nombre = "";
 	for(int i = 0; i < 4; i++){
-		if(i == 0) nombre = "CapitanAmerica";
-		else if(i == 1) nombre = "MegaMan";
-		else if(i == 2) nombre = "Spiderman";
-		else nombre = "Venom";
+		nombre = lifeBar->obtenerNombre(i);
 		destino.h = lifeBar->obtenerAnchoBarra(nombre);
 		destino.w = lifeBar->obtenerLargoBarra(nombre);
 		destino.x = lifeBar->obtenerPosicionHorizontal(nombre);
