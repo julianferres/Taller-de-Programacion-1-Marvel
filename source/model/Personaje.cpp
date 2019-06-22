@@ -50,7 +50,7 @@ void Personaje::actualizar(Personaje *enemigo){
 	this->spriteAnimado->update();
 	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
-	if(!saltando) posy = posicionYdefault-alto;
+	if(!saltando &&!lanzado) posy = posicionYdefault-alto;
 
 }
 
@@ -62,29 +62,32 @@ void Personaje::cambiarAnimacion(string nombre){
 	this->spriteAnimado->cambiarAnimacion(nombre);
 }
 void Personaje::serLanzado(Personaje* enemigo){
-	int posInicial=enemigo->getPosX();
-	int ancho1=enemigo->obtenerSprite()->getAncho();
-	if (ancho1>220){
-		ancho1=120;
-	}else if(ancho1<=100){
-		ancho1=200;
+	if(!lanzado){
+		lanzado=true;
+		spriteAnimado->iniciarAnimacion("serLanzado");
+		if(enemigo->posx>posx)
+			lanzadoAderecha=true;
 	}
-	int ancho2=this->obtenerSprite()->getAncho();
-	int anchoTotal=2.5*(ancho1+ancho2);
-	bool lanzadoPermitido;
-		if(!lanzado){
-			lanzadoPermitido = this->spriteAnimado->iniciarAnimacion("serLanzado");
-			if(lanzadoPermitido) lanzado = true;
-			else lanzado = false;
+	else{
+		distanciaRecorrida+=2*velocidad;
+		if(spriteAnimado->getAnimacionActual()!="serLanzado" || distanciaRecorrida>maximaDistanciaArrojable){
+			lanzado=false;
+			lanzadoAderecha=false;
+			distanciaRecorrida=0;
 		}
-		else{
-			if(this->posx<=posInicial-anchoTotal){
-				lanzado=false;
-			}
-			else{
-					this->posx=this->posx-velocidad;
-			}
+		else if(lanzadoAderecha ){
+			if(posx+2*velocidad+ancho<controladorJson->anchoVentana()) posx+=2*velocidad;
+			else enemigo->posx-=2*velocidad;
 		}
+		else {
+			if(posx-2*velocidad>0)	posx-=2*velocidad;
+			else enemigo->posx+=2*velocidad;
+		}
+		if(distanciaRecorrida<maximaDistanciaArrojable/2) posy-=2*velocidad;
+		else posy+=2*velocidad;
+
+	}
+
 }
 
 bool Personaje::moverDerecha(Personaje *enemigo,bool finEscenarioDerecha){
@@ -187,7 +190,7 @@ void Personaje::defenderse(){
 }
 void Personaje::tirar(){
 	if(saltando|| agachado) return;
-	this->spriteAnimado->cambiarAnimacion("tirar");
+	this->spriteAnimado->iniciarAnimacion("tirar");
 }
 void Personaje::recibirGolpe(){
 	this->spriteAnimado->cambiarAnimacion("recibirGolpe");

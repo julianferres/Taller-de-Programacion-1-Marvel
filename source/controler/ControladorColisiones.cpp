@@ -62,7 +62,7 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 					personajeEquipo2->restarVida(4);
 			}
 		}
-		else if(movimientosEspeciales[animacionPersonaje1]){
+		else if(movimientosEspeciales[animacionPersonaje1] && animacionPersonaje2!="serLanzado"){
 			if(tiempoCorriendo){
 				personajeEquipo2->restarVida(6);
 			}
@@ -89,7 +89,7 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 				if (tiempoCorriendo)
 					personajeEquipo1->restarVida(4);
 			}
-		}else if(movimientosEspeciales[animacionPersonaje2]){
+		}else if(movimientosEspeciales[animacionPersonaje2]&& animacionPersonaje1!="serLanzado"){
 			if(tiempoCorriendo){
 				personajeEquipo1->restarVida(6);
 			}

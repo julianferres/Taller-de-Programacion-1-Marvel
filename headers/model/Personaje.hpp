@@ -84,6 +84,10 @@ class Personaje{
 		int anchoEnemigo;
 		int offsetX=0;
 		int anchoDefault;
+		bool lanzadoAderecha=false;
+		bool lanzadoAizquierda=false;
+		int distanciaRecorrida=0;
+		int maximaDistanciaArrojable = 500;
 
 
 };
