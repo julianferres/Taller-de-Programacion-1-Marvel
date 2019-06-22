@@ -20,17 +20,24 @@ Personaje::~Personaje(){
 Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip){
 	this->vida = 100;
 	this->habilitado = true;
-	if(nombre == "sinSprite"){
+	if(nombre == "SinSprite"){
 		this->zindex = 99;
+		this->spriteAnimado=new SpriteAnimado(nombre);
+		constanteEstiramientoHorizontal=1;
+		constanteEstiramientoVertical=1;
+		this->alto = controladorJson->alturaPersonajeDefault();
+		this->ancho = controladorJson->anchoPersonajeDefault();
 		controladorLogger->registrarEvento("ERROR", "El personaje elegido es inexistente, se carga una imagen por defecto");
 	}
-	else
+	else {
 		this->zindex = controladorJson->zindexPersonaje(nombre);
-	this->spriteAnimado=new SpriteAnimado(nombre);
-	constanteEstiramientoHorizontal=controladorJson->anchoPersonaje(nombre)/spriteAnimado->getAncho();
-	constanteEstiramientoVertical=controladorJson->alturaPersonaje(nombre)/spriteAnimado->getAlto();
-	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
-	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
+		this->spriteAnimado=new SpriteAnimado(nombre);
+		constanteEstiramientoHorizontal=controladorJson->anchoPersonaje(nombre)/spriteAnimado->getAncho();
+		constanteEstiramientoVertical=controladorJson->alturaPersonaje(nombre)/spriteAnimado->getAlto();
+		this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
+		this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
+	}
+
 	this->posicionYdefault= controladorJson->alturaVentana() - controladorJson->getAlturaPiso();
 	this->nombre = nombre;
 	this->posy = posicionYdefault - 2*spriteAnimado->getAlto();
@@ -40,14 +47,17 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->flip = flip;
 	anchoDefault=spriteAnimado->getAncho();
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
-
+	if(nombre == "SinSprite")
+		cout << this->alto << " - " << this->ancho << endl;
 }
 
 void Personaje::actualizar(Personaje *enemigo){
 	if(saltando) this->saltar(enemigo);
 	this->spriteAnimado->update();
-	this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
-	this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
+	if(this->nombre != "SinSprite"){
+		this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
+		this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
+	}
 	if(!saltando) posy = posicionYdefault-alto;
 
 }
