@@ -56,7 +56,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		disparo=new Animacion("disparar",7,0,1539,275,115,4); //LISTO
 		Animacion *atraparEscudo = new Animacion("atraparEscudo",6,435,1668,145,124,6);//LISTO
 		animaciones.push_back(atraparEscudo);
-		tiro=new Animacion("tirar",7,19,6904,120,130,3);//LISTO
+		tiro=new Animacion("tirar",7,19,6906,120,130,3);//LISTO
 		rgolpe=new Animacion("recibirGolpe",3,850,5170,112,140,6);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,6);//LISTO
 		levantarse=new Animacion("levantarse",2,1150,5359,87,96,10);//LISTO
@@ -104,11 +104,11 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		patadaA=new Animacion("patadaA",4,0,1570,215,109,8);//patada agachado//LISTO
 		defensa=new Animacion("defensa",8,0,2924,170,172,8);//LISTO
 		disparo=new Animacion("disparar",12,0,3230,275,128,2);//LISTO
-		tiro=new Animacion("tirar",11,0,4160,250,160,6);
+		tiro=new Animacion("tirar",11,10,4432,250,160,6);
 		rgolpe=new Animacion("recibirGolpe",5,0,3500,170,140,4);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",3,0,3640,180,140,4);//LISTO
 		levantarse=new Animacion("levantarse",6,0,3780,180,140,4);//LISTO
-		serLanzado=new Animacion("serLanzado",8,0,4683,185,134,4); //LISTO
+		serLanzado=new Animacion("serLanzado",8,6,4840,185,134,4); //LISTO
 		boton = false;
 	}
 	else if(nombre=="MegaMan" ){
@@ -128,11 +128,11 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		patadaA=new Animacion("patadaA",5,0,1170,110,65,8);//patada agachado//LISTO
 		defensa=new Animacion("defensa",4,0,960,110,80,8);//LISTO
 		disparo=new Animacion("disparar",11,0,2160,275,80,2);//LISTO
-		tiro=new Animacion("tirar",10,0,2775,100,75,6);
+		tiro=new Animacion("tirar",10,3,2912,100,75,6);
 		rgolpe=new Animacion("recibirGolpe",4,0,2380,85,90,4);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",6,0,2465,105,85,4);//LISTO
 		levantarse=new Animacion("levantarse",7,0,2600,90,100,4);//LISTO
-		serLanzado=new Animacion("serLanzado",10,0,2888,116,90,3);
+		serLanzado=new Animacion("serLanzado",10,3,3025,116,90,3);
 		boton = false;
 	}
 	else if(nombre=="Hulk" ){
