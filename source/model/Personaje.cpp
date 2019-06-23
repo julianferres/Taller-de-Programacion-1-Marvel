@@ -83,6 +83,11 @@ void Personaje::cambiarAnimacion(string nombre){
 		defendiendo = false;
 	this->spriteAnimado->cambiarAnimacion(nombre);
 }
+
+void Personaje::festejar(){
+	spriteAnimado->iniciarAnimacion("festejo");
+}
+
 void Personaje::serLanzado(Personaje* enemigo){
 	if(!lanzado){
 		lanzado=true;

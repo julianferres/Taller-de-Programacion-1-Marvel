@@ -152,13 +152,15 @@ void Servidor::gameLoop(){
 	//tiempo->resetear();
 	//cout << "Tiempo reseteado" << endl;
 	while(true){
+		tiempoInicial= SDL_GetTicks();
 		server_mutex.lock();
 		this->dibujables = juego->dibujarPantallaFinal();
 		server_mutex.unlock();
-	}
+		tiempoActual = SDL_GetTicks();
+		if(tiempoActual - tiempoInicial < 1000/FPS)
+			SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
 
-
-
+		}
 }
 
 void *Servidor::actualizarModelo(){
