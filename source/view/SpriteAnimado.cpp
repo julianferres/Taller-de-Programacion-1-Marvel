@@ -241,7 +241,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 			animaciones.push_back(arrojable);
 			return;
 		}
-	//std::string Nombre, int Frames,int x,int y, int ancho, int alto,int Velocidad
+
 	if(nombre=="CapitanAmericaBoton"){
 		mouseOut = new Animacion("mouseOut",1,0,0,159,129,10);
 		mouseOver = new Animacion("mouseOver",1,160,0,159,129,10);
