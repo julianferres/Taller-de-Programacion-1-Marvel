@@ -72,7 +72,7 @@ void Personaje::actualizar(Personaje *enemigo){
 		this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 		this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
 	}
-	if(!saltando) posy = posicionYdefault-alto;
+
 
 }
 
