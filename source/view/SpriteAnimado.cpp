@@ -86,7 +86,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		rgolpeF=new Animacion("recibirGolpeF",7,0,3721,157,93,3);//LISTO
 		levantarse=new Animacion("levantarse",5,1099,3721,157,93,5);//LISTO
 		serLanzado=new Animacion("serLanzado",8,814,3606,147,114,4);
-		festejo=new Animacion("festejo",8,814,3606,147,114,4);
+		festejo=new Animacion("festejo",8,0,3960,100,155,4);
 		boton = false;
 	}
 	else if(nombre=="Venom" ){
@@ -111,7 +111,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		rgolpeF=new Animacion("recibirGolpeF",3,0,3640,180,140,4);//LISTO
 		levantarse=new Animacion("levantarse",6,0,3780,180,140,4);//LISTO
 		serLanzado=new Animacion("serLanzado",8,6,4840,185,134,4); //LISTO
-		festejo=new Animacion("festejo",18,0,4848,300,215,4); //LISTO
+		festejo=new Animacion("festejo",18,0,5000,300,220,4); //LISTO
 		boton = false;
 	}
 	else if(nombre=="MegaMan" ){
@@ -136,7 +136,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		rgolpeF=new Animacion("recibirGolpeF",6,0,2465,105,85,4);//LISTO
 		levantarse=new Animacion("levantarse",7,0,2600,90,100,4);//LISTO
 		serLanzado=new Animacion("serLanzado",10,3,3025,116,90,3);//LISTO
-		festejo=new Animacion("festejo",10,3,3025,116,90,3);//LISTO
+		festejo=new Animacion("festejo",10,0,3812,150,95,3);//LISTO
 		boton = false;
 	}
 	else if(nombre=="Hulk" ){
