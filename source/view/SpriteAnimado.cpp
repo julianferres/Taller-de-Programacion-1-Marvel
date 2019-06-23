@@ -53,14 +53,14 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeSaltando=new Animacion("golpeSaltando",5,310,2943,155,163,5);//golpe saltando LISTO
 		patadaSaltando=new Animacion("patadaSaltando",7,0,3513,172,163,5);//patada saltando LISTO
 		defensa=new Animacion("defensa",2,385,742,103,110,7); //LISTO
-		disparo=new Animacion("disparar",7,0,1539,125,115,6); //LISTO
+		disparo=new Animacion("disparar",7,0,1539,275,115,4); //LISTO
 		Animacion *atraparEscudo = new Animacion("atraparEscudo",6,435,1668,145,124,6);//LISTO
 		animaciones.push_back(atraparEscudo);
-		tiro=new Animacion("tirar",7,0,6630,120,130,3);//LISTO
+		tiro=new Animacion("tirar",7,19,6904,120,130,3);//LISTO
 		rgolpe=new Animacion("recibirGolpe",3,850,5170,112,140,6);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,6);//LISTO
 		levantarse=new Animacion("levantarse",2,1150,5359,87,96,10);//LISTO
-		serLanzado=new Animacion("serLanzado",8,0,6798,179,133,5);//LISTO
+		serLanzado=new Animacion("serLanzado",8,15,7066,179,133,5);//LISTO
 		boton = false;
 	}
 	else if(nombre=="Spiderman"){
@@ -79,8 +79,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeA=new Animacion("golpeA",8,790,2748,155,150,5);//golpe agachado LISTO
 		patadaA=new Animacion("patadaA",5,1030,1405,140,70,5);//patada agachado LISTO
 		defensa=new Animacion("defensa",4,0,2377,110,110,6); //LISTO
-		disparo=new Animacion("disparar",7,0,2500,125,84,3); //LISTO
-		tiro=new Animacion("tirar",10,0,4800,145,120,6);//LISTO
+		disparo=new Animacion("disparar",7,0,2500,275,84,3); //LISTO
+		tiro=new Animacion("tirar",10,7,4994,145,120,2);//LISTO
 		rgolpe=new Animacion("recibirGolpe",3,0,3477,160,113,4); //LISTO
 		rgolpeF=new Animacion("recibirGolpeF",7,0,3721,157,93,3);//LISTO
 		levantarse=new Animacion("levantarse",5,1099,3721,157,93,5);//LISTO
@@ -103,7 +103,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeA=new Animacion("golpeA",3,0,875,220,90,8);//golpe agachado//LISTO
 		patadaA=new Animacion("patadaA",4,0,1570,215,109,8);//patada agachado//LISTO
 		defensa=new Animacion("defensa",8,0,2924,170,172,8);//LISTO
-		disparo=new Animacion("disparar",12,0,3230,145,128,2);//LISTO
+		disparo=new Animacion("disparar",12,0,3230,275,128,2);//LISTO
 		tiro=new Animacion("tirar",11,0,4160,250,160,6);
 		rgolpe=new Animacion("recibirGolpe",5,0,3500,170,140,4);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",3,0,3640,180,140,4);//LISTO
@@ -127,7 +127,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		golpeA=new Animacion("golpeA",4,0,1105,110,65,8);//golpe agachado//LISTO
 		patadaA=new Animacion("patadaA",5,0,1170,110,65,8);//patada agachado//LISTO
 		defensa=new Animacion("defensa",4,0,960,110,80,8);//LISTO
-		disparo=new Animacion("disparar",11,0,2160,105,80,2);//LISTO
+		disparo=new Animacion("disparar",11,0,2160,275,80,2);//LISTO
 		tiro=new Animacion("tirar",10,0,2775,100,75,6);
 		rgolpe=new Animacion("recibirGolpe",4,0,2380,85,90,4);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",6,0,2465,105,85,4);//LISTO
@@ -212,31 +212,9 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		animacionActual = quieto;
 		return;
 	}
-	if(nombre=="CapitanAmericaArrojable"){
-		arrojable = new Animacion("arrojar",3,950,1560,175,30,5);
-		Animacion* escudo = new Animacion("regresoEscudo",4,1550,1550,50,45,5);
-		animaciones.push_back(arrojable);
-		animaciones.push_back(escudo);
-		return;
-	}
-	else if(nombre=="SpidermanArrojable"){
-			arrojable = new Animacion("arrojar",7,1080,2510,90,40,5);
-			animaciones.push_back(arrojable);
-			return;
-		}
-	else if(nombre=="VenomArrojable"){
-			arrojable = new Animacion("arrojar",7,250,3415,50,35,5);
-			animaciones.push_back(arrojable);
-			return;
-		}
-	else if(nombre=="MegaManArrojable"){
-			arrojable = new Animacion("arrojar",7,500,2271,125,85,5);
-			animaciones.push_back(arrojable);
-			return;
-		}
 
 	//std::string Nombre, int Frames,int x,int y, int ancho, int alto,int Velocidad
-	else if(nombre=="CapitanAmericaBoton"){
+	if(nombre=="CapitanAmericaBoton"){
 		mouseOut = new Animacion("mouseOut",1,0,0,159,129,10);
 		mouseOver = new Animacion("mouseOver",1,160,0,159,129,10);
 		mouseDown = new Animacion("mouseDown",1,319,0,159,129,10);
@@ -311,8 +289,7 @@ void SpriteAnimado::update(){
 	if (frameIndex < animacionActual->getFrames() - 1 )
 		frameIndex++;
 	else{
-		string Nombre = animacionActual->getNombre();
-		if(Nombre=="agacharse" || Nombre=="defensa"||Nombre=="arrojar"||Nombre=="regresoEscudo")
+		if(animacionActual->getNombre()=="agacharse" || animacionActual->getNombre()=="defensa")
 			return;
 		frameIndex=0;
 		if(nombreSprite == "CapitanAmerica" && animacionActual->getNombre()=="disparar")
