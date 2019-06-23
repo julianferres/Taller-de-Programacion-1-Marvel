@@ -224,6 +224,9 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujarPantall
 	SDL_Rect source  = {-1,-1,-1,-1};
 	SDL_Rect dest = {0,0,1200, 700};
 	dibujables.push_back(std::make_tuple("FondoWinners", source, dest, SDL_FLIP_NONE));
+	dibujables.push_back(std::make_tuple("FondoWinners", source, dest, SDL_FLIP_NONE));
+	dibujables.push_back(std::make_tuple("FondoWinners", source, dest, SDL_FLIP_NONE));
+	dibujables.push_back(std::make_tuple("FondoWinners", source, dest, SDL_FLIP_NONE));
 
 	if (this->getTotalEquipo1() > this->getTotalEquipo2()){
 		equipoGanador = this->equipo1;
@@ -253,6 +256,12 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujarPantall
 	SDL_Rect origen2 = equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->obtenerSprite()->rectOrigen();
 	SDL_Rect destino2 = equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->obtenerRectangulo();
 	dibujables.push_back(make_tuple(equipoGanador->JugadorCompaniero()->nombreJugador(),origen2,destino2,SDL_FLIP_HORIZONTAL));
+
+	SDL_Rect origen3 = {-1,-1,-1,-1};
+	SDL_Rect destino3 = { this->ancho_ventana/2,(10 * this->alto_ventana) / this->alto_maximo_ventana,0,0};
+	string text = "Winners";
+	dibujables.push_back(make_tuple(string("Winners"),origen3,destino3,SDL_FLIP_NONE));
+
 
 	return dibujables;
 }

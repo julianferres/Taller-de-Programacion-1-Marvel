@@ -37,6 +37,7 @@ class Servidor{
 		void correrMenu();
 		void crearEquipos();
 		void gameLoop();
+		void cartelFinal();
 		int obtenerEquipoPersonaje(string nombre);
 		void obtenerLados(string *lados);
 
@@ -59,6 +60,7 @@ class Servidor{
 		queue<tuple<SDL_Event,int>>colaEventos;
 		int vidas[4];
 		vector<string>sonidos={"",""};
+		bool enCartelFinal = false;
 
 
 };

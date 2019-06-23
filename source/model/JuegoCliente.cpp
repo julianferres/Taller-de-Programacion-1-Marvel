@@ -60,6 +60,9 @@ SDL_Texture * JuegoCliente::getTextura(string nombre){
 		string resultado = nombre.substr(nombre.find("/")+1, nombre.length());
 		return this->getResultado(resultado);
 	}
+	if (key == "Winners"){
+		return this->getCartelGanadores(key);
+	}
 	return this->texturas->getTextura(nombre);
 }
 
@@ -76,6 +79,18 @@ SDL_Texture * JuegoCliente::getTimer(string tiempo){
 	return texturas->getTextura(tiempo);
 
 
+}
+
+SDL_Texture * JuegoCliente::getCartelGanadores(string key){
+	if(!texturas->existeTextura(key)){
+		SDL_Color color ={255,155,0};
+		string path="contents/Fonts/Badaboom.TTF";
+		TTF_Font* font = TTF_OpenFont(path.c_str(),90);
+		SDL_Surface *surface = TTF_RenderText_Solid(font, key.c_str(), color);
+		SDL_Texture * textura = SDL_CreateTextureFromSurface(this->grafico->getRenderer(), surface);
+		texturas->agregarTextura(key, textura);
+	}
+	return texturas->getTextura(key);
 }
 
 SDL_Texture * JuegoCliente::getResultado(string resultado){
@@ -102,7 +117,7 @@ void JuegoCliente::dibujar(string nombre,int posiciones[8],SDL_RendererFlip flip
 	origen.w = posiciones[2];
 	origen.h = posiciones[3];
 	string key = nombre.substr(0, nombre.find("/"));
-	if(key=="Titulo" ||key=="SubTitulo" || key=="Eleccion" || key == "Temporizador" || key == "Resultados"){
+	if(key=="Titulo" ||key=="SubTitulo" || key=="Eleccion" || key == "Temporizador" || key == "Resultados" || key == "Winners"){
 		SDL_QueryTexture(getTextura(nombre), NULL, NULL,&w , &h);
 		//cout << "textura for " << key << "Queriada" << endl;
 	}

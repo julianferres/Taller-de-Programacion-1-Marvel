@@ -147,10 +147,11 @@ void Servidor::gameLoop(){
 		this->juego->nuevoRound();
 
 	}
-//	Temporizador *tiempo;
-	//cout << "Tiempo creado" << endl;
-	//tiempo->resetear();
-	//cout << "Tiempo reseteado" << endl;
+}
+
+void Servidor::cartelFinal(){
+	Uint32 tiempoInicial,tiempoActual;
+	int FPS = controladorJson->cantidadFPS();
 	while(true){
 		tiempoInicial= SDL_GetTicks();
 		server_mutex.lock();
@@ -176,6 +177,8 @@ void *Servidor::actualizarModelo(){
 	this->crearEquipos();
 
 	this->gameLoop();
+	this->enCartelFinal = true;
+	this->cartelFinal();
 
  	return NULL;
   }
@@ -311,16 +314,17 @@ void Servidor::enviarParaDibujar(int socket){
 		int size = dibujablesThread.size();
 
 		send(socket,&size,sizeof(int),0);
-		for(size_t i=0;i<size;i++){
-				strcpy(textura,  get<0>(dibujablesThread[i]).c_str());
-				rectOrigen =get<1>(dibujablesThread[i]);
-				rectDestino =get<2>(dibujablesThread[i]);
-				int posiciones[8]={rectOrigen.x,rectOrigen.y,rectOrigen.w,rectOrigen.h,rectDestino.x,rectDestino.y,rectDestino.w,rectDestino.h};
-				flip = get<3>(dibujablesThread[i]);
 
-				send(socket,textura,1000,0);
-				send(socket,posiciones,sizeof(posiciones),0);
-				send(socket,&flip,sizeof(flip),0);
+		for(size_t i=0;i<size;i++){
+			strcpy(textura,  get<0>(dibujablesThread[i]).c_str());
+			rectOrigen =get<1>(dibujablesThread[i]);
+			rectDestino =get<2>(dibujablesThread[i]);
+			int posiciones[8]={rectOrigen.x,rectOrigen.y,rectOrigen.w,rectOrigen.h,rectDestino.x,rectDestino.y,rectDestino.w,rectDestino.h};
+			flip = get<3>(dibujablesThread[i]);
+
+			send(socket,textura,1000,0);
+			send(socket,posiciones,sizeof(posiciones),0);
+			send(socket,&flip,sizeof(flip),0);
 		}
 		if(!enMenu){
 			for(int i=0;i<2;i++){

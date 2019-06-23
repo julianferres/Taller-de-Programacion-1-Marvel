@@ -148,6 +148,7 @@ void Cliente::recibirParaDibujar(){
 	int vidas[4] = {100, 100, 100, 100};
 	bool equiposArmados = true;
 	char personaje[1000];
+	bool enCartelFinal = false;
 
 	while(running){
 
@@ -160,7 +161,7 @@ void Cliente::recibirParaDibujar(){
 			juegoCliente->setearLados(lados);
 		}
 
-		if(!enMenu){
+		if(!enMenu && !enCartelFinal){
 			recv(numeroSocket, vidas, sizeof(vidas), MSG_WAITALL);
 		}
 
@@ -180,6 +181,7 @@ void Cliente::recibirParaDibujar(){
 			running = false;
 			return;
 		}
+
 		if(!conectado)
 			cout<<"Reconectado con el servidor."<<endl;
 		conectado = true;
@@ -192,8 +194,8 @@ void Cliente::recibirParaDibujar(){
 			if(recv(numeroSocket,textura,MAXDATOS,MSG_WAITALL)<0) break;
 			if(recv(numeroSocket,posiciones,sizeof(posiciones),MSG_WAITALL)<0) break;
 			if(recv(numeroSocket,&flip,sizeof(flip),MSG_WAITALL)<0) break;
-			if(!enMenu && i == 3)
-					juegoCliente->dibujarBarrasVida(vidas);
+			if(!enCartelFinal && !enMenu && i == 3)
+				juegoCliente->dibujarBarrasVida(vidas);
 			juegoCliente->dibujar(string(textura),posiciones,flip);
 		}
 		if(!enMenu){
