@@ -60,7 +60,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		rgolpe=new Animacion("recibirGolpe",3,850,5170,112,140,6);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",5,1295,5191,179,115,6);//LISTO
 		levantarse=new Animacion("levantarse",2,1150,5359,87,96,10);//LISTO
-		serLanzado=new Animacion("serLanzado",8,15,7066,179,133,5);//LISTO
+		serLanzado=new Animacion("serLanzado",8,0,6989,179,135,5);//LISTO
 		festejo=new Animacion("festejo",14,0,7425,140,209,5);//LISTO
 		boton = false;
 	}
@@ -318,16 +318,17 @@ void SpriteAnimado::update(){
 	if (frameIndex < animacionActual->getFrames() - 1 )
 		frameIndex++;
 	else{
-		if(animacionActual->getNombre()=="agacharse" || animacionActual->getNombre()=="defensa")
+		string nombreAnimacion = animacionActual->getNombre();
+		if(nombreAnimacion=="agacharse" || nombreAnimacion=="defensa")
 			return;
 		frameIndex=0;
-		if(nombreSprite == "CapitanAmerica" && animacionActual->getNombre()=="disparar")
+		if(nombreSprite == "CapitanAmerica" && nombreAnimacion=="disparar")
 			cambiarAnimacion("atraparEscudo");
-		else if(animacionActual->getNombre()=="golpeA" || animacionActual->getNombre()=="patadaA" )
+		else if(nombreAnimacion=="golpeA" || nombreAnimacion=="patadaA" )
 			cambiarAnimacion("agacharse");
-		else if(animacionActual->getNombre()=="recibirGolpeF")
+		else if(nombreAnimacion=="recibirGolpeF" ||nombreAnimacion=="serLanzado" )
 			cambiarAnimacion("levantarse");
-		else if(animacionActual->getNombre()!="movDerecha" && animacionActual->getNombre()!="movIzquierda")
+		else if(nombreAnimacion!="movDerecha" && nombreAnimacion!="movIzquierda")
 			cambiarAnimacion("quieto");
 	}
 	regulador = 0;
