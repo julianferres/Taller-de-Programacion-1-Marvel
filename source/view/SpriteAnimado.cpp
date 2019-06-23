@@ -132,7 +132,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		rgolpe=new Animacion("recibirGolpe",4,0,2380,85,90,4);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",6,0,2465,105,85,4);//LISTO
 		levantarse=new Animacion("levantarse",7,0,2600,90,100,4);//LISTO
-		serLanzado=new Animacion("serLanzado",10,3,3025,116,90,3);
+		serLanzado=new Animacion("serLanzado",10,3,3025,116,90,3);//LISTO
 		boton = false;
 	}
 	else if(nombre=="Hulk" ){
