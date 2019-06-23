@@ -63,7 +63,9 @@ class Personaje{
 		void actualizarDisparo();
 		void serLanzado(Personaje * enemigo);
 		void levantarse();
-		void festejar();
+		void festejar(int i);
+		int getAncho();
+		int getAlto();
 
 
 	private:

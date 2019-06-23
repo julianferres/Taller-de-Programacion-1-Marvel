@@ -236,13 +236,10 @@ vector<tuple<string,SDL_Rect, SDL_Rect ,SDL_RendererFlip >>Juego::dibujarPantall
 		equipoGanador = this->equipo2;
 		equipoPerdedor = this->equipo1;
 	}
-	//if (not animation){
-		equipoGanador->JugadorActual()->devolverPersonajeActual()->forzarPosicion(100,this->alto_ventana -400);
-		equipoGanador->JugadorActual()->devolverPersonajeActual()->festejar();
-		equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->forzarPosicion(800,this->alto_ventana-400);
-		equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->festejar();
-		//animation = true;
-	//}
+
+	equipoGanador->JugadorActual()->devolverPersonajeActual()->festejar(1);
+	equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->festejar(2);
+
 
 	equipoGanador->JugadorActual()->devolverPersonajeActual()->actualizar(equipoPerdedor->JugadorActual()->devolverPersonajeActual());
 	equipoGanador->JugadorCompaniero()->devolverPersonajeActual()->actualizar(equipoPerdedor->JugadorActual()->devolverPersonajeActual());

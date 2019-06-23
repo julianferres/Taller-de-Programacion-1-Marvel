@@ -84,7 +84,12 @@ void Personaje::cambiarAnimacion(string nombre){
 	this->spriteAnimado->cambiarAnimacion(nombre);
 }
 
-void Personaje::festejar(){
+void Personaje::festejar(int i){
+	posy = posicionYdefault-alto;
+	if(i==1)
+		this->posx = 10;
+	else
+		this->posx = controladorJson->anchoVentana()- 2*spriteAnimado->getAncho() - 10;
 	spriteAnimado->iniciarAnimacion("festejo");
 }
 
@@ -176,6 +181,7 @@ void Personaje::correrADerecha(){
 			return;
 	this->posx=this->posx+velocidad;
 }
+
 void Personaje::golpe(string tipoDeGolpe){
 	if(saltando){
 		if(tipoDeGolpe=="golpeS" || tipoDeGolpe=="golpeF")
@@ -204,12 +210,14 @@ void Personaje::agacharse(){
 		this->spriteAnimado->iniciarAnimacion("agacharse");
 	}
 }
+
 void Personaje::disparar(){
 	if(saltando|| agachado || disparando) return;
 	this->spriteAnimado->iniciarAnimacion("disparar");
 	this->disparable->cambiarAnimacion("arrojar");
 	disparando = true;
 }
+
 void Personaje::defenderse(){
 	if(saltando) return;
 	if(!defendiendo){
@@ -217,10 +225,12 @@ void Personaje::defenderse(){
 		this->spriteAnimado->iniciarAnimacion("defensa");
 	}
 }
+
 void Personaje::tirar(){
 	if(saltando|| agachado) return;
 	this->spriteAnimado->iniciarAnimacion("tirar");
 }
+
 void Personaje::recibirGolpe(){
 	this->spriteAnimado->cambiarAnimacion("recibirGolpe");
 }
@@ -234,6 +244,13 @@ void Personaje::cambio(){
 	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
 }
 
+int Personaje::getAlto(){
+	return this->spriteAnimado->getAlto();
+}
+
+int Personaje::getAncho(){
+	return this->spriteAnimado->getAncho();
+}
 void Personaje::saltar(Personaje *enemigo){
 	SDL_Rect rectanguloFuturo = { static_cast<int>(posx), static_cast<int>(posy), ancho,alto*alto};
 	SDL_Rect rect_enemigo=enemigo->obtenerRectangulo();
