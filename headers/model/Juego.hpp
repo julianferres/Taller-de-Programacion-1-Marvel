@@ -61,6 +61,7 @@ class Juego{
 		bool hayGanador();
 		int getTotalEquipo1();
 		int getTotalEquipo2();
+		void verificarMuerte(Equipo * equipo);
 
 	private:
 		std::vector<int>resultados = {0,0,0};

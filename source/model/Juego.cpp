@@ -512,29 +512,25 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 			this->equipo2->cambiarJugador();
 			controladorLogger->registrarEvento("DEBUG", "Juego::Cambio de jugador del equipo 2");
 		}
-
-	 }
-	 if (personaje1->obtenerVida()<= 0 ){
-		personaje1->bloquear();
-		if (this->equipo1->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
-			this->finalizarRound(2);
-		}else{
-			this->equipo1->cambiarJugador();
-		}
 	 }
 
-	 if (personaje2->obtenerVida()<= 0 ){
-		personaje2->bloquear();
-		if (this->equipo2->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
-			this->finalizarRound(1);
-		}else{
-			this->equipo2->cambiarJugador();
-		}
-	 }
+
 	 this->controladorColisiones->resolverColisiones(this->tiempoCorriendo);
+	 this->verificarMuerte(equipo1);
+	 this->verificarMuerte(equipo2);
 
 }
 
+void Juego::verificarMuerte(Equipo * equipo){
+	 if (equipo->JugadorActual()->devolverPersonajeActual()->obtenerVida()<= 0 ){
+		 equipo->JugadorActual()->devolverPersonajeActual()->bloquear();
+		if (equipo->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
+			this->finalizarRound(1);
+		}else{
+			equipo->cambiarJugador();
+		}
+	 }
+}
 std::vector<std::string> Juego::gameMenu(){
 	std::vector<std::string> nombres_jugadores;
 	nombres_jugadores.push_back("Venom");
