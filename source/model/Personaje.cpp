@@ -249,12 +249,14 @@ if(SDL_HasIntersection(&rectanguloFuturo, &rect_enemigo) && posy + alto < enemig
 
 		posy-=velocidad/5;
 		if (moviendoIzq){
-			posx-=30;
+			if(posx>30)
+				posx-=30;
 			enemigo->correrADerecha();
 
 		}
-		if (moviendoDer && posx<controladorJson->anchoVentana()){
-			posx+=30;
+		if (moviendoDer ){
+			if(posx+30+ancho<controladorJson->anchoVentana())
+				posx+=30;
 			enemigo->correrAIzquierda();
 
 		}
