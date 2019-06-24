@@ -60,9 +60,6 @@ SDL_Texture * JuegoCliente::getTextura(string nombre){
 		string resultado = nombre.substr(nombre.find("/")+1, nombre.length());
 		return this->getResultado(resultado);
 	}
-	if (key == "Winners"){
-		return this->getCartelGanadores(key);
-	}
 	return this->texturas->getTextura(nombre);
 }
 
@@ -81,24 +78,28 @@ SDL_Texture * JuegoCliente::getTimer(string tiempo){
 
 }
 
-SDL_Texture * JuegoCliente::getCartelGanadores(string key){
-	if(!texturas->existeTextura(key)){
-		SDL_Color color ={255,155,0};
-		string path="contents/Fonts/Badaboom.TTF";
-		TTF_Font* font = TTF_OpenFont(path.c_str(),90);
-		SDL_Surface *surface = TTF_RenderText_Solid(font, key.c_str(), color);
-		SDL_Texture * textura = SDL_CreateTextureFromSurface(this->grafico->getRenderer(), surface);
-		texturas->agregarTextura(key, textura);
-	}
-	return texturas->getTextura(key);
-}
 
 SDL_Texture * JuegoCliente::getResultado(string resultado){
 	if(!texturas->existeTextura(resultado)){
-		SDL_Color color ={255,255,255};
+		SDL_Color color ={255,155,0};
 		string path="contents/Fonts/Badaboom.TTF";
 		TTF_Font* font = TTF_OpenFont(path.c_str(),90);
-		SDL_Surface *surface = TTF_RenderText_Solid(font, resultado.c_str(), color);
+		SDL_Surface *surface = TTF_RenderText_Blended(font, resultado.c_str(), color);
+		SDL_LockSurface(surface);
+		SDL_PixelFormat* fmt = surface->format;
+		Uint8 r, g, b, a;
+		SDL_LockSurface(surface);
+		unsigned bpp = fmt->BytesPerPixel;
+		for (int y = 0; y < surface->h; ++y)
+		for (int x = 0; x < surface->w; ++x) {
+			// Get a pointer to the current pixel.
+			Uint32* pixel_ptr = (Uint32 *)(	(Uint8 *)surface->pixels + y * surface->pitch + x * bpp);
+			// Get the old pixel components.
+			SDL_GetRGBA( *pixel_ptr, fmt, &r, &g, &b, &a);
+			// Set the pixel with the new alpha.
+			*pixel_ptr = SDL_MapRGBA( fmt, r, g + Uint8(y%100), b, a);
+		}
+		SDL_UnlockSurface(surface);
 		SDL_Texture * textura = SDL_CreateTextureFromSurface(this->grafico->getRenderer(), surface);
 		texturas->agregarTextura(resultado, textura);
 	}
