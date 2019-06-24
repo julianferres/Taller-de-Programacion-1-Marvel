@@ -524,7 +524,6 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 void Juego::verificarMuerte(Equipo * equipo){
 	Personaje *personaje=equipo->JugadorActual()->devolverPersonajeActual();
 	 if (personaje->obtenerVida()<= 0 ){
-		 jugadorMuerto=personaje->getNombre();
 		 personaje->bloquear();
 		if (equipo->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
 			this->finalizarRound(1);
@@ -546,12 +545,7 @@ std::vector<std::string> Juego::gameMenu(){
 vector<string>Juego::getSonidos(vector<string> sonidos){
 	sonidos.pop_back();
 	sonidos.pop_back();
-	if(!jugadorMuerto.empty()){
-		sonidos.push_back(string("contents/sounds/")+jugadorMuerto+ string("/muerte.wav"));
-		jugadorMuerto="";
-	}
-	else
-		sonidos.push_back(equipo1->JugadorActual()->devolverPersonajeActual()->getSonido());
+	sonidos.push_back(equipo1->JugadorActual()->devolverPersonajeActual()->getSonido());
 	sonidos.push_back(equipo2->JugadorActual()->devolverPersonajeActual()->getSonido());
 	return sonidos;
 }
