@@ -66,7 +66,7 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 	if(hayColision()){
 		string animacionPersonaje1 = personajeEquipo1->obtenerSprite()->getAnimacionActual();
 		string animacionPersonaje2 = personajeEquipo2->obtenerSprite()->getAnimacionActual();
-		if(golpesSuaves[animacionPersonaje1]&& animacionPersonaje2!="recibirGolpe" ){//personaje1 esta golpeando
+		if(golpesSuaves[animacionPersonaje1]&& animacionPersonaje2!="recibirGolpe" && animacionPersonaje2!="recibirGolpe" && animacionPersonaje2!="levantarse" ){//personaje1 esta golpeando
 			if(animacionPersonaje2=="defensa"){
 				if(tiempoCorriendo)
 					personajeEquipo2->restarVida(1);
@@ -77,7 +77,7 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 					personajeEquipo2->restarVida(2);
 			}
 		}
-		else if(golpesFuertes[animacionPersonaje1] && animacionPersonaje2!="recibirGolpeF" ){//personaje1 esta golpeando fuerte
+		else if(golpesFuertes[animacionPersonaje1] && animacionPersonaje2!="recibirGolpeF"&& animacionPersonaje2!="recibirGolpe" && animacionPersonaje2!="levantarse" ){//personaje1 esta golpeando fuerte
 			if(animacionPersonaje2=="defensa"){
 				if(tiempoCorriendo) personajeEquipo2->restarVida(1);
 			}
@@ -88,14 +88,14 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 					personajeEquipo2->restarVida(4);
 			}
 		}
-		else if(movimientosEspeciales[animacionPersonaje1] && animacionPersonaje2!="serLanzado"){
+		else if(movimientosEspeciales[animacionPersonaje1] && animacionPersonaje2!="serLanzado"&& animacionPersonaje2!="levantarse"){
 			if(tiempoCorriendo){
 				personajeEquipo2->restarVida(6);
 			}
 			personajeEquipo2->serLanzado(personajeEquipo1);
 			}
 
-		if(golpesSuaves[animacionPersonaje2]&& animacionPersonaje1!="recibirGolpe"){//personaje2 esta golpeando
+		if(golpesSuaves[animacionPersonaje2]&& animacionPersonaje1!="recibirGolpe"&& animacionPersonaje1!="recibirGolpe" && animacionPersonaje1!="levantarse" ){//personaje2 esta golpeando
 			if(animacionPersonaje1=="defensa"  ){
 				if(tiempoCorriendo) personajeEquipo1->restarVida(1);
 			}
@@ -106,7 +106,7 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 					personajeEquipo1->restarVida(2);
 			}
 		}
-		else if(golpesFuertes[animacionPersonaje2]&& animacionPersonaje1!="recibirGolpeF"){//personaje2 esta golpeando fuerte
+		else if(golpesFuertes[animacionPersonaje2]&& animacionPersonaje1!="recibirGolpeF"&& animacionPersonaje1!="recibirGolpe" && animacionPersonaje1!="levantarse" ){//personaje2 esta golpeando fuerte
 			if(animacionPersonaje1=="defensa" ){
 				if(tiempoCorriendo) personajeEquipo1->restarVida(1);
 			}
@@ -115,7 +115,7 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 				if (tiempoCorriendo)
 					personajeEquipo1->restarVida(4);
 			}
-		}else if(movimientosEspeciales[animacionPersonaje2]&& animacionPersonaje1!="serLanzado"){
+		}else if(movimientosEspeciales[animacionPersonaje2]&& animacionPersonaje1!="serLanzado"&& animacionPersonaje1!="levantarse"){
 			if(tiempoCorriendo){
 				personajeEquipo1->restarVida(6);
 			}

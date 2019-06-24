@@ -68,7 +68,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		quieto = new Animacion("quieto",10,1365,7,105,85,5);
 		moverDerecha = new Animacion("movDerecha",12,0,120,100,99,2);
 		moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,2);
-		salto = new Animacion("salto",14,0,473,100,135,3);
+		salto = new Animacion("salto",14,0,473,100,132,3);
 		agacharse = new Animacion("agacharse",13,0,1205,110,65,4);
 		cambioEntrada = new Animacion("cambioEntrada",14,0,227,110,133,2);
 		golpeS=new Animacion("golpeS",5,0,633,155,85,4);//golpe simple LISTO
@@ -100,7 +100,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		patadaS=new Animacion("patadaS",3,0,1050,220,119,8);//patada simple//LISTO
 		golpeSaltando=new Animacion("golpeSaltando",9,0,1226,215,160,6);//golpe saltando//LISTO
 		patadaSaltando=new Animacion("patadaSaltando",9,0,1400,215,170,6);//patada saltando//LISTO
-		golpeF=new Animacion("golpeF",7,0,1800,190,178,8);//golpe fuerte//LISTO
+		golpeF=new Animacion("golpeF",7,0,1800,190,178,5);//golpe fuerte//LISTO
 		patadaF=new Animacion("patadaF",9,0,1980,210,124,6);//patada fuerte//LISTO
 		golpeA=new Animacion("golpeA",3,0,875,220,90,8);//golpe agachado//LISTO
 		patadaA=new Animacion("patadaA",4,0,1570,215,109,8);//patada agachado//LISTO
@@ -109,8 +109,8 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		tiro=new Animacion("tirar",11,10,4432,250,160,6);//LISTO
 		rgolpe=new Animacion("recibirGolpe",5,0,3500,170,140,4);//LISTO
 		rgolpeF=new Animacion("recibirGolpeF",3,0,3640,180,140,4);//LISTO
-		levantarse=new Animacion("levantarse",6,0,3780,180,140,4);//LISTO
-		serLanzado=new Animacion("serLanzado",8,6,4840,185,134,4); //LISTO
+		levantarse=new Animacion("levantarse",6,0,3780,180,132,4);//LISTO
+		serLanzado=new Animacion("serLanzado",7,6,4840,185,134,4); //LISTO
 		festejo=new Animacion("festejo",18,0,5000,300,220,4); //LISTO
 		boton = false;
 	}
@@ -292,8 +292,11 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 }
 
 bool SpriteAnimado::iniciarAnimacion(string nombre){
-	if(animacionActual->getNombre()=="cambioEntrada" || animacionActual->getNombre()=="disparar" ) return false;
-	if(animacionActual->getNombre() == "tirar") return false;
+	string nombreAnimacion = animacionActual->getNombre();
+	if(nombre!="recibirGolpeF"&&(nombreAnimacion=="cambioEntrada"|| nombreAnimacion=="disparar"|| nombreAnimacion=="recibirGolpeF"||nombreAnimacion=="recibirGolpe"||nombreAnimacion=="tirar"||nombreAnimacion=="serLanzado"))
+		return false;
+
+
 //	if(animacionActual->getNombre() == "festejo") return false;
 	if( animacionActual->getNombre() != nombre || nombre=="quieto")
 		cambiarAnimacion(nombre);

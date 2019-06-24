@@ -49,8 +49,7 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->disparable = new SpriteAnimado(nombre+"Arrojable");
 	this->setDisparo();
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
-	if(nombre == "SinSprite")
-		cout << this->alto << " - " << this->ancho << endl;
+
 }
 
 void Personaje::actualizar(Personaje *enemigo){
@@ -81,7 +80,7 @@ void Personaje::cambiarAnimacion(string nombre){
 		agachado=false;
 	if(defendiendo)
 		defendiendo = false;
-	this->spriteAnimado->cambiarAnimacion(nombre);
+	this->spriteAnimado->iniciarAnimacion(nombre);
 }
 
 void Personaje::festejar(){
@@ -206,10 +205,12 @@ void Personaje::agacharse(){
 }
 void Personaje::disparar(){
 	if(saltando|| agachado || disparando) return;
-	this->spriteAnimado->iniciarAnimacion("disparar");
-	this->disparable->cambiarAnimacion("arrojar");
-	disparando = true;
+	if(this->spriteAnimado->iniciarAnimacion("disparar")){
+		this->disparable->cambiarAnimacion("arrojar");
+		disparando = true;
+	}
 }
+
 void Personaje::defenderse(){
 	if(saltando) return;
 	if(!defendiendo){
