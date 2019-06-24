@@ -93,6 +93,7 @@ void Juego::iniciarRound(){
 	this->roundActual->iniciarTiempo();
 	this->tiempoCorriendo = true;
 	this->reiniciarPersonajes();
+	this->teclado->reiniciar();
 }
 
 void Juego::reiniciarVidas(){
