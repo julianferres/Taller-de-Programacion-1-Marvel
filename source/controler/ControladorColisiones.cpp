@@ -46,6 +46,12 @@ void ControladorColisiones::resolverDisparos(Personaje* personaje1,Personaje* pe
 	if(personaje1->estaDisparando() &&!disparoAcertado1){
 		recPersonaje1=personaje1->getRectDestinoArrojable();
 		recPersonaje2=personaje2->obtenerRectangulo();
+		if(recPersonaje1.x<recPersonaje2.x){
+			recPersonaje1.x-=30;
+		}
+		else{
+			recPersonaje1.x+=30;
+		}
 		resolverColisiones(tiempoCorriendo);
 		if(hayColision()) disparoAcertado1=true;
 	}
@@ -53,6 +59,12 @@ void ControladorColisiones::resolverDisparos(Personaje* personaje1,Personaje* pe
 	if(personaje2->estaDisparando() &&!disparoAcertado2){
 		recPersonaje1=personaje1->obtenerRectangulo();
 		recPersonaje2=personaje2->getRectDestinoArrojable();
+		if(recPersonaje2.x<recPersonaje1.x){
+				recPersonaje2.x-=30;
+			}
+			else{
+				recPersonaje2.x+=30;
+			}
 		resolverColisiones(tiempoCorriendo);
 		if(hayColision()) disparoAcertado2=true;
 	}
