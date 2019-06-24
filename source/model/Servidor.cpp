@@ -177,7 +177,7 @@ void *Servidor::actualizarModelo(){
 	this->crearEquipos();
 
 	this->gameLoop();
-	this->enCartelFinal = true;
+
 	this->cartelFinal();
 
  	return NULL;
