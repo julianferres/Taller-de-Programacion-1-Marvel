@@ -87,9 +87,9 @@ void Personaje::cambiarAnimacion(string nombre){
 void Personaje::festejar(int i){
 	posy = posicionYdefault-alto;
 	if(i==1)
-		this->posx = 10;
+		this->posx = 20;
 	else
-		this->posx = controladorJson->anchoVentana()- 2*spriteAnimado->getAncho() - 10;
+		this->posx = controladorJson->anchoVentana()- (2*spriteAnimado->getAncho()) - 20;
 	spriteAnimado->iniciarAnimacion("festejo");
 }
 
