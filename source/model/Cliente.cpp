@@ -201,7 +201,7 @@ void Cliente::recibirParaDibujar(){
 		if(!enMenu){
 			for(int i=0;i<2;i++){
 				recv(numeroSocket,sonido,MAXDATOS,MSG_WAITALL);
-				if(!string(sonido).empty())
+				if(!string(sonido).empty() && !musicaMenu)
 					controladorSonido->correrSonido(sonido, false);
 			}
 		}
@@ -241,7 +241,7 @@ void Cliente::manejarSonidos(){
 	srand(time(NULL));
 	int random = (rand()%(songs.size()-1-3)) +3;
 	controladorSonido->correrCancionFondo(songs[random], -1);
-	while(running){}
+	musicaMenu= false;
 
 }
 

@@ -49,6 +49,7 @@ class Cliente{
 		bool running = true;
 		bool enMenu = true;
 		bool conectado = true;
+		bool musicaMenu=true;
 		vector<tuple<string, const string>> personajesYfondos;
 		LifeBar *lifeBar;
 	};

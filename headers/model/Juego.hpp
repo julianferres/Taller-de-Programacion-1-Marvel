@@ -76,6 +76,7 @@ class Juego{
 		vector<Jugador*> jugadores={NULL,NULL,NULL,NULL};
 		Equipo *equipo1;
 		Equipo *equipo2 ;
+		string jugadorMuerto="";
 		bool isRunning;
 		int FPS = controladorJson->cantidadFPS();
 		unsigned MAX_FRAME_TIME = 1000 / FPS;
