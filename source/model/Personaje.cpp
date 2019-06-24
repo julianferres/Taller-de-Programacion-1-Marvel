@@ -8,7 +8,6 @@
 extern ControladorJson *controladorJson;
 extern ControladorLogger *controladorLogger;
 
-#define constanteDeAltura 7500 //sale de querer saltar 375 unidades
 #define constanteTiempoCiclos 0.3
 
 using namespace std;
@@ -41,11 +40,12 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->posicionYdefault= controladorJson->alturaVentana() - controladorJson->getAlturaPiso();
 	this->nombre = nombre;
 	this->posy = posicionYdefault - 2*spriteAnimado->getAlto();
-	this->velocidadInicial = sqrt(constanteDeAltura);
+	this->velocidadInicial = sqrt(20*posy);//20 es 2*gravedad, posy es lo que quiero saltar
 	this->posx= posicionXinicial;
 	this->posicionXinicial = posicionXinicial;
 	this->flip = flip;
 	this->anchoDefault=spriteAnimado->getAncho();
+
 	this->disparable = new SpriteAnimado(nombre+"Arrojable");
 	this->setDisparo();
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
@@ -249,14 +249,14 @@ if(SDL_HasIntersection(&rectanguloFuturo, &rect_enemigo) && posy + alto < enemig
 
 		posy-=velocidad/5;
 		if (moviendoIzq){
-			if(posx>30)
-				posx-=30;
+			if(posx>2*velocidad)
+				posx-=2*velocidad;
 			enemigo->correrADerecha();
 
 		}
 		if (moviendoDer ){
-			if(posx+30+ancho<controladorJson->anchoVentana())
-				posx+=30;
+			if(posx+2*velocidad+ancho<controladorJson->anchoVentana())
+				posx+=2*velocidad;
 			enemigo->correrAIzquierda();
 
 		}

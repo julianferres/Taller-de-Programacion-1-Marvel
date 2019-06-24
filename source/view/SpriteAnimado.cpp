@@ -68,7 +68,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		quieto = new Animacion("quieto",10,1365,7,105,85,5);
 		moverDerecha = new Animacion("movDerecha",12,0,120,100,99,2);
 		moverIzquierda = new Animacion("movIzquierda",12,0,120,100,99,2);
-		salto = new Animacion("salto",14,0,473,100,132,3);
+		salto = new Animacion("salto",14,0,482,100,124,5);
 		agacharse = new Animacion("agacharse",13,0,1205,110,65,4);
 		cambioEntrada = new Animacion("cambioEntrada",14,0,227,110,133,2);
 		golpeS=new Animacion("golpeS",5,0,633,155,85,4);//golpe simple LISTO
@@ -118,7 +118,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		quieto = new Animacion("quieto",6,0,0,90,75,10);//LISTO
 		moverDerecha = new Animacion("movDerecha",12,0,75,90,75,4);//LISTO
 		moverIzquierda = new Animacion("movIzquierda",12,0,150,90,75,4);//LISTO
-		salto = new Animacion("salto",13,0,225,90,147,6);//LISTO
+		salto = new Animacion("salto",13,0,260,90,115,6);//LISTO
 		agacharse = new Animacion("agacharse",8,0,585,90,65,2);//LISTO
 		cambioEntrada = new Animacion("cambioEntrada",12,0,375,90,147,2);//LISTO
 		golpeS=new Animacion("golpeS",4,0,750,115,75,6);//golpe simple//LISTO
@@ -129,7 +129,7 @@ void SpriteAnimado::cargarAnimaciones(string nombre){
 		patadaF=new Animacion("patadaF",8,0,1900,100,95,6);//patada fuerte//LISTO
 		golpeA=new Animacion("golpeA",4,0,1105,110,65,8);//golpe agachado//LISTO
 		patadaA=new Animacion("patadaA",5,0,1170,110,65,8);//patada agachado//LISTO
-		defensa=new Animacion("defensa",4,0,960,110,80,8);//LISTO
+		defensa=new Animacion("defensa",4,0,965,90,83,8);//LISTO
 		disparo=new Animacion("disparar",11,0,2160,105,80,2);//LISTO
 		tiro=new Animacion("tirar",10,3,2912,100,75,6);
 		rgolpe=new Animacion("recibirGolpe",4,0,2380,85,90,4);//LISTO
