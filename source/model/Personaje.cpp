@@ -31,8 +31,8 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	else {
 		this->zindex = controladorJson->zindexPersonaje(nombre);
 		this->spriteAnimado=new SpriteAnimado(nombre);
-		constanteEstiramientoHorizontal=controladorJson->anchoPersonaje(nombre)/spriteAnimado->getAncho();
-		constanteEstiramientoVertical=controladorJson->alturaPersonaje(nombre)/spriteAnimado->getAlto();
+		constanteEstiramientoHorizontal=static_cast<float>(controladorJson->anchoPersonaje(nombre)) / spriteAnimado->getAncho();
+		constanteEstiramientoVertical=static_cast<float>(controladorJson->alturaPersonaje(nombre))/spriteAnimado->getAlto();
 		this->alto =constanteEstiramientoVertical*spriteAnimado->getAlto();
 		this->ancho = constanteEstiramientoHorizontal*spriteAnimado->getAncho();
 	}

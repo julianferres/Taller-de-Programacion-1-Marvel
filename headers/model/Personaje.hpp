@@ -92,8 +92,8 @@ class Personaje{
 		int anchoEnemigo;
 		int offsetX=0;
 		int anchoDefault;
-		int constanteEstiramientoHorizontal;
-		int constanteEstiramientoVertical;
+		float constanteEstiramientoHorizontal;
+		float constanteEstiramientoVertical;
 		int velocidadArrojable=10;
 		int anchoDisparo,altoDisparo,posyDisparo;
 		int distanciaDisparada = 0;
