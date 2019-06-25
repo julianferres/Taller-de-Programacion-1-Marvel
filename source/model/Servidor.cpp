@@ -123,6 +123,7 @@ void Servidor::gameLoop(){
 		this->dibujables = this->juego->dibujarBannerRound();
 		server_mutex.unlock();
 		SDL_Delay(3000);
+		roundFinalizado=false;
 		this->juego->iniciarRound();
 		while(!this->juego->roundFinalizado()){
 			tiempoInicial= SDL_GetTicks();
@@ -144,6 +145,7 @@ void Servidor::gameLoop(){
 				SDL_Delay( 1000/FPS - tiempoActual +tiempoInicial );
 
 			}
+		roundFinalizado = true;
 		this->juego->nuevoRound();
 
 	}
@@ -308,7 +310,10 @@ void Servidor::enviarParaDibujar(int socket){
 
 		server_mutex.lock();
 		dibujablesThread=this->dibujables;
-		sonidosThread = this->sonidos;
+		if(roundFinalizado)
+			sonidosThread=juego->sonidoGanadorOPerdedor(mapaIDClientes[socket]);
+		else
+			sonidosThread = this->sonidos;
 		server_mutex.unlock();
 
 		int size = dibujablesThread.size();

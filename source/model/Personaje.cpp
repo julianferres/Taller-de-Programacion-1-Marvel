@@ -239,9 +239,9 @@ void Personaje::cambio(){
 	if(posicionXinicial < controladorJson->anchoVentana()/2)
 		this->posx = 0;
 	else
-		this->posx = controladorJson->anchoVentana()- 2*spriteAnimado->getAncho();
+		this->posx = controladorJson->anchoVentana()- ancho;
 
-	this->spriteAnimado->iniciarAnimacion("cambioEntrada");
+	this->spriteAnimado->cambiarAnimacion("cambioEntrada");
 }
 
 int Personaje::getAlto(){
@@ -276,7 +276,7 @@ if(SDL_HasIntersection(&rectanguloFuturo, &rect_enemigo) && posy + alto < enemig
 			enemigo->correrAIzquierda();
 
 		}
-		this->spriteAnimado->cambiarAnimacion("salto");
+		this->spriteAnimado->iniciarAnimacion("salto");
 		return;
 	}
 

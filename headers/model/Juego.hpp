@@ -62,6 +62,7 @@ class Juego{
 		int getTotalEquipo1();
 		int getTotalEquipo2();
 		void verificarMuerte(Equipo * equipo);
+		vector<string> sonidoGanadorOPerdedor(int cliente);
 
 	private:
 		std::vector<int>resultados = {0,0,0};
@@ -77,12 +78,14 @@ class Juego{
 		Equipo *equipo1;
 		Equipo *equipo2 ;
 		bool isRunning;
+		string jugadorMuerto="";
 		int FPS = controladorJson->cantidadFPS();
 		unsigned MAX_FRAME_TIME = 1000 / FPS;
 		int ancho_ventana;
 		int alto_ventana;
 		int ancho_maximo_ventana = 1400;
 		int alto_maximo_ventana = 1000;
+		map<int,bool>sonidoEnviado;
 
 };
 

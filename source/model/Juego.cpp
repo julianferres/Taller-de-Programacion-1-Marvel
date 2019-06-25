@@ -94,6 +94,7 @@ void Juego::iniciarRound(){
 	this->tiempoCorriendo = true;
 	this->reiniciarPersonajes();
 	this->teclado->reiniciar();
+	sonidoEnviado.clear();
 }
 
 void Juego::reiniciarVidas(){
@@ -528,6 +529,7 @@ void Juego::verificarMuerte(Equipo * equipo){
 		if (equipo->JugadorCompaniero()->devolverPersonajeActual()->bloqueado()){
 			this->finalizarRound(1);
 		}else{
+			 jugadorMuerto=personaje->getNombre();
 			equipo->cambiarJugador();
 		}
 	 }
@@ -545,7 +547,12 @@ std::vector<std::string> Juego::gameMenu(){
 vector<string>Juego::getSonidos(vector<string> sonidos){
 	sonidos.pop_back();
 	sonidos.pop_back();
-	sonidos.push_back(equipo1->JugadorActual()->devolverPersonajeActual()->getSonido());
+	if(!jugadorMuerto.empty()){
+		sonidos.push_back(string("contents/sounds/")+jugadorMuerto+ string("/muerte.wav"));
+		jugadorMuerto="";
+	}
+	else
+		sonidos.push_back(equipo1->JugadorActual()->devolverPersonajeActual()->getSonido());
 	sonidos.push_back(equipo2->JugadorActual()->devolverPersonajeActual()->getSonido());
 	return sonidos;
 }
@@ -556,6 +563,32 @@ void Juego::reiniciarPersonajes(){
 	this->jugadorActualEquipo2->devolverPersonajeActual()->cambio();
 
 	this->reiniciarVidas();
+}
+
+vector<string> Juego::sonidoGanadorOPerdedor(int cliente){
+	if(sonidoEnviado[cliente])return {"",""};
+	sonidoEnviado[cliente]=true;
+	bool equipo1;
+	switch(controladorJson->cantidadClientes()){
+		case 4:
+			equipo1= cliente<3;
+			break;
+		case 3:
+			equipo1 = cliente == 1 || cliente ==2;
+			break;
+		case 2:
+			equipo1 = cliente == 1 ;
+			break;
+		case 1:
+			return {"",""};
+	}
+	if(resultados[this->roundActual->getNumero()-1]==1 && equipo1){
+		return {"contents/sounds/Announcer voice/youwin.wav",""};
+	}
+	if(resultados[this->roundActual->getNumero()-1]==2 && !equipo1){
+		return {"contents/sounds/Announcer voice/youwin.wav",""};
+	}
+	return {"contents/sounds/Announcer voice/youlose.wav",""};
 }
 
 

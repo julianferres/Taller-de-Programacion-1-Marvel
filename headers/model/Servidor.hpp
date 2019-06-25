@@ -61,6 +61,7 @@ class Servidor{
 		int vidas[4];
 		vector<string>sonidos={"",""};
 		bool enCartelFinal = false;
+		bool roundFinalizado=false;
 
 
 };
