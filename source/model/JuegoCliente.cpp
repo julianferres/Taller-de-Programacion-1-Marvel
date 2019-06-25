@@ -149,7 +149,6 @@ void JuegoCliente::dibujarBarrasVida(int *vidas){
 		destino.x = lifeBar->obtenerPosicionHorizontal(nombre);
 		destino.y = lifeBar->obtenerPosicionVertical(nombre);
 
-
 		fondoVida.y = lifeBar->obtenerPosicionVerticalFondoVida(nombre);
 		fondoVida.x = lifeBar->obtenerPosicionHorizontalFondoVida(nombre);
 		fondoVida.h = lifeBar->obtenerAnchoFondoVida(nombre);
@@ -162,6 +161,11 @@ void JuegoCliente::dibujarBarrasVida(int *vidas){
 		this->grafico->dibujarRectanguloDeColor(250, 250, 0, 0, &vida);
 		this->grafico->dibujarImagen(getTextura(lifeBar->obtenerNombreBarra(nombre)), NULL,&destino, lifeBar->obtenerFlipBarra(nombre));
 
+		destino.w = destino.w / 2;
+		destino.h = destino.h / 2;
+		destino.x = lifeBar->obtenerPosicionHorizontalNombre(nombre);
+		destino.y = lifeBar->obtenerPosicionVerticalNombre(nombre);
+		this->grafico->dibujarImagen(getTextura(lifeBar->obtenerNombreParaBarra(nombre)), NULL, &destino, SDL_FLIP_NONE);
 	}
 }
 
