@@ -183,8 +183,10 @@ void Personaje::correrADerecha(){
 
 void Personaje::golpe(string tipoDeGolpe){
 	if(saltando){
-		if(tipoDeGolpe=="golpeS" || tipoDeGolpe=="golpeF")
+		if(tipoDeGolpe=="golpeS")
 			this->spriteAnimado->iniciarAnimacion("golpeSaltando");
+		if (tipoDeGolpe=="golpeF")
+			this->spriteAnimado->iniciarAnimacion("golpeSaltandoF");
 		if(tipoDeGolpe=="patadaS")
 			this->spriteAnimado->iniciarAnimacion("patadaSaltando");
 		if (tipoDeGolpe=="patadaF")
