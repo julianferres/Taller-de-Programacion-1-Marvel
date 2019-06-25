@@ -185,8 +185,10 @@ void Personaje::golpe(string tipoDeGolpe){
 	if(saltando){
 		if(tipoDeGolpe=="golpeS" || tipoDeGolpe=="golpeF")
 			this->spriteAnimado->iniciarAnimacion("golpeSaltando");
-		if(tipoDeGolpe=="patadaS" || tipoDeGolpe=="patadaF")
+		if(tipoDeGolpe=="patadaS")
 			this->spriteAnimado->iniciarAnimacion("patadaSaltando");
+		if (tipoDeGolpe=="patadaF")
+			this->spriteAnimado->iniciarAnimacion("patadaSaltandoF");
 	}
 
 	else{
