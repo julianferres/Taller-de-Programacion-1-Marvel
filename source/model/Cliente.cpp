@@ -63,7 +63,7 @@ void Cliente::cargarContenidos(){
 		const string &buttonPath = controladorJson->pathBoton((personajes[i]));
 		personajesYfondos.push_back(make_tuple(personajes[i]+"Boton",buttonPath));
 		personajesYfondos.push_back(make_tuple(this->lifeBar->obtenerNombreBarra(personajes[i]), this->lifeBar->obtenerPath(personajes[i])));
-
+		personajesYfondos.push_back(make_tuple(this->lifeBar->obtenerNombreParaBarra(personajes[i]), this->lifeBar->obtenerPathNombre(personajes[i])));
 	}
 	vector<int> fondos = controladorJson->getZindexes(round);
 	for (int r=1; r<4; r++){

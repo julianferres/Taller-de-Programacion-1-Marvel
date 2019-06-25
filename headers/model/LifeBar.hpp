@@ -30,6 +30,10 @@ class LifeBar{
 		int obtenerPosicionHorizontalVida(string nombrePersonaje, int vida);
 		void setearLados(string *ladosPersonajes);
 		string obtenerNombre(int indice);
+		string obtenerNombreParaBarra(string nombrePersonaje);
+		string obtenerPathNombre(string nombrePersonaje);
+		int obtenerPosicionHorizontalNombre(string nombrePersonaje);
+		int obtenerPosicionVerticalNombre(string nombrePersonaje);
 
 	private:
 		map<string, int> lados;
@@ -49,8 +53,12 @@ class LifeBar{
 		int posicionVerticalFondoVidaArriba, posicionVerticalFondoVidaAbajo;
 		int posicionHorizontalFondoVidaArribaIzq, posicionHorizontalFondoVidaAbajoIzq;
 
-
 		int posicionHorizontalVidaArribaIzq, posicionHorizontalVidaAbajoIzq;
+
+		int anchoNombreArriba, anchoNombreAbajo;
+		int largoNombreArriba, largoNombreAbajo;
+		int posicionHorizontalNombreIzq;
+		int posicionVerticalNombreArriba, posicionVerticalNombreAbajo, posicionHorizontalNombreArriba;
 };
 
 #endif /* HEADERS_MODEL_LIFEBAR_HPP_ */
