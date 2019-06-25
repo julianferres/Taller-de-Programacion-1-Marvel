@@ -18,6 +18,7 @@ public:
 	void setPersonaje2(Personaje* personaje);
 	void resolverColisiones(bool tiempoCorriendo);
 	void resolverDisparos(Personaje* personaje1,Personaje* personaje2,bool tiempoCorriendo);
+	void moverRectangulo(string animacionPersonaje1, string animacionPersonaje2);
 
 private:
 	Personaje* personajeEquipo1;
@@ -28,6 +29,7 @@ private:
 	map<string,int> golpesFuertes;
 	map<string,int> movimientos;
 	map<string,int> movimientosEspeciales;
+	map<string,int>offset;
 	bool disparoAcertado1=false;
 	bool disparoAcertado2=false;
 

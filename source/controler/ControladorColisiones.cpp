@@ -11,6 +11,8 @@ ControladorColisiones::ControladorColisiones(){
 	golpesSuaves["golpeA"]=1;
 	golpesSuaves["patadaS"]=1;
 	golpesFuertes["patadaF"]=1;
+	golpesFuertes["patadaAF"]=1;
+	golpesFuertes["golpeAF"]=1;
 	golpesFuertes["patadaSaltando"]=1;
 	golpesSuaves["patadaA"]=1;
 	movimientos["movDerecha"]=1;
@@ -18,6 +20,11 @@ ControladorColisiones::ControladorColisiones(){
 	movimientos["salto"]=1;
 	movimientos["agacharse"]=1;
 	movimientosEspeciales["tirar"]=1;
+
+	offset["Venom"]=15;
+	offset["Spiderman"] = 30;
+	offset["CapitanAmerica"] = 30;
+	offset["Megaman"] = 5;
 
 }
 
@@ -75,9 +82,10 @@ void ControladorColisiones::resolverDisparos(Personaje* personaje1,Personaje* pe
 
 
 void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
+	string animacionPersonaje1 = personajeEquipo1->obtenerSprite()->getAnimacionActual();
+	string animacionPersonaje2 = personajeEquipo2->obtenerSprite()->getAnimacionActual();
+	moverRectangulo(animacionPersonaje1,animacionPersonaje2);
 	if(hayColision()){
-		string animacionPersonaje1 = personajeEquipo1->obtenerSprite()->getAnimacionActual();
-		string animacionPersonaje2 = personajeEquipo2->obtenerSprite()->getAnimacionActual();
 		if(golpesSuaves[animacionPersonaje1]&& animacionPersonaje2!="recibirGolpe" && animacionPersonaje2!="recibirGolpe" && animacionPersonaje2!="levantarse" && animacionPersonaje2!="defensa" ){//personaje1 esta golpeando
 			personajeEquipo2->cambiarAnimacion("recibirGolpe");
 			if (tiempoCorriendo)
@@ -118,4 +126,25 @@ void ControladorColisiones::resolverColisiones(bool tiempoCorriendo){
 			personajeEquipo1->serLanzado(personajeEquipo2);
 		}
 	}
+}
+
+
+void ControladorColisiones::moverRectangulo(string animacionPersonaje1, string animacionPersonaje2){
+
+	if(recPersonaje1.x<recPersonaje2.x){//personaje 1 a la izq
+		recPersonaje1.x-=offset[personajeEquipo2->getNombre()];
+	}
+	else if(recPersonaje1.x>recPersonaje2.x){//personaje 1 a la der
+		recPersonaje1.x+=offset[personajeEquipo2->getNombre()];
+	}
+
+	if(recPersonaje2.x<recPersonaje1.x){//personaje 2 a la izq
+		recPersonaje2.x-=offset[personajeEquipo1->getNombre()];
+	}
+	else if(recPersonaje2.x>recPersonaje1.x){//personaje 2a la der
+		recPersonaje2.x+=offset[personajeEquipo1->getNombre()];
+	}
+
+
+
 }
