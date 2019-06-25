@@ -195,10 +195,10 @@ void Personaje::golpe(string tipoDeGolpe){
 
 	else{
 		if(agachado){
-			if(tipoDeGolpe=="golpeS" || tipoDeGolpe=="golpeF")
-				this->spriteAnimado->iniciarAnimacion("golpeA");
-			if(tipoDeGolpe=="patadaS" || tipoDeGolpe=="patadaF")
-				this->spriteAnimado->iniciarAnimacion("patadaA");
+			if(tipoDeGolpe=="golpeS") this->spriteAnimado->iniciarAnimacion("golpeA");
+			if(tipoDeGolpe=="golpeF") this->spriteAnimado->iniciarAnimacion("golpeAF");
+			if(tipoDeGolpe=="patadaS") this->spriteAnimado->iniciarAnimacion("patadaA");
+			if( tipoDeGolpe=="patadaF")	this->spriteAnimado->iniciarAnimacion("patadaAF");
 		}
 		else
 			this->spriteAnimado->iniciarAnimacion(tipoDeGolpe);
