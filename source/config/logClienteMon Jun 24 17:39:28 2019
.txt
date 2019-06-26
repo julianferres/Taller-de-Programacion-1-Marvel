@@ -1,0 +1,8 @@
+INFO ; Archivo de logging creado! ; Mon Jun 24 17:39:28 2019
+INFO ; main::Comienzo a leer el json ; Mon Jun 24 17:39:28 2019
+ERROR ; [json.exception.parse_error.101] parse error at line 5, column 14: syntax error while parsing object separator - invalid literal; last read: '"round1"f:'; expected ':' ; Mon Jun 24 17:39:28 2019
+ERROR ; ControladorJson:: Se leera el archivo default ; Mon Jun 24 17:39:28 2019
+INFO ; ControladorJson::Archivo default de configuracion JSON leido correctamente ; Mon Jun 24 17:39:28 2019
+INFO ; main::Json leido. Comienzo el juego ; Mon Jun 24 17:39:28 2019
+INFO ; Cliente::Conectado al servidor correctamente. ; Mon Jun 24 17:39:28 2019
+INFO ; Cliente::Conexion finalizada. ; Mon Jun 24 17:41:12 2019

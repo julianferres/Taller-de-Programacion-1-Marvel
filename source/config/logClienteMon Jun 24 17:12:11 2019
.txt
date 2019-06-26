@@ -1,0 +1,30 @@
+INFO ; Archivo de logging creado! ; Mon Jun 24 17:12:11 2019
+INFO ; main::Comienzo a leer el json ; Mon Jun 24 17:12:11 2019
+INFO ; ControladorJson::Log level = DEBUG ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Altura ventana seteada: 700 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Ancho ventana seteada: 1200 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Fullscreen = 0 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::FPS seteados = 60 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Personajes contados = 4 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Cantidad Rounds seteados = 3 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson:: Por setear cantidad fondos por round ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Fondos contados para round 1 = 3 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Fondos contados para round 2 = 3 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Fondos contados para round 3 = 3 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Personajes seteados ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Seteando fondos para round 1 cantidad: 3 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Fondos round 1 seteados ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson:: Fondos para escenario 1 encontrado ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson:: Fondos para escenario 1 seteado ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Seteando fondos para round 2 cantidad: 3 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Fondos round 2 seteados ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson:: Fondos para escenario 2 encontrado ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson:: Fondos para escenario 2 seteado ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Seteando fondos para round 3 cantidad: 3 ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson::Fondos round 3 seteados ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson:: Fondos para escenario 3 encontrado ; Mon Jun 24 17:12:11 2019
+DEBUG ; ControladorJson:: Fondos para escenario 3 seteado ; Mon Jun 24 17:12:11 2019
+INFO ; ControladorJson::Archivo de configuracion JSON leido correctamente ; Mon Jun 24 17:12:11 2019
+INFO ; main::Json leido. Comienzo el juego ; Mon Jun 24 17:12:11 2019
+INFO ; Cliente::Conectado al servidor correctamente. ; Mon Jun 24 17:12:11 2019
+INFO ; Cliente::Conexion finalizada. ; Mon Jun 24 17:16:58 2019

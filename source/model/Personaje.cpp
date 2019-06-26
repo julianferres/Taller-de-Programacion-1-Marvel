@@ -49,7 +49,10 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->disparable = new SpriteAnimado(nombre+"Arrojable");
 	this->setDisparo();
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
-
+	offset["CapitanAmerica"]=100;
+	offset["Spiderman"]=100;
+	offset["Venom"] =140;
+	offset["MegaMan"]=100;
 }
 
 void Personaje::actualizar(Personaje *enemigo){
@@ -362,13 +365,15 @@ SpriteAnimado *Personaje::obtenerSprite(){
 }
 
 
-bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+velocidad, static_cast<int>(posy), ancho, alto};
+bool Personaje::colisionaAlaDerecha(SDL_Rect rectanguloOponente, string oponente){
+	if (posx>rectanguloOponente.x) return false;
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-offset[oponente], static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
 
-bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente){
-	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)-velocidad, static_cast<int>(posy), ancho, alto};
+bool Personaje::colisionaAlaIzquierda(SDL_Rect rectanguloOponente, string oponente){
+	if(posx<rectanguloOponente.x) return false;
+	SDL_Rect rectanguloFuturo = { static_cast<int>(posx)+offset[oponente], static_cast<int>(posy), ancho, alto};
 	return SDL_HasIntersection( &rectanguloFuturo, &rectanguloOponente );
 }
 

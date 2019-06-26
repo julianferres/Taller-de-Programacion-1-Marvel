@@ -396,7 +396,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 	 }
 	 if(puedoMoverPersonaje1 || controladorJson->cantidadClientes() == 1){
 		 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_D)){
-			 if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo() )  ){
+			 if(! personaje1->colisionaAlaDerecha(personaje2->obtenerRectangulo(), personaje2->getNombre() )  ){
 				if(personaje1->moverDerecha(personaje2,finEscenarioDerecha))
 					this->parallax->moverCamaraDerecha();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la derecha");
@@ -404,7 +404,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		 }
 
 		 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_A)){
-			if(! personaje1->colisionaAlaIzquierda(personaje2->obtenerRectangulo() )  ){
+			if(! personaje1->colisionaAlaIzquierda(personaje2->obtenerRectangulo(), personaje2->getNombre() )  ){
 				if (personaje1->moverIzquierda(personaje2,finEscenarioIzquierda))
 					this->parallax->moverCamaraIzquierda();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 1 a la izquierda");
@@ -456,7 +456,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 
 	 if(puedoMoverPersonaje2 || controladorJson->cantidadClientes() == 1){
 		 if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_LEFT)){
-			if(! personaje2->colisionaAlaIzquierda(personaje1->obtenerRectangulo()) ){
+			if(! personaje2->colisionaAlaIzquierda(personaje1->obtenerRectangulo(), personaje1->getNombre()) ){
 				if (personaje2->moverIzquierda(personaje1,finEscenarioIzquierda)){
 					this->parallax->moverCamaraIzquierda();
 				}
@@ -465,7 +465,7 @@ void Juego::teclear(SDL_Event evento, int idCliente){
 		}
 
 		if(teclado->seEstaPresionandoUnaTecla(SDL_SCANCODE_RIGHT)){
-		  if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo()) ){
+		  if(! personaje2->colisionaAlaDerecha(personaje1->obtenerRectangulo(), personaje1->getNombre()) ){
 				if(personaje2->moverDerecha(personaje1, finEscenarioDerecha) )
 					this->parallax->moverCamaraDerecha();
 				controladorLogger->registrarEvento("DEBUG", "Juego::Jugador 2 a la derecha");

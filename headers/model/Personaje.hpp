@@ -22,8 +22,8 @@ class Personaje{
 		void actualizar(Personaje *enemigo);
 		bool moverDerecha(Personaje *enemigo, bool finEscenarioDerecha); //devuelve true o false si hay que mover o no le parallax
 		bool moverIzquierda(Personaje *enemigo,bool finEscenarioIzquierda); //devuelve true o false si hay que mover o no le parallax
-		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente);
-		bool colisionaAlaIzquierda(SDL_Rect rectanguloOponente);
+		bool colisionaAlaDerecha(SDL_Rect rectanguloOponente, string oponente);
+		bool colisionaAlaIzquierda(SDL_Rect rectanguloOponente, string oponente);
 		bool colisionaAbajoIzquierda(SDL_Rect rectanguloOponente);
 		bool colisionaAbajoDerecha(SDL_Rect rectanguloOponente);
 		bool ladoDerecho();
@@ -105,7 +105,7 @@ class Personaje{
 		bool lanzadoAizquierda=false;
 		int distanciaRecorrida=0;
 		int maximaDistanciaArrojable = 500;
-
+		map<string,int>offset;
 
 };
 
