@@ -1,0 +1,54 @@
+INFO ; Archivo de logging creado! ; Tue Jun 25 00:46:38 2019
+INFO ; main::Comienzo a leer el json ; Tue Jun 25 00:46:38 2019
+INFO ; ControladorJson::Log level = DEBUG ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Altura ventana seteada: 700 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Ancho ventana seteada: 1200 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Fullscreen = 0 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::FPS seteados = 60 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Personajes contados = 4 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Cantidad Rounds seteados = 3 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson:: Por setear cantidad fondos por round ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Fondos contados para round 1 = 3 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Fondos contados para round 2 = 3 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Fondos contados para round 3 = 3 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Personajes seteados ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Seteando fondos para round 1 cantidad: 3 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Fondos round 1 seteados ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson:: Fondos para escenario 1 encontrado ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson:: Fondos para escenario 1 seteado ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Seteando fondos para round 2 cantidad: 3 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Fondos round 2 seteados ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson:: Fondos para escenario 2 encontrado ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson:: Fondos para escenario 2 seteado ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Seteando fondos para round 3 cantidad: 3 ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson::Fondos round 3 seteados ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson:: Fondos para escenario 3 encontrado ; Tue Jun 25 00:46:38 2019
+DEBUG ; ControladorJson:: Fondos para escenario 3 seteado ; Tue Jun 25 00:46:38 2019
+INFO ; ControladorJson::Archivo de configuracion JSON leido correctamente ; Tue Jun 25 00:46:38 2019
+INFO ; main::Json leido. Comienzo el juego ; Tue Jun 25 00:46:38 2019
+INFO ; Servidor::Socket creado. ; Tue Jun 25 00:46:38 2019
+DEBUG ; Parallax::Camara 1 inicializada ; Tue Jun 25 00:46:39 2019
+DEBUG ; Parallax::Camara 2 inicializada ; Tue Jun 25 00:46:39 2019
+DEBUG ; Parallax::Camara 3 inicializada ; Tue Jun 25 00:46:39 2019
+INFO ; Juego::Se inicio el juego ; Tue Jun 25 00:46:39 2019
+DEBUG ; GameMenu::Inicio menu ; Tue Jun 25 00:46:39 2019
+INFO ; Servidor::Se acepto la conexion correctamente. ; Tue Jun 25 00:46:48 2019
+DEBUG ; GameMenu::Personaje CapitanAmericaBoton Seteado ; Tue Jun 25 00:46:52 2019
+DEBUG ; GameMenu::Personaje VenomBoton Seteado ; Tue Jun 25 00:46:52 2019
+DEBUG ; GameMenu::Personaje SpidermanBoton Seteado ; Tue Jun 25 00:46:53 2019
+DEBUG ; GameMenu::Personaje MegaManBoton Seteado ; Tue Jun 25 00:46:54 2019
+INFO ; Juego::Jugador 1 al equipo 1 ; Tue Jun 25 00:46:54 2019
+INFO ; Personaje:: Personaje creado: CapitanAmerica ; Tue Jun 25 00:46:54 2019
+INFO ; Juego::Jugador 2 al equipo 1 ; Tue Jun 25 00:46:54 2019
+INFO ; Personaje:: Personaje creado: Venom ; Tue Jun 25 00:46:54 2019
+INFO ; Juego::Jugador 3 al equipo 2 ; Tue Jun 25 00:46:54 2019
+INFO ; Personaje:: Personaje creado: Spiderman ; Tue Jun 25 00:46:54 2019
+INFO ; Juego::Jugador 4 al equipo 2 ; Tue Jun 25 00:46:54 2019
+INFO ; Personaje:: Personaje creado: MegaMan ; Tue Jun 25 00:46:54 2019
+DEBUG ; Juego::Jugador 1 salta ; Tue Jun 25 00:46:59 2019
+DEBUG ; Juego::Jugador 1 salta ; Tue Jun 25 00:47:00 2019
+DEBUG ; Juego::Jugador 1 salta ; Tue Jun 25 00:47:01 2019
+DEBUG ; Juego::Jugador 1 salta ; Tue Jun 25 00:47:02 2019
+DEBUG ; Juego::Jugador 1 salta ; Tue Jun 25 00:47:03 2019
+DEBUG ; Juego::Jugador 1 salta ; Tue Jun 25 00:47:05 2019
+INFO ; Servidor::Se desconecto el cliente 1 ; Tue Jun 25 00:47:08 2019
