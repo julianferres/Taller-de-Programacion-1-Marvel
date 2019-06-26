@@ -352,7 +352,7 @@ void SpriteAnimado::update(){
 		frameIndex=0;
 		if(nombreSprite == "CapitanAmerica" && nombreAnimacion=="disparar")
 			cambiarAnimacion("atraparEscudo");
-		else if(nombreAnimacion=="golpeA" || nombreAnimacion=="patadaA" )
+		else if(nombreAnimacion=="golpeA" || nombreAnimacion=="patadaA" || nombreAnimacion=="golpeAF" || nombreAnimacion=="patadaAF" )
 			cambiarAnimacion("agacharse");
 		else if(nombreAnimacion=="recibirGolpeF" ||nombreAnimacion=="serLanzado" )
 			cambiarAnimacion("levantarse");
