@@ -49,10 +49,10 @@ Personaje::Personaje(string nombre, int posicionXinicial, SDL_RendererFlip flip)
 	this->disparable = new SpriteAnimado(nombre+"Arrojable");
 	this->setDisparo();
 	controladorLogger->registrarEvento("INFO", "Personaje:: Personaje creado: "+nombre);
-	offset["CapitanAmerica"]=100;
-	offset["Spiderman"]=100;
-	offset["Venom"] =140;
-	offset["MegaMan"]=100;
+	offset["CapitanAmerica"]=140;
+	offset["Spiderman"]=130;
+	offset["Venom"] =150;
+	offset["MegaMan"]=130;
 }
 
 void Personaje::actualizar(Personaje *enemigo){
